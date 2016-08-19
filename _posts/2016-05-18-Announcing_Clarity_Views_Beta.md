@@ -1,5 +1,8 @@
 ---
-title: Anouncing Clarity Views!
+title:  "Clarity Views - How Developers Understand Code"
+date:   2016-05-18 15:04:23
+categories: [tech, code, static analysis, uml]
+tags: [tech, code, static analysis, uml]
 ---
 
 <p class="lead"><a href="http://clarityviews.com">Clarity Views</a> is web based software comprehension toolbox built for GitHub <img style="display: inline-block; margin:0;" src="http://clarityviews.com/badge">. It allows developers to rapidly comprehend the inner workings of a software system so they can start contributing faster. Simply visit the <a href="http://clarityviews.com">Clarity Views</a> web page to get started, then display your repository's Clarity Views badge in a visible place for your team to use. </p>
