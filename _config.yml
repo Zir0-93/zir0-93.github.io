@@ -1,14 +1,14 @@
 # Site settings
-title: Jekyll-Uno
-description: 'Jekyll-Uno - a minimal, responsive theme for Jekyll'
-url: 'http://joshgerdes.com/jekyll-uno'
+title: The Clarity Views Blog
+description: 'Clarity Views - how developers understand code'
+url: 'http://clarity-team.github.io'
 baseurl: '/jekyll-uno/'
 # google_analytics: 'UA-XXXXXX-X'
 # disqus_shortname: 'your-disqus-name'
 
 author:
-  name: 'Josh Gerdes'
-  email: josh@joshgerdes.com
+  name: ''
+  email: admin@clarityviews.com
   twitter_username: joshgerdes
   facebook_username: joshgerdes
   github_username:  joshgerdes
