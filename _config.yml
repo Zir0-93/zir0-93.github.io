@@ -4,7 +4,7 @@ description: 'Clarity Views - how developers understand code'
 url: 'https://clarity-team.github.io'
 baseurl: '/'
 google_analytics: 'UA-80543111-2'
-# disqus_shortname: 'your-disqus-name'
+disqus_shortname: 'clarity-team'
 
 author:
   name: ''
