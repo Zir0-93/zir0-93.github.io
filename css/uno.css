@@ -1190,15 +1190,13 @@ hr {
 	vertical-align: middle; }
 
 .panel-title {
-	margin: 0 0 5px 0;
-	font-size: 2.5em;
-	letter-spacing: 4px;
-	color: #FFF; }
+	font-size: 2.0em;
+	color: rgb(34, 223, 128);
+}
 
 .panel-subtitle {
-	font-family: "Roboto Slab", serif;
+	font-family: "Roboto";
 	font-size: 1.2em;
-	font-weight: lighter;
 	letter-spacing: 3px;
 	color: #cccccc;
 	-webkit-font-smoothing: antialiased; }
