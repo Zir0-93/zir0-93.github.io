@@ -52,7 +52,7 @@ Clarity Views also helps help teams write useful, maintainable documentation. Us
 ```
 ![Clarity Views Diagram](http://clarityviews.com/github/clarity-team/clarpse/master/diagram/clarpse-master/clarpse/src/main/java/com/clarity/parser/AntlrParser.java?projectName=clarpse)
 ````
-![Clarity Views Diagram](http://clarityviews.com/embed/clarity-team/clarpse/master/diagram/clarpse-master/clarpse/src/main/java/com/clarity/parser/AntlrParser.java?projectName=clarpse)
+![Clarity Views Diagram](http://clarityviews.com/embed/clarity-team/clarpse/master/diagram/clarpse-master/clarpse/src/main/java/com/clarity/parser/AntlrParser.java)
 
 
 <p class="lead">Best of all, Clarity Views is <b>completely secure</b> - all code is requested on the fly using GitHub API's and never kept in any storage of any kind. Clarity Views is also <b>completely free</b> for open source repositories, get <a href="http://clarityviews.com">started</a> today! </p>
