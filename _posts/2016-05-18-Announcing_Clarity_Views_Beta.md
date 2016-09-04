@@ -50,7 +50,7 @@ Starting discussions and creating issues in line with your code and diagrams kee
 Clarity Views also helps help teams write useful, maintainable documentation. Users can **embed diagrams into any HTML or markdown environment**, simply look for the "attachment" symbol to get the embed code. Furthermore, as your codebase evolves, so will the diagrams!
 
 ```
-![Clarity Views Diagram](http://clarityviews.com/github/clarity-team/clarpse/master/diagram/clarpse-master/clarpse/src/main/java/com/clarity/parser/AntlrParser.java?projectName=clarpse)
+![Clarity Views Diagram](http://clarityviews.com/github/clarity-team/clarpse/master/diagram/clarpse-master/clarpse/src/main/java/com/clarity/parser/AntlrParser.java)
 ````
 ![Clarity Views Diagram](http://clarityviews.com/embed/clarity-team/clarpse/master/diagram/clarpse-master/clarpse/src/main/java/com/clarity/parser/AntlrParser.java)
 
