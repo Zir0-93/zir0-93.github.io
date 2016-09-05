@@ -1,11 +1,11 @@
 ---
-title:  "Clarity Views - How Developers Understand Code"
+title:  "Clarity Views - Public Offering Release"
 date:   2016-05-18 15:04:23
 categories: [tech, code, static analysis, uml]
 tags: [tech, code, static analysis, uml]
 ---
 
-<p class="lead">With <a href="http://clarityviews.com">Clarity Views</a>  developers can analyze code for both architectural designs and implementation level patterns right from the browser, making any piece of code a breeze to enhance, maintain and test. Simply visit the <a href="http://clarityviews.com">Clarity Views</a> web page to get started, then share your repository's Clarity Views ![badge](http://clarityviews.com/badge) with others to use.</p>
+With [Clarity Views](bttp://clarityviews.com) developers can analyze their open source repositories for both architectural designs and implementation level patterns right from the browser, making any piece of code a breeze to enhance, maintain and test. Simply visit the [Clarity Views](http://clarityviews.com) web page to get started, then place your repository's Clarity Views ![badge](http://clarityviews.com/badge) in a visible area.
 
 <span class="fa fa-question-circle-o"></span>
 
