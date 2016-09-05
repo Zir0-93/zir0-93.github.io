@@ -16,7 +16,7 @@ We get it, you're dev team is filled with rockstar developers. You're all about 
 ![overwhelmed](/images/overwhelmed.gif)
 
 
-## So we asked... 
+## So we asked...  
 How do we reduce the amount of time it takes for someone to understand how a given component of a system works? 
 
 -   How do I develop tests for this component?
