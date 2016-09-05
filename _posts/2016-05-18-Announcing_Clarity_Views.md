@@ -34,7 +34,7 @@ Tradional UML diagrams recovered from code are too complicated and fail to abstr
 ## Code Intelligence ![code](/images/codeviewbtn.PNG)
 Clarity does not only understand your code, it does more with it than your code host. Users can click on any type within the Code View to **jump to definitions, view type information, and view example code snippets for a given type**. We also prioritizes displaying test related code snippets to quickly convey intended usage scenarios for a given type. Look for the ![code](/images/codeviewbtn.PNG) button to switch to the Code View.
 
-![diagram](images/codeview.PNG)
+![diagram](/images/codeview.PNG)
 
 ## Code Search
 Save time and effort by searching across functions, classes, and other code elements. Simply enter the name of the function of type into the search bar at the top of your Clarity Views environment to start searching.
