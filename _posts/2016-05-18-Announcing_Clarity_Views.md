@@ -42,7 +42,7 @@ Save time and effort by searching across functions, classes, and other code elem
 ![diagram](https://raw.githubusercontent.com/clarity-team/jekyll-uno/master/images/search.PNG)
 
 ## Create GitHub Issues ![plus](/images/newissuebtn.PNG)
-Starting discussions and creating issues in line with your code and diagrams keeps everyone on the same page. Simply **highlight a piece of code** and look for the ![pluss](/images/newissuebtnsmall.png) button to create a new contextual issue where developers can ask questions, suggest improvements, and explain design decision. You can embed diagrams into a new GitHub issue from the Code View as well.
+Starting discussions and creating issues in line with your code and diagrams keeps everyone on the same page. Simply **highlight a piece of code** and look for the ![pluss](/images/newissuebtnsmall.png) button to create a new contextual issue where developers can ask questions, suggest improvements, and explain design decision. You can embed diagrams into a new GitHub issue from the Diagram View  ![pluses](/images/diagramviewbtnsmall.png) as well.
 
 ![diagram](/images/embed.PNG)
 
