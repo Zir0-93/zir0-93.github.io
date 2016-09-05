@@ -44,7 +44,7 @@ Save time and effort by searching across functions, classes, and other code elem
 ## Create GitHub Issues ![plus](/images/newissuebtn.PNG)
 Starting discussions and creating issues in line with your code and diagrams keeps everyone on the same page. Simply **highlight a piece of code** and look for the ![plus](/images/newissuebtn.PNG) sign to create a new contextual issue where developers can ask questions, suggest improvements, and explain design decision. You can embed diagrams into a new GitHub issue from the Code View as well.
 
-![diagram](https://raw.githubusercontent.com/clarity-team/jekyll-uno/master/images/create new issue.PNG)
+![diagram](/images/embed.PNG)
 
 ## Embed Your Diagrams ![embed](/images/embedbtn.PNG)
 Clarity Views also helps help teams write useful, maintainable documentation. Users can **embed diagrams into any HTML or markdown environment**, simply look for the  ![embed](/images/embedbtn.PNG) button to get the embed code. Furthermore, as your codebase evolves, so will the diagrams!
