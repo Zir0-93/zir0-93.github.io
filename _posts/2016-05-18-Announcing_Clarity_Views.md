@@ -5,7 +5,7 @@ categories: [tech, code, static analysis, uml]
 tags: [tech, code, static analysis, uml]
 ---
 
-<p class="lead">With <a href="http://clarityviews.com">Clarity Views</a>  developers can analyze code for both architectural designs and implementation level patterns right from the browser, making any piece of code a breeze to enhance, maintain and test. Simply visit the <a href="http://clarityviews.com">Clarity Views</a> web page to get started, then share your repository's Clarity Views badge ![badge](http://clarityviews.com/badge) with others to use.</p>
+<p class="lead">With <a href="http://clarityviews.com">Clarity Views</a>  developers can analyze code for both architectural designs and implementation level patterns right from the browser, making any piece of code a breeze to enhance, maintain and test. Simply visit the <a href="http://clarityviews.com">Clarity Views</a> web page to get started, then share your repository's Clarity Views ![badge](http://clarityviews.com/badge) with others to use.</p>
 
 <span class="fa fa-question-circle-o"></span>
 
