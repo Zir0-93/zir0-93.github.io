@@ -32,7 +32,7 @@ Tradional UML diagrams recovered from code are too complicated and fail to abstr
 ![diagram](/images/diagram.PNG) 
 
 ## Code Intelligence ![code](/images/codeviewbtn.PNG)
-Clarity does not only understand your code, it does more with it than your code host. Users can click on any type within the Code View to **jump to definitions, view type information, and view example code snippets for a given type**. We also prioritizes displaying test related code snippets to quickly convey intended usage scenarios for a given type. **Look for the ![codess](/images/codeviewbtnsmall.png) button** to switch to the Code View.
+Clarity does not only understand your code, it does more with it than your code host. Users can click on any type within the Code View to *jump to definitions, view type information, and view example code snippets for a given type*. We also prioritizes displaying test related code snippets to quickly convey intended usage scenarios for a given type. **Look for the ![codess](/images/codeviewbtnsmall.png) button** to switch to the Code View.
 
 ![diagram](/images/codeview.PNG)
 
@@ -42,12 +42,12 @@ Save time and effort by searching across functions, classes, and other code elem
 ![diagram](https://raw.githubusercontent.com/clarity-team/jekyll-uno/master/images/search.PNG)
 
 ## Create GitHub Issues ![plus](/images/newissuebtn.PNG)
-Starting discussions and creating issues in line with your code and diagrams keeps everyone on the same page. Simply **highlight a piece of code** and **look for the ![pluss](/images/newissuebtnsmall.png) button** to create a new contextual issue where developers can ask questions, suggest improvements, and explain design decision. You can embed diagrams into a new GitHub issue from the Diagram View  ![pluses](/images/diagramviewbtnsmall.png) as well.
+Starting discussions and creating issues in line with your code and diagrams keeps everyone on the same page. Simply *highlight a piece of code* and **look for the ![pluss](/images/newissuebtnsmall.png) button** to create a new contextual issue where developers can ask questions, suggest improvements, and explain design decision. You can embed diagrams into a new GitHub issue from the Diagram View  ![pluses](/images/diagramviewbtnsmall.png) as well.
 
 ![diagram](/images/embed.PNG)
 
 ## Embed Your Diagrams ![embed](/images/embedbtn.PNG)
-Clarity Views also helps help teams write useful, maintainable documentation. Users can **embed diagrams into any HTML or markdown environment**, simply **look for the  ![embeds](/images/embedbtnsmall.png) button** to get the embed code. Furthermore, as your codebase evolves, so will the diagrams!
+Clarity Views also helps help teams write useful, maintainable documentation. Users can *embed diagrams into any HTML or markdown environment*, simply **look for the  ![embeds](/images/embedbtnsmall.png) button** to get the embed code. Furthermore, as your codebase evolves, so will the diagrams!
 
 ```
 ![Clarity Views Diagram](http://clarityviews.com/github/clarity-team/clarpse/master/diagram/clarpse-master/clarpse/src/main/java/com/clarity/parser/ClarpseJava.java)
