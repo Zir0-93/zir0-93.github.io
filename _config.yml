@@ -1,17 +1,16 @@
 # Site settings
-title: The Clarity Views Blog
-description: 'www.clarityviews.com'
-url: 'https://clarity-team.github.io'
+title: Muntazir Fadhel
+description: ''
+url: 'https://zir0-93.github.io'
 baseurl: '/'
-google_analytics: 'UA-80543111-2'
-disqus_shortname: 'clarity-team'
+google_analytics: 'UA-80543111-1'
+disqus_shortname: 'MuntazirFadhel'
 
 author:
   name: ''
-  email: admin@clarityviews.com
-  twitter_username: clarity_views
-  facebook_username: clarityviews
-  github_username:  clarity-team
+  email: muntazirfadhel@gmail.com
+  twitter_username: FadhelMuntazir
+  github_username: zir0-93
 
 defaults:
   -
