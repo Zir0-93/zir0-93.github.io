@@ -7,7 +7,7 @@ tags: [tech, code, static analysis, uml]
 ---
 
 With [Clarity Views](bttp://clarityviews.com) developers can analyze their open source repositories for both architectural designs and implementation level patterns right from the browser, making any piece of code a breeze to enhance, maintain and test. Simply visit the [Clarity Views](http://clarityviews.com) web page to get started and open the repository of your choice.
-
+<br>
 ![code](/images/diagramviewbtn.PNG)   ![code](/images/codeviewbtn.PNG) ![plus](/images/newissuebtn.PNG) ![embed](/images/embedbtn.PNG)
 <!--more-->
 
