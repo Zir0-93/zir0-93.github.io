@@ -1,5 +1,5 @@
 ---
-title:  ![code](/images/codeviewbtn.PNG) "Gain Clarity Series - Extensibility in Junit5"
+title:  "Gain Clarity Series - Extensibility in Junit5"
 date:   2016-09-08 15:04:23
 categories: [gain clarity series]
 tags: [tech, code, clarity views, junit5, static analysis, uml]
