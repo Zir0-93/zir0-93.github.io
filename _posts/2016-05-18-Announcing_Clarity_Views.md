@@ -1,13 +1,15 @@
 ---
 title:  "Clarity Views - Public Offering Release"
 date:   2016-05-18 15:04:23
+excerpt_separator: <!--more-->
 categories: [tech, code, static analysis, uml]
 tags: [tech, code, static analysis, uml]
 ---
 
 With [Clarity Views](bttp://clarityviews.com) developers can analyze their open source repositories for both architectural designs and implementation level patterns right from the browser, making any piece of code a breeze to enhance, maintain and test. Simply visit the [Clarity Views](http://clarityviews.com) web page to get started and open the repository of your choice.
 
-<span class="fa fa-question-circle-o"></span>
+![code](/images/diagramviewbtn.PNG)   ![code](/images/codeviewbtn.PNG) ![plus](/images/newissuebtn.PNG) ![embed](/images/embedbtn.PNG)
+<!--more-->
 
 ## You write great code, but...
 We get it, you're dev team is filled with rockstar developers. You're all about using the right design patterns, writing effective unit tests, developing maintainable code, writing useful documentation - your GitHub activity says it all. However, despite your efforts to maintain best practices, potential contributors to your project and new team members are often overwhelmed with a parking garage of code when they visit your GitHub repository page.  
