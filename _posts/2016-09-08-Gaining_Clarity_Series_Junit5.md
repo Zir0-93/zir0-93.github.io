@@ -55,5 +55,6 @@ created in Junit5 to executing tests written in Junit 4 and Junit 3 by the Junit
 ```
 
 ![JupiterDiagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-jupiter-engine/src/main/java/org/junit/jupiter/engine/JupiterTestEngine.java)
+
 We hoped you enjoyed this article and as always, all diagrams have been generated using [Clarity Views](http://clarityviews.com)!
 And if you would like, feel free to explore Junit5 for yourself! [![Clarity Views Label](http://clarityviews.com/badge)](http://clarityviews.com/github/junit-team/junit5)
