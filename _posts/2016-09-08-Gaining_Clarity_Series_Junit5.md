@@ -12,7 +12,7 @@ that existed in Junit. For this reason, other test engines, extensions and buld 
 deep into Junit 4's internals to implement much needed features. As a result, while Junit4 was extremely successfull as a platform,
 its maintainers could not enhance Junit the tool as much as they would have liked without breaking all the third party tools that depended on it. Lets take a look at Junit5,
 where an exciting new architecture and extensibility model has been put in place to resolve these problems.
-
+ <!--more-->
 ## The Junit Platform Launcher
 The Junit Platfrom Launcher component was introduced to provide a **uniform** and much more powerful set of API's for external tools and IDE's to interact with test
 execution (launching tests, viewing test results, etc..). Upon further inspection of the DefaultLauncher class, we can see that it is able to
