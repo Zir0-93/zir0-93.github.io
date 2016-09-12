@@ -6,27 +6,26 @@ excerpt_separator: <!--more-->
 tags: [tech, code, clarity views, junit5, static analysis, uml]
 ---
 The Gain Clarity Series aims to uncover architectural desigs in some of the most popular developer frameworks and libraries.
-Today we will use Clarity Views to analyze major architectural changes that have come about in [Junit5](https://github.com/junit-team/junit5)
-[![Clarity Views Label](http://clarityviews.com/badge)](http://clarityviews.com/github/junit-team/junit5). One of the main drawbacks that existed in Junit4 was the lack of separation of cocerns between the various core mecahnisms 
+Today we will use [Clarity Views](http://clarityviews.com) to analyze major architectural changes that have come about in [Junit5](https://github.com/junit-team/junit5)
+[![Clarity Views Label](http://clarityviews.com/badge)](http://clarityviews.com/github/junit-team/junit5). One of the main drawbacks that existed in Junit4 was the lack of separation of concerns between the various core mecahnisms 
 that existed in Junit. For this reason, other test engines, extensions and buld tools built on top of Junit needed to reach
 deep into Junit 4's internals to implement much needed features. As a result, while Junit4 was extremely successfull as a platform,
-its maintainers could not enhance Junit the tool as much as they would have liked without breaking all the third party tools that depended on it. Lets take a look at Junit5,
-where an exciting new architecture and extensibility model has been put in place to resolve these problems.
+its maintainers could not enhance Junit the tool as much as they would have liked without breaking all the third party tools that depended on it. 
  <!--more-->
  
-## The Junit Platform Launcher
+## The Junit5 Platform Launcher
 The Junit Platfrom Launcher component was introduced to provide a **uniform** and much more powerful set of API's for external tools and IDE's to interact with test
 execution (launching tests, viewing test results, etc..). Upon further inspection of the DefaultLauncher class, we can see that it is able to
 execute tests and register the all important TestExecutionListeners which will will get feedback about the progress and results of test execution. 
 ![launcher](/images/launcher.svg)
 
 
-## The Junit Test Engine
+## The Junit5 Test Engine
 One further responsibility of the Launcher, as documented in the Launcher interface, is to determine 
 what Test Engine's to delegate the execution of tests to at runtime. A TestEngine essentially has two main functionalities.
 
-    1. Execute tests 
-    2. Discover what tests it is actually capable of executing
+1. Execute tests 
+2. Discover what tests it is actually capable of executing
     
 You can see now how a Launcher instance is able to determine what Test Engine to delegate tests to. It passes a LauncherDiscoveryRequest instance to each
 registered Test Engine (found dynamically via Java's [ServiceLoader](http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html)
