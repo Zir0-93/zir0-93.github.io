@@ -22,7 +22,7 @@ execute tests and register the all important TestExecutionListeners which will g
 
 ## The Junit5 Test Engine
 One further responsibility of the Launcher, as documented in the Launcher interface, is to decide
-what Test Engine's to delegate the execution of tests to at runtime. A TestEngine instance essentially has two main functionalities.
+what Test Engine's to delegate the execution of tests to at runtime. A Test Engine instance essentially has two main functionalities.
 
 1. Execute tests
 2. Discover what tests it is actually capable of executing
@@ -30,7 +30,7 @@ what Test Engine's to delegate the execution of tests to at runtime. A TestEngin
 You can see now how a Launcher instance is able to decide what Test Engine to delegate tests to. It passes a LauncherDiscoveryRequest instance to each
 registered Test Engine (found dynamically via Java's [ServiceLoader](http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html)
 mechanism) and lets the engine return a Test Plan indicating what tests it can discover and execute.
-As you can see below, there are multiple TestEngine implementations within
+As you can see below, there are multiple Test Engine implementations within
 the Junit5 code base itself.
 
 ```
@@ -41,14 +41,14 @@ the Junit5 code base itself.
 
 ## A Concrete Example, The Jupiter Test Engine
 If you've come this far, you've probably realized why Junit-5's architecture makes developing extensions for Junit much easier.
-Junit5 now supports a model where multiple Test Engines (not just Junit5), each with their own implementations of
-executing tests exist under a common Laucher. We mentioned earlier that Junit Platform Launcher is responsible for
+Junit5 now supports a model where multiple Test Engines (not just Junit-5), each complete with their own implementations of
+executing tests, exist under a common Launcher. We mentioned earlier that Junit Platform Launcher is responsible for
 providing  the API's external tools will use. Therefore, all the Test Engine implementations found at runtime discovered by the
-Junit Platform Launcher ca
-be accessed using a common set of public APIs, great stuff. As in the diagram below, Junit5 provides its own TestEngine implementation, called Jupiter,
+Junit Platform Launcher can
+be accessed using the same APIs! As in the diagram below, Junit5 provides its own Test Engine implementation, called Jupiter,
 which as you would expect  is responsible
-for discovering and executing tests written using Junit 's brand new APIs. The Vintage Test Engine was another Test Engine implementation
-created in Junit5 to executing tests written in Junit 4 and Junit 3 by the Junit Platform.
+for discovering and executing tests written using Junit-5's [brand new APIs](http://junit.org/junit5/docs/current/user-guide/#writing-tests-dynamic-tests). The Vintage Test Engine was another Test Engine implementation
+created in Junit-5 to executing tests written in Junit-4 and Junit-3 by the Junit Platform.
 
 ```
 ![Clarity Views Diagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-jupiter-engine/src/main/java/org/junit/jupiter/engine/JupiterTestEngine.java)
