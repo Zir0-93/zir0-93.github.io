@@ -33,7 +33,11 @@ mechanism) and lets the engine return a Test Plan indicating what tests it can d
 As you can see below, their are multiple TestEngine implementations within
 the Junit5 code base itself.
 
-![Clarity Views Diagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestEngine.java)
+```
+![TestEngine](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestEngine.java)
+```
+
+![TestEngineDiagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestEngine.java)
 
 ## A Concrete Example, The Jupiter Test Engine
 If you've come this far, you've probably realized why Junit5's architecture makes developing extensions for Junit much easier.
@@ -46,6 +50,10 @@ which as you would expect  is responsible
 for discovering and executing tests written using Junit 's brand new APIs. The Vintage Test Engine was another Test Engine implementation
 created in Junit5 to executing tests written in Junit 4 and Junit 3 by the Junit Platform.
 
+```
 ![Clarity Views Diagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-jupiter-engine/src/main/java/org/junit/jupiter/engine/JupiterTestEngine.java)
+```
+
+![JupiterDiagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-jupiter-engine/src/main/java/org/junit/jupiter/engine/JupiterTestEngine.java)
 We hoped you enjoyed this article and as always, all diagrams have been generated using [Clarity Views](http://clarityviews.com)!
 And if you would like, feel free to explore Junit5 for yourself! [![Clarity Views Label](http://clarityviews.com/badge)](http://clarityviews.com/github/junit-team/junit5)
