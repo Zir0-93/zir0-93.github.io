@@ -8,10 +8,10 @@ tags: [tech, code, clarity views, junit5, static analysis, uml]
 The Gain Clarity Series aims to uncover architectural designs in some of the most popular developer frameworks and libraries.
 Today we will use [Clarity Views](http://clarityviews.com) to analyze major architectural changes that have come about in [Junit5](https://github.com/junit-team/junit5)
 [![Clarity Views Label](http://clarityviews.com/badge)](http://clarityviews.com/github/junit-team/junit5). One of the main drawbacks that existed in Junit-4 was the lack of separation of concerns between the various core mechanisms
-that existed in Junit. For this reason, other test engines, extensions and build tools built on top of Junit needed to reach
+that existed in Junit. Other test engines, extensions and build tools built on top of Junit needed to reach
 deep into Junit-4's internals to implement much needed features. As a result, while Junit-4 was extremely successful as a platform,
-its maintainers could not enhance Junit the tool as much as they would have liked without breaking all the third-party tools that depended on it.
- <!--more-->
+its maintainers could not enhance Junit as a tool as much as they would have liked without breaking all the external tools that were built on top of it.
+<!--more-->
  
 ## The Junit-5 Platform Launcher
 The Junit Platform Launcher component was introduced to provide a **uniform** and much more powerful set of API's for external tools and IDE's to interact with test
@@ -39,7 +39,7 @@ the Junit5 code base itself.
 
 ![TestEngineDiagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestEngine.java)
 
-## A Concrete Example, The Jupiter Test Engine
+## The Jupiter Test Engine
 If you've come this far, you've probably realized why Junit-5's architecture makes developing extensions for Junit much easier.
 Junit-5 now supports a model where multiple Test Engines (not just Junit-5), each complete with their own implementations of
 executing tests, exist under a common Launcher. Because they all dynamically plug into the same Launcher infrastructure, IDE's and build tools that support the Junit Platform will be able to run these Test Engines through a single, uniform API. In fact, new Test Engine 
