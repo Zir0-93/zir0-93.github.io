@@ -1385,8 +1385,8 @@ nav {
 		color: #FFF;
 		opacity: .8; }
 		.navigation__item a:hover {
-			color: #FFF;
-			border-color: #FFF;
+			color: rgb(34, 203, 223);
+			border-color: rgb(34, 203, 223);
 			opacity: 1; }
 
 .navigation--social {
