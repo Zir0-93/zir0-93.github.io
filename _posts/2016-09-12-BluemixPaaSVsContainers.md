@@ -35,11 +35,9 @@ This test consisted of sending 20 requests, one at a time, to each of the two de
 
 ![simplecontainertest](/images/simplecontainertestz.png)
 
-1185 ms
 
 ![simplePaaSTest](/images/simplePaasTestz.png)
 
-2161 ms
 
 ## Burst Tests
 This test consisted of sending five asynchronous requests, 20 times, to each of the two deployment solutions. The results
@@ -47,9 +45,8 @@ are presented below:
 
 ![containerbursttest](/images/singlecontainerbursttestz.png)
 
-1944 ms
 
-![PaaS Burst Test](/images/PaasBurstTestz.png)
+![PaaSBurstTest](/images/PaasBurstTestz.png)
 
 
 Note: The Bluemix PaaS instance has 8 results rather than 20 because it ran out of memory and crashed. This
@@ -58,6 +55,7 @@ instance kept crashing before a single response was delivered. 8 results are goo
 moving forward at this point.
 
 ## Concluding Remarks
+
 
 | Deployment Solution        |  Simple Test Result Average (ms)         | Burst Test Result Average (ms)  |
 | ------------- |:-------------:| -----:|
