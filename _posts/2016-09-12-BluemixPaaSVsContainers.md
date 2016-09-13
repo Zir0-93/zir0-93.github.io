@@ -56,11 +56,7 @@ moving forward at this point.
 
 ## Concluding Remarks
 
-| Deployment Solution 	| Simple Test Result Average (ms) 	| Burst Test Result Average (ms) 	|
-|--------------------------------	|---------------------------------	|--------------------------------	|
-| IBM Container (256 MB) 	| 1185 	| 1944 	|
-| Bluemix PaaS Instance (256 MB) 	| 2161 	| N/A 	|
-
+![testtable](/images/testtable.PNG)
 <br>
 Overall the containers seem to outperform Bluemix PaaS instances by large margin. This is surprising
 because containers form the infrastructure of most PaaS environments so you would not expect a major difference. 
