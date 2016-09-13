@@ -56,6 +56,7 @@ moving forward at this point.
 
 ## Concluding Remarks
 
+
 | Deployment Solution            | Simple Test Result Average (ms) | Burst Test Result Average (ms) |
 |--------------------------------|---------------------------------|--------------------------------|
 | IBM Container (256 MB)         | 1185                            |              1944              |
