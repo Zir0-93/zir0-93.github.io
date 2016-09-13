@@ -34,7 +34,7 @@ This test consisted of sending 20 requests, one at a time, to each of the two de
 
 ![simplecontainertest](/images/simplecontainertest.png)
 
-**Average Parse Time for IBM Containers: 1185 ms**
+<p style="padding-left:20px;">Average Parse Time for IBM Containers: 1185 ms</p>
 
 ![simplePaaSTest](/images/simplePaasTest.png)
 
