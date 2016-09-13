@@ -49,10 +49,10 @@ are presented below:
 ![PaaSBurstTest](/images/PaasBurstTestz.png)
 
 
-The Bluemix PaaS instance has 8 results rather than 20 because it ran out of memory and crashed. This
-experiment originally involved sending 20 asynchronous requests instead of 5, but the Bluemix PaaS 
-instance kept crashing before a single response was delivered. 8 results are good enough to keep
-moving forward at this point.
+The Bluemix PaaS instance has nine results rather than 20 because it ran out of memory and crashed. This
+experiment originally involved sending 20 asynchronous requests instead of five, but the Bluemix PaaS 
+instance kept crashing before a single response was delivered. Nine results are good enough to keep
+moving forward at this point!
 
 ## Concluding Remarks
 
