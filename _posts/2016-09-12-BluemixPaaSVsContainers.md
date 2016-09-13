@@ -8,17 +8,15 @@ excerpt_separator: <!--more-->
 One of the most important decisions regarding the development of any software application revolves around the 
 choice of technology used to host and run the application in production. Moreover, when we talk about cloud applications, the number
 of vendors and solutions that can used for hosting drastically increases. This article will compare the **performance** of 
-[PaaS](https://www.ibm.com/cloud-computing/ca/en/paas.html) and [Container](https://www.ibm.com/cloud-computing/bluemix/containers/) based deployment solutions provided by the IBM Cloud. <!--more--> Please not that performance is not the only indicator of whether you should use PaaS Instances vs Containers and that the results presented below were collected using the IBM Cloud.
+Platform-As-A-Service [PaaS](https://www.ibm.com/cloud-computing/ca/en/paas.html) and [Container](https://www.ibm.com/cloud-computing/bluemix/containers/) based deployment solutions provided by the IBM Cloud. <!--more-->
 
 ## Deployment Solution A: IBM Bluemix PaaS
 
-PaaS offerings such as IBM's Bluemix (built on top of Pivotal's [CloudFoundry](https://github.com/cloudfoundry/cf-release)) allow developers to run their applications in the cloud without having to worry about any infrastructure. To push applications to the cloud, developers only push their (web) applications, all the remaining infrastructure is taken
-care of by the platform. Furthermore, Bluemix provides scalability of applications and auto-recovery, logging dashboards and more administration functionality right out of the box. Lastly, developers can develop their applications in their local IDEs of choice, run and test their applications on local servers and simply push the applications to the cloud. While developers have a great deal of functionality out of the box, they are restricted from configuring the underlying infrastructure running their applications.
+PaaS offerings such as IBM's Bluemix (built on top of Pivotal's [CloudFoundry](https://github.com/cloudfoundry/cf-release)) allow developers to run their web applications in the cloud without having to worry about any infrastructure. As a result, developers can develop their applications in their local IDEs of choice, run and test their applications on local servers and simply push the applications to the cloud. Bluemix also allows developers to bind a variety cloud services (Database, analytics, etc..) to their cloud app dynamically.  One negatives aspect of PaaS environments however is the inability to configure/tune the underlying servers running your software.
 
 ## Deployment Solution B: IBM Containers
 
-Docker is a container technology to package full application stacks so that these containers can easily be run in different environments. This portability is achieved by packaging not only the core applications (your own code) but also the complete underlying stack you need to run applications including application servers, Java runtimes, configuration and other dependencies. Docker uses Linux as operating system and leverages concepts like Linux namespaces to run multiple applications in sandboxes. Containers are more portable since all you need are Linux Docker environments while for Cloud Foundry packaged applications you have more prerequisites, the Cloud Foundry runtimes and services. Unlike PaaS environments, containers allow developers more flexibility to configure the infrastructure running their applications
-and but this requires additional overhead and.
+ Containers wrap-up an application in a self-contained filesystem which includes all the dependencies the app requires to run: binaries, runtime libraries, system tools, system packages, etc. This model allows for portability and allows applications to be deployed in a very consistent and predictive way. Unlike PaaS environments, containers allow developers to configure the containers running their applications.
 
 ## Experimental Setup
 The [Clarpse](http://mfadhel.com/2016/clarpse/) Source Code Analysis project was packaged as a web application with a single REST end point that will:
@@ -58,7 +56,7 @@ moving forward at this point!
 
 ![testtable](/images/testtable.PNG)
 <br>
-Overall the containers seem to outperform Bluemix PaaS instances by large margin. This is surprising
-because containers form the infrastructure of most PaaS environments so you would not expect a major difference. 
+Overall the containers seem to outperform Bluemix PaaS instances by a large margin. This is surprising
+because containers are what power PaaS environments so in theory there should not be a significant difference in the performance. 
 What is even more surprising however, is the cost of Bluemix PaaS instances compared to that of IBM Containers. As of now, 4 1-GB Bluemix
 PaaS instances cost $175.35 and 4 1-GB IBM Containers $72.43. 
