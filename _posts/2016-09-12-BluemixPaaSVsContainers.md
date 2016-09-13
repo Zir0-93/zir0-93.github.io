@@ -33,11 +33,11 @@ The basic test case simply routes a request (JSON list of 100 java source files)
 ## Simple Parse Tests
 This test consisted of sending 20 requests, one at a time, to each of the two deployment solutions, the results are presented below.
 
-![simplecontainertest](/images/simplecontainertest.png)
+![simplecontainertest](/images/simplecontainertestz.png)
 
 1185 ms
 
-![simplePaaSTest](/images/simplePaasTest.png)
+![simplePaaSTest](/images/simplePaasTestz.png)
 
 2161 ms
 
@@ -45,11 +45,11 @@ This test consisted of sending 20 requests, one at a time, to each of the two de
 This test consisted of sending five asynchronous requests, 20 times, to each of the two deployment solutions. The results
 are presented below:
 
-![containerbursttest](/images/singlecontainerbursttest.png)
+![containerbursttest](/images/singlecontainerbursttestz.png)
 
 1944 ms
 
-![PaaS Burst Test](/images/PaasBurstTest.png)
+![PaaS Burst Test](/images/PaasBurstTestz.png)
 
 
 Note: The Bluemix PaaS instance has 8 results rather than 20 because it ran out of memory and crashed. This
