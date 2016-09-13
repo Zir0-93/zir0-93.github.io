@@ -22,9 +22,10 @@ and but this requires additional overhead to setup.
 
 ## Experimental Setup
 The [Clarpse](http://mfadhel.com/2016/clarpse/) Source Code Analysis project was packaged as a web application with a single REST end point that will:
- 1. Accept a JSON list of source files
- 2. Parse these files
- 3. Return a JSON object representing the parsed output
+
+1. Accept a JSON list of source files
+2. Parse these files
+3. Return a JSON object representing the parsed output
 
 The basic test case simply routes a request (JSON list of 100 java source files) to this endpoint (either deployed on Bluemix PaaS or IBM containers) and calculates the amount of time it takes to recieve the response. To set up the deployment environments, the web application was exported as a WAR file and pushed
  to the the Bluemix Paas Environment (1 x 256MB instance). The same WAR file was also installed within a default Tomcat instance in an IBM container (1 x 256MB instance). 
@@ -34,11 +35,11 @@ This test consisted of sending 20 requests, one at a time, to each of the two de
 
 ![simplecontainertest](/images/simplecontainertest.png)
 
-<p style="padding-left:20px;">Average Parse Time for IBM Containers: 1185 ms</p>
+1185 ms
 
 ![simplePaaSTest](/images/simplePaasTest.png)
 
-**Average Parse Time for Bluemi PaaS Instance: 2161 ms **
+2161 ms
 
 ## Burst Tests
 This test consisted of sending five asynchronous requests, 20 times, to each of the two deployment solutions. The results
@@ -46,29 +47,24 @@ are presented below:
 
 ![containerbursttest](/images/singlecontainerbursttest.png)
 
-**Average Parse Time for IBM Containers: 1944 ms**
+1944 ms
 
 ![PaaS Burst Test](/images/PaasBurstTest.png)
 
-**Average Parse Time for Bluemix PaaS: N/A**
 
-The Bluemix PaaS instance has 8 results rather than 20 because it ran out of memory and crashed. This
+Note: The Bluemix PaaS instance has 8 results rather than 20 because it ran out of memory and crashed. This
 experiment originally involved sending 20 asynchronous requests rather than 5, but the Bluemix PaaS 
 instance kept crashing before a single response was delivered. 8 results are good enough to keep
 moving forward at this point.
 
 ## Concluding Remarks
+
+| Deployment Solution        |  Simple Test Result Average (ms)         | Burst Test Result Average (ms)  |
+| ------------- |:-------------:| -----:|
+| IBM Contianer (256 MB)      | 1185 |  1944 |
+| Bluemix PaaS Instace (256 MB)      | 2161      |  N/A |
+
 Overall the containers seem to outperform Bluemix PaaS instances by large margin. This is surprising
-because containers form the infrastructure of most PaaS environments! What is even more surprising
-however, is the cost of Bluemix PaaS instances compared to that of IBM Containers. As of now, 4 1-GB Bluemix
+because containers form the infrastructure of most PaaS environments so you would not expect a major difference. 
+What is even more surprising however, is the cost of Bluemix PaaS instances compared to that of IBM Containers. As of now, 4 1-GB Bluemix
 PaaS instances cost $175.35 and 4 1-GB IBM Containers $72.43. 
-
-## New Challenger: Container Groups
-This test consisted of sending 50 asynchronous requests, 20 times, to a single IBM Container, and then to 
-an IBM Container Group. The results are presented below:
-
-![singlecontainerlargebusttest](/images/singlecontainerlargebursttest.png)
-**Average Parse Time for Single IBM Container: 25 253 ms**
-
-![containergroupbursttest](/images/multicontainergroupbursttest.png)
-**Average Parse Time for Container Group: 4306 ms**
