@@ -8,7 +8,7 @@ excerpt_separator: <!--more-->
 One of the most important decisions regarding the development of any software application revolves around the 
 choice of technology used to host and run the application in production. Moreover, when we talk about cloud applications, the number
 of vendors and solutions that can used for hosting drastically increases. This article will compare the **performance** 
-[PaaS](https://www.ibm.com/cloud-computing/ca/en/paas.html) and [Container](https://www.ibm.com/cloud-computing/bluemix/containers/) based deployment solutions provided by the IBM Cloud. <!--more--> Please not that performance is not the only indicator of whether you should use PaaS vs Containers and the results presented below were collected using the IBM Cloud (do keep in mind however that Bluemix's PaaS is based of [Pivotal's Cloud Foundry[(https://pivotal.io/platform)).
+[PaaS](https://www.ibm.com/cloud-computing/ca/en/paas.html) and [Container](https://www.ibm.com/cloud-computing/bluemix/containers/) based deployment solutions provided by the IBM Cloud. <!--more--> Please not that performance is not the only indicator of whether you should use PaaS vs Containers and the results presented below were collected using the IBM Cloud (do keep in mind however that Bluemix's PaaS is based of [Pivotal's Cloud Foundry](https://pivotal.io/platform)).
 
 ## Deployment Solution A: IBM Bluemix PaaS
 
