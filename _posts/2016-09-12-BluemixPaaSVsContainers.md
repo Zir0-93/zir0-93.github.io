@@ -56,22 +56,6 @@ moving forward at this point.
 
 ## Concluding Remarks
 
-|-----------------+------------+-----------------+----------------|
-| Default aligned |Left aligned| Center aligned  | Right aligned  |
-|-----------------|:-----------|:---------------:|---------------:|
-| First body part |Second cell | Third cell      | fourth cell    |
-| Second line     |foo         | **strong**      | baz            |
-| Third line      |quux        | baz             | bar            |
-|-----------------+------------+-----------------+----------------|
-| Second body     |            |                 |                |
-| 2 line          |            |                 |                |
-|=================+============+=================+================|
-| Footer row      |            |                 |                |
-|-----------------+------------+-----------------+----------------|
-
-
-
-
 | Deployment Solution 	| Simple Test Result Average (ms) 	| Burst Test Result Average (ms) 	|
 |--------------------------------	|---------------------------------	|--------------------------------	|
 | IBM Container (256 MB) 	| 1185 	| 1944 	|
