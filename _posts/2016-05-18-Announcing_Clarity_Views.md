@@ -6,7 +6,7 @@ categories: [tech, code, static analysis, uml]
 tags: [tech, code, static analysis, uml]
 ---
 
-With [Clarity Views](bttp://clarityviews.com) developers can analyze their open source repositories for both architectural designs and implementation level patterns right from the browser, making any piece of code a breeze to enhance, maintain and test. Simply visit the [Clarity Views](http://clarityviews.com) web page to get started and open the repository of your choice.
+With [Clarity Views](bttp://clarityviews.io) developers can analyze their open source repositories for both architectural designs and implementation level patterns right from the browser, making any piece of code a breeze to enhance, maintain and test. Simply visit the [Clarity Views](http://clarityviews.io) web page to get started and open the repository of your choice.
 <br>
 ![code](/images/diagramviewbtn.PNG)   ![code](/images/codeviewbtn.PNG) ![plus](/images/newissuebtn.PNG) ![embed](/images/embedbtn.PNG)
 <!--more-->
@@ -52,10 +52,10 @@ Starting discussions and creating issues in line with your code and diagrams kee
 Clarity Views also helps help teams write useful, maintainable documentation. Users can *embed diagrams into any HTML or markdown environment*, simply **look for the  ![embeds](/images/embedbtnsmall.png) button** to get the embed code. Furthermore, as your codebase evolves, so will the diagrams!
 
 ```
-![Clarity Views Diagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestDescriptor.java)
+![Clarity Views Diagram](http://clarityviews.io/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestDescriptor.java)
 ````
-![Clarity Views Diagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestDescriptor.java)
-<p class="lead">Best of all, Clarity Views is <b>completely secure</b> - all code is requested on the fly using GitHub API's and never kept in any storage of any kind. Clarity Views is also <b>completely free</b> for open source repositories, get <a href="http://clarityviews.com">started</a> today! </p>
+![Clarity Views Diagram](http://clarityviews.io/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestDescriptor.java)
+<p class="lead">Best of all, Clarity Views is <b>completely secure</b> - all code is requested on the fly using GitHub API's and never kept in any storage of any kind. Clarity Views is also <b>completely free</b> for open source repositories, get <a href="http://clarityviews.io">started</a> today! </p>
 
 ## Display Your Badge!
-Click on the Clarity Views badge ![badge](http://clarityviews.com/badge) within any repository page to get your badge embed code!
+Click on the Clarity Views badge ![badge](http://clarityviews.io/badge) within any repository page to get your badge embed code!
