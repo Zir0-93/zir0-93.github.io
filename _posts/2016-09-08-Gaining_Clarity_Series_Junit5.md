@@ -6,8 +6,8 @@ excerpt_separator: <!--more-->
 tags: [tech, code, clarity views, junit5, static analysis, uml]
 ---
 The Gain Clarity Series aims to uncover architectural designs in some of the most popular developer frameworks and libraries.
-Today we will use [Clarity Views](http://clarityviews.com) to analyze major architectural changes that have come about in [Junit5](https://github.com/junit-team/junit5)
-[![Clarity Views Label](http://clarityviews.com/badge)](http://clarityviews.com/github/junit-team/junit5). One of the main drawbacks that existed in Junit-4 was the lack of separation of concerns between the various core mechanisms
+Today we will use [Clarity Views](http://clarityviews.io) to analyze major architectural changes that have come about in [Junit5](https://github.com/junit-team/junit5)
+[![Clarity Views Label](http://clarityviews.io/badge)](http://clarityviews.io/github/junit-team/junit5). One of the main drawbacks that existed in Junit-4 was the lack of separation of concerns between the various core mechanisms
 that existed in Junit. Other test engines, extensions and build tools built on top of Junit needed to reach
 deep into Junit-4's internals to implement much needed features. As a result, while Junit-4 was extremely successful as a platform,
 its maintainers could not enhance Junit as a tool as much as they would have liked without breaking all the external tools that were built on top of it.
@@ -34,10 +34,10 @@ As you can see below, there are multiple Test Engine implementations within
 the Junit5 code base itself.
 
 ```
-![TestEngine](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestEngine.java)
+![TestEngine](http://clarityviews.io/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestEngine.java)
 ```
 
-![TestEngineDiagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestEngine.java)
+![TestEngineDiagram](http://clarityviews.io/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestEngine.java)
 
 ## The Jupiter Test Engine
 If you've come this far, you've probably realized why Junit-5's architecture makes developing extensions for Junit much easier.
@@ -51,10 +51,10 @@ for discovering and executing tests written using Junit-5's [brand new APIs](htt
 created in Junit-5 to executing tests written in Junit-4 and Junit-3 by the Junit Platform. 
 
 ```
-![Clarity Views Diagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-jupiter-engine/src/main/java/org/junit/jupiter/engine/JupiterTestEngine.java)
+![Clarity Views Diagram](http://clarityviews.io/embed/junit-team/junit5/master/diagram/junit5-master/junit-jupiter-engine/src/main/java/org/junit/jupiter/engine/JupiterTestEngine.java)
 ```
 
-![JupiterDiagram](http://clarityviews.com/embed/junit-team/junit5/master/diagram/junit5-master/junit-jupiter-engine/src/main/java/org/junit/jupiter/engine/JupiterTestEngine.java)
+![JupiterDiagram](http://clarityviews.io/embed/junit-team/junit5/master/diagram/junit5-master/junit-jupiter-engine/src/main/java/org/junit/jupiter/engine/JupiterTestEngine.java)
 
-We hoped you enjoyed this article and as always, all diagrams were generated using [Clarity Views](http://clarityviews.com)!
-If you would like, feel free to explore Junit-5 for yourself! [![Clarity Views Label](http://clarityviews.com/badge)](http://clarityviews.com/github/junit-team/junit5)
+We hoped you enjoyed this article and as always, all diagrams were generated using [Clarity Views](http://clarityviews.io)!
+If you would like, feel free to explore Junit-5 for yourself! [![Clarity Views Label](http://clarityviews.io/badge)](http://clarityviews.io/github/junit-team/junit5)
