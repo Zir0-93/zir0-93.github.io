@@ -12,9 +12,14 @@ Platform-As-A-Service [PaaS](https://www.ibm.com/cloud-computing/ca/en/paas.html
 
 ## Deployment Solution A: IBM Bluemix PaaS
 
+
+![ibmbluemix](/images/bluemix_banner.png)
+
 PaaS offerings such as IBM's Bluemix (built on top of Pivotal's [CloudFoundry](https://github.com/cloudfoundry/cf-release)) allow developers to run their web applications in the cloud without having to worry about any infrastructure. As a result, developers can develop their applications in their local IDEs of choice, run and test their applications on local servers and simply push the applications to the cloud. Bluemix also allows developers to bind a variety cloud services (Database, analytics, etc..) to their cloud app dynamically. One downside of PaaS environments however is the lack of freedom given to customers in configuring/tuning their deployment environment.
 
 ## Deployment Solution B: IBM Containers
+
+![ibmcontainer](/images/containers.png)
 
  Containers wrap-up an application in a self-contained filesystem which includes all the dependencies the app requires to run: binaries, runtime libraries, system tools, system packages, etc. This model allows for portability and allows applications to be deployed in a very consistent and predictive way. Unlike PaaS environments, containers allow developers to configure the environments running their applications.
 
