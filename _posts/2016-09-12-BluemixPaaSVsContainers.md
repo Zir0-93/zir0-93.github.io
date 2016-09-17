@@ -58,8 +58,10 @@ instance kept crashing before a single response was delivered. Nine results are 
 moving forward at this point!
 
 ## Concluding Remarks
+<br>
 
 ![testtable](/images/testtable.PNG)
+<br>
 <br>
 Overall the containers seem to outperform Bluemix PaaS instances by a large margin. This is surprising
 because containers are what power PaaS environments so in theory there should not be a significant difference in the performance. 
