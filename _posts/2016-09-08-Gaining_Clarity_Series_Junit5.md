@@ -37,9 +37,6 @@ the Junit5 code base itself.
 ![TestEngine](http://clarityviews.io/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestEngine.java)
 ```
 
-</section>
-</article>
-
 ![TestEngineDiagram](http://clarityviews.io/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-engine/src/main/java/org/junit/platform/engine/TestEngine.java)
 
 
