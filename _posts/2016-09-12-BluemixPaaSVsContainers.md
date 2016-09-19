@@ -65,5 +65,5 @@ moving forward at this point!
 <br>
 Overall the containers seem to outperform Bluemix PaaS instances by a large margin. This is surprising
 because containers are what power PaaS environments so in theory there should not be a significant difference in the performance. 
-What is even more surprising however, is the cost of Bluemix PaaS instances compared to that of IBM Containers. As of now, 4 1-GB Bluemix
+What is even more surprising however, is the cost of Bluemix PaaS instances compared to that of IBM Containers. At present, 4 1-GB Bluemix
 PaaS instances cost $175.35 and 4 1-GB IBM Containers $72.43. 
