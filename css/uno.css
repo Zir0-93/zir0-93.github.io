@@ -943,7 +943,7 @@ a {
 		-o-transition: .5s;
 		-ms-transition: .5s;
 		-moz-transition: .5s;
-		-webkit-transition: .5s; }
+		-webkit-transition: .5s; text-decoration:underline; }
 
 h1,
 h2,
