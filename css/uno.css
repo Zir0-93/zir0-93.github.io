@@ -1098,9 +1098,9 @@ pre {
 
 .content-wrapper {
 	z-index: 800;
-	width: 60%;
-	max-width: 800px;
-	margin-left: 40%; }
+	width: 70%;
+	max-width: 900px;
+	margin-left: 35%; }
 
 .content-wrapper__inner {
 	margin: 0 3%;
@@ -1212,7 +1212,7 @@ hr {
 	background-size: cover; }
 
 .panel-cover--collapsed {
-	width: 40%;
+	width: 30%;
 	max-width: 530px; }
 
 .panel-cover--overlay {
