@@ -17,7 +17,7 @@ its maintainers could not enhance Junit as a tool as much as they would have lik
 The Junit Platform Launcher component was introduced to provide a **uniform** and much more powerful set of API's for external tools and IDE's to interact with test
 execution (launching tests, viewing test results, etc..). Upon further inspection of the DefaultLauncher class, we can see that it is able to
 execute tests and register TestExecutionListeners which will are responsible for getting feedback about the progress and results of the test execution.
-![launcher](/images/launcher.svg)
+![Clarity Views Diagram](http://clarityviews.io/embed/junit-team/junit5/master/diagram/junit5-master/junit-platform-launcher/src/main/java/org/junit/platform/launcher/Launcher.java)
 
 
 ## The Junit-5 Test Engine
