@@ -1,0 +1,18 @@
+---
+title:  "Clarity Views Introduces Method Level Support"
+date:   2016-10-10 15:04:23
+excerpt_separator: <!--more-->
+categories: [tech, code, static analysis, uml]
+tags: [tech, code, static analysis, uml]
+---
+
+Developers can now select methods within class diagrams to view example usage snippets and type information!
+<br>
+![code](/images/diagramviewbtn.PNG)  
+<!--more-->
+At Clarity Views we belive visualizations can be a great way to comprehend software architecture. However, these visualizations need
+to interact with developer by answering important questions and demonstrating key architectural properties. With Clarity Views, any
+method or class level element within a diagram can be selected to view type information and example usages. We believe this is a great
+way to combine the benefits of the architectural insights provided by class diagrams along with the benefits from viewing lower level
+implementation details - all from a single view, right in your browser.
+
