@@ -1,0 +1,10 @@
+---
+title:  "The OOP We've Never Known"
+date:   2016-10-15 15:04:23
+categories: [oop, programming, alan kay, actor model]
+tags: [oop, programming, modular, alan kay, actor model]
+excerpt_separator: <!--more-->
+---
+The Object Oriented Programming [OOP] paradigm is often associated with many wonderful programming ideas including polymorphism, encapsulation and composition to name a few. However, if you have ever worked with any functional programming languages, you will realize that these techniques are not exclusive to OOP at all. It is no surprise then that in comparison to what early p, many of the concepts we associate with OOP are
+![inheritance](/images/inheritance-meem.jpg)
+<!--more-->
