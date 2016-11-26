@@ -1059,8 +1059,8 @@ pre {
 
 .excerpt {
 	margin: 0;
-	font-size: 1.0em;
-	color: #999999; }
+	font-size: 0.8em;
+	color: #000; }
 
 .intro {
 	font-family: "Roboto Slab", serif;
