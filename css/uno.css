@@ -927,7 +927,7 @@ html {
 body {
 	font-family: "Raleway", sans-serif;
 	font-size: 1em;
-	background-color: #f8f8f2;
+	background-color: #ffffff;
 	color: #000;
 	rgba(200, 200, 200, 0.48);}
 
@@ -1445,7 +1445,7 @@ i {
 	.post-list__post-title a {
 		color: #000; }
 		.post-list__post-title a:hover {
-			color: #b9301c; }
+    			    text-decoration: underline; }
 
 .post-list__meta {
 	display: block;
