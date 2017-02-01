@@ -1100,7 +1100,7 @@ pre {
 .content-wrapper {
 	z-index: 800;
 	width: 73%;
-	max-width: 800px;
+	max-width: 60%;
 	margin-left: 35%; }
 
 .content-wrapper__inner {
