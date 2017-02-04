@@ -1,0 +1,33 @@
+---
+title:  "Using the Google Closure-Compiler To Parse JavaScript Code"
+date:   2016-12-15 15:04:23
+categories: [oop, programming, javascript, closure, compiler, google]
+tags: [oop, programming, javascript, closure, compiler, google]
+excerpt_separator: <!--more-->
+---
+From the Closure Compiler website:
+```
+The Closure Compiler is a tool for making JavaScript download and run faster. Instead of compiling from a source language to 
+machine code, it compiles from JavaScript to better JavaScript. It parses your JavaScript, analyzes it, removes dead 
+code and rewrites and minimizes what's left. It also checks syntax, variable references, and types, and warns about 
+common JavaScript pitfalls.
+```
+
+### Closure Compiler As A JavaScript Parser
+With a few modifications, the Google Closure-Compiler Java API can also be consumed to perform static analysis on JavaScript code.
+We will create a simple JavaScript parser that will output the names of all the classes in a given JavaScript program.
+
+```
+public class JavaScriptParserPass extends AbstractPostOrderCallback implements CompilerPass {
+
+    @Override
+    public void process(Node externs, Node root) {
+    }
+
+    @Override
+    public void visit(NodeTraversal t, Node n, Node parent) {
+        if (n.isClass()) {
+            System.out.println("Class: " + n.);
+        }
+    }
+}
