@@ -11,6 +11,8 @@ pre.highlight,
 pre.highlight code,
 .highlight pre code {
   white-space: pre-wrap;
+      color: #c8c8c8;
+    font-size: 14px;
 }
 
 .btn, 
