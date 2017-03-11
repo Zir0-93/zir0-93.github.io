@@ -19,6 +19,7 @@ Wanting to support ES6 programs for [Clarpse](https://github.com/Zir0-93/clarpse
 At the time of writing, the Google Closure-Compiler was the only tool that fit this category. While the tool is not natively meant to be used
 as parser, its Java API can be consumed to perform static analysis on JavaScript code with a few modifications.
 
+
 We will create a simple JavaScript source code analyzer that will output the names of all the classes and methods in a given JavaScript ES6 program.
 First, we extend the [AbstractShallowCallback](https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/NodeTraversal.java#L159) class which will visit all nodes in the [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
 representing the given JavaScript source; however, it will not traverse into any function bodies.
@@ -48,6 +49,7 @@ public class JavaScriptAnalyzer extends AbstractShallowCallback {
 
 Now, we initialize a compiler and run our created JavaScript analyzer on a given JavaScript source file.
 
+
 ```java
 public void parse(String jsFileContent, String jsName) throws Exception {
         Compiler compiler = new Compiler();
@@ -60,7 +62,9 @@ public void parse(String jsFileContent, String jsName) throws Exception {
     }
 ```
 
+
 And thats it! Running the above code on the following source file:
+
 
 ```
 class Polygon {
@@ -71,7 +75,9 @@ class Polygon {
 }
 ```
 
+
 Produces the following output as expected:
+
 
 ```
 constructor
