@@ -42,7 +42,7 @@ public class JavaScriptAnalyzer extends AbstractShallowCallback {
             System.out.println(n.getFirstChild().getString());
         }
         // there is more work required to detect all types of methods that
-        // has been left out  to improve brevity...
+        // has been left out for brevity...
     }
 }
 ```
