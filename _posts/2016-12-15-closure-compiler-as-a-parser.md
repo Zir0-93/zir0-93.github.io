@@ -20,7 +20,7 @@ At the time of writing, the Google Closure-Compiler was the only tool that fit t
 as parser, its Java API can be consumed to perform static analysis on JavaScript code with a few modifications.
 
 We will create a simple JavaScript source code analyzer that will output the names of all the classes and methods in a given JavaScript ES6 program.
-First, we extend the AbstractShallowCallback class which will visit all nodes in the [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
+First, we extend the [AbstractShallowCallback](https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/NodeTraversal.java#L159) class which will visit all nodes in the [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
 representing the given JavaScript source; however, it will not traverse into any function bodies.
 There are other traversal algorithms that can be used as well, for a full list check out the [NodeTraversal Class](https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/NodeTraversal.java).
 Next, we need to provide an implementation for the ```visit()``` method which is activated everytime a Node is encountered. It is therefore in this method where we will output the value of the current node if the node corresponds
@@ -80,4 +80,3 @@ width
 height
 Polygon
 ```
-
