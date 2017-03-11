@@ -64,7 +64,7 @@ public void parse(String jsFileContent, String jsName) throws Exception {
 And thats it! Running the above code on the following source file:
 
 
-```
+```javascript
 class Polygon {
   constructor(height, width) {}
   logWidth() {}
