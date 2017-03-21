@@ -7,7 +7,7 @@ excerpt_separator: <!--more-->
 ---
 One of the most important decisions regarding the development of any software application revolves around the 
 choice of technology used to host and run the application in production. Moreover, when we talk about cloud applications, the number
-of vendors and solutions that can used for hosting drastically increases. This article will compare the **performance** of 
+of vendors and solutions that be can used for hosting drastically increases. This article will compare the **performance** of 
 Platform-As-A-Service [PaaS](https://www.ibm.com/cloud-computing/ca/en/paas.html) and [Container](https://www.ibm.com/cloud-computing/bluemix/containers/) based deployment solutions provided by the IBM Cloud.
 <!--more-->
 
