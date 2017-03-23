@@ -36,11 +36,6 @@ public class JavaScriptAnalyzer extends AbstractShallowCallback {
         if (n.isMemberFunctionDef() || n.isGetterDef() || n.isSetterDef()) {
             System.out.println(n.getString());
         }
-        if (n.isFunction()) {
-            System.out.println(n.getFirstChild().getString());
-        }
-        // there is more work required to detect all types of methods that
-        // has been left out for brevity...
     }
 }
 ```
