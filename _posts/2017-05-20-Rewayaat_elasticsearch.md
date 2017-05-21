@@ -46,7 +46,7 @@ for setting up synonyms can be found [here](https://www.elastic.co/guide/en/elas
 Most languages of the world are inflected, meaning that words can change their form to express differences in number,
 tense, gender, person, cause and mood.
 
-![stem](/images/stem.svg)
+![stem](/images/stem2.svg)
 
 While inflection aids expressivity, it interferes with retrievability, as a single root word sense (or meaning)
 may be represented by many different sequences of letters. 
@@ -57,9 +57,10 @@ form.
 
 #### Fuzzy Searching
 Fuzzy matching treats two words that are “fuzzily” similar as if they were the same word. 
-First, we need to define what we mean by fuzziness. In 1965, Vladimir Levenshtein developed the
-Levenshtein distance, which measures the number of single-character edits required to transform one
-word into the other. Elasticsearch supports a maximum edit distance, specified with the fuzziness parameter, of 2.
+Here, fuzziness describes the number of single-character edits required to transform one
+word into the other. Not only does this allow us to account for minor variations in the spelling of 
+translated words, but fuzzy searching allows us to return relevant results for misspeleed words and for words
+that contain typos.
 
 
  ## Simplified User Search Experience
