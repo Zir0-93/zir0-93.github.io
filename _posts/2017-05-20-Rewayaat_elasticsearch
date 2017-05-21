@@ -19,8 +19,9 @@ Full-text search is a battle between precision — returning as few irrelevant d
 
 Spelling is another crucial area, The name Muhammad for example, may take over eight almost identical English spellings across all the books of hadith. How can we easily return all the relevant documents based on a search for one of these valid spellings? We also need to consider the use of titles in Islamic History. An influential figure like Ali Ibn Abi Talib for example, may also be referred to as Abu Turab (Father of Soil) , Amir Al-Momineen (Commander of the Faithful) amongst many other titles. As you can see, dealing with language in a full text search engine is a challenging task. 
 
-### 
+#### Synonym Filters
 
+Synonyms help to broaden the scope of the user's search by relating concepts and ideas. A user might search for “the US” and expect to find documents that contain United States, USA, U.S.A., America, or the States. However, they wouldn’t expect to see results about the states of matter or state machines.
 
 
 
