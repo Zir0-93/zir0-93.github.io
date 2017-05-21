@@ -14,7 +14,7 @@ and elaborate API, Elasticsearch can power extremely fast searches that support 
 ## Dealing With Human Languages (Fuzzy, Stem, Arabic)
 Full-text search is a battle between precision — returning as few irrelevant documents as possible, and recall—returning as many relevant documents as possible. This battle is made more challenging when searching hadith since as documents were originally recorded in Arabic and later translated for English speakers. This poses a problem for both precision and recall when there are multiple translations of the same word - a quick and dirty example can be seen in the word ```مسلم```. Valid English translations of this word include  ```a Muslim``` and ```one who submits```; However, given that a translation must use **one** of several valid meanings for a word, a user searching for alternative meanings of the word will completely miss out on relevant documents!
 
-![precisionrecall.png](/images/Screenshot from 2017-05-21 01-05-31.PNG)
+![precisionrecall](/images/precisionrecall.png)
 
 Spelling is another crucial area, The name Muhammad for example, may take over eight almost exact but different English spellings across all the books of hadith. How can we easily return all the relevant documents based on a search for one of these valid spellings?
 
