@@ -66,11 +66,14 @@ One major difficulty with dealing with documents containing English translations
 spellings a single Arabic word or name might take in English. The Arabic name "جعفر" might take English forms of
 "Jaffar", "Jafar", "Ja'ffar" and "Ja'far" across the entire search space. How can we easily return all the relevant documents based on a search 
 for one of these valid spellings?  Or how do we account for the fact
-that users of the engine might use both the American and British spelling of the same word (color vs colour)? We certainly don't want to have to define synonyms in this case, rather we can take advantage of Elastic Search [Fuzzy Queries](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-fuzzy-query.html).
-
-Fuzzy matching treats two words that are “fuzzily” similar as if they were the same word. 
+that users of the engine might use both the American and British spelling of the same word (color vs colour)? We certainly don't want to have to define synonyms in this case, rather we can take advantage of Elastic Search [Fuzzy Queries](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-fuzzy-query.html).Fuzzy matching treats 
+two words that are “fuzzily” similar as if they were the same word. 
 Here, fuzziness describes the number of single-character edits required to transform one
-word into the other. Not only does this type of query allow us to account for minor variations in the spelling of 
+word into the other. 
+
+![fuzzy](/images/Levenshtein.png)
+
+Not only does this type of query allow us to account for minor variations in the spelling of 
 translated words, but fuzzy searching allows us to return relevant results for misspeled words and for words
 that contain typos as well!
   
@@ -97,7 +100,8 @@ in order to gain deeper insights from the data:
 (title:"foo bar" AND body:"quick fox") OR title:fox
 ```
 This would search for either the phrase "foo bar" in the title field AND the phrase "quick fox" in the body field,
-or the word "fox" in the title field.
+or the word "fox" in the title field. The main point here is that both types of users can be supported through a 
+single, flexible query mechanism.
 
 ## Summary
   
