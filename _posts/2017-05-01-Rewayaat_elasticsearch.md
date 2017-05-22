@@ -15,29 +15,30 @@ and elaborate API, Elasticsearch can power extremely fast searches that support 
 
 Full-text search is a battle between precision — returning as few irrelevant documents as possible, 
 and recall—returning as many relevant documents as possible. When dealing with documents that contain
-searcheable text in both Arabic and English, this battle becomes even more difficult to deal with.
+searchable text in both Arabic and English, as was the case for my database, the battle further intensifies.
 Outlined below are some of the challenges I faced while developing a search engine and how Elastic Search
-helped to deal with them.
+provided effective solutions for them.
 
 ![precisionrecall](/images/precisionrecall.png)
  
 
 ### Synonym Filters
 
-A user searching for "intelligent" for example, would expect not only to find documents containing
-the word "intelligent", but documents containing words that have an almost identical meaning to "intelligent"
-as well ("wise", "smart", ...). Results for these secondary words should have lower higher priority, but nonetheless they should show up. Furthermore, its
-not as simple as finding synonyms of the given search - sometimes, we need to relate terms that
+A user searching for "intelligent" would expect not only to find documents containing
+the word "intelligent", but documents containing words that have a similar meaning to "intelligent"
+as well ("wise", "smart", ...). Results for these secondary words should have lower higher priority, but nonetheless they should show up at some point down the list. Furthermore, its
+not as simple as finding synonyms of the given search terms - sometimes, we need to relate terms that
 are not synonyms of each other. For example, a user searching for "United States" might expect to see results for "USA",
 "America" and the "United States of America" as well! This is where Elastic Search synonym filters come into play.
 
 
-Synonyms help to broaden the scope of the user's search by relating concepts and ideas. We can use Elastic Search synonym filters to make a word more generic. This allowing us to account
-for the multiple closely related meanings a word might have. For example, I can define
+Synonyms help to broaden the scope of the user's search by relating concepts and ideas. We can use Elastic Search synonym filters to make a word more generic. This allows the search to account
+for retrieving documents containing closely related words/ideas. For example, I can define
 a simple rule for my synonym filter in the following way:
 
 ```
-intelligent -> wise, knowledgeable, smart
+jump            → jump,leap,hop
+intelligent     → wise,knowledgeable,smart
 ```
 
 As implementing this rule, a user searching for ```intelligent``` will now also see
@@ -52,12 +53,12 @@ tense, gender, person, cause and mood.
 ![stem](/images/stem2.svg)
 
 While inflection aids expressivity, it interferes with retrievability, as a single root word sense (or meaning)
-may be represented by many different sequences of letters. For example, a user searching for "run" would miss
-out on possibly relevant documents containing "runner" or "running". Stemming attempts to help improve recall by reducing
-each word in your documents to their root form before carrying out the user's search. This is not always a good thing,
-as a user **may** be soley interested in documents containing the word "run"; therefore, using a [Bool Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
+may be represented by different sequences of letters. For example, a user searching for "run" would miss
+out on possibly relevant documents containing "runner" or "running". Stemming filters attempt to improve recall by reducing
+each word in a document to its root form before carrying out the query. This is not always a good thing,
+as a user **may** be soley interested in documents containing the word "run" but would see results for "running" and "runner" in this case; therefore, using a [Bool Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
 to combine the results of the un-stemmed, boosted query with the stemmed query gives
-the best of both worlds. Multiple [Alogirithmic](https://www.elastic.co/guide/en/elasticsearch/guide/current/algorithmic-stemmers.html) and [Dictionary](https://www.elastic.co/guide/en/elasticsearch/guide/current/dictionary-stemmers.html) Stemmers are provided by Elastic Search right out of the box.
+the best of both worlds. Multiple [Algorithmic](https://www.elastic.co/guide/en/elasticsearch/guide/current/algorithmic-stemmers.html) and [Dictionary](https://www.elastic.co/guide/en/elasticsearch/guide/current/dictionary-stemmers.html) Stemmers are provided by Elastic Search right out of the box.
 
 ### Fuzzy Searching
 
@@ -73,7 +74,7 @@ word into the other.
 ![fuzzy](/images/Levenshtein.png)
 
 Not only does this type of query allow us to account for minor variations in the spelling of 
-translated words, but fuzzy searching allows us to return relevant results for misspeled words and for words
+translated words, but fuzzy searching allows us to return relevant results for misspelled words and for words
 that contain typos as well!
   
 ## Simplified User Search Experience
@@ -81,8 +82,8 @@ that contain typos as well!
 Elasticsearch is a document oriented database and does not require you to specify a schema upfront. 
 Throw a JSON-document at it, and it will do some educated guessing to infer its type. This saves a great deal amount 
 of time in data retrieval, and Elastic Search will also take care of storing your documents such that they
-are optimized for search and retrieval. You can now take advantage of many different queries Elastic Search
-provides out of the box for analyzing and querying your data. Because I was designing a search engine open to the public,
+are optimized for search and retrieval. You can now take advantage of the various queries provided by Elastic Search
+for analyzing and querying your data. Because I was designing a search engine open to the public,
 I wanted to ensure that both technical oriented and non-technical oriented users could get the most out of the search.
 The Query String Query is the perfect query for this task. Its supports both simple and complex queries, for example, the query:
 ```
