@@ -1,5 +1,5 @@
 ---
-title:  "Thoughts on Powering A Hadith Search Engine using Elastic Search"
+title:  "Developing a Search Engine using Elastic Search"
 date:   2017-05-01 15:04:23
 categories: [Islam, hadith, narrations, rewayaat, elastic search]
 tags: [Islam, hadith, narrations, rewayaat, elastic search]
