@@ -84,13 +84,11 @@ of time in data retrieval, and Elastic Search will also take care of storing you
 are optimized for search and retrieval. You can now take advantage of many different queries Elastic Search
 provides out of the box for analyzing and querying your data. Because I was designing a search engine open to the public,
 I wanted to ensure that both technical oriented and non-technical oriented users could get the most out of the search.
-The Query String Query is the perfect query for this task. Its allows users to search the database
-with a simple list of space separated terms:
-
+The Query String Query is the perfect query for this task. Its supports both simple and complex queries, for example, the query:
 ```
 Strawberry Cuppy Cakes
 ```
-This would return all documents containing one or more of the terms "Strawberry", "Cuppy" or "Cakes".
+Would return all documents containing one or more of the terms "Strawberry", "Cuppy" or "Cakes".
 
 At the same time however, more advanced users can take advantage of [Lucene's Query Parser Syntax](https://lucene.apache.org/core/2_9_4/queryparsersyntax.html)
 in order to gain deeper insights from the data:
@@ -99,7 +97,7 @@ in order to gain deeper insights from the data:
 (title:"foo bar" AND body:"quick fox") OR title:fox
 ```
 This would search for either the phrase "foo bar" in the title field AND the phrase "quick fox" in the body field,
-or the word "fox" in the title field. The main point here is that both types of users can be supported through a 
+or the word "fox" in the title field. The main point here is that queries of highly varied level of complexity can all be supported through a 
 single, flexible searching mechanism.
 
 ## Summary
