@@ -98,7 +98,7 @@ in order to gain deeper insights from the data:
 (title:"foo bar" AND body:"quick fox") OR title:fox
 ```
 This would search for either the phrase "foo bar" in the title field AND the phrase "quick fox" in the body field,
-or the word "fox" in the title field. The main point here is that queries of highly varied level of complexity can all be supported through a 
+or the word "fox" in the title field. The main point here is that queries of varying levels of complexity can all be expressed through a 
 single, flexible searching mechanism.
 
 ## Summary
