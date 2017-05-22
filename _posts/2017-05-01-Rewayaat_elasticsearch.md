@@ -1,8 +1,8 @@
 ---
 title:  "Developing a Search Engine using Elastic Search"
 date:   2017-05-01 15:04:23
-categories: [Islam, hadith, narrations, rewayaat, elastic search]
-tags: [Islam, hadith, narrations, rewayaat, elastic search]
+categories: [hadith, stemmers, synonyms, fuzziness, rewayaat, elastic search]
+tags: [hadith, stemmers, synonyms, fuzziness, rewayaat, elastic search]
 excerpt_separator: <!--more-->
 ---
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is an open-source, broadly-distributable, readily-scalable, enterprise-grade search engine. Accessible through an extensive
