@@ -26,8 +26,8 @@ provided effective solutions for them.
 
 A user searching for "intelligent" would expect not only to find documents containing
 the word "intelligent", but documents containing words that have a similar meaning to "intelligent"
-as well ("wise", "smart", ...). Results for these secondary words should have lower higher priority, but nonetheless they should show up at some point down the list. Furthermore, its
-not as simple as finding synonyms of the given search terms - sometimes, we need to relate terms that
+as well ("wise", "smart", ...). While results for these secondary words should have lower priority, they should still show up at some point down the list. Furthermore, its
+not always as simple as finding synonyms of the given search terms - sometimes, we need to relate terms that
 are not synonyms of each other. For example, a user searching for "United States" might expect to see results for "USA",
 "America" and the "United States of America" as well. This is where Elastic Search synonym filters come into play.
 
@@ -68,7 +68,7 @@ spellings a single Arabic word or name might have in English. The Arabic name "�
 for one of these valid spellings?  Or how do we account for the fact
 that users of our search engine will possibly use one of the American or British spellings of a word (color vs colour)? We certainly don't want to have to define synonyms in this case; instead, we can take advantage of Elastic Search [Fuzzy Queries](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-fuzzy-query.html). Fuzzy matching treats 
 two words that are “fuzzily” similar as if they were the same word. 
-Here, fuzziness describes the number of single-character edits required to transform one
+Here, fuzziness, based on the Levenshtein distance, describes the number of single-character edits required to transform one
 word into the other. 
 
 ![fuzzy](/images/Levenshtein.png)
