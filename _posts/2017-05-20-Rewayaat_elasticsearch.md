@@ -77,11 +77,11 @@ Not only does this type of query allow us to account for minor variations in the
 translated words, but fuzzy searching allows us to return relevant results for misspeled words and for words
 that contain typos as well!
   
- ## Simplified User Search Experience
+## Simplified User Search Experience
  
- Elasticsearch is a document oriented database and does not require you to specify a schema upfront. 
- Throw a JSON-document at it, and it will do some educated guessing to infer its type. This saves a great deal amount 
- of time in data retrieval, and Elastic Search will also take care of storing your documents such that
+Elasticsearch is a document oriented database and does not require you to specify a schema upfront. 
+Throw a JSON-document at it, and it will do some educated guessing to infer its type. This saves a great deal amount 
+of time in data retrieval, and Elastic Search will also take care of storing your documents such that
 there optimized for search and retrieval. You can now take advantage of many different queries Elastic Search
 provides out of the box for analyzing and querying your data. Because I was designing a search engine open to the public,
 I wanted to ensure that both technical oriented and non-technical oriented users could get the most out of the search.
