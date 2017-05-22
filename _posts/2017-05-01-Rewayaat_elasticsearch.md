@@ -29,7 +29,7 @@ the word "intelligent", but documents containing words that have a similar meani
 as well ("wise", "smart", ...). Results for these secondary words should have lower higher priority, but nonetheless they should show up at some point down the list. Furthermore, its
 not as simple as finding synonyms of the given search terms - sometimes, we need to relate terms that
 are not synonyms of each other. For example, a user searching for "United States" might expect to see results for "USA",
-"America" and the "United States of America" as well! This is where Elastic Search synonym filters come into play.
+"America" and the "United States of America" as well. This is where Elastic Search synonym filters come into play.
 
 
 Synonyms help to broaden the scope of the user's search by relating concepts and ideas. We can use Elastic Search synonym filters to make a word more generic. This allows the search to account
@@ -41,8 +41,8 @@ jump            → jump,leap,hop
 intelligent     → wise,knowledgeable,smart
 ```
 
-As implementing this rule, a user searching for ```intelligent``` will now also see
-documents containing  "wise", "knowledgeable" and  "smart" as well! Instructions
+Once this rule is implemented, a search for ```intelligent``` will retrieve
+documents containing  "wise", "knowledgeable" and  "smart" as well. Instructions
 for setting up synonyms can be found [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-synonym-tokenfilter.html).
 
 ### Word Stemming
