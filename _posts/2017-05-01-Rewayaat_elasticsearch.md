@@ -15,7 +15,7 @@ and elaborate API, Elasticsearch can power extremely fast searches that support 
 
 Full-text search is a battle between precision — returning as few irrelevant documents as possible, 
 and recall—returning as many relevant documents as possible. When dealing with documents that contain
-searchable text in both Arabic and English, as was the case for my database, the battle further intensifies.
+searchable text in both Arabic and English, as was the case for the engine I needed to build, the problem becomes even more complex.
 Outlined below are some of the challenges I faced while developing a search engine and how Elastic Search
 provided effective solutions for them.
 
