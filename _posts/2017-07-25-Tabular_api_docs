@@ -13,8 +13,33 @@ as the complexity of APIs grows, developers need a way to get a high level under
 low level details.
 <!--more--> 
 
+![swagger example](/images/petstore.png)
 
-Description of Problem
+The image above depicts Swagger UI documentation for a sample pet resource. As an API specification grows in complexity,
+I find it increasingly difficult to answer the following questions using the aformentioned format.
+
+1. **What are all the resources that this API exposes?**
+
+This one is pretty explanatory, even with tags, an API specification with many endpoints will take a long time to navigate.
+
+2. ** What operations are available on key resources? **
+
+This questions exists for the same reason as the first question. API specifications with increasing complexity make
+it difficult for developers to navigate long lists of endpoints in order to figure out what operations are
+avaialable for a given resource.
+
+3. **What relationships exist in the ways these resources are consumed?**
+
+Developer apps seldom depend on a single endpoint or API call from a third party API. Instead, such apps are built
+by stringing together numerous API calls dynamically based on certain use cases. By helping developers understand
+the requirements of and relations between the consumption of resources, you are helping them  
+documentation:
+
+#### Scalability
+Many APIs are not as simple as the one presented in the sample above. If you have worked with the APIs provided by
+GitHub, Twitter or Facebook to name a few, you'll know that
+
+
 
 
 
