@@ -35,7 +35,7 @@ by stringing together numerous API calls on the fly based on certain user scenar
 the requirements of and relations between the consumption of resources, you are helping them  
 documentation:
 
-### API Tables
+### Introducing API Tables
 
 ![tabexpr](/images/tabexprv4.svg)
 
