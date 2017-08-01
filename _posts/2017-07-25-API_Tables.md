@@ -37,7 +37,7 @@ documentation:
 
 ### Introducing API Tables
 
-![tabexpr](/images/testv2.png)
+![tabexpr](/images/tabexprv6.svg)
 
 #### Scalability
 Many APIs are not as simple as the one presented in the sample above. If you have worked with the APIs provided by
