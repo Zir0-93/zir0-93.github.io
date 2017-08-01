@@ -18,17 +18,17 @@ low level details.
 The image above depicts Swagger UI documentation for a sample pet resource. As an API specification grows in complexity,
 I find it increasingly difficult to answer the following questions using the aformentioned format.
 
-1. **What are all the resources that this API exposes?**
+- **What are all the resources that this API exposes?**
 
 This one is pretty explanatory, even with tags, an API specification with many endpoints will take a long time to navigate.
 
-2. ** What operations are available on key resources? **
+- **What operations are available on key resources?**
 
 This questions exists for the same reason as the first question. API specifications with increasing complexity make
 it difficult force developers to sift through longer than necessary lists of endpoints to figure out what operations are
 avaialable for a given resource.
 
-3. **What relationships exist in the ways these resources are consumed?**
+- **What relationships exist in the ways these resources are consumed?**
 
 Developer apps seldom depend on a single endpoint or API call from a third party API. Instead, such apps are built
 by stringing together numerous API calls on the fly based on certain user scenarios. By helping developers understand
@@ -36,6 +36,12 @@ the requirements of and relations between the consumption of resources, you are 
 documentation:
 
 ### Introducing API Tables
+
+An API Table is the perfect solution for providing a quick overview for a group of related endpoints in a specification. The table below represents
+an API Table for working with Pull Requests in the [GitHub API](https://developer.github.com/v3/). The table is
+read left to right, where each cell builds on top of the cells to its left to represent a certain endpoint of the API
+spec. As a result, every cell represents a certain endpoint, and contains buttons representing operations available at that endpoint (GET, POST, etc..) that users can click on to view more detailed documentation.
+
 
 ![tabexpr](/images/tabexprv7.svg)
 
