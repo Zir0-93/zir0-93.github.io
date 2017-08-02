@@ -1,51 +1,77 @@
 --- 
-title:  "API Documentation Using Tabular Expressions"
-date:   2017-07-20 15:04:23
-categories: [api, REST, tabular, documentation]
-tags: [api, REST, tabular, documentation]
-excerpt_separator: <!--more-->
----
-It is wellknown that APIs need developer-friendly docs in order
-to gain widespread adoption. However, little if any improvement in the way REST APIs are presented to developers have been made over the 
-past few years. Nowadays, most API docs and developer portals adopt a [Swagger UI](http://petstore.swagger.io/) type of format where all the endpoints in the specification
-are simply listed, one after another. This format does a good job of communicating the low level details of each endpoint; However, 
-as the complexity of APIs grows, developers need a way to get a high level understanding of the API **before** diving down into those
-low level details.
-<!--more--> 
 
+title:  "API Documentation Using Tabular Expressions"
+
+date:   2017-07-20 15:04:23
+
+categories: [api, REST, tabular, documentation]
+
+tags: [api, REST, tabular, documentation]
+
+excerpt_separator: <!--more-->
+
+---
+
+It is well known that APIs need developer-friendly docs in order
+
+to gain widespread adoption. However, little if any improvement in the REST API visualization methods have been made over the 
+
+past few years. Nowadays, most API docs and developer portals adopt a [Swagger UI](http://petstore.swagger.io/) type of format where all the endpoints in the specification
+
+are simply listed, one after another within categories. This format does a good job of communicating the low-level details of each endpoint; However, 
+
+when dealing with increased API complexity, developers need a way to get a high level understanding of the API **before** diving down into those
+
+low-level details.
+
+<!--more--> 
 ![swagger example](/images/petstorev2.png)
 
 The image above depicts Swagger UI documentation for a sample pet resource. As an API specification grows in complexity,
-I find it increasingly difficult to answer the following questions using the aformentioned format:
+I find it increasingly difficult to answer the following questions using the aforementioned format:
 
 **1. What are all the resources that this API exposes?**
 
 **2. What operations are available on key resources?**
 
-Its easy to see why these problems exist. Even with tags, an API specification with many endpoints will take a long time to
+It's easy to see why these problems exist. Even with tags, an API specification with many endpoints will take a long time to
 navigate. As a result, determining basic information about an API such as what resources are available requires
-developers to sift through a longer than necessary lists of API endpoints.
+developers to read through a longer than necessary lists of API endpoints.
 
 ### Introducing API Tables
 
 API Tables form the perfect solution for providing a quick overview of a group of related endpoints in a specification. The image below represents
 an API Table for working with Pull Requests in the [GitHub API](https://developer.github.com/v3/). The table is
 read left to right, where each cell builds on the cells to its left to represent a certain endpoint of the API
-spec. Each cell also contains buttons representing operations available at that particular endpoint (GET, POST, etc..) 
+spec. Each table cell also has buttons representing operations available at that particular endpoint (GET, POST, etc..) 
 that users can click on to view more detailed documentation. Download the interactive version of this API Table in
-pdf format [here](https://github.com/Zir0-93/zir0-93.github.io/raw/master/images/tabular_github_apiv3.pdf)
+pdf format [here](https://github.com/Zir0-93/zir0-93.github.io/raw/master/images/tabular_github_apiv3.pdf).
 
 ![tabexpr](/images/tabexprv7.svg)
 
-A quick glance at the table above conveys what resources are made available by this API along with
-what operations can be executed on those resources.
-Believe it or not, the API Table above compactly depicts over 30 different API operations whose documentation is spread across six different
+A quick glance at the table above conveys what resources are offered by this API along with
+what executable operations are available on those resources.
+Believe it or not, the API Table above compactly depicts over 30 different API operations whose documentation spreads across six different
 and lengthy pages 
-on GitHub. And this is precisely why API tables shine, **they provide a high level representation of an API spec that allows
-developers to find and navigate to more detailed documentation in a natural and intuitive way**. Additionally, these
-tables are scalable and can be used to represent larger and more sophisticated API specs without sacrificing readability.
-The sample table depicted above can easily accomodate up to 65 different operations!
+on GitHub. And this is precisely why API tables are incredibly useful, **they provide a high level representation of an API spec thereby enabling
+developers to explore more detailed documentation as required in a natural and intuitive way**. 
 
-I am not sure about you
 
-#### Its Time For Change
+
+These tables are also very easy to read. They consist of very little text in comparison
+to other documentation methods and most people prefer reading horizontally oriented tables over vertically oriented lists of text. Most importantly, **API Tables can represent larger and more sophisticated API specs without sacrificing readability.** For example,
+
+the sample table depicted above can easily accommodate displaying up to 65 different operations!
+
+
+### In Closing
+
+I strongly feel that API Tables supplement the existing Swagger UI very well. Swagger UI does a great job of
+displaying low level details, while API Tables are the perfect entrypoint for developers wishing to get a high level 
+overview of an API. For the next few months, I will be working on
+implementing a prototype that adapts the Swagger UI to include API Tables. Users will be able to interact with the API table
+to view basic information about the API and navigate to more detailed documentation in a streamlined fashion.
+
+
+
+Do you think the Swagger UI suffers from the weaknesses I mentioned? Do you see yourself using API Tables to represent your APIs anytime soon? Let me know via comments.
