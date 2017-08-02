@@ -6,7 +6,8 @@ tags: [hadith, stemmers, synonyms, fuzziness, rewayaat, elastic search]
 excerpt_separator: <!--more-->
 ---
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is an open-source, broadly-distributable, readily-scalable, enterprise-grade search engine. Accessible through an extensive
-and elaborate API, Elasticsearch can power extremely fast searches that support your data discovery applications. At [Rewayaat.info](http://rewayaat.info/) I worked on implementing a [Hadith](https://en.wikipedia.org/wiki/Hadith) Search Engine using Elastic Search. I found that for certain use cases, rolling Elastic Search for your back end offers significant advantages over conventional SQL database systems.
+and elaborate API, Elasticsearch can power extremely fast searches that support your data discovery applications. I recently
+worked on implementing a multi-language search engine using Elastic Search and found that for certain use cases, rolling Elastic Search for your back end offers significant advantages over conventional SQL database systems.
 <!--more--> 
 
  ![esyudothis.jpg](/images/initializeshards.png)
@@ -62,11 +63,8 @@ the best of both worlds. Multiple [Algorithmic](https://www.elastic.co/guide/en/
 
 ### Fuzzy Searching
 
-One major difficulty with dealing with documents containing English translations of Arabic has to do with the various
-spellings a single Arabic word or name might have in English. The Arabic name "جعفر" might take English forms of
-"Jaffar", "Jafar", "Ja'ffar" and "Ja'far" across the entire search space. How can we easily return all the relevant documents based on a search 
-for one of these valid spellings?  Or how do we account for the fact
-that users of our search engine will possibly use one of the American or British spellings of a word (color vs colour)? We certainly don't want to have to define synonyms in this case; instead, we can take advantage of Elastic Search [Fuzzy Queries](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-fuzzy-query.html). Fuzzy matching treats 
+How do we account for the fact
+that users of our search engine will possibly use one of the American or British spellings of any given word (color vs colour)? We certainly don't want to have to define synonyms in this case; instead, we can take advantage of Elastic Search [Fuzzy Queries](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-fuzzy-query.html). Fuzzy matching treats 
 two words that are “fuzzily” similar as if they were the same word. 
 Here, fuzziness, based on the Levenshtein distance, describes the number of single-character edits required to transform one
 word into the other. 
