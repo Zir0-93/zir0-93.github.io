@@ -55,7 +55,6 @@ developers to explore more detailed documentation as required in a natural and i
 
 These tables are also very easy to read. They consist of very little text in comparison
 to other documentation methods and most people prefer reading horizontally oriented tables over vertically oriented lists of text. Most importantly, **API Tables can represent larger and more sophisticated API specs without sacrificing readability.** For example,
-
 the sample table depicted above can easily accommodate displaying up to 65 different operations!
 
 
@@ -66,7 +65,5 @@ displaying low level details, while API Tables are the perfect entrypoint for de
 overview of an API. For the next few months, I will be working on
 implementing a prototype that adapts the Swagger UI to include API Tables. Users will be able to interact with the API table
 to view basic information about the API and navigate to more detailed documentation in a streamlined fashion.
-
-
 
 Do you think the Swagger UI suffers from the weaknesses I mentioned? Do you see yourself using API Tables to represent your APIs anytime soon? Let me know via comments.
