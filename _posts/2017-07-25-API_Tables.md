@@ -18,7 +18,7 @@ low-level details.
 
 ## Existing API Visualization Methods
 
-The image above depicts Swagger UI documentation for a sample pet resource. As an API specification grows in complexity,
+The image above depicts [Swagger UI](http://petstore.swagger.io/) documentation for a sample API. As an API specification grows in complexity,
 I find it increasingly difficult to answer the following questions using the aforementioned format:
 
 **1. What are all the resources that this API exposes?**
@@ -56,7 +56,7 @@ the sample table depicted above can easily accommodate displaying up to 65 diffe
 
 ## In Closing
 
-I strongly feel that API Tables supplement the existing Swagger UI very well. Swagger UI does a great job of
+I strongly feel that API Tables supplement the existing [Swagger UI](http://petstore.swagger.io/) very well. Swagger UI does a great job of
 displaying low level details, while API Tables are the perfect entrypoint for developers wishing to get a high level 
 overview of an API. For the next few months, I will be working on
 implementing a prototype that adapts the Swagger UI to include API Tables. Users will be able to interact with the API table
