@@ -16,11 +16,11 @@ low level details.
 ![swagger example](/images/petstorev2.png)
 
 The image above depicts Swagger UI documentation for a sample pet resource. As an API specification grows in complexity,
-I find it increasingly difficult to answer the following questions using the aformentioned format.
+I find it increasingly difficult to answer the following questions using the aformentioned format:
 
-**What are all the resources that this API exposes?
+**1. What are all the resources that this API exposes?**
 
-**What operations are available on key resources?**
+**2. What operations are available on key resources?**
 
 Its easy to see why these problems exist. Even with tags, an API specification with many endpoints will take a long time to
 navigate. As a result, determining basic information about an API such as what resources are available requires
