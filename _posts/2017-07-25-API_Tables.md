@@ -1,15 +1,9 @@
 --- 
-
 title:  "API Documentation Using Tabular Expressions"
-
 date:   2017-07-20 15:04:23
-
-categories: [api, REST, tabular, documentation]
-
-tags: [api, REST, tabular, documentation]
-
+categories: [API, REST, API Table, documentation]
+tags: [API, REST, API Table, documentation]
 excerpt_separator: <!--more-->
-
 ---
 
 It is well known that APIs need developer-friendly docs in order
@@ -20,6 +14,9 @@ when dealing with increased API complexity, developers need a way to get a high 
 low-level details.
 
 <!--more--> 
+
+## Existing API Visualization Methods
+
 ![swagger example](/images/petstorev2.png)
 
 The image above depicts Swagger UI documentation for a sample pet resource. As an API specification grows in complexity,
@@ -33,7 +30,7 @@ It's easy to see why these problems exist. Even with tags, an API specification 
 navigate. As a result, determining basic information about an API such as what resources are available requires
 developers to read through a longer than necessary lists of API endpoints.
 
-### Introducing API Tables
+## Introducing API Tables
 
 API Tables form the perfect solution for providing a quick overview of a group of related endpoints in a specification. The image below represents
 an API Table for working with Pull Requests in the [GitHub API](https://developer.github.com/v3/). The table is
@@ -58,7 +55,7 @@ to other documentation methods and most people prefer reading horizontally orien
 the sample table depicted above can easily accommodate displaying up to 65 different operations!
 
 
-### In Closing
+## In Closing
 
 I strongly feel that API Tables supplement the existing Swagger UI very well. Swagger UI does a great job of
 displaying low level details, while API Tables are the perfect entrypoint for developers wishing to get a high level 
