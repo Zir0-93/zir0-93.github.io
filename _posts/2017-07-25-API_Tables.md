@@ -14,10 +14,9 @@ when dealing with increased API complexity, developers need a way to get a high 
 low-level details.
 
 <!--more--> 
+![swagger example](/images/petstorev2.png)
 
 ## Existing API Visualization Methods
-
-![swagger example](/images/petstorev2.png)
 
 The image above depicts Swagger UI documentation for a sample pet resource. As an API specification grows in complexity,
 I find it increasingly difficult to answer the following questions using the aforementioned format:
