@@ -18,7 +18,9 @@ low level details.
 The image above depicts Swagger UI documentation for a sample pet resource. As an API specification grows in complexity,
 I find it increasingly difficult to answer the following questions using the aformentioned format.
 
-**What are all the resources that this API exposes? What operations are available on key resources?**
+**What are all the resources that this API exposes?
+
+**What operations are available on key resources?**
 
 Its easy to see why these problems exist. Even with tags, an API specification with many endpoints will take a long time to
 navigate. As a result, determining basic information about an API such as what resources are available requires
@@ -43,5 +45,7 @@ on GitHub. And this is precisely why API tables shine, **they provide a high lev
 developers to find and navigate to more detailed documentation in a natural and intuitive way**. Additionally, these
 tables are scalable and can be used to represent larger and more sophisticated API specs without sacrificing readability.
 The sample table depicted above can easily accomodate up to 65 different operations!
+
+I am not sure about you
 
 #### Its Time For Change
