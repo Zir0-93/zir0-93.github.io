@@ -29,8 +29,8 @@ It's easy to see why these problems exist. Even with tags, an API specification 
 navigate. On top of this, Swagger UI will
 list the same endpoint multiple times for each action (GET, POST, etc..) that is available at that endpoint, resulting in a large amount of 
 duplicated text. As a result, determining basic information about an API such as what resources are available can be a difficult task.
-What developer first looking at an API need is a compact, high level representation of the specification that conveys the essential functionality
-of the API.
+When first examining an API, developers need a high level representation of the specification that conveys the essential functionality
+of the specification.
 
 ## Introducing API Tables
 
