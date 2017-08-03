@@ -49,7 +49,7 @@ Believe it or not, the API Table above compactly depicts over 30 different API o
 and lengthy pages 
 on GitHub. And this is precisely why API tables are incredibly useful, **they provide a high level representation of an API spec thereby enabling
 developers to explore more detailed documentation as required in a natural and intuitive way**. Ideally, developers wishing to explore an API
-would start off with API Table representations of the API. Next, they would use action verb hyperlinks in each cell to further navigate to low level documentation as done for the GitHub API above.
+would start off with API Table representations of the API. Next, they would use the action verb hyperlinks in each cell to further navigate to low level documentation as done for the GitHub API above.
 
 These tables are also very easy to read. They consist of very little text in comparison
 to other documentation methods and most people prefer reading horizontally oriented tables over vertically oriented lists of text. Most importantly, **API Tables can represent larger and more sophisticated API specs without sacrificing readability.** For example,
