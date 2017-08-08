@@ -12,18 +12,18 @@ layout: default
   <section class="post">
     {{ content }}
   </section>
-  <div style="padding:7px; border-style:solid; border-width:1px; width:400px; border-radius:12px;">
-    <div style="font-weight:bold; display:inline-block;">SHARE POST</div>
-      <a target="_blank" href="https://developer.github.com/v3/repos/#get">
-				<div style="background-color: #3399ff; display:inline-block; color:white; width:30px; padding:5px; margin-right:-2px; text-align:center;">Twitter</div>
-		  </a>
-      <a target="_blank" href="https://developer.github.com/v3/repos/#edit">
-				<div style="background-color: #99cccc; color:white; display:inline-block; width:40px; margin-right:-3px; padding:5px; text-align:center;">LinkedIn</div>
-			</a>
-      <a target="_blank" href="https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review">
-				<div style="background-color: #3b5998; display:inline-block; color:white; width:33px; padding:5px; margin-right:-3px; text-align:center;">Facebook</div>
-		  </a>
-  </div>
+  <div style="padding:7px;/* border-style:solid; */border-width:1px;width:400px;border-radius:12px;">
+   <div style="font-weight:bold; padding-right:6px; display:inline-block;">SHARE ON </div>
+   <a target="_blank" href="https://developer.github.com/v3/repos/#get">
+      <div style="background-color: #3399ff; border-radius:8px; display:inline-block; color:white; width:60px; padding:5px; margin-right:2px; text-align:center;">Twitter</div>
+   </a>
+   <a target="_blank" href="https://developer.github.com/v3/repos/#edit">
+      <div style="background-color: #99cccc; border-radius:8px; color:white; display:inline-block; width:70px; margin-right:2px; padding:5px; text-align:center;">LinkedIn</div>
+   </a>
+   <a target="_blank" href="https://developer.github.com/v3/pulls/reviews/#create-a-pull-request-review">
+      <div style="background-color: #3b5998; border-radius:8px; display:inline-block; color:white; width:70px; padding:5px; margin-right:2px; text-align:center;">Facebook</div>
+   </a>
+</div>
   {% if page.comments != false and site.disqus_shortname %}<section id="disqus_thread"></section><!-- /#disqus_thread -->{% endif %}
 </article>
 {% if page.comments != false %}{% include disqus.html %}{% endif %}
