@@ -38,17 +38,17 @@ API Tables form the perfect solution for providing a quick overview of a group o
 an API Table for working with Pull Requests in the [GitHub API](https://developer.github.com/v3/). The table is
 read left to right, where each cell builds on the cells to its left to represent a certain endpoint of the API
 spec. Each table cell also has buttons representing operations available at that particular endpoint (GET, POST, etc..) 
-that users can click on to view more detailed documentation. Download the interactive version of this API Table in
-pdf format [here](https://github.com/Zir0-93/zir0-93.github.io/raw/master/images/tabular_github_apiv3.pdf).
+that users can click on to view more detailed documentation, go ahead and try it out below!
 
 {% include tabular_github_api.html %}
+
 
 A quick glance at the table above conveys what resources are offered by this API along with
 what executable operations are available on those resources.
 Believe it or not, the API Table above compactly depicts over 30 different API operations whose documentation spreads across six different
 and lengthy pages 
-on GitHub. And this is precisely why API tables are incredibly useful, **they provide a high level representation of an API spec thereby enabling
-developers to explore more detailed documentation as required in a natural and intuitive way**. Ideally, developers wishing to explore an API
+on GitHub. And this is precisely why API tables are incredibly useful, **they provide a high level representation of an API and enable
+developers to explore low level documentation in a natural and intuitive way**. Ideally, developers wishing to explore an API
 would start off with API Table representations of the API. Next, they would use the action verb hyperlinks in each cell to further navigate to low level documentation as done for the GitHub API above.
 
 These tables are also very easy to read. They consist of very little text in comparison
