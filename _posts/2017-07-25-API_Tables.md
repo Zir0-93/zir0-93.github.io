@@ -47,7 +47,7 @@ A quick glance at the table above conveys what resources are offered by this API
 what executable operations are available on those resources.
 Believe it or not, the API Table above compactly depicts over 30 different API operations whose documentation spreads across six different
 and lengthy pages 
-on GitHub. And this is precisely why API tables are incredibly useful, **they provide a high level representation of an API and enable
+on GitHub. And this is precisely why API tables are incredibly useful, **they provide a high level representation of an API that allows
 developers to explore low level documentation in a natural and intuitive way**. Ideally, developers wishing to explore an API
 would start off with API Table representations of the API. Next, they would use the action verb hyperlinks in each cell to further navigate to low level documentation as done for the GitHub API above.
 
