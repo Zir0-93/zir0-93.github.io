@@ -41,7 +41,7 @@ spec. Each table cell also has buttons representing operations available at that
 that users can click on to view more detailed documentation. Download the interactive version of this API Table in
 pdf format [here](https://github.com/Zir0-93/zir0-93.github.io/raw/master/images/tabular_github_apiv3.pdf).
 
-![tabexpr](/images/tabexprv7.svg)
+!{% include tabular_github_api.html %}
 
 A quick glance at the table above conveys what resources are offered by this API along with
 what executable operations are available on those resources.
