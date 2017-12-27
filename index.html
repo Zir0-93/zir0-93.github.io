@@ -7,7 +7,7 @@ layout: default
   <ol class="post-list">
     {% for post in paginator.posts %}
       <li>
-        <img style="width:200px;" src="/images/api-settings.png">
+        <img style="display: inline-block; float:left; width:200px;" src="/images/api-settings.png">
         <div style="display:inline-block;">
           <h2 class="post-list__post-title post-title"><a href="{{ site.baseurl }}{{ post.url | remove_first: '/' }}" title="{{ post.title }}">{{ post.title }}</a></h2>
           <p class="excerpt">{{ post.excerpt | remove: '<p>' | remove: '</p>' }}&hellip;</p>
