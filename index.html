@@ -8,7 +8,9 @@ layout: default
     {% for post in paginator.posts %}
       <li>
         {% if post.icon %}
-          <i style="color:#1d1f21;" class="fa {{ post.icon}}" style="display:inline-block;"/>
+          <div>
+             <i style="color:#1d1f21;" class="fa {{ post.icon}}" style="display:inline-block;"/>
+          </div>
         {% endif %}
         <div style="display:inline-block;">
           <h2 class="post-list__post-title post-title"><a href="{{ site.baseurl }}{{ post.url | remove_first: '/' }}" title="{{ post.title }}">{{ post.title }}</a></h2>
