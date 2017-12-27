@@ -7,8 +7,8 @@ layout: default
   <ol class="post-list">
     {% for post in paginator.posts %}
       <li>
-        {% if post.image %}
-          <img src="{{ post.image}}" style="display:inline-block;"/>
+        {% if post.icon %}
+          <i style="color:#1d1f21;" class="{{ post.icon}}" style="display:inline-block;"/>
         {% endif %}
         <div style="display:inline-block;">
           <h2 class="post-list__post-title post-title"><a href="{{ site.baseurl }}{{ post.url | remove_first: '/' }}" title="{{ post.title }}">{{ post.title }}</a></h2>
