@@ -1,6 +1,7 @@
 ---
 title:  "Developing a Search Engine using Elastic Search"
 date:   2017-05-01 15:04:23
+image: /images/elasticsearchicon.png
 categories: [hadith, stemmers, synonyms, fuzziness, rewayaat, elastic search]
 tags: [hadith, stemmers, synonyms, fuzziness, rewayaat, elastic search]
 excerpt_separator: <!--more-->
