@@ -1,7 +1,7 @@
 ---
 title:  "Comparing The Performance of Bluemix PaaS Instances and IBM Containers"
 date:   2016-09-12 15:04:23
-image: bluemix.png
+image: /images/bluemix.png
 categories: [tech, bluemix, docker, PaaS, containers, IBM]
 tags: [tech, bluemix, docker, PaaS, containers, IBM]
 excerpt_separator: <!--more-->
