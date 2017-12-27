@@ -1,6 +1,6 @@
 --- 
 title:  "API Documentation Using Tables"
-icon: fa-rocket
+image: /images/api-settings.png
 date:   2017-07-20 15:04:23
 categories: [API, REST, API Table, documentation]
 tags: [API, REST, API Table, documentation]
