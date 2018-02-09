@@ -21,9 +21,10 @@ learning methods to try and automatically predict whether a given snippet of cod
 All the code is available as a [python notebook](), and all experimental results were executed a linux machine with 32 GB RAM and a Tesla K40c GPU.  
 
 ![sample GitHub review comment](/images/review_comment.png)
+
 ** Sample GitHub review comment: Code reviewers are able to leave comments on parts of the unified diff of a commit**
 
-# Step 1 - Build a Review Comment Classifier
+# Step 1 - Build a Review Comment Classifier 
 
 # Step 2 - Convert Code Snippets to AST's
 
