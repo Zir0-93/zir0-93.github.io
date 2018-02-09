@@ -22,7 +22,7 @@ All the code is available as a [python notebook](), and all experimental results
 
     ![sample GitHub review comment](/images/review_comment.png)
 
-    Sample GitHub review comment**
+    Sample GitHub review comment
 
 # Step 1 - Build a Review Comment Classifier 
 
