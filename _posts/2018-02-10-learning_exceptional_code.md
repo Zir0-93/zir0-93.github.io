@@ -20,9 +20,8 @@ cause a program to become corrupt and/or difficult to predict. Of 88 000 [review
 learning methods to try and automatically predict whether a given snippet of code exhibits proper exception handling strategies or not.
 All the code is available as a [python notebook](), and all experimental results were executed a linux machine with 32 GB RAM and a Tesla K40c GPU.  
 
-    ![sample GitHub review comment](/images/review_comment.png)
-
-    Sample GitHub review comment
+   ![sample GitHub review comment](/images/review_comment.png)
+   Sample GitHub review comment
 
 # Step 1 - Build a Review Comment Classifier 
 
