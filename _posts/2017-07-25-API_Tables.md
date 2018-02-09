@@ -61,8 +61,4 @@ the sample table depicted above can easily accommodate displaying up to 65 diffe
 
 I strongly feel that API Tables supplement the existing [Swagger UI](http://petstore.swagger.io/) very well. Swagger UI does a great job of
 displaying low level details, while API Tables are the perfect entrypoint for developers wishing to get a high level 
-overview of an API. For the next few months, I will be working on
-implementing a prototype that adapts the Swagger UI to include API Tables. Users will be able to interact with the API table
-to view basic information about the API and navigate to more detailed documentation in a streamlined fashion.
-
-Do you think the Swagger UI suffers from the weaknesses I mentioned? Do you see yourself using API Tables to represent your APIs anytime soon? Let me know via comments.
+overview of an API. Do you think the Swagger UI suffers from the weaknesses I mentioned? Do you see yourself using API Tables to represent your APIs anytime soon? Let me know via comments.
