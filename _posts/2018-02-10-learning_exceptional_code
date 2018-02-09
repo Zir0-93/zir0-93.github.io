@@ -10,6 +10,7 @@ I'm afraid this article won't be about using machine learning to generate unsual
 I think we can all agree there simply isn't enough training data in existence for that. Rather, I'll try to use machine learning on graphs
 in order to detect common exception handling anti-patterns [Exception/Error handling](https://en.wikipedia.org/wiki/Exception_handling) in source code.
 <!--more-->
+
 ![Exception_img](/images/exceptions.jpg)
 
 One of the main reasons as to why exception handling can be tricky to do properly is a result of the almost "hidden" control-flow
