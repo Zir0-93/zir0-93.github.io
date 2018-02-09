@@ -22,7 +22,7 @@ All the code is available as a [python notebook](), and all experimental results
 
    ![sample GitHub review comment](/images/review_comment.png)
 
-   ** Sample GitHub review comment: Code reviewers are able to leave comments on parts of the unified diff of a commit **
+   **Sample GitHub review comment: Code reviewers are able to leave comments on parts of the unified diff of a commit**
 
 # Step 1 - Build a Review Comment Classifier 
 
