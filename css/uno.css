@@ -1194,7 +1194,7 @@ hr {
 
 .panel-title {
 	font-size: 2.0em;
-	color: rgb(34, 203, 223);
+	color: rgb(34, 223, 165);
 }
 
 .panel-subtitle {
@@ -1388,8 +1388,8 @@ nav {
 		color: #FFF;
 		opacity: .8; }
 		.navigation__item a:hover {
-			color: rgb(34, 203, 223);
-			border-color: rgb(34, 203, 223);
+			color: rgb(34, 223, 165);
+			border-color: rgb(34, 223, 165);
 			opacity: 1; }
 
 .navigation--social {
