@@ -52,8 +52,7 @@ with open('review_comments.txt') as f:
 with open('review_comments_labels.txt') as g:
     classifications = g.readlines()
  ```
- Next, we preprocess the data in multiple steps to prepare it for use by our proposed SVM classifier. First, we define
- a function to remove all formatting characters that are associated with the Markdown syntax. Markdown is a lightweight
+ Next, we preprocess the data in multiple steps to prepare it for use by our proposed SVM classifier. First, we remove all formatting characters from each comment that are associated with the Markdown syntax. Markdown is a lightweight
  markup language with plain text formatting syntax. It is designed to be easily converted to HTML and many other formats
  using a tool by the same name. Markdown is often used to format readme files, for writing messages in online discussion forums, 
  and in GitHub code review comments. This step is neccessary as the additional formatting related characters introduced by the 
@@ -63,11 +62,10 @@ with open('review_comments_labels.txt') as g:
  ```python
  import re 
 
-def cleanReviewComment(comment):
-    comment = re.sub("\*|\[|\]|#|\!|`|,|\.|\"|;", "", comment)
-    comment = re.sub("\.|\(|\)|<|>", " ", comment)
-    comment = ' '.join(comment.split())
-    return comment
+for index, comment in enumerate(comments):
+    comments[index] = re.sub("\*|\[|\]|#|\!|`|,|\.|\"|;", "", comments[index])
+    comments[index] = re.sub("\.|\(|\)|<|>", " ", comments[index])
+    comments[index] = ' '.join(comments[index].split())
 ```
 
 Next, we remove all stop words from the review comments. A stop word is a commonly used word
