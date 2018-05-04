@@ -1,6 +1,6 @@
 --- 
 title:  "Analyzing GitHub Code Review Comments"
-image: /images/code_review.jpg
+image: /images/code-reviews.png
 date:   2018-05-04 15:04:23
 categories: [machine-learning]
 tags: [machine learning, probabilistic, code reviews, NLP, language models]
