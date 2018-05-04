@@ -1,6 +1,6 @@
 --- 
 title:  "Analyzing GitHub Code Review Comments"
-image: /images/ml.jpg
+image: /images/code_review.jpg
 date:   2018-02-10 15:04:23
 categories: [machine-learning]
 tags: [machine learning, probabilistic, code reviews, NLP, language models]
@@ -167,7 +167,8 @@ np.mean(predicted_svm == classification_test)
 ```0.96```
 
 
-Classifying GitHub Review Comments
+## Classifying GitHub Review Comments
+
 We now leverage the classifier developed in the previous section to classify over 20000 GitHub review comments from the top 100
 most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform. In general,
 an API provides an interface between two systems to interact with each other programmatically. Representational State Transfer (REST) 
