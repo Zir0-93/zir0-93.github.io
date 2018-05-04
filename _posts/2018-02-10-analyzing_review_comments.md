@@ -6,16 +6,16 @@ categories: [machine-learning]
 tags: [machine learning, probabilistic, code reviews, NLP, language models]
 excerpt_separator: <!--more-->
 ---
-In this article, we develop an SVM classifier to categorize over twenty thousand GitHub review comments based on the main topic
+In this article, we develop an SVM classifier to categorize over 30 000 GitHub review comments based on the main topic
 addressed by each comment. For example, a review comment suggesting an improved variable name might fall under the subject, 
-"naming". A full list of the classes incorporated by our classifier is presented in Table 1. To our knowledge, our experiment is 
-the first of its kind to leverage GitHub review comments for the analysis of human code reviewing habits. We hope that the findings 
-from our experiments will assist in the development of improved code reviewing tools.
+"naming". To my knowledge, this experiment is 
+the first of its kind to leverage GitHub review comments for the analysis of human code reviewing habits. I hope the findings 
+from this experiment will assist in the development of improved code reviewing tools.
 <!--more-->
 
 ## Review Comment Categories
 
-The list of categories incorporated by our classifier are summarized in the tabhle below. This list was developed based on a manual survey of 
+The list of categories incorporated by our classifier are summarized in the table below. This list was developed based on a manual survey of 
 approximately 500 GitHub review comments taken from the top ten most forked repositories on GitHub. The selected 
 categories reflect the most frequently occurring topics encountered in the surveyed review comments. Majority of the categories 
 are related to code level concepts (e.g. variable naming, exception handling); however, certain review comments 
