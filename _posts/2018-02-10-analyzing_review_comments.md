@@ -72,10 +72,9 @@ def cleanReviewComment(comment):
 
 Next, we remove all stop words from the review comments. A stop word is a commonly used word
 (such as “the”, “a”, “an”, “in”) that we would like to ignore. The reason is for this is that they 
-take up valuable processing time, but are not very relevant to the classification task at hand. For this,
-we can remove them easily, by storing a list of words that you consider to be stop words. 
-
-Lastly, we stem all the words in our review comments as well. Stemming is the process of reducing inflected
+take up valuable processing time, but are not very relevant to the classification task at hand. We can remove them easily
+by simply maintaing a list of words that are considered to be stop words. 
+Additionally, we stem all the words in our review comments as well. Stemming is the process of reducing inflected
 (or sometimes derived) words to their word stem, base or root form. E.g. A stemming algorithm reduces the words 
 “fishing”, “fished”, and “fisher” to the root word, “fish”. The Natural Language Toolkit (NLTK) in python has a
 list of stopwords stored in 16 different languages, as well as a stemmer implementation we can make use of.
@@ -111,9 +110,9 @@ non-relevant documents and terms, unlike the less-common words "variable" and "n
 factor is incorporated which diminishes the weight of terms that occur very frequently in the document set and increases the
 weight of terms that occur rarely.
 
-Putting it all together, the weight the td-idf statistic gives to a weight for any given term is:
+Putting it all together, the weight the td-idf statistic gives to a given term is:
 
-1. Highest when t occurs many times within a small number of documents (thus lending high discriminating power to those documents);
+1. Highest when the term occurs many times within a small number of documents (thus lending high discriminating power to those documents);
 2. Lower when the term occurs fewer times in a document, or occurs in many documents (thus offering a less pronounced relevance signal);
 3. Lowest when the term occurs in virtually all documents.
 
@@ -145,7 +144,7 @@ comment_train, comment_test, classification_train, classification_test = train_t
 Lastly, we can run our SVM machine learning algorithm with the components developed so far. Additionally, our developed classifier
 contains various parameters which can be tuned to obtain optimal performance. Scikit gives an extremely useful tool GridSearchCV 
 with which performance tuning for our various parameters will be carried out. As we can see, our classifier scored an accuracy 
-of 99% on the test data set.
+of 96% on the test data set.
 
 ```python
 # Training Support Vector Machines - SVM and calculating its performance
@@ -164,7 +163,7 @@ np.mean(predicted_svm == classification_test)
 ``` 0.96 ```
 
 ## Classifying GitHub Review Comments
-We now leverage the classifier developed in the previous section to classify over 20000 GitHub review comments from the top 100
+We now leverage the classifier developed in the previous section to classify over 30000 GitHub review comments from the top 100
 most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform. In general,
 an API provides an interface between two systems to interact with each other programmatically. Representational State Transfer (REST) 
 is an architectural style that defines a set of constraints and properties based on HTTP. APIs that conform to the REST architectural 
