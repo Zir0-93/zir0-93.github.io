@@ -13,6 +13,8 @@ the first of its kind to leverage GitHub review comments for the analysis of hum
 from this experiment will assist in the development of improved code reviewing tools.
 <!--more-->
 
+![sample_comment](/images/review_example.png)
+
 ## Review Comment Categories
 
 The list of categories incorporated by our classifier are summarized in the table below. This list was developed based on a manual survey of 
