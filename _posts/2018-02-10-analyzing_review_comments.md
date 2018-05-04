@@ -247,3 +247,5 @@ plt.gca().add_artist(my_circle)
 plt.show()
 ```
 
+![results](/images/svm_results.png)
+
