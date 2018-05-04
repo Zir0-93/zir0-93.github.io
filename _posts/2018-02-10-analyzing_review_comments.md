@@ -174,7 +174,7 @@ load repository data for the 100 most forked java repositories on GitHub.
 import urllib.request
 import json
 
-github_token='01fe37630d630dfecbd504faed22688d6de0aab6'
+github_token='<token>'
 # URL to consume GitHub REST API to retrieve the top 50 most forked repositories on GitHub
 url = 'https://api.github.com/search/repositories?q=language:java&sort=forks&order=desc&per_page=100&page=1&access_token=' + github_token
 # Execute the HTTP GET request
