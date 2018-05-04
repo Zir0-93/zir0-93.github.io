@@ -100,8 +100,7 @@ count_vect = CountVectorizer()
 comments_train_counts = count_vect.fit_transform(comments)
 comments_train_counts.shape
 ```
-*[Out]*
-```(307, 1499)```
+*[Out]*```(307, 1499)```
 
 Moreover, further improvements can be made to this method of representing the review comment texts through the incorporation
 of inverse document frequency statistic.
@@ -131,8 +130,7 @@ tfidf_transformer = TfidfTransformer()
 comments_train_tfidf = tfidf_transformer.fit_transform(comments_train_counts)
 comments_train_tfidf.shape
 ```
-*[Out]*
-```(307, 1499)```
+*[Out]*```(307, 1499)```
 
 
 We dedicate 80% of the data to the training set, which we use to train our SVM classifier. The remaining 20% of the 
@@ -163,12 +161,9 @@ text_clf_svm = text_clf_svm.fit(comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 np.mean(predicted_svm == classification_test)
 ```
-*[Out]*
-```0.96```
-
+*[Out]*```0.96```
 
 ## Classifying GitHub Review Comments
-
 We now leverage the classifier developed in the previous section to classify over 20000 GitHub review comments from the top 100
 most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform. In general,
 an API provides an interface between two systems to interact with each other programmatically. Representational State Transfer (REST) 
@@ -216,8 +211,7 @@ for repo in repos_json_obj['items']:
     
 print ('Collected', str(len(review_comments)), 'review comments.')
 ```
-*[Out]*
-```Collected 32512 review comments.```
+*[Out]*```Collected 32512 review comments.```
 
 
 We categorize each review comment using our SVM classifier, and generate a pie graph demonstrating our results.
