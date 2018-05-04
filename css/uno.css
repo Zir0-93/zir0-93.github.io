@@ -24,6 +24,9 @@ table {
   width: 100%;
   table-layout: fixed;
 }
+tr:nth-child(even) {
+    background-color: #c1e7ff94;
+}
 
 table caption {
   font-size: 1.5em;
@@ -38,8 +41,10 @@ table tr {
 
 table th,
 table td {
-  padding: .625em;
-  text-align: center;
+    padding: .625em;
+    text-align: center;
+    border: 1px solid;
+    font-family: Consolas;
 }
 
 table th {
