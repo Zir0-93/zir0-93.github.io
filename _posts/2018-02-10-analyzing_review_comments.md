@@ -136,7 +136,7 @@ comments_train_tfidf.shape
 We dedicate 80% of the data to the training set, which we use to train our SVM classifier. The remaining 20% of the 
 data will be dedicated to the test set, which we use to test the performance of the developed classifier.
 
-```
+```python
 from sklearn.model_selection import train_test_split
 
 comment_train, comment_test, classification_train, classification_test = train_test_split(comments, classifications, test_size=0.2)
@@ -161,6 +161,7 @@ text_clf_svm = text_clf_svm.fit(comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 np.mean(predicted_svm == classification_test)
 ```
+*[Out]*``` 0.96 ```
 
 ## Classifying GitHub Review Comments
 We now leverage the classifier developed in the previous section to classify over 20000 GitHub review comments from the top 100
