@@ -34,10 +34,10 @@ to the topic it spent the most words discussing.
 | Efficiency / Optimization       | 7     |                                                                                                     |
 | Code Organization/ Refactoring  | 8     | Comments related to extracting code from methods and classes, moving large chunks of code around.   |
 | Concurrency                     | 9    | Comments related to threads, synchronization, parallelism.                                          |
-| High Level Method Semantics & Design                           | 10    | Comments relating to method and class input/output, polymorphism, coupling, cohesion.                                                           |
-| High Level Class Semantics & Design                           | 11    | Comments relating to program output and behaviour.                                                           |
+| High Level Method Semantics & Design                           | 10    | Comments relating to method design and semantics.                                                           |
+| High Level Class Semantics & Design                           | 11    | Comments relating to class design and semantics.                                                           |
 | Testing                           | 12    |                                                           |
-| Other                           | 13    | Comments not relating to categories 1-11.                                                           |
+| Other                           | 13    | Comments not relating to categories 1-12.                                                           |
 
 ## SVM Classifier Implementation
 
