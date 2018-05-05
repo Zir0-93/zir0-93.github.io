@@ -984,13 +984,17 @@ a {
     font-weight: bold; }
 
 	a:hover {
-		background-color:#2196F3;
-		color:white;
-		border-color:white;
+		
 		-o-transition: .5s;
 		-ms-transition: .5s;
 		-moz-transition: .5s;
 		-webkit-transition: .5s; }
+
+.post_tags:hover {
+	background-color:#2196F3;
+		color:white;
+		border-color:white;	
+}
 
 h1,
 h2,
