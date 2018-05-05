@@ -1195,6 +1195,7 @@ hr {
     border-radius: 7%;
     color: white;
     font-size: 10px;
+    border: 1px solid;
     background-color: #2196F3;
     -o-transition: .5s;
     -ms-transition: .5s;
