@@ -83,8 +83,8 @@ stemmer = SnowballStemmer("english", ignore_stopwords=True)
 The next step of our preprocessing stage is to convert the comment reviews into numerical feature vectors. This is required to
 make our review comments amenable for machine learning algorithms. To do this, we will use the bag of words method, which 
 represents a sentence using a feature vector developed based on the number of occurrences of each
-term, known as *term frequency*. Thus, the comment “please rename this variable” is, in this view, identical
-to the comment “rename this variable please”. We use the Scikit-learn Python library to create feature vectors for our 
+term, known as *term frequency*. Thus, the comment `please rename this variable` is, in this view, identical
+to the comment `rename this variable please`. We use the Scikit-learn Python library to create feature vectors for our 
 review comments using the `CountVectorizer` module.
 
 
