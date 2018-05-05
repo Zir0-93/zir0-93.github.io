@@ -41,8 +41,8 @@ to the topic it spent the most words discussing.
 ## SVM Classifier Implementation
 
 We now discuss our SVM text classifier implementation. This experiment represents a typical supervised learning classification exercise.
-We first load our training data from the local directory which consists of two files. The first file contains a review comment on each
-line, while the second file contains manually determined classifications for each review comment on each line.
+We first load our training data from a local directory which consists of two files representing 1000 manually labelled comment-classification pairs. The first file contains a review comment on each
+line, while the second file contains manually determined classifications for each corresponding review comment on each line.
 
 ```python
 with open('review_comments.txt') as f:
@@ -51,7 +51,7 @@ with open('review_comments.txt') as f:
 with open('review_comments_labels.txt') as g:
     classifications = g.readlines()
  ```
- Next, we preprocess the data in multiple steps to prepare it for use by our proposed SVM classifier. First, we remove all formatting characters from each comment that are associated with the Markdown syntax. Markdown is a lightweight
+ Next, the data is preprocessed in multiple steps to prepare it for use by our proposed SVM classifier. First, all formatting characters from each comment that are associated with the Markdown syntax are removed. Markdown is a lightweight
  markup language with plain text formatting syntax. It is designed to be easily converted to HTML and many other formats
  using a tool by the same name. Markdown is often used to format readme files, for writing messages in online discussion forums, 
  and in GitHub code review comments. This step is neccessary as the additional formatting related characters introduced by the 
@@ -66,7 +66,7 @@ for index, comment in enumerate(comments):
     comments[index] = ' '.join(comments[index].split())
 ```
 
-Next, we remove all stop words from the review comments. A stop word is a commonly used word
+Next, all stop words are removed from the review comments. A stop word is a commonly used word
 (such as “the”, “a”, “an”, “in”) that we would like to ignore. The reason is for this is that these words 
 take up valuable processing time, but are not very relevant to the classification task at hand. We can remove them easily
 by simply maintaing a list of words that are considered to be stop words. 
@@ -99,10 +99,10 @@ comments_train_counts.shape
 
 Moreover, further improvements can be made to this method of representing the review comment texts through the incorporation
 of inverse document frequency statistic.
-Consider a commonly occurring term like "the". A simple bag of words model based only on term frequency would tend to incorrectly
-emphasize review comments which happen to use the word "the" more frequently, without giving enough weight to the more meaningful
-terms like "variable" and "naming". This is problematic as the term "the" is not a good keyword to distinguish relevant and
-non-relevant documents and terms, unlike the less-common words "variable" and "naming". Hence an inverse document frequency 
+Consider a commonly occurring term like `the`. A simple bag of words model based only on term frequency would tend to incorrectly
+emphasize review comments which happen to use the word `the` more frequently, without giving enough weight to the more meaningful
+terms like `variable` and `naming`. This is problematic as the term `the` is not a good keyword to distinguish relevant and
+non-relevant documents and terms, unlike the less-common words `variable` and `naming`. Hence an inverse document frequency 
 factor is incorporated to diminsh the weight of terms that occur very frequently in the review comment set and increases the
 weight of terms that occur rarely.
 
@@ -114,7 +114,7 @@ Putting it all together, the weight the td-idf statistic assigns to a given term
 
 At this point, we may view each review comment as a vector with one component
 corresponding to each term in the dictionary, together with a weight for each
-component that is given by the equation above. For dictionary terms that do not occur in
+component that is given by the tf-idf statistic. For dictionary terms that do not occur in
 a document, this weight is zero. This vector form will prove to be crucial to
 the scoring and ranking capabilities of our SVM classifier.
 
@@ -127,8 +127,9 @@ comments_train_tfidf.shape
 ```
 ```(307, 1499)```
 
-
-We dedicate 80% of our 1000 GitHub review comments data to the training set, which we use to train our SVM classifier. The remaining 20% of the 
+Now that the classifier itself is almost ready, an important consideration now is the amount of data to use for testing the classifier. After having included a minimum
+of 50 review comments for each classification in the training set, we experimented with different numbers of review comments
+to see what gave the best results. 1000 review comments seemed to give a good accuracy for the classifier as we will see below. We dedicate 80% of our 1000 GitHub review comments data to the training set, which we use to train our SVM classifier. The remaining 20% of the 
 data will be dedicated to the test set, which we use to test the performance of the developed classifier.
 
 ```python
@@ -137,8 +138,8 @@ from sklearn.model_selection import train_test_split
 comment_train, comment_test, classification_train, classification_test = train_test_split(comments, classifications, test_size=0.2)
 ```
 Lastly, we can run our SVM machine learning algorithm with the components developed so far. Additionally, our developed classifier
-contains various parameters which can be tuned to obtain optimal performance. Scikit gives an extremely useful tool GridSearchCV 
-with which performance tuning for our various parameters will be carried out. As we can see, our classifier scored an accuracy 
+contains various parameters which can be tuned to obtain optimal performance. Scikit gives an extremely useful tool, `GridSearchCV` 
+with which performance tuning for our various parameters will be carried out. As you can see, our classifier scored an accuracy 
 of 96% on the test data set.
 
 ```python
@@ -240,6 +241,3 @@ plt.gca().add_artist(my_circle)
 plt.show()
 ```
 {% include amcharts.editor.html %}
-
-## Discussion
-
