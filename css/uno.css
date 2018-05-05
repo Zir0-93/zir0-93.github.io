@@ -977,8 +977,10 @@ body {
 	background: #fae3df; }
 
 a {
-	text-decoration: none;
-	color: #e25440; }
+	    text-decoration: none;
+    color: rgb(0, 98, 255);
+    font-weight: bold; }
+
 	a:hover {
 		color: #b9301c;
 		-o-transition: .5s;
