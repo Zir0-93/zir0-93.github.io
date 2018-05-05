@@ -6,11 +6,9 @@ categories: [machine-learning]
 tags: [machine learning, probabilistic, code reviews, NLP, language models]
 excerpt_separator: <!--more-->
 ---
-In this article, we develop an SVM classifier to categorize over 30 000 GitHub review comments based on the main topic
-addressed by each comment. For example, a review comment suggesting an improved variable name might fall under the subject, 
-"naming". To my knowledge, this experiment is 
-the first of its kind to leverage GitHub review comments for the analysis of human code reviewing habits. I hope the findings 
-from this experiment will assist in the development of improved code reviewing tools.
+A code review is a form of code inspection where a developer assesses code for style, defects, and other standards prior to integration into a code base. As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in factilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions. In an effort to better understand code reivewing habbits, we develop an SVM classifier to classify over 30 000 GitHub review comments based on the main topic
+addressed by each comment. E.g. a review comment suggesting an improved variable name might fall under the subject, 
+`naming`.
 <!--more-->
 
 ![sample_comment](/images/review_example.png)
@@ -18,7 +16,7 @@ from this experiment will assist in the development of improved code reviewing t
 ## Review Comment Categories
 
 The list of categories incorporated by our classifier are summarized in the table below. This list was developed based on a manual survey of 
-approximately 500 GitHub review comments taken from the top ten most forked repositories on GitHub. The selected 
+approximately 1000 GitHub review comments taken from the top ten most forked repositories on GitHub. We selected this range of repositories in the hope that the most forked repositories exhibit standard open source code reviewing practices. The selected 
 categories reflect the most frequently occurring topics encountered in the surveyed review comments. Majority of the categories 
 are related to code level concepts (e.g. variable naming, exception handling); however, certain review comments 
 that did not naturally fall into any existing categories and were unrelated to the overall goal of code reviewing were placed in
@@ -58,8 +56,7 @@ with open('review_comments_labels.txt') as g:
  markup language with plain text formatting syntax. It is designed to be easily converted to HTML and many other formats
  using a tool by the same name. Markdown is often used to format readme files, for writing messages in online discussion forums, 
  and in GitHub code review comments. This step is neccessary as the additional formatting related characters introduced by the 
- Markdown stadard will negatively impact our classifier's ability 
- to recognize identical words.
+ Markdown stadard will negatively impact our classifier's ability to recognize identical words.
  
  ```python
  import re 
@@ -71,7 +68,7 @@ for index, comment in enumerate(comments):
 ```
 
 Next, we remove all stop words from the review comments. A stop word is a commonly used word
-(such as “the”, “a”, “an”, “in”) that we would like to ignore. The reason is for this is that they 
+(such as “the”, “a”, “an”, “in”) that we would like to ignore. The reason is for this is that these words 
 take up valuable processing time, but are not very relevant to the classification task at hand. We can remove them easily
 by simply maintaing a list of words that are considered to be stop words. 
 Additionally, we stem all the words in our review comments as well. Stemming is the process of reducing inflected
@@ -107,16 +104,16 @@ Consider a commonly occurring term like "the". A simple bag of words model based
 emphasize review comments which happen to use the word "the" more frequently, without giving enough weight to the more meaningful
 terms like "variable" and "naming". This is problematic as the term "the" is not a good keyword to distinguish relevant and
 non-relevant documents and terms, unlike the less-common words "variable" and "naming". Hence an inverse document frequency 
-factor is incorporated which diminishes the weight of terms that occur very frequently in the document set and increases the
+factor is incorporated to diminsh the weight of terms that occur very frequently in the review comment set and increases the
 weight of terms that occur rarely.
 
-Putting it all together, the weight the td-idf statistic gives to a given term is:
+Putting it all together, the weight the td-idf statistic assigns to a given term is:
 
-1. Highest when the term occurs many times within a small number of documents (thus lending high discriminating power to those documents);
-2. Lower when the term occurs fewer times in a document, or occurs in many documents (thus offering a less pronounced relevance signal);
-3. Lowest when the term occurs in virtually all documents.
+1. Highest when the term occurs many times within a small number of review comments
+2. Lower when the term occurs fewer times in a review comment, or occurs in many review comments
+3. Lowest when the term occurs in virtually all review comments.
 
-At this point, we may view each document as a vector with one component
+At this point, we may view each review comment as a vector with one component
 corresponding to each term in the dictionary, together with a weight for each
 component that is given by the equation above. For dictionary terms that do not occur in
 a document, this weight is zero. This vector form will prove to be crucial to
@@ -132,7 +129,7 @@ comments_train_tfidf.shape
 ```(307, 1499)```
 
 
-We dedicate 80% of the data to the training set, which we use to train our SVM classifier. The remaining 20% of the 
+We dedicate 80% of our 1000 GitHub review comments data to the training set, which we use to train our SVM classifier. The remaining 20% of the 
 data will be dedicated to the test set, which we use to test the performance of the developed classifier.
 
 ```python
@@ -140,7 +137,6 @@ from sklearn.model_selection import train_test_split
 
 comment_train, comment_test, classification_train, classification_test = train_test_split(comments, classifications, test_size=0.2)
 ```
-
 Lastly, we can run our SVM machine learning algorithm with the components developed so far. Additionally, our developed classifier
 contains various parameters which can be tuned to obtain optimal performance. Scikit gives an extremely useful tool GridSearchCV 
 with which performance tuning for our various parameters will be carried out. As we can see, our classifier scored an accuracy 
@@ -164,10 +160,10 @@ np.mean(predicted_svm == classification_test)
 
 ## Classifying GitHub Review Comments
 We now leverage the classifier developed in the previous section to classify over 30000 GitHub review comments from the top 100
-most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform. In general,
+most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform, which we will use to mine our Review Comments. In general,
 an API provides an interface between two systems to interact with each other programmatically. Representational State Transfer (REST) 
 is an architectural style that defines a set of constraints and properties based on HTTP. APIs that conform to the REST architectural 
-style, or RESTful web services, provide interoperability between computer systems on the Internet. We consume the GitHub REST API to
+style, or RESTful web services, provide interoperability between computer systems on the Internet. We first consume the GitHub REST API to
 load repository data for the 100 most forked java repositories on GitHub.
 
 ```python
@@ -213,7 +209,7 @@ print ('Collected', str(len(review_comments)), 'review comments.')
 ```Collected 32512 review comments.```
 
 
-We categorize each review comment using our SVM classifier, and generate a pie graph demonstrating our results.
+We categorize each review comment using our SVM classifier, and generate a donut chart demonstrating our results.
 
 ```python
 import matplotlib.pyplot as plt
@@ -247,5 +243,5 @@ plt.gca().add_artist(my_circle)
 plt.show()
 ```
 
-![results](/images/svm_results.png)
+{% include amcharts.editor.html %}
 
