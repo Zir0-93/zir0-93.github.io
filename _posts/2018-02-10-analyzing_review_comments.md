@@ -23,21 +23,21 @@ that did not naturally fall into any existing categories and were unrelated to t
 the "other" category. In situations where a review comment discussed more than one subject, it was given a classification according 
 to the topic it spent the most words discussing.
 
-| Category                        | Label | Further Explanation                                                                                 |
-|---------------------------------|-------|-----------------------------------------------------------------------------------------------------|
-| Readability                     | 1     | Comments related to readability, style, general project conventions.                                |
-| Naming                          | 2     |                                                                                                     |
-| Documentation                   | 3     | Comments related to licenses, package info, module documentation, commenting.                       |
-| Error/Resource Handling         | 4     | Comments related to exception/resource handling, program failure,  termination analysis, resource . |
-| Control Structures/Program Flow | 5     | Comments related to usage of loops, if-statements, placement of individual lines of code.           |
-| Visibility/ Access              | 6     | Comments related to access level for classes, fields, methods and local variables.                  |
-| Efficiency / Optimization       | 7     |                                                                                                     |
-| Code Organization/ Refactoring  | 8     | Comments related to extracting code from methods and classes, moving large chunks of code around.   |
-| Concurrency                     | 9    | Comments related to threads, synchronization, parallelism.                                          |
-| High Level Method Semantics & Design                           | 10    | Comments relating to method design and semantics.                                                           |
-| High Level Class Semantics & Design                           | 11    | Comments relating to class design and semantics.                                                           |
-| Testing                           | 12    |                                                           |
-| Other                           | 13    | Comments not relating to categories 1-12.                                                           |
+| Category| Label | Further Explanation|  &nbsp; &nbsp; &nbsp;Sample Comment &nbsp; &nbsp; &nbsp;    |    
+|-------------------|-------|--------------|-------------------------------------------------------|
+| Readability                     | 1     | Comments related to readability, style, general project conventions.                                | "Please split this statement into two separate ones" |
+| Naming                          | 2     |                                                                                                     | "I think foo would be a more appropriate name" |
+| Documentation                   | 3     | Comments related to licenses, package info, module documentation, commenting.                       |"Please add a comment here explaining this logic" |
+| Error/Resource Handling         | 4     | Comments related to exception/resource handling, program failure,  termination analysis, resource . |"Forgot to catch a possible exception here" |
+| Control Structures/Program Flow | 5     | Comments related to usage of loops, if-statements, placement of individual lines of code.           |"This if-statement should be moved after the while loop" |
+| Visibility/ Access              | 6     | Comments related to access level for classes, fields, methods and local variables.                  |"Make this final" |
+| Efficiency / Optimization       | 7     |                                                                                                     |"Many uneccessary call to foo() here" |
+| Code Organization/ Refactoring  | 8     | Comments related to extracting code from methods and classes, moving large chunks of code around.   |"Please extract this logic into a separate method" |
+| Concurrency                     | 9    | Comments related to threads, synchronization, parallelism.                                          |"This class does not look thread safe" |
+| High Level Method Semantics & Design                           | 10    | Comments relating to method design and semantics.                                                           |"This method should return a String" |
+| High Level Class Semantics & Design                           | 11    | Comments relating to class design and semantics.                                                           |"This should extend Foo" |
+| Testing                           | 12    |                                                           |"is there a test for this?" |
+| Other                           | 13    | Comments not relating to categories 1-12.                                                           |Looks good, done, thanks |
 
 ## SVM Classifier Implementation
 
@@ -170,9 +170,8 @@ load repository data for the 100 most forked java repositories on GitHub.
 import urllib.request
 import json
 
-github_token='<token>'
 # URL to consume GitHub REST API to retrieve the top 50 most forked repositories on GitHub
-url = 'https://api.github.com/search/repositories?q=language:java&sort=forks&order=desc&per_page=100&page=1&access_token=' + github_token
+url = 'https://api.github.com/search/repositories?q=language:java&sort=forks&order=desc&per_page=100&page=1'
 # Execute the HTTP GET request
 resp_text = urllib.request.urlopen(urllib.request.Request(url)).read().decode('UTF-8')
 # load the JSON response in a python object
@@ -192,8 +191,7 @@ for repo in repos_json_obj['items']:
     for j in range(1, 11):
         # URL to consume GitHub REST API to retrieve 100 review comments
         url = 'https://api.github.com/repos/' + repo['owner']['login'] \
-        + '/' + repo['name'] + '/pulls/comments?direction=desc&per_page=100&page=' + str(j) \
-        + '&access_token=' + github_token
+        + '/' + repo['name'] + '/pulls/comments?direction=desc&per_page=100&page=' + str(j)
         # Execute the HTTP GET request and store response in object
         json_obj = json.loads(urllib
                               .request
@@ -243,4 +241,6 @@ plt.gca().add_artist(my_circle)
 plt.show()
 ```
 {% include amcharts.editor.html %}
+
+## Discussion
 
