@@ -24,6 +24,8 @@ table {
   width: 100%;
   table-layout: fixed;
 }
+
+
 tr:nth-child(even) {
     background-color: #c1e7ff94;
 }
@@ -1185,6 +1187,13 @@ hr {
 .post-comments {
 	border-top: 1px solid #dddddd;
 	padding: 60px 0; }
+.post_tags {
+    border: 1px solid #bfb7b7;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5%;
+	
+}
 
 .post-meta {
 	margin: 0 0 .4em 0;
