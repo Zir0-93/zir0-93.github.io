@@ -1188,12 +1188,14 @@ hr {
 	border-top: 1px solid #dddddd;
 	padding: 60px 0; }
 .post_tags {
-    border: 1px solid #908989;
     padding: 5px;
-    margin: 5px;
-    border-radius: 5%;
-    color: #53545d;
-	
+    margin: 3px;
+    border-radius: 7%;
+    color: white;
+    background-color: #2196F3;
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;	
 }
 
 .post-meta {
