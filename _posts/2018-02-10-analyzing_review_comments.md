@@ -1,5 +1,5 @@
 --- 
-title:  "Analyzing GitHub Code Review Comments using Text Classification"
+title:  "Analyzing Code Review Comments on GitHub - A Text Classification Experiment"
 image: /images/code-reviews.png
 date:   2018-05-04 15:04:23
 categories: [machine-learning]
