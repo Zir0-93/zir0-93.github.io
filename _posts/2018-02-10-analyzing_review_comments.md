@@ -37,7 +37,7 @@ to the topic it spent the most words discussing.
 | High Level Method Semantics & Design                           | 10    | Comments relating to method design and semantics.                                                           |"This method should return a String" |
 | High Level Class Semantics & Design                           | 11    | Comments relating to class design and semantics.                                                           |"This should extend Foo" |
 | Testing                           | 12    |                                                           |"is there a test for this?" |
-| Other                           | 13    | Comments not relating to categories 1-12.                                                           |Looks good, done, thanks |
+| Other                           | 13    | Comments not relating to categories 1-12.                                                           |"Looks good", "done", "thanks" |
 
 ## SVM Classifier Implementation
 
