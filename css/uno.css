@@ -984,9 +984,9 @@ a {
     font-weight: bold; }
 
 	a:hover {
-		background-color:white;
-		color:#2196F3;
-		border-color:#2196F3;
+		background-color:#2196F3;
+		color:white;
+		border-color:white;
 		-o-transition: .5s;
 		-ms-transition: .5s;
 		-moz-transition: .5s;
@@ -1193,13 +1193,20 @@ hr {
     padding: 5px;
     margin: 3px;
     border-radius: 7%;
-    color: white;
     font-size: 10px;
     border: 1px solid;
-    background-color: #2196F3;
+    
     -o-transition: .5s;
     -ms-transition: .5s;
-    -moz-transition: .5s;	
+    -moz-transition: .5s;
+	
+	background-color: white;
+    color: #2196F3;
+    border-color: #2196F3;
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
 }
 
 .post-meta {
