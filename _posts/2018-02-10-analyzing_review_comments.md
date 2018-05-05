@@ -242,6 +242,6 @@ fig = plt.gcf().set_size_inches(20,20)
 plt.gca().add_artist(my_circle)
 plt.show()
 ```
-
+<center> <h3>GitHub Review Comment Classifications</h3> </center>
 {% include amcharts.editor.html %}
 
