@@ -150,8 +150,7 @@ from sklearn.linear_model import SGDClassifier
 
 text_clf_svm = Pipeline([('vect', CountVectorizer()), ('tfidf', TfidfTransformer()),
                          ('clf-svm', SGDClassifier(loss='hinge', penalty='elasticnet',alpha=1e-3, max_iter=5, random_state=42))])
-
-print(len(comment_test))
+                         
 text_clf_svm = text_clf_svm.fit(comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 np.mean(predicted_svm == classification_test)
