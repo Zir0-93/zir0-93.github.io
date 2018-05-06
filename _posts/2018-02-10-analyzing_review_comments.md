@@ -58,12 +58,15 @@ with open('review_comments_labels.txt') as g:
  Markdown stadard will negatively impact our classifier's ability to recognize identical words.
  
  ```python
- import re 
-
+ import re
+ 
 for index, comment in enumerate(comments):
-    comments[index] = re.sub("\*|\[|\]|#|\!|`|,|\.|\"|;", "", comments[index])
-    comments[index] = re.sub("\.|\(|\)|<|>", " ", comments[index])
-    comments[index] = ' '.join(comments[index].split())
+    # replace odd formatting characters
+    comment = re.sub("\*|\[|\]|#|\!|,|\.|\"|;|\?|\(|\)|`.*?`", "", comment)
+    comment = re.sub("\.|\(|\)|<|>", " ", comment)
+    # remove markdown code in comments
+    comment = ' '.join(comment.split())
+    comments[index] = comment
 ```
 
 Next, all stop words are removed from the review comments. A stop word is a commonly used word
