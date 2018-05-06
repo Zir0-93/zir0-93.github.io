@@ -140,10 +140,7 @@ from sklearn.model_selection import train_test_split
 
 comment_train, comment_test, classification_train, classification_test = train_test_split(comments, classifications, test_size=0.2)
 ```
-Lastly, we can run our SVM machine learning algorithm with the components developed so far. Additionally, our developed classifier
-contains various parameters which can be tuned to obtain optimal performance. Scikit gives an extremely useful tool, `GridSearchCV` 
-with which performance tuning for our various parameters will be carried out. As you can see, our classifier scored an accuracy 
-of 93% on the test data set.
+Lastly, we can complete our classifier by combining the components developed so far with the scikit SVM classifier using the scikit `Pipeline` module. The purpose of the pipeline is to assemble several steps that can be cross-validated together while setting different parameters.  As you can see, our developed classifier scored an accuracy of 93% on the test data set.
 
 ```python
 # Training Support Vector Machines - SVM and calculating its performance
