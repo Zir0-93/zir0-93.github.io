@@ -143,7 +143,7 @@ comment_train, comment_test, classification_train, classification_test = train_t
 Lastly, we can run our SVM machine learning algorithm with the components developed so far. Additionally, our developed classifier
 contains various parameters which can be tuned to obtain optimal performance. Scikit gives an extremely useful tool, `GridSearchCV` 
 with which performance tuning for our various parameters will be carried out. As you can see, our classifier scored an accuracy 
-of 95% on the test data set.
+of 93% on the test data set.
 
 ```python
 # Training Support Vector Machines - SVM and calculating its performance
@@ -152,14 +152,14 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import SGDClassifier
 
 text_clf_svm = Pipeline([('vect', CountVectorizer()), ('tfidf', TfidfTransformer()),
-                         ('clf-svm', SGDClassifier(loss='hinge', penalty='l2',alpha=1e-3, max_iter=5, random_state=42))])
+                         ('clf-svm', SGDClassifier(loss='hinge', penalty='elasticnet',alpha=1e-3, max_iter=5, random_state=42))])
 
 print(len(comment_test))
 text_clf_svm = text_clf_svm.fit(comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 np.mean(predicted_svm == classification_test)
 ```
-``` 0.95499999999999996 ```
+``` 0.93269230769230771 ```
 
 ## Classifying GitHub Review Comments
 We now leverage the classifier developed in the previous section to classify over 30000 GitHub review comments from the top 100
