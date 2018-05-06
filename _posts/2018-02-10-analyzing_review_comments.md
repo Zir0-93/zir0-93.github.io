@@ -180,13 +180,10 @@ repos_json_obj = json.loads(resp_text)
 Next, we use the GitHub REST API again to collect a list of all the review comments from each repository.
 
 ```python
-from IPython.display import clear_output
-
 review_comments = []
 
 # loop through our list of 100 most forked java repositories..
 for repo in repos_json_obj['items']:
-    print("Retrieving review comments for repository:", repo['name'] )
     # i is the current page number
     for j in range(1, 11):
         # URL to consume GitHub REST API to retrieve 100 review comments
@@ -200,7 +197,6 @@ for repo in repos_json_obj['items']:
                               .decode('UTF-8'))
         # Store all review comments from the response
         review_comments.extend(json_obj)
-    clear_output() 
     
 print ('Collected', str(len(review_comments)), 'review comments.')
 ```
