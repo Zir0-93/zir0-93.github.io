@@ -30,7 +30,7 @@ to the topic it spent the most words discussing.
 | Error/Resource Handling         | 4     | Comments related to exception/resource handling, program failure,  termination analysis, resource . |"Forgot to catch a possible exception here" |
 | Control Structures/Program Flow | 5     | Comments related to usage of loops, if-statements, placement of individual lines of code.           |"This if-statement should be moved after the while loop" |
 | Visibility/ Access              | 6     | Comments related to access level for classes, fields, methods and local variables.                  |"Make this final" |
-| Efficiency / Optimization       | 7     |                                                                                                     |"Many uneccessary call to foo() here" |
+| Efficiency / Optimization       | 7     |                                                                                                     |"Many uneccessary calls to foo() here" |
 | Code Organization/ Refactoring  | 8     | Comments related to extracting code from methods and classes, moving large chunks of code around.   |"Please extract this logic into a separate method" |
 | Concurrency                     | 9    | Comments related to threads, synchronization, parallelism.                                          |"This class does not look thread safe" |
 | High Level Method Semantics & Design                           | 10    | Comments relating to method design and semantics.                                                           |"This method should return a String" |
