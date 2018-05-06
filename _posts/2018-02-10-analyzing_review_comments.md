@@ -98,7 +98,7 @@ count_vect = CountVectorizer()
 comments_train_counts = count_vect.fit_transform(comments)
 comments_train_counts.shape
 ```
-```(307, 1499)```
+```(1036, 2787)```
 
 Moreover, further improvements can be made to this method of representing the review comment texts through the incorporation
 of inverse document frequency statistic.
@@ -128,7 +128,7 @@ tfidf_transformer = TfidfTransformer()
 comments_train_tfidf = tfidf_transformer.fit_transform(comments_train_counts)
 comments_train_tfidf.shape
 ```
-```(307, 1499)```
+```(1036, 2787)```
 
 Now that the classifier itself is almost ready, an important consideration now is the amount of data to use for testing the classifier. After having included a minimum
 of 50 review comments for each classification in the training set, we experimented with different numbers of review comments
