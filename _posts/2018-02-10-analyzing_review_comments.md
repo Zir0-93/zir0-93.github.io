@@ -2,7 +2,7 @@
 title:  "Analyzing Code Review Comments on GitHub - A Text Classification Experiment"
 image: /images/code-reviews.png
 date:   2018-05-04 15:04:23
-tags: [machine learning, GitHub, code reviews, NLP, n-grams]
+tags: [machine learning, GitHub, code reviews, NLP, n-grams, pyhon, scikit]
 excerpt_separator: <!--more-->
 ---
 A code review is a form of code inspection where a developer assesses code for style, defects, and other standards prior to integration into a code base. As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in factilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions. In an effort to better understand code reivewing habbits, we develop an SVM classifier to classify over 30 000 GitHub review comments based on the main topic
@@ -129,8 +129,7 @@ comments_train_tfidf.shape
 ```
 ```(1036, 2787)```
 
-Now that the classifier itself is almost ready, an important consideration now is the amount of data to use for testing the classifier. After having included a minimum
-of 50 review comments for each classification in the training set, we experimented with different numbers of review comments
+Now that the classifier itself is almost ready, an important consideration now is the amount of training data to use for testing the classifier. After ensuring that atleast 50 review comments for each classification are present in our labelled data set, we experimented with different numbers of review comments
 to see what gave the best results. 1000 review comments seemed to give a good accuracy for the classifier as we will see below. We dedicate 80% of our 1000 GitHub review comments data to the training set, which we use to train our SVM classifier. The remaining 20% of the 
 data will be dedicated to the test set, which we use to test the performance of the developed classifier.
 
