@@ -1738,14 +1738,14 @@ input[type="tel"] {
 	.navigation__item {
 		width: 100%;
 		margin: 0 0 .4em 0; } }
-@media all and (max-width: 340px) {
-	.panel-main__inner {
-		padding: 0 5%; }
-	
+@media all and (max-width: 640px) {
 	.post_image {
 		display:none;	
 	}
-
+}
+@media all and (max-width: 340px) {
+	.panel-main__inner {
+		padding: 0 5%; }
 	.panel-title {
 		margin-bottom: .1em;
 		font-size: 1.5em; }
