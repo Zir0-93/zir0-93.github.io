@@ -1741,6 +1741,10 @@ input[type="tel"] {
 @media all and (max-width: 340px) {
 	.panel-main__inner {
 		padding: 0 5%; }
+	
+	.post_image {
+		display:none;	
+	}
 
 	.panel-title {
 		margin-bottom: .1em;
