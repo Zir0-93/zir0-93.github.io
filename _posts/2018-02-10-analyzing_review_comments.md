@@ -45,7 +45,7 @@ line, while the [second file](https://raw.githubusercontent.com/Zir0-93/zir0-93.
 
 ```python
 with open('review_comments.txt') as f:
-    comments = f.readlines()
+    review_comments = f.readlines()
     
 with open('review_comments_labels.txt') as g:
     classifications = g.readlines()
@@ -57,15 +57,20 @@ with open('review_comments_labels.txt') as g:
  Markdown stadard will negatively impact our classifier's ability to recognize identical words.
  
  ```python
- import re
- 
-for index, comment in enumerate(comments):
-    # replace odd formatting characters
-    comment = re.sub("\*|\[|\]|#|\!|,|\.|\"|;|\?|\(|\)|`.*?`", "", comment)
-    comment = re.sub("\.|\(|\)|<|>", " ", comment)
-    # remove markdown code in comments
-    comment = ' '.join(comment.split())
-    comments[index] = comment
+import re 
+
+def formatComment(comment):
+        comment = re.sub("\*|\[|\]|#|\!|,|\.|\"|;|\?|\(|\)|`.*?`", "", comment)
+        comment = re.sub("\.|\(|\)|<|>", " ", comment)
+        comment = ' '.join(comment.split())
+        return comment
+        
+
+def formatComments(comments):
+    for index, comment in enumerate(comments):
+        comments[index] = formatComment(comment)  
+
+formatComments(review_comments)
 ```
 
 Next, all stop words are removed from the review comments. A stop word is a commonly used word
@@ -94,7 +99,7 @@ review comments using the `CountVectorizer` module.
 # Extracting features from text files
 from sklearn.feature_extraction.text import CountVectorizer
 count_vect = CountVectorizer()
-comments_train_counts = count_vect.fit_transform(comments)
+comments_train_counts = count_vect.fit_transform(review_comments)
 comments_train_counts.shape
 ```
 ```(1036, 2787)```
@@ -136,7 +141,7 @@ data will be dedicated to the test set, which we use to test the performance of 
 ```python
 from sklearn.model_selection import train_test_split
 
-comment_train, comment_test, classification_train, classification_test = train_test_split(comments, classifications, test_size=0.2)
+comment_train, comment_test, classification_train, classification_test = train_test_split(review_comments, classifications, test_size=0.2)
 ```
 Lastly, we can complete our classifier by combining the components developed so far with the scikit SVM classifier using the scikit `Pipeline` module. The purpose of the pipeline is to assemble several steps that can be cross-validated together while setting different parameters.  As you can see, our developed classifier scored an accuracy of 93% on the test data set.
 
@@ -149,7 +154,7 @@ from sklearn.linear_model import SGDClassifier
 text_clf_svm = Pipeline([('vect', CountVectorizer()), ('tfidf', TfidfTransformer()),
                          ('clf-svm', SGDClassifier(loss='hinge', penalty='elasticnet',alpha=1e-3, max_iter=5, random_state=42))])
                          
-text_clf_svm = text_clf_svm.fit(comments, classifications)
+text_clf_svm = text_clf_svm.fit(review_comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 np.mean(predicted_svm == classification_test)
 ```
@@ -220,7 +225,7 @@ explode = [0.03] * 13
 
 # loop through review comments and score
 for review_comment in review_comments:
-    label = int(text_clf_svm.predict([review_comment['body']])[0])
+    label = int(text_clf_svm.predict([formatComment(review_comment['body'])])[0])
     sizes[label - 1] += 1
 
 # Create a circle for the center of the plot
