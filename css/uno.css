@@ -1497,6 +1497,10 @@ i {
 	display: block;
 	position: relative; }
 
+.post_image_description {
+		width: 80%;	
+}
+
 .post-list {
 	margin: 0;
 	padding: 0;
@@ -1741,6 +1745,9 @@ input[type="tel"] {
 @media all and (max-width: 640px) {
 	.post_image {
 		display:none;	
+	}
+	.post_image_description {
+		width: 100%;	
 	}
 }
 @media all and (max-width: 340px) {
