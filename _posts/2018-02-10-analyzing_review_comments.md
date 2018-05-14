@@ -14,7 +14,7 @@ addressed by each comment (e.g. naming, readability, etc.).
 ## Review Comment Categories
 
 The list of categories incorporated by our classifier are summarized in the table below. This list was developed based on a manual survey of 
-approximately 1000 GitHub review comments taken from the top ten most forked repositories on GitHub. We selected this range of repositories in the hope that the most forked repositories exhibit standard open source code reviewing practices. The selected 
+approximately 2000 GitHub review comments taken from the top ten most forked repositories on GitHub. We selected this range of repositories in the hope that the most forked repositories exhibit standard open source code reviewing practices. The selected 
 categories reflect the most frequently occurring topics encountered in the surveyed review comments. Majority of the categories 
 are related to code level concepts (e.g. variable naming, exception handling); however, certain review comments 
 that did not naturally fall into any existing categories and were unrelated to the overall goal of code reviewing were placed in
@@ -40,7 +40,7 @@ to the topic it spent the most words discussing.
 ## SVM Classifier Implementation
 
 We now discuss our SVM text classifier implementation. This experiment represents a typical supervised learning classification exercise.
-We first load our training data from a local directory which consists of two files representing 1000 manually labelled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments.txt) contains a review comment on each
+We first load our training data from a local directory which consists of two files representing 2000 manually labelled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments.txt) contains a review comment on each
 line, while the [second file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments_labels.txt)  contains manually determined classifications for each corresponding review comment on each line.
 
 ```python
@@ -104,14 +104,7 @@ comments_train_counts.shape
 ```
 ```(1036, 2787)```
 
-Moreover, further improvements can be made to this method of representing the review comment texts through the incorporation
-of inverse document frequency statistic.
-Consider a commonly occurring term like `the`. A simple bag of words model based only on term frequency would tend to incorrectly
-emphasize review comments which happen to use the word `the` more frequently, without giving enough weight to the more meaningful
-terms like `variable` and `naming`. This is problematic as the term `the` is not a good keyword to distinguish relevant and
-non-relevant documents and terms, unlike the less-common words `variable` and `naming`. Hence an inverse document frequency 
-factor is incorporated to diminsh the weight of terms that occur very frequently in the review comment set and increases the
-weight of terms that occur rarely.
+Moreover, we also investigate incorporating the inverse document frequency statistic, a common technique used in text classification experiments. To understand how the technique works, consider a commonly occurring term like "the". A simple bag of words model based only on term frequency would tend to incorrectly emphasize review comments which happen to use the word "the" more frequently, without giving enough weight to the more meaningful terms like "variable" and "naming". This is problematic as the term "the" is not a good keyword to distinguish relevant and non-relevant documents and terms, unlike the less-common words "variable" and "naming". Hence an inverse document frequency factor is incorporated which diminishes the weight of terms that occur very frequently in the document set and increases the weight of terms that occur rarely. This factor is given by the equation.
 
 Putting it all together, the weight the td-idf statistic assigns to a given term is:
 
@@ -134,8 +127,8 @@ comments_train_tfidf.shape
 ```
 ```(1036, 2787)```
 
-Now that the classifier itself is almost ready, an important consideration now is the amount of training data to use for testing the classifier. After ensuring that atleast 50 review comments for each classification are present in our labelled data set, we experimented with different numbers of review comments
-to see what gave the best results. 1000 review comments seemed to give a good accuracy for the classifier as we will see below. We dedicate 80% of our 1000 GitHub review comments data to the training set, which we use to train our SVM classifier. The remaining 20% of the 
+Now that the classifier itself is almost ready, an important consideration now is the amount of training data to use for testing the classifier. After ensuring that atleast 100 review comments for each classification are present in our labelled data set, we experimented with different numbers of review comments
+to see what gave the best results. 2000 review comments seemed to give a good accuracy for the classifier as we will see below. We dedicate 80% of our 2000 GitHub review comments data to the training set, which we use to train our SVM classifier. The remaining 20% of the 
 data will be dedicated to the test set, which we use to test the performance of the developed classifier.
 
 ```python
@@ -143,7 +136,7 @@ from sklearn.model_selection import train_test_split
 
 comment_train, comment_test, classification_train, classification_test = train_test_split(review_comments, classifications, test_size=0.2)
 ```
-Lastly, we can complete our classifier by combining the components developed so far with the scikit SVM classifier using the scikit `Pipeline` module. The purpose of the pipeline is to assemble several steps that can be cross-validated together while setting different parameters.  As you can see, our developed classifier scored an accuracy of 93% on the test data set.
+Lastly, we can complete our classifier by combining the components developed so far with the scikit SVM classifier using the scikit `Pipeline` module. The purpose of the pipeline is to assemble several steps that can be cross-validated together while setting different parameters. We also use the scikit `SGDClassifier` module to train our SVM model using Stochastic Gradient Descent (SGD). SGD is an interative based optimisation technique which modifies the SVM parameters on each training iteration to find a local opitmum that produces the best results. We set the number of iterations for our estimator at 1000. As demonstrated below, our developed classifier scored an accuracy of 80.5% on the test data set.
 
 ```python
 # Training Support Vector Machines - SVM and calculating its performance
@@ -151,15 +144,31 @@ import numpy as np
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import SGDClassifier
 
-text_clf_svm = Pipeline([('vect', CountVectorizer()), ('tfidf', TfidfTransformer()),
-                         ('clf-svm', SGDClassifier(loss='hinge', penalty='elasticnet',alpha=1e-3, max_iter=5, random_state=42))])
-                         
-text_clf_svm = text_clf_svm.fit(review_comments, classifications)
+text_clf_svm = Pipeline([('vect', CountVectorizer()), ('tfidf', TfidfTransformer()), 
+                         ('clf-svm', SGDClassifier(loss='hinge', penalty='elasticnet',alpha=1e-3, max_iter=1000, random_state=42))])
+
+text_clf_svm = text_clf_svm.fit(comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 np.mean(predicted_svm == classification_test)
 ```
-``` 0.93269230769230771 ```
+``` 0.80500000000000005 ```
 
+An accuracy of 80.5% did not seem reliable enough for the purpose of classifying over 30 000 GitHub review comments. Moreover, we realized that the incorporation of the tf-idf statistic, while useful for general text classification activities, was not suitable for the classification of review comments. The reason for this can be traced to the treatment of uncommon words in this technique. In a regular document, an uncommon word, like "abject" for example, would be valuable in classifying that document. Review comments also contain uncommon terms; however, these terms mostly reference source code entities which we would not want to our classifier to place a major importance on. If our labeled data set for example consisted of a review comment that read, "The Foo class has some formatting issues.", we would manually assign the `Readability` classification to this comment. The problem is because `Foo` is an uncommon term, our tf-idf based SVM classifier would highly correlate this term with the `Readability` category, which is undesirable. This is because any future review comments containing the term  `Foo` would be given the `Readability` classification with a very high probability, even though that might be incorrect. Therefore, we revert the use of the tf-idf statistic, which raises the accuracy of our classifier to 92.5%
+
+```python
+# Training Support Vector Machines - SVM and calculating its performance
+import numpy as np
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import SGDClassifier
+
+text_clf_svm = Pipeline([('vect', CountVectorizer()), 
+                         ('clf-svm', SGDClassifier(loss='hinge', penalty='elasticnet',alpha=1e-3, max_iter=1000, random_state=42))])
+
+text_clf_svm = text_clf_svm.fit(comments, classifications)
+predicted_svm = text_clf_svm.predict(comment_test)
+np.mean(predicted_svm == classification_test)
+```
+``` 0.92500000000000004 ```
 ## Classifying GitHub Review Comments
 We now leverage the classifier developed in the previous section to classify over 30000 GitHub review comments from the top 100
 most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform, which we will use to mine our Review Comments. In general,
@@ -239,3 +248,17 @@ plt.gca().add_artist(my_circle)
 plt.show()
 ```
 {% include amcharts.editor.html %}
+
+## Discussion
+
+Many of the classifications are related to each other at a conceptual level. For example, a `Readability` problem may be caused due to poor use of `Control Structures`. Therefore, it is important to note that the classifications were based only on what the **review comments explicitly discussed**. That is to say, if a comment read, "poor readability here", we would expect it to be classified as `Readability`. However, if the comment read, "This for loop should be moved before line 2", then `Control Structures` would be its expected classification, despite readability being the motivating factor for the review suggestion. As mentioned previously, in cases where multiple classifications applied, the comment was classified to a category it spend the most words discussing.
+
+Interestingly, 15% of review comments were found to discuss `Readability`. This category of comments not only deals with formatting, project conventions and style, but also with  how easy the code is to follow for a human. While existing static analysis tools are effective in dealing with the former area, they lack the ability to check code effectively in the latter domain. This is supported by the fact that over 80% of the repositories included in our study had some form of static analysis tools checking their code. Additionally, a manual survey of 100 randomly sampled comments classified with `Readability` pointed towards this idea as well. One such comment from our study is illustrated below. While the approach taken by the code contributer is correct, the code review has suggested an alternate approach that increases the clarity of the code.
+
+<img style="width:60%;" src="/images/readability.png">
+
+Error handling, class and method design were areas according to which a significant percentage of review comments were classified under. This does not come as a surprise, as these topics vary greatly in the way they are handled from program to program. Moreover, there is often no single correct way to go about their implementation, resulting in an increased amount of developer discussion, and thus review comments, that exist around them.
+
+The most surprising finding from this study is the fact that 44% of review comments were classified according to the `Other` category. This highlights a major limitation of our approach in using review comments **alone** to understand the subject of typical code review discussions. Without the ability to extract meaningful information from the source code alongside the review comment, it is very difficult to understand what the comment alone is discussing. For example, the figure below illustrate a review comment targeted at a Java annotation for a field variable. However, without viewing the source code, it equally possible to suggest that the review comment is targeted at a method name, class name, or even source code documentation. Moreover, many review comments contain references to source code entities, which also makes their classification a difficult task without the analyzing the source code as well. Lastly, many review comments analyzed consisted of comments serving as a response to previous comments, which do not always reveal information on their own about the original subject of the discussion.
+
+<img style="width:60%;" src="/images/pluralize.png">
