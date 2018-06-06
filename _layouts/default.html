@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
   {% include head.html %}
+  <head>
+    <title>{{ post.title }}</title>
+    <meta property="og:title" content="{{ post.title }}" />
+    <meta property="og:url" content="{{ page.url }}" />
+    <meta property="og:image" content="{{ post.img }}" />  
+  </head>
 
   <body>
     {% include header.html %}
