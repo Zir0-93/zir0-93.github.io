@@ -15,10 +15,10 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="{{ site.title }}">
   <meta name="twitter:description" content="{{ site.description }}">
-
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="{{ site.title }}">
-  <meta property="og:description" content="{{ site.description }}">
+  
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
+  <meta property="og:url" content="{{ page.url }}" />
+  <meta property="og:image" content="{% if post.image %}{{ post.image }}{% else %}{{ site.image }}{% endif %}" />
 
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
