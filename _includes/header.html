@@ -18,13 +18,11 @@
 
         <div class="navigation-wrapper">
           
-          <!-- Resume Button
           <nav class="cover-navigation cover-navigation--primary">
             <ul class="navigation">
-              <li class="navigation__item"><a href="https://github.com/Zir0-93/zir0-93.github.io/raw/master/Muntazir_Resume_v4.pdf" title="Download my resume" class="blog-button">My Resume</a></li>
+              <li id="open-popup" class="navigation__item">Subscribe</li>
             </ul>
           </nav>
-          -->
           
           <nav class="cover-navigation navigation--social">
             <ul class="navigation">
@@ -98,5 +96,13 @@
 
     <div class="panel-cover--overlay"></div>
   </div>
-  <script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script><script type="text/javascript">require(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us18.list-manage.com","uuid":"e29b3cf65fc914736ceb6d80c","lid":"5de0ab474c"}) })</script>
+  <script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false">
+  </script>
+  <script type="text/javascript">
+    function showMailingPopUp() { 
+      require(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us18.list-manage.com","uuid":"e29b3cf65fc914736ceb6d80c","lid":"5de0ab474c"}) })
+      document.cookie = "MCEvilPopupClosed=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    };
+    document.getElementById("open-popup").onclick = function() {showMailingPopUp()};
+  </script>
 </header>
