@@ -26,9 +26,6 @@ form input::-webkit-input-placeholder{
      opacity:  1;
 
  }
-#mc_embed_signup{
-    background-color: #464646;
-}
 
 #mc_embed_signup:hover{
 	background-color:#6f6b6b;
