@@ -1683,7 +1683,10 @@ input[type="tel"] {
 @media all and (max-width: 960px) {
 	.btn-mobile-menu {
 		display: block; }
-
+	
+	#mc_embed_signup {
+		display:none;
+	}
 	.panel-main {
 		display: table;
 		position: relative; }
@@ -1775,9 +1778,6 @@ input[type="tel"] {
 	}
 	.post_image_description {
 		width: 100%;	
-	}
-	#mc_embed_signup {
-		display:none;
 	}
 }
 @media all and (max-width: 340px) {
