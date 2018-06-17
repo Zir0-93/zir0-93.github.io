@@ -966,11 +966,10 @@ html {
 	max-height: 100%; }
 
 body {
-	font-family: Open Sans, "Raleway", sans-serif;
-	font-size: 1em;
-	background-color: #ffffff;
-	color: #000;
-	rgba(200, 200, 200, 0.48);}
+    font-family: Open Sans, sans-serif;
+    font-size: 1.2em;
+    background-color: #ffffff;
+    color: #272525;}
 
 ::selection {
 	background: #fae3df; }
