@@ -1776,6 +1776,9 @@ input[type="tel"] {
 	.post_image_description {
 		width: 100%;	
 	}
+	#mc_embed_signup {
+		display:none;
+	}
 }
 @media all and (max-width: 340px) {
 	.panel-main__inner {
@@ -1783,7 +1786,7 @@ input[type="tel"] {
 	.panel-title {
 		margin-bottom: .1em;
 		font-size: 1.5em; }
-
+	
 	.panel-subtitle {
 		font-size: .9em; }
 
