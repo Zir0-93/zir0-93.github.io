@@ -17,7 +17,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 	display: block; }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:    #2f2f2f;
+    color:    #2f2f2f; 
+    opacity: 1; /* Firefox */
 }
 input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
    color:    #2f2f2f;
@@ -35,10 +36,12 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: #2f2f2f;
+    opacity: 1; /* Firefox */
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
     color: #2f2f2f;
+    opacity: 1; /* Firefox */
 }
 
 table {
