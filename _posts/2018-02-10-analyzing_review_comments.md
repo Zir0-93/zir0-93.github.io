@@ -72,7 +72,7 @@ def formatComments(comments):
 formatComments(review_comments)
 ```
 
-Next, we are going to remove all stop the words from the review comments. A stop word is a commonly used word
+For the next phase, we are going to remove all stop the words from the review comments. A stop word is a commonly used word
 (such as “the”, “a”, “an”, “in”) that we would like to ignore. The reason is for this is that these words 
 take up valuable processing time, but are not very relevant to the classification task at hand. We can remove them easily
 by simply maintaing a list of words that are considered to be stop words. 
@@ -103,9 +103,9 @@ comments_train_counts.shape
 ```
 ```(1036, 2787)```
 
-Moreover, we wil also investigate incorporating the inverse document frequency statistic, a common technique used in text classification experiments. To understand how the technique works, consider a commonly occurring term like "the". A simple bag of words model based only on term frequency would tend to incorrectly emphasize review comments which happen to use the word "the" more frequently, without giving enough weight to the more meaningful terms like "variable" and "naming". This is problematic as the term "the" is not a good keyword to distinguish relevant and non-relevant documents and terms, unlike the less-common words "variable" and "naming". Hence the inverse document frequency factor is incorporated which diminishes the weight of terms that occur very frequently in the document set and increases the weight of terms that occur rarely.
+We wil also experiment with incorporating the inverse document frequency statistic, a common technique used in text classification experiments. To understand how the technique works, consider a commonly occurring term like "the". A simple bag of words model based only on term frequency would tend to incorrectly emphasize review comments which happen to use the word "the" more frequently, without giving enough weight to the more meaningful terms like "variable" and "naming". This is problematic as the term "the" is not a good keyword to distinguish relevant and non-relevant documents and terms, unlike the less-common words "variable" and "naming". Hence the inverse document frequency factor is incorporated which diminishes the weight of terms that occur very frequently in the document set and increases the weight of terms that occur rarely.
 
-Putting it all together, the weight the td-idf statistic assigns to a given term is:
+**Putting it all together, the weight the td-idf statistic assigns to a given term is:**
 
 1. Highest when the term occurs many times within a small number of review comments
 2. Lower when the term occurs fewer times in a review comment, or occurs in many review comments
