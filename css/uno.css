@@ -16,6 +16,18 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 	display: block; }
 
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #2f2f2f;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #2f2f2f;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #2f2f2f;
+   opacity:  1;
+}
+
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #2f2f2f;
     opacity: 1; /* Firefox */
