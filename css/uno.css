@@ -1695,7 +1695,7 @@ input[type="tel"] {
 	.btn-mobile-menu {
 		display: block; }
 	
-	.twitter-follow-button {
+	#twitter_btn {
 		display:none;
 	}
 	.panel-main {
