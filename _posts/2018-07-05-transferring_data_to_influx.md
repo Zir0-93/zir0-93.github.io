@@ -14,15 +14,15 @@ In an effort to garner meaning from rapidly growing data sources, an increasing 
 
 #### Efficiency
 
-A TSDB co-locates chucks of data within the same time range on the same physicalpart of the database cluster and hence enables quick access for faster, more efficient analysis. As aresult, range queries, even over many records complete extremely quickly.  In many cases regular databases produce an index out of memory error because of the sheer volume of time series dataand subsequently affect the performance of read and write operations.
+A TSDB co-locates chucks of data within the same time range on the same physical section of the database cluster and hence enables quick access for faster, more efficient analysis. As a result, range queries, even over many records complete extremely quickly.  In many cases, regular databases produce an index out of memory error because of the sheer volume of time series dataand subsequently affect the performance of read and write operations.
 
 #### Usability
 
-TSDBs typically include functions and operations that are common to time series data analysis. First, they utilize data retention policies, continuous queries, flexible time aggregations,and range queries.  Additionally, they offer mathematical querying functionality that allows usersto understand their data in ways common to the analysis of time series data. As a result, the overalluser experience in dealing with time series data is significantly improved in comparison to database systems in which this functionality needs to be manually configured and developed.
+TSDBs typically include functions and operations that are common to time series data analysis. First, they utilize data retention policies, continuous queries, flexible time aggregations,and range queries.  Additionally, they offer mathematical querying functionality that allows users to understand their data in ways common to the analysis of time series data. As a result, the overall user experience in dealing with time series data is significantly improved in comparison to database systems in which this functionality needs to be manually configured and developed.
 
-### Python Script to Transfer Records From an RDBS To InfluxDB
+### The Python Script
 
-The following script transfers records from PostgreSQL or MySQL to InfluxDB, just fill out the relevant databse connection information and schema design object as required. Note, InfluxDB introduces incorporates some [key concepts](https://docs.influxdata.com/influxdb/v1.5/concepts/key_concepts/) that might seem unfamiliar for those coming from a typical relation database background. These should be read and understood before using the script below: 
+The following script transfers records from a PostgreSQL or MySQL database to InfluxDB - just fill out the relevant database connection information and schema design object as required. Note, InfluxDB incorporates some [key concepts](https://docs.influxdata.com/influxdb/v1.5/concepts/key_concepts/) that might seem unfamiliar for those coming from a typical relation database background. These should be reviewed and understood before using the script below. 
 
 ```python
 ### MySQL DB info ###
