@@ -22,7 +22,7 @@ TSDBs typically include functions and operations that are common to time series 
 
 ### The Python Script
 
-The following script transfers records from a PostgreSQL or MySQL database to InfluxDB - just fill out the relevant database connection information and schema design object as required. Note, InfluxDB incorporates some [key concepts](https://docs.influxdata.com/influxdb/v1.5/concepts/key_concepts/) that might seem unfamiliar for those coming from a typical relation database background. These should be reviewed and understood before using the script below. 
+The following script transfers records from a PostgreSQL or MySQL database to InfluxDB - just fill out the relevant database connection information and schema design object as required. You need to also make sure you have the appropriate python libraries installed: `pip install psycopg2 mysqlclient indfluxdb`. Note, InfluxDB incorporates some [key concepts](https://docs.influxdata.com/influxdb/v1.5/concepts/key_concepts/) that might seem unfamiliar for those coming from a typical relation database background. These should be reviewed and understood before using the script below. 
 
 ```python
 ### MySQL DB info ###
