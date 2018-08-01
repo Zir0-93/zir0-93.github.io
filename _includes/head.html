@@ -14,12 +14,12 @@
   
   <meta name="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta name="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="og:image" content="{{ page.image | prepend: site.url}}" />
-  <meta name="og:url" content="{{ page.url | prepend: site.url }}" />
+  <meta name="og:image" content="{{ site.url }}/{{ page.image }}" />
+  <meta name="og:url" content="{{ site.url }}/{{ page.url }}" />
 
   <meta name="twitter:card" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta name="twitter:image" content="{{ page.image | prepend: site.url}}" />
+  <meta name="twitter:image" content="{{ site.url }}/{{ page.image }}" />
   <meta name="twitter:creator" content="{{ @FadhelMuntazir }}" />
   <link href="//cdn-images.mailchimp.com/embedcode/slim-10_7.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
