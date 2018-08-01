@@ -3,6 +3,7 @@ title:  "Analyzing JavaScript Programmatically In Java Using The Google-Closure 
 date:   2016-12-15 15:04:23
 image: /images/closurecompiler.png
 tags: [javascript, closure, compiler, google]
+description: The Google Closure Compiler is a tool for making JavaScript download and run faster. Instead of compiling from a source language to machine code, it compiles from JavaScript to better JavaScript. It parses your JavaScript, analyzes it, removes dead code and rewrites and minimizes what's left. It also checks syntax, variable references, and types, and warns about common JavaScript pitfalls.
 excerpt_separator: <!--more-->
 ---
 The Closure Compiler is a tool for making JavaScript download and run faster. Instead of compiling from a source language to 
