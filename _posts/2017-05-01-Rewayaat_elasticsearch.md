@@ -3,6 +3,7 @@ title:  "Developing a Search Engine using Elastic Search"
 date:   2017-05-01 15:04:23
 image: /images/elasticsearchicon.png
 tags: [stemmers, synonyms, fuzziness, elastic search, search]
+description: ElasticSearch is an open-source, broadly-distributable, readily-scalable, enterprise-grade search engine. Accessible through an extensive and elaborate API, Elasticsearch can power extremely fast searches that support your data discovery applications. I recently worked on implementing a multi-language search engine using Elastic Search and found that for certain use cases, rolling Elastic Search for your back end offers significant advantages over conventional SQL database systems.
 excerpt_separator: <!--more-->
 ---
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is an open-source, broadly-distributable, readily-scalable, enterprise-grade search engine. Accessible through an extensive
