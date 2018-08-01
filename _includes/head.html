@@ -14,30 +14,30 @@
   
   <meta name="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta name="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="og:image" content="{{ page.image | prepend: site.baseurl}}" />
-  <meta name="og:url" content="{{ page.url }}" />
+  <meta name="og:image" content="{{ page.image | prepend: site.url}}" />
+  <meta name="og:url" content="{{ page.url | prepend: site.url }}" />
 
   <meta name="twitter:card" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
-  <meta name="twitter:image" content="{{ page.image | prepend: site.baseurl}}" />
+  <meta name="twitter:image" content="{{ page.image | prepend: site.url}}" />
   <meta name="twitter:creator" content="{{ @FadhelMuntazir }}" />
   <link href="//cdn-images.mailchimp.com/embedcode/slim-10_7.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|Source+Sans+Pro" rel="stylesheet">
-  <link rel="apple-touch-icon" sizes="57x57" href="{{ "images/favicons/apple-touch-icon-57x57.png" | prepend: site.baseurl }}">
-  <link rel="apple-touch-icon" sizes="60x60" href="{{ "images/favicons/apple-touch-icon-60x60.png" | prepend: site.baseurl }}">
-  <link rel="apple-touch-icon" sizes="72x72" href="{{ "images/favicons/apple-touch-icon-72x72.png" | prepend: site.baseurl }}">
-  <link rel="apple-touch-icon" sizes="76x76" href="{{ "images/favicons/apple-touch-icon-76x76.png" | prepend: site.baseurl }}">
-  <link rel="apple-touch-icon" sizes="114x114" href="{{ "images/favicons/apple-touch-icon-114x114.png" | prepend: site.baseurl }}">
-  <link rel="apple-touch-icon" sizes="120x120" href="{{ "images/favicons/apple-touch-icon-120x120.png" | prepend: site.baseurl }}">
-  <link rel="apple-touch-icon" sizes="144x144" href="{{ "images/favicons/apple-touch-icon-144x144.png" | prepend: site.baseurl }}">
-  <link rel="apple-touch-icon" sizes="152x152" href="{{ "images/favicons/apple-touch-icon-152x152.png" | prepend: site.baseurl }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ "images/favicons/apple-touch-icon-180x180.png" | prepend: site.baseurl }}">
-  <link rel="icon" type="image/png" href="{{ "images/favicons/favicon-32x32.png" | prepend: site.baseurl }}" sizes="32x32">
-  <link rel="icon" type="image/png" href="{{ "images/favicons/favicon-194x194.png" | prepend: site.baseurl }}" sizes="194x194">
-  <link rel="icon" type="image/png" href="{{ "images/favicons/favicon-96x96.png" | prepend: site.baseurl }}" sizes="96x96">
-  <link rel="icon" type="image/png" href="{{ "images/favicons/android-chrome-192x192.png" | prepend: site.baseurl }}" sizes="192x192">
+  <link rel="apple-touch-icon" sizes="57x57" href="{{ "images/favicons/apple-touch-icon-57x57.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{{ "images/favicons/apple-touch-icon-60x60.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ "images/favicons/apple-touch-icon-72x72.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ "images/favicons/apple-touch-icon-76x76.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ "images/favicons/apple-touch-icon-114x114.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{{ "images/favicons/apple-touch-icon-120x120.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ "images/favicons/apple-touch-icon-144x144.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{{ "images/favicons/apple-touch-icon-152x152.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ "images/favicons/apple-touch-icon-180x180.png" | prepend: site.url }}">
+  <link rel="icon" type="image/png" href="{{ "images/favicons/favicon-32x32.png" | prepend: site.url }}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ "images/favicons/favicon-194x194.png" | prepend: site.url }}" sizes="194x194">
+  <link rel="icon" type="image/png" href="{{ "images/favicons/favicon-96x96.png" | prepend: site.url }}" sizes="96x96">
+  <link rel="icon" type="image/png" href="{{ "images/favicons/android-chrome-192x192.png" | prepend: site.url }}" sizes="192x192">
   <link rel="icon" type="image/png" href="{{ "images/favicons/favicon-16x16.png" | prepend: site.baseurl }}" sizes="16x16">
   <link rel="manifest" href="{{ "images/favicons/manifest.json" | prepend: site.baseurl }}">
   <link rel="shortcut icon" href="{{ "images/favicons/favicon.ico" | prepend: site.baseurl }}">
