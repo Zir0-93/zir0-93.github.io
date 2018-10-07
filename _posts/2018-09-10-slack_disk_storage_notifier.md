@@ -8,7 +8,6 @@ enables you to centralize all your notifications, from sales to tech support, so
 where your team can discuss and take action on each. In this article, I'll share a simple bash script that reports local 
 disk storage levels to Slack at a continuous time interval. It is easily deployable to multiple instances, highly configurable,
 and can helps teams take proactive measures in maintaining the operational well-being of their systems.
-
 excerpt_separator: <!--more-->
 ---
 
