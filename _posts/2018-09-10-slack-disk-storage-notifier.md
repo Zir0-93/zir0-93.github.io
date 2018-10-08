@@ -35,17 +35,19 @@ prompt. New jobs can be installed by adding a new entry to the file with the fol
 ```
 Where,
 
-0. Minute (0-59)
-0. Hours (0-23)
-0. Day (0-31)
-0. Month (0-12 [12 == December])
-0. Day of the week(0-7 [7 or 0 == sunday])
-/path/to/command – Script or command name to schedule
+**1** - Minute (0-59)
+**2** - Hours (0-23)
+**3** - Day (0-31)
+**4** - Month (0-12 [12 == December])
+**5** - Day of the week(0-7 [7 or 0 == sunday])
+**/path/to/command** – Script or command name to schedule
 
-To run the script, simply execute it as a bash script. The Webhook URL can be fed either as the first agrument to the script or
-as the value of the SLACK_WEBHOOK_URL environment variable. Assuming the Webhook URL is stored in this environment variable,
+To run the script, simply execute it as a bash script. The Webhook URL generated in step 1 can be inputted to the script either as the first agrument when executing the script or
+as an environment variable named `SLACK_WEBHOOK_URL`. Assuming the Webhook URL is stored in this environment variable,
 the script should be run every week at midnight on Sunday, and the script is located in my home folder, 
 the following crontab entry would do the trick:
 ```
 * * * * 0 ./home/slack_storage_notifier.sh
 ```
+
+That is everything you need to get the integration working. Thank you for reading, please leave your comments and questions, and have a great day!
