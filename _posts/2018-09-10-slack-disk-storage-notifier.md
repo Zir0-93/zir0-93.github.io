@@ -36,16 +36,11 @@ prompt. New jobs can be installed by adding a new entry to the file with the fol
 ```
 Where,
 
-**1** - Minute (0-59)
-
+**1** - Minute (0-59) <br>
 **2** - Hours (0-23)
-
 **3** - Day (0-31)
-
 **4** - Month (0-12 [12 == December])
-
 **5** - Day of the week(0-7 [7 or 0 == sunday])
-
 **/path/to/command** – Script or command name to schedule
 
 
@@ -57,4 +52,4 @@ the following crontab entry would do the trick:
 * * * * 0 ./home/slack_storage_notifier.sh
 ```
 
-That is everything you need to get the integration working. Thank you for reading, please leave your comments and questions, and have a great day!
+Note the machine name used in the slack message corresponds the the `$HOSTNAME` environment variable on the instance. And that's everything you need to get the integration working. Thank you for reading, please leave your comments and questions, and have a great day!
