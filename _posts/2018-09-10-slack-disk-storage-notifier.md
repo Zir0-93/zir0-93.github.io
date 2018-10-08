@@ -13,7 +13,8 @@ Integrations are what takes Slack from a normal online instant messaging and col
 ![inheritance](/images/notification.png)
 
 The script is available on GitHub and can be dropped anywhere on the instance you want to monitor. At a specified interval, it will
-post disk storage related information to slack as illustrated above. To get up and running, you need to setup *two* things:
+post disk storage related information to slack as illustrated above. **Two quick steps** are required for getting
+setup and running.
 
 #### **1 - Create a Slack Webhook Notification**: 
 
