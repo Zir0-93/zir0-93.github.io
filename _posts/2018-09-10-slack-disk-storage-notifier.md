@@ -15,14 +15,18 @@ Integrations are what takes Slack from a normal online instant messaging and col
 The script is available on GitHub and can be dropped anywhere on the instance you want to monitor. At a specified interval, it will
 post disk storage related information to slack as illustrated above. To get up and running, you need to setup *two* things:
 
-0. **Create a Slack Webhook Notification**: This will allow the script to post as a bot/integration instead of as yourself (which would
+#### **1 - Create a Slack Webhook Notification**: 
+
+This will allow the script to post as a bot/integration instead of as yourself (which would
 require your personal credentials). First, ensure the [Incoming WebHooks](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks?next_id=0) app
 is installed in your slack organization. Next, click `Add Configuration` and read the instructions to configure the integration settings 
 as desired. Copy the value for the `Webhook URL` field, which will be required in the next step.
 
 ![inheritance](/images/integrationv2.png)
 
-0. **Use a time-based job scheduler to run the script**: The job scheduler will execute the script regularly at a time interval based
+#### **2 - Use a time-based job scheduler to run the script**: 
+
+The job scheduler will execute the script regularly at a time interval based
 on how often we want to view the reports. On a Linux environment, the `crontab` command, which is used to schedule 
 commands to be executed periodically, is the perfect tool for the job. To create a new cronjob, simply type `crontab -e` in a command
 prompt. New jobs can be installed by adding a new entry to the file with the following syntax:
