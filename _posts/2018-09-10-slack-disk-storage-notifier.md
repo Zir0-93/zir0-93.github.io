@@ -1,5 +1,5 @@
 --- 
-title:  "Slack Integration to Monitor Disk Storage Levels"
+title:  "Monitor Disk Storage Using A Slack App"
 image: /images/Analytics-icon.png
 date:  2018-09-10 15:04:23
 tags: [python, slack, bash, script]
