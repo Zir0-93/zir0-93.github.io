@@ -1,0 +1,47 @@
+--- 
+title:  "Monitor Disk Storage Levels on Slack"
+image: /images/Analytics-icon.png
+date:  2018-09-10 15:04:23
+tags: [python, slack, bash, script]
+description: Integrations are what takes Slack from a normal online instant messaging and collaboration system to a solution that enables you to centralize all your notifications, from sales to tech support, social media and more, into one searchable place where your team can discuss and take action on each. In this article, I'll share a simple bash script that reports local disk storage levels to Slack at a continuous time interval. It is easily deployable to multiple instances, highly configurable, and can helps teams take proactive measures in maintaining the operational well-being of their systems.
+
+excerpt_separator: <!--more-->
+---
+Integrations are what takes Slack from a normal online instant messaging and collaboration system to a solution that enables you to centralize all your notifications, from sales to tech support, social media and more, into one searchable place where your team can discuss and take action on each. In this article, I'll share a simple bash script that reports local disk storage levels to Slack at a continuous time interval. It is easily deployable to multiple instances, highly configurable, and can helps teams take proactive measures in maintaining the operational well-being of their systems.
+<!--more-->
+
+![inheritance](/images/notification.png)
+
+The script is available on GitHub and can be dropped anywhere on the instance you want to monitor. At a specified interval, it will
+post disk storage related information to slack as illustrated above. To get up and running, you need to setup *two* things:
+
+0. **Create a Slack Webhook Notification**: This will allow the script to post as a bot/integration instead of as yourself (which would
+require your personal credentials). First, ensure the [Incoming WebHooks](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks?next_id=0) app
+is installed in your slack organization. Next, click `Add Configuration` and read the instructions to configure the integration settings 
+as desired. Copy the value for the `Webhook URL` field, which will be required in the next step.
+
+![inheritance](/images/integrationv2.png)
+
+0. **Use a time-based job scheduler to run the script**: The job scheduler will execute the script regularly at a time interval based
+on how often we want to view the reports. On a Linux environment, the `crontab` command, which is used to schedule 
+commands to be executed periodically, is the perfect tool for the job. To create a new cronjob, simply type `crontab -e` in a command
+prompt. New jobs can be installed by adding a new entry to the file with the following syntax:
+```
+1 2 3 4 5 /path/to/command arg1 arg2
+```
+Where,
+
+0. Minute (0-59)
+0. Hours (0-23)
+0. Day (0-31)
+0. Month (0-12 [12 == December])
+0. Day of the week(0-7 [7 or 0 == sunday])
+/path/to/command – Script or command name to schedule
+
+To run the script, simply execute it as a bash script. The Webhook URL can be fed either as the first agrument to the script or
+as the value of the SLACK_WEBHOOK_URL environment variable. Assuming the Webhook URL is stored in this environment variable,
+the script should be run every week at midnight on Sunday, and the script is located in my home folder, 
+the following crontab entry would do the trick:
+```
+* * * * 0 ./home/slack_storage_notifier.sh
+```
