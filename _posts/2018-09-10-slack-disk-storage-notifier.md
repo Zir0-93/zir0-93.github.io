@@ -37,12 +37,11 @@ prompt. New jobs can be installed by adding a new entry to the file with the fol
 Where,
 
 **1** - Minute (0-59) <br>
-**2** - Hours (0-23)
-**3** - Day (0-31)
-**4** - Month (0-12 [12 == December])
-**5** - Day of the week(0-7 [7 or 0 == sunday])
+**2** - Hours (0-23) <br>
+**3** - Day (0-31) <br>
+**4** - Month (0-12 [12 == December]) <br>
+**5** - Day of the week(0-7 [7 or 0 == sunday]) <br>
 **/path/to/command** – Script or command name to schedule
-
 
 To run the script, simply execute it as a bash script. The Webhook URL generated in step 1 can be inputted to the script either as the first agrument when executing the script or
 as an environment variable named `SLACK_WEBHOOK_URL`. Assuming the Webhook URL is stored in this environment variable,
