@@ -7,7 +7,7 @@ description: Integrations are what takes Slack from a normal online instant mess
 
 excerpt_separator: <!--more-->
 ---
-Integrations are what takes Slack from a normal online instant messaging and collaboration system to a solution that enables you to centralize all your notifications, from sales to tech support, social media and more, into one searchable place where your team can discuss and take action on each. In this article, I'll share a simple bash script that reports local disk storage levels to Slack at a continuous time interval. It is easily deployable to multiple instances, highly configurable, and can helps teams take proactive measures in maintaining the operational well-being of their systems.
+Integrations are what takes Slack from a normal online instant messaging and collaboration system to a solution that enables you to centralize all your notifications, from sales to tech support, social media and more, into one searchable place where your team can discuss and take action on each. In this article, I'll share a simple[bash script]((https://github.com/Zir0-93/slack-storage-notifier/blob/master/slack_storage_notifier.sh)) that reports local disk storage levels to Slack at a continuous time interval. It is easily deployable to multiple instances, highly configurable, and can helps teams take proactive measures in maintaining the operational well-being of their systems.
 <!--more-->
 
 <h3 id="download-from-github"><a style="background: #8080802e; padding: 10px;  border: 1px solid #8080802e;  box-shadow: 5px 10px #8080801f; color: #000000b3;" href="https://github.com/Zir0-93/slack-storage-notifier"><i style="padding-right: 10px;" class="fa fa-github"></i><strong>Download the App on GitHub </strong></a></h3>
