@@ -1,5 +1,5 @@
 --- 
-title:  "Monitor Disk Storage Using A Slack App"
+title:  "A Slack App to Monitor Disk Storage"
 image: /images/icon-ai-data-analytics.png
 date:  2018-09-10 15:04:23
 tags: [python, slack, bash, script]
