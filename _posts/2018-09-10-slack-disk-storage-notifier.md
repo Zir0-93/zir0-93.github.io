@@ -1,21 +1,22 @@
 --- 
-title:  "A Slack App to Monitor Disk Storage"
+title:  "Monitor Disk Usage Levels on Slack"
 image: /images/icon-ai-data-analytics.png
 date:  2018-09-10 15:04:23
 tags: [python, slack, bash, script]
-description: Integrations are what takes Slack from a normal online instant messaging and collaboration system to a solution that enables you to centralize all your notifications, from sales to tech support, social media and more, into one searchable place where your team can discuss and take action on each. In this article, I'll share a simple bash script that reports local disk storage levels to Slack at a continuous time interval. It is easily deployable to multiple instances, highly configurable, and can helps teams take proactive measures in maintaining the operational well-being of their systems.
+description: Integrations are what takes Slack from a normal online instant messaging and collaboration system to a solution that enables you to centralize all your notifications, from sales to tech support, social media and more, into one searchable place where your team can discuss and take action on each. In this article, I'll share a simple [bash script]((https://github.com/Zir0-93/slack-storage-notifier/blob/master/slack_storage_notifier.sh)) that reports local disk storage levels to Slack at a continuous time interval. It is easily deployable to multiple instances, highly configurable, and can helps teams take proactive measures in maintaining the operational well-being of their systems.
 
 excerpt_separator: <!--more-->
 ---
 Integrations are what takes Slack from a normal online instant messaging and collaboration system to a solution that enables you to centralize all your notifications, from sales to tech support, social media and more, into one searchable place where your team can discuss and take action on each. In this article, I'll share a simple bash script that reports local disk storage levels to Slack at a continuous time interval. It is easily deployable to multiple instances, highly configurable, and can helps teams take proactive measures in maintaining the operational well-being of their systems.
 <!--more-->
 
+<h3 id="download-from-github"><a style="background: #8080802e; padding: 10px;  border: 1px solid #8080802e;  box-shadow: 5px 10px #8080801f; color: #000000b3; href="https://github.com/Zir0-93/slack-storage-notifier"><strong>Get it on GitHub</strong></a></h3>
+
 ![inheritance](/images/notification.png)
 
-<h3 id="download-from-github"><a href="https://github.com/Zir0-93/slack-storage-notifier"><strong>Download from GitHub</strong></a></h3>
-
 The [script](https://github.com/Zir0-93/slack-storage-notifier/blob/master/slack_storage_notifier.sh) is available on GitHub and can be dropped anywhere on the instance you want to monitor. At a specified interval, it will
-post disk storage related information to slack as illustrated above. The drive information is retrieved using the `df -h` [command](https://en.wikipedia.org/wiki/Df_(Unix)) on Unix systems. Additionally, drives whose usage levels are nearing their total capacity are visibly highlighted. **Two quick steps** are required for getting the integration setup and running.
+post disk storage related information to slack as illustrated above. The drive information is retrieved using the `df -h` [command](https://en.wikipedia.org/wiki/Df_(Unix)) on Unix systems. Additionally, listed drives on the system are color coded based on how much
+storage capacity they have left. **Two quick steps** are required for getting the integration setup and running.
 
 #### **1 - Create a Slack Webhook Notification**: 
 
