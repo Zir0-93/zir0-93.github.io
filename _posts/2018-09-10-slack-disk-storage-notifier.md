@@ -12,7 +12,7 @@ Integrations are what takes Slack from a normal online instant messaging and col
 
 ![inheritance](/images/notification.png)
 
-[**Download the script from GitHub**](https://github.com/Zir0-93/slack-storage-notifier)
+### [**Download from GitHub**](https://github.com/Zir0-93/slack-storage-notifier)
 
 The [script](https://github.com/Zir0-93/slack-storage-notifier/blob/master/slack_storage_notifier.sh) is available on GitHub and can be dropped anywhere on the instance you want to monitor. At a specified interval, it will
 post disk storage related information to slack as illustrated above. The drive information is retrieved using the `df -h` [command](https://en.wikipedia.org/wiki/Df_(Unix)) on Unix systems. Additionally, drives whose usage levels are nearing their total capacity are visibly highlighted. **Two quick steps** are required for getting the integration setup and running.
