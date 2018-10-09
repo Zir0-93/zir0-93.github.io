@@ -4,9 +4,10 @@ image: /images/icon-ai-data-analytics.png
 date:  2018-09-10 15:04:23
 tags: [python, slack, bash, script]
 description: Integrations are what takes Slack from a normal online instant messaging and collaboration system to a solution that enables you to centralize all your notifications, from sales to tech support, social media and more, into one searchable place where your team can discuss and take action on each. In this article, I'll share a simple [bash script]((https://github.com/Zir0-93/slack-storage-notifier/blob/master/slack_storage_notifier.sh)) that reports local disk storage levels to Slack at a continuous time interval. It is easily deployable to multiple instances, highly configurable, and can helps teams take proactive measures in maintaining the operational well-being of their systems.
-
 excerpt_separator: <!--more-->
 ---
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+<br>
 Integrations are what takes Slack from a normal online instant messaging and collaboration system to a solution that enables you to centralize all your notifications, from sales to tech support, social media and more, into one searchable place where your team can discuss and take action on each. In this article, I'll share a simple[bash script]((https://github.com/Zir0-93/slack-storage-notifier/blob/master/slack_storage_notifier.sh)) that reports local disk storage levels to Slack at a continuous time interval. It is easily deployable to multiple instances, highly configurable, and can helps teams take proactive measures in maintaining the operational well-being of their systems.
 <!--more-->
 
