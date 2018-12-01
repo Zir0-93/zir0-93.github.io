@@ -1,5 +1,5 @@
 --- 
-title:  "A Python Script to Migrate Postgres/MySQL Records to InfluxDB"
+title:  "Easily Migrate Postgres/MySQL Records to InfluxDB"
 image: /images/influxdb.png
 date:   2018-07-05 15:04:23
 tags: [python, influxdb, time-series, postgreSQL, MySQL]
