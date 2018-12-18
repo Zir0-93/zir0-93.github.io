@@ -1274,7 +1274,7 @@ hr {
 .post img {
 	max-width: 100%;
 	margin: 0 auto;
-	display:block;
+	display: inline-block;
 	border-radius: 3px;
 	text-align: center; }
 .post pre {
