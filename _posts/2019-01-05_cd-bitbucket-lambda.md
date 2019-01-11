@@ -14,12 +14,16 @@ pass through testing in several environments (test, staging, etc..) before being
 
 ![cd_img](/images/Continuous-Delivery-and-Deployment.jpg)
 
-# Multi-Environment Serverless Architecture
-In general, multi-environments setups help teams gain **confidence** in the ability of developed software to perform as expected before it is delivered into production. We'll use a multi-stack approach to setup a `staging` and `prod` environment for our lambda functions, API Gateways, and databases, the architecture of which is depicted below. The idea is that any new code deliveries will sit in the staging environment for a few days. If it performs as expected, only then will it be incorporated into the production environment.
+# Overview
+## Multi-Environment Serverless Architecture
+In general, multi-environments setups help teams gain **confidence** in the ability of newly developed software to perform as expected before it is delivered into production. We'll use a multi-stack approach to setup a `staging` and `prod` environment for our lambda functions, API Gateways, and databases as illustrated in the diagram below. Note that in this setup, seperate API Gateways and Datastore instances are created for each environment. And unlike our Lambda functions, they do not need to be updated every time new code is delivered. In the proposed system, any new code deliveries will be pushed to our staging environment where it will run for a few days. If it performs as expected, our contious delivery pipelines will push the changes into our production environment via a manual trigger.
 
 ![staging_prod_architecture](/images/staging_prod.png)
 
-# Branching Model
+### Multi-Stack vs Single Stack Architecture
+The single stack approach shares its API Gateway and Lambda functions across all environments, and uses stages, environment variables and Lambda aliases to differentiate between environments. The multi-stack appraoch demonstrated in this post uses completely separate instances of each service instead and not API stages or Lambda aliases to seperate environment. The main reason for this decision is risk minimization. In the event that something goes wrong in a single stack approach, there is a much higher likelihood that your production systems are affected. This likelyhood is greatly minimized in a multi-stack approach where entirely sepearate instances are deployed for each environment.
 
+### Process Flow
 
-tes
+![staging_prod_architecture](/images/staging_prod.png)
+
