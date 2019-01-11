@@ -21,9 +21,9 @@ In general, multi-environments setups help teams gain **confidence** in the abil
 ![staging_prod_architecture](/images/staging_prod.png)
 
 ### Multi-Stack vs Single Stack Architecture
-The single stack approach shares its API Gateway and Lambda functions across all environments, and uses stages, environment variables and Lambda aliases to differentiate between environments. The multi-stack appraoch demonstrated in this post uses completely separate instances of each service instead and not API stages or Lambda aliases to seperate environment. The main reason for this decision is risk minimization. In the event that something goes wrong in a single stack approach, there is a much higher likelihood that your production systems are affected. This likelyhood is greatly minimized in a multi-stack approach where entirely sepearate instances are deployed for each environment.
+The single stack approach shares its API Gateway and Lambda functions across all environments, and uses stages, environment variables and Lambda aliases to differentiate between environments. The multi-stack appraoch demonstrated in this post uses completely separate instances of each service instead and not API stages or Lambda aliases to seperate environment. The main reason for this decision is to **minimize risk**. In the event that something goes wrong in a single stack approach, there is a much higher likelihood that your production systems are affected. This likelyhood is greatly minimized in a multi-stack approach where entirely sepearate instances are deployed for each environment.
 
 ### Process Flow
 
-![staging_prod_architecture](/images/staging_prod.png)
+![staging_prod_architecture](/images/process.png)
 
