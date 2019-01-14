@@ -1077,17 +1077,14 @@ em {
 	font-style: italic; }
 
 blockquote {
-	margin: 1em 0;
-	padding: 2em 0;
-	background: #e1faff;
-	border: 1px solid #eeeeee;
-	border-radius: 3px;
-	font-family: "Roboto Slab", serif;
-	font-weight: lighter;
-	font-style: italic;
-	font-weight:bold;
-	font-size: 1.3em;
-	text-align: center; }
+    margin: 1em 0;
+    padding: 20px;
+    background: #0016d40d;
+    border-left: 4px solid #00000082;
+    font-family: Lato;
+    font-weight: lighter;
+    font-weight: 300;
+    font-size: 1.3em; }
 	blockquote p:last-child {
 		margin-bottom: 0; }
 
