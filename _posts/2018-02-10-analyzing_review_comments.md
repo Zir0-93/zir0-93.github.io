@@ -1,5 +1,5 @@
 --- 
-title:  "Analyzing Code Review Comments on GitHub - A Text Classification Experiment"
+title:  "What Code Reviewers Talk About - A Machine Learning Experiment"
 image: /images/1_2UjSSQwW0bns1lPIuRxccQ.png
 date:   2018-05-04 15:04:23
 tags: [machine learning, GitHub, code reviews, NLP, n-grams, pyhon, scikit]
@@ -10,7 +10,7 @@ A code review is a form of code inspection where a developer assesses code for s
 addressed by each comment (e.g. naming, readability, etc.).
 <!--more-->
 
-![sample_comment](/images/review_example.png)
+![sample_comment](/images/i-was-told-there-would-be-a-review.jpg)
 
 ## Review Comment Categories
 
