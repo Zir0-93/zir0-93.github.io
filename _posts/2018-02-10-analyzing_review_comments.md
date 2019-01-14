@@ -10,7 +10,7 @@ A code review is a form of code inspection where a developer assesses code for s
 addressed by each comment (e.g. naming, readability, etc.).
 <!--more-->
 
-![sample_comment](/images/i-was-told-there-would-be-a-review.jpg)
+<p><img style="display:block;" src="/images/i-was-told-there-would-be-a-review.jpg" alt="sample_comment"></p>
 
 ## Review Comment Categories
 
