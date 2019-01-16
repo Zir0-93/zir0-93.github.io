@@ -30,6 +30,10 @@ Using their front end web application, Cloud providers such as Amazon Web Servic
 1. **Minimizing Risk** - Even with proper resource access controls in place, which is seldom the case, the risk of accidentally causing bad things to happen are higher than you think. You definitely don't want be the reason for a disruption to your service.
 2. **Traceability** - When your continuous delivery strategy is an automated, often using an automated pipeline of some sort, the use of  deployments, builds and other components are better documented, making it easier to resolve issues and manage your multi-environment setup in general.
 
+
+<script src="https://gist.github.com/Zir0-93/85b1d1c7433049c8d41de082366c362c.js"></script>
+
+
 Additionally, 
 # Store App Config In the Environment
 
