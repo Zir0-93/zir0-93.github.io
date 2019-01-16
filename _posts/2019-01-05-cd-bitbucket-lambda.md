@@ -11,7 +11,7 @@ excerpt_separator: <!--more-->
 
 ![cd_img](/images/Continuous-Delivery-and-Deployment.jpg)
 
-# Multi-Environment Approach - Multi-Stack or Single Stack?
+## Multi-Stack vs Single Stack Approach
 In order to minimize the risk introduced by any code integrations, organizations typically setup multiple environments (test, staging, etc..) designed to test the robustness of any delivered code before it is pushed into production. When configuring these environments in a serverless environment however, an important decision must be made as to whether a single stack or multi-stack strategy is most appropriate.
 
 ![staging_prod_architecture](/images/staging_prod.png)
@@ -22,23 +22,55 @@ The single stack approach shares its API Gateway and Lambda functions across all
 
 For example, in the event in which something goes wrong in a single stack approach, there is a much higher likelihood that your production systems are negatively impacted as well. This is due to this approach's reliance on environment variables and lambda aliases for indirection. In the multi-stack approach, this probability is greatly reduced as a result of the use of separate resources for each environment. 
 
-# Adopt Continuous Delivery
-The main idea behind Continuous delivery is to produce **production ready** artifacts from your code base frequently in an **automated fashion**. It  ensures that code can be rapdily and safely deployed to production by delivering every change to a production-like environment and ensuring business applications and services function as expected through rigorous automated testing. The most important point however, is that code must be tested and deployed (to environments other than production) using complete automation.
+## Adopt Continuous Delivery
+The main idea behind Continuous delivery is to produce **production ready** artifacts from your code base frequently in an **automated fashion**. It  ensures that code can be rapdily and safely deployed to production by delivering every change to a production-like environment and that any business applications and services function as expected through rigorous automated testing. The most important point however, is that all of this must be automated.
 
 Using their front end web application, Cloud providers such as Amazon Web Services make it easy to spin off a new lambda function for testing purposes or to update a function's application code. However, all aspects of your continous delivery strategy should be automated - the only manual step should be the push of the `deploy to production` button. This is vital for two reasons:
 
 1. **Minimizing Risk** - Even with proper resource access controls in place, which is seldom the case, the risk of accidentally causing bad things to happen are higher than you think. You definitely don't want be the reason for a disruption to your service.
-2. **Traceability** - When your continuous delivery strategy is an automated, often using an automated pipeline of some sort, the use of  deployments, builds and other components are better documented, making it easier to resolve issues and manage your multi-environment setup in general.
+2. **Traceability** - When your continuous delivery strategy is an automated, often using an automated pipeline of some sort, the use of  deployments, builds and other components are better documented, making it easier to resolve issues and manage what has been used where.
+
+Using bitbucket pipelines, I usually use the following skeleton pipeline in multi-environment, continous delivery environments. Firstly, it checks and tests every Pull Request. Once the changes are deployed to master, it automatically updates our `STAGING` environment. Finally, our `PROD` environment is updated once the changes in `STAGING` are known to be safe using a manual trigger. If you are using AWS, checkout [this repo](https://bitbucket.org/awslabs/) for more information on the actual autoamted deployment of Lambda functions.
+
+```yml
+pipelines:
+  default:
+    - step:
+        name: Run Static Analysis Tools
+        script:
+          ...
+    - step:
+        name: Run Automated Tests
+        script:
+          ...
+  branches:
+    master:
+      - step:
+          name: Run Static Analysis Tools
+          script:
+            ...
+      - step:
+          name: Run Automated Tests
+          script:
+            ...
+      - step:
+          name: Update STAGING
+          deployment: staging
+          script:
+            (deploy to staging)...
+      - step:
+          name: Update PROD
+          deployment: production
+          trigger: manual
+          script:
+            (deploy to production)...
+```
 
 
-<script src="https://gist.github.com/Zir0-93/85b1d1c7433049c8d41de082366c362c.js"></script>
+## Store App Config In the Environment
 
 
-Additionally, 
-# Store App Config In the Environment
-
-
-# Use A Serverless Framework
+## Use A Serverless Framework
 
 
 
