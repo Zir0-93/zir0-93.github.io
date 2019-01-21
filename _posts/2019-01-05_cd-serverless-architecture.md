@@ -6,7 +6,7 @@ tags: [python, AWS, lambda, continuous delivery, bitbucket]
 description: Serverless is the new Buzz word in town being promoted by cloud service providers designed to allow organizations to focus on developing applications, and not on managing infrastructure. However, the need for minimizing the risk in the software development cycle for these applications is not such a new concept. In most organizations, code delivered by developers is typically required to flow through multiple environments (test, staging, etc..) to ensure it works as expected before it is deployed to production. That said, Servless Architectures introduce a unique set of challenges that need to be considered when running a multi-environment setup. In this article, I'll go over a few best practices for managing multi-environment serverless architectures.
 excerpt_separator: <!--more-->
 ---
-*Serverless* is the new Buzz word in town being promoted by cloud service providers designed to allow organizations to focus on **developing applications**, and not on **managing infrastructure**. However, the need for minimizing the risk in the software development cycle for these applications is not such a new concept. In most organizations, code delivered by developers is typically required to flow through multiple environments (test, staging, etc..) to ensure it works as expected before it is deployed to production. That said, Servless Architectures introduce a unique set of challenges that need to be considered when running a multi-environment setup. In this article, I'll go over a few best practices for managing multi-environment serverless architectures.
+*Serverless* is the new Buzz word in town being promoted by cloud service providers. It's designed to allow organizations to focus on **developing applications**, and not on **managing infrastructure**; however, the need for minimizing the risk in the software development cycle for these applications is not such a new concept. In most organizations, code delivered by developers typically flows through multiple environments (test, staging, etc..) to ensure it works as expected before it is deployed to production. That said, Servless Architectures introduce a unique set of challenges that need to be considered when running a multi-environment setup. In this article, I'll go over a few best practices for managing multi-environment serverless architectures.
 <!--more-->
 
 ![cd_img](/images/Continuous-Delivery-and-Deployment.jpg)
@@ -20,7 +20,7 @@ The single stack approach shares its API Gateway and Lambda functions across all
 
 ![staging_prod_single_architecture](/images/staging_prod_single_stack.png)
 
-For example, in the event in which something goes wrong in a single stack approach, there is a much higher likelihood that your production systems are negatively impacted as well. This is due to this approach's reliance on environment variables and lambda aliases for indirection. In the multi-stack approach, this probability is greatly reduced as a result of the use of separate resources for each environment. 
+In the event in which something goes wrong in a single stack approach, there is a much higher likelihood that your production systems are negatively impacted as well. This is due to this approach's reliance on environment variables and lambda aliases for indirection. In the multi-stack approach, this probability is greatly reduced as a result of the use of separate resources for each environment. 
 
 ## Adopt Continuous Delivery
 The main idea behind Continuous delivery is to produce **production ready** artifacts from your code base frequently in an **automated fashion**. It  ensures that code can be rapdily and safely deployed to production by delivering every change to a production-like environment and that any business applications and services function as expected through rigorous automated testing. The most important point however, is that all of this must be automated.
@@ -68,14 +68,33 @@ pipelines:
 
 
 ## Store App Config In the Environment
+An app’s config is everything that is likely to vary between deploys (staging, production, developer environments, etc). This includes:
 
+- Resource handles to the database, Memcached, and other backing services
+- Credentials to external services such as Amazon S3 or Twitter
+- Per-deploy values such as the canonical hostname for the deploy
+
+Apps sometimes store config as constants in the code. This is a violation of twelve-factor, which requires strict separation of config from code. Config varies substantially across deploys, code does not. A litmus test for whether an app has all config correctly factored out of the code is whether the codebase could be made open source at any moment, without compromising any credentials.
+
+The twelve-factor app stores config in environment variables (often shortened to env vars or env). Env vars are easy to change between deploys without changing any code; unlike config files, there is little chance of them being checked into the code repo accidentally; and unlike custom config files, or other config mechanisms such as Java System Properties, they are a language- and OS-agnostic standard.
+
+Another aspect of config management is grouping. Sometimes apps batch config into named groups (often called “environments”) named after specific deploys, such as the development, test, and production environments in Rails. This method does not scale cleanly: as more deploys of the app are created, new environment names are necessary, such as staging or qa. As the project grows further, developers may add their own special environments like joes-staging, resulting in a combinatorial explosion of config which makes managing deploys of the app very brittle.
+
+In a twelve-factor app, env vars are granular controls, each fully orthogonal to other env vars. They are never grouped together as “environments”, but instead are independently managed for each deploy. This is a model that scales up smoothly as the app naturally expands into more deploys over its lifetime.
 
 ## Use A Serverless Framework
 
+A serverless framework is a command line interface for building and deploying serverless applications. 
+Cloud-agnostic
+Allowing organizations to prevent data lock-in on a single vendor. Use the Serverless Framework CLI to build and deploy your application to any cloud provider with a consistent experience. The Framework automatically configures cloud vendor settings for you, based on the language you use and the provider you deploy to.
 
 
+Componentized
+So that developers don’t have to keep rebuilding the wheel. They can build once, use, and reuse Serverless Components to do things like create & manage DynamoDB tables or enable authentication with Auth0. Components are open source, and there is lots of pre-built functionality developers can tap into right away.
 
-Now that the general architecture of our multi-environment setup has been outlined, I'll now describe what steps take place in our system from the time a developer begins working on a new feature to the time that feature is merged into production.
+
+Code for your infrastructure
+Because Serverless Applications require automation. If you're tying together multiple managed services and functions, you cannot rely on a checklist of manual steps. You should be able to recreate your entire application with a command.
 
 
 ![staging_prod_architecture](/images/process.png)
