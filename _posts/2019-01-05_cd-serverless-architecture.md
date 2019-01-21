@@ -68,19 +68,15 @@ pipelines:
 
 
 ## Store App Config In the Environment
-An app’s config is everything that is likely to vary between deploys (staging, production, developer environments, etc). This includes:
+An app’s config is everything that is likely to vary between deploys (staging, production, developer environments, etc). This typically includes:
 
-- Resource handles to the database, Memcached, and other backing services
+- Resource handles to the database, cache or any other attached resources
 - Credentials to external services such as Amazon S3 or Twitter
 - Per-deploy values such as the canonical hostname for the deploy
 
-Apps sometimes store config as constants in the code. This is a violation of twelve-factor, which requires strict separation of config from code. Config varies substantially across deploys, code does not. A litmus test for whether an app has all config correctly factored out of the code is whether the codebase could be made open source at any moment, without compromising any credentials.
+Apps sometimes store config variables as constants in source code which is problematic for several reasons. Firstly, any security sensitive related config data is visible to everyone who has access to the source code, which poses a serious security concern. Additionally, config varies substantially across deploys, code does not. Therefore, writng code that dynamically detects the environment and sets the appropriate config data results in code that is uneccessarily complicated and difficult to maintain, especially as the number of environments/deploys increase. Any reqired changes to an environment requires pushing a change through the code base and waiting for it to propogate through the software delivery process which is often tedious and slow.  A good test for determining whether an app has decoupled its config from the code is to see if the codebase could be made open source at any moment, without compromising any credentials.
 
-The twelve-factor app stores config in environment variables (often shortened to env vars or env). Env vars are easy to change between deploys without changing any code; unlike config files, there is little chance of them being checked into the code repo accidentally; and unlike custom config files, or other config mechanisms such as Java System Properties, they are a language- and OS-agnostic standard.
-
-Another aspect of config management is grouping. Sometimes apps batch config into named groups (often called “environments”) named after specific deploys, such as the development, test, and production environments in Rails. This method does not scale cleanly: as more deploys of the app are created, new environment names are necessary, such as staging or qa. As the project grows further, developers may add their own special environments like joes-staging, resulting in a combinatorial explosion of config which makes managing deploys of the app very brittle.
-
-In a twelve-factor app, env vars are granular controls, each fully orthogonal to other env vars. They are never grouped together as “environments”, but instead are independently managed for each deploy. This is a model that scales up smoothly as the app naturally expands into more deploys over its lifetime.
+Instead, config related data should be stored in ennvironment variables, or in another way that does not require changing any code. In multi-environment systems, environment variables allow you to generate flexible and infinite variations of your environment template. More importantly, this can all be done without changing any code, and unlike config files in source code, there is little chance of them being checked into the code repo accidentally. They are also OS and language agnostic. 
 
 ## Use A Serverless Framework
 
