@@ -78,11 +78,13 @@ An app’s config is everything that is likely to vary between deploys (staging,
 
 Apps sometimes store config variables as constants in source code which is problematic for several reasons. Firstly, any security sensitive related config data is visible to everyone who has access to the source code, which poses a serious security concern. Additionally, config varies substantially across deploys, whereas code does not. Therefore, developing code that dynamically detects the environment and sets the appropriate config data as required results in code that is uneccessarily complicated and difficult to maintain, especially as the number of environments/deploys increases. Moreover, any reqired changes to an environment config requires pushing a change through the code base and waiting for it to propagate through the software delivery process which is often tedious and slow.  A good test for determining whether an app has decoupled its config from the code is to see if the codebase could be made open source at any moment, without compromising any credentials.
 
-Rather than keeping your config data in source code, consider using evironment variables. In multi-environment systems, environment variables can be leveraged to  generate flexible and infinite variations (test, staging, prod, etc..) of your environment template. More importantly, this can done without changing any code, which makes the code base much cleaner. They are also OS and language agnostic. In this method, applications are developed to simply refer to environment variables, which are dynamically set by a build system an a per-deploy basis. 
+Rather than keeping your config data in source code, consider using evironment variables. In multi-environment systems, environment variables can be leveraged to  generate flexible and infinite variations (test, staging, prod, etc..) of your environment template. More importantly, this can done without changing any code, which makes the code base much cleaner. They are also OS and language agnostic. In this method, applications are developed to simply refer to environment variables (possibly encrypted), which are dynamically set by a build system an a per-deploy basis. 
 
 ## Use A Serverless Framework
 
-A serverless framework is a command line interface for building and deploying serverless applications. 
+A serverless framework is a command line interface for building and deploying serverless applications. The main service provided by such frameworks is the ability to define entire Serverless applications using a simple yaml configuration file. Applications can be defined using using a front end console, but the amount of work to manage your application increases proportionally to the number of environments being managed. Serverless frameworks on the other hand offer a systematic and efficient approach to managing environments.
+
+
 Cloud-agnostic
 Allowing organizations to prevent data lock-in on a single vendor. Use the Serverless Framework CLI to build and deploy your application to any cloud provider with a consistent experience. The Framework automatically configures cloud vendor settings for you, based on the language you use and the provider you deploy to.
 
@@ -94,6 +96,4 @@ So that developers don’t have to keep rebuilding the wheel. They can build onc
 Code for your infrastructure
 Because Serverless Applications require automation. If you're tying together multiple managed services and functions, you cannot rely on a checklist of manual steps. You should be able to recreate your entire application with a command.
 
-
-![staging_prod_architecture](/images/process.png)
 
