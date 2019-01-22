@@ -84,10 +84,11 @@ Rather than keeping your config data in source code, consider storing this data 
 
 ## Use A Serverless Framework
 
-A serverless framework is a command line interface for building and deploying entire serverless applications through the use of configuration template files. Now this work **can** be completed using using a front end console in theory if you really wanted to do so, but the amount of work to manage your environments increases proportionally to the number of environments in your setup. Additionally, the larger number of environments raises the overall complexity of your operation, which in turn increases the chance of making accidental errors. Serverless frameworks provides a scalable and systematic solution to many of the operational complexities of multi-environment serverless architectures.
+A serverless framework is a command line interface for building and deploying entire serverless applications through the use of configuration template files. Now this work **can** be completed using using a front end console in theory if you really wanted to do so, but the amount of work to manage your environments increases proportionally to the number of environments in your setup. Additionally, the larger number of environments raises the overall complexity of your operation, which in turn increases the chance of making accidental errors. Serverless frameworks provides a scalable and systematic solution to many of the operational complexities of multi-environment serverless architectures. 
 
-### Componentized
-So that developers don’t have to keep rebuilding the wheel. They can build once, use, and reuse Serverless Components to do things like create & manage DynamoDB tables or enable authentication with Auth0. Components are open source, and there is lots of pre-built functionality developers can tap into right away.
+The [Serverless Framework](https://serverless.com) is probably the most popular framework for configuring serverless applications. It is completely cloud agnostic and support AWS, Microsoft Azure, Google Cloud Platform, IBM OpenWhisk, and more. Components presents a single experience for you to provision infrastructure and code across all cloud and SaaS vendors. Think of them like building blocks which you can use to build applications more easily.
+
+They can build once, use, and reuse Serverless Components to do things like create & manage DynamoDB tables or enable authentication with Auth0. Components are open source, and there is lots of pre-built functionality developers can tap into right away.
 
 
 ### Code for your infrastructure
