@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1008" height="256" viewBox="0 0 1008 256">
+    <defs>
+        <linearGradient id="a" x1="100%" x2="0%" y1="100%" y2="0%">
+            <stop offset="0%" stop-color="#FF9088" stop-opacity=".2"/>
+            <stop offset="100%" stop-color="#FD5750"/>
+        </linearGradient>
+        <linearGradient id="c" x1="100%" x2="1.398%" y1="50%" y2="50%">
+            <stop offset="0%" stop-color="#FF9088" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#FD5750"/>
+        </linearGradient>
+        <linearGradient id="b" x1="100%" x2="0%" y1="100%" y2="0%">
+            <stop offset="0%" stop-color="#FF9088" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#FD5750"/>
+        </linearGradient>
+        <linearGradient id="d" x1="0%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#FF9088" stop-opacity=".2"/>
+            <stop offset="100%" stop-color="#FD5750"/>
+        </linearGradient>
+        <linearGradient id="e" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#FF9088" stop-opacity=".2"/>
+            <stop offset="100%" stop-color="#FD5750"/>
+        </linearGradient>
+        <linearGradient id="g" x1="100%" x2="0%" y1="50%" y2="50%">
+            <stop offset="0%" stop-color="#FF9088" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#FD5750"/>
+        </linearGradient>
+        <path id="f" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+        <path id="h" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+        <path id="i" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+        <path id="j" d="M80.353 27.46c-18.3 4.72-48.068 4.72-66.485 0C4.872 25.156.246 22.152 0 19.131V12h94v7.244c-.275 2.983-4.822 5.94-13.647 8.216z"/>
+        <path id="k" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+        <path id="l" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+        <path id="m" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+        <path id="n" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+        <path id="o" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+        <path id="p" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+        <path id="q" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+        <path id="r" d="M80.343 28.083c-18.295 4.824-48.056 4.824-66.468 0C4.88 25.728.256 22.657.01 19.57v-7.289h93.977v7.405c-.276 3.048-4.82 6.071-13.644 8.397z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#000" stroke="url(#a)" stroke-width="1.5" d="M.75.75h148.5v108.5H.75z" transform="translate(72 18)"/>
+        <path fill="url(#c)" fill-opacity=".2" stroke="url(#b)" stroke-width="1.5" d="M.75.75h148.5v18.5H.75z" transform="translate(72 18)"/>
+        <path fill="#000" fill-opacity=".7" d="M72 18h150v110H72z"/>
+        <path fill="#000" stroke="url(#a)" stroke-width="1.5" d="M.75.75h148.5v108.5H.75z" transform="translate(48 106)"/>
+        <path fill="url(#c)" fill-opacity=".2" stroke="url(#b)" stroke-width="1.5" d="M.75.75h148.5v18.5H.75z" transform="translate(48 106)"/>
+        <path fill="#000" fill-opacity=".7" d="M48 106h150v110H48z"/>
+        <path fill="#000" stroke="url(#a)" stroke-width="1.5" d="M.75.75h148.5v108.5H.75z" transform="translate(0 66)"/>
+        <path fill="url(#c)" fill-opacity=".2" stroke="url(#b)" stroke-width="1.5" d="M.75.75h148.5v18.5H.75z" transform="translate(0 66)"/>
+        <path fill="#000" fill-opacity=".7" d="M0 66h150v110H0z"/>
+        <path fill="#000" stroke="url(#a)" stroke-width="1.5" d="M.75.75h148.5v108.5H.75z" transform="translate(128 66)"/>
+        <path fill="url(#c)" fill-opacity=".2" stroke="url(#b)" stroke-width="1.5" d="M.75.75h148.5v18.5H.75z" transform="translate(128 66)"/>
+        <path fill="#000" fill-opacity=".7" d="M128 66h150v110H128z"/>
+        <path fill="#000" stroke="url(#a)" stroke-width="1.5" d="M.75.75h148.5v108.5H.75z" transform="translate(24 50)"/>
+        <path fill="url(#c)" fill-opacity=".2" stroke="url(#b)" stroke-width="1.5" d="M.75.75h148.5v18.5H.75z" transform="translate(24 50)"/>
+        <text fill="#FD5750" font-family="Serverless-Regular, Serverless" font-size="12" letter-spacing=".5" transform="translate(24 50)">
+            <tspan x="8" y="14">serverless.yml</tspan>
+        </text>
+        <text fill="#F7F7F7" font-family="Serverless-Regular, Serverless" font-size="12" letter-spacing=".5" transform="translate(24 50)">
+            <tspan x="16" y="45">service: hello</tspan> <tspan x="16" y="59">functions:</tspan> <tspan x="16" y="73"> hello</tspan>
+        </text>
+        <g>
+            <path fill="#000" stroke="url(#a)" stroke-width="1.5" d="M.75.75h148.5v108.5H.75z" transform="translate(143 81)"/>
+            <path fill="url(#c)" fill-opacity=".2" stroke="url(#b)" stroke-width="1.5" d="M.75.75h148.5v18.5H.75z" transform="translate(143 81)"/>
+            <text fill="#FD5750" font-family="Serverless-Regular, Serverless" font-size="12" letter-spacing=".5" transform="translate(143 81)">
+                <tspan x="8" y="14">terminal</tspan>
+            </text>
+            <text fill="#F7F7F7" font-family="Serverless-Regular, Serverless" font-size="12" letter-spacing=".5" transform="translate(143 81)">
+                <tspan x="16" y="45">$ serverless </tspan> <tspan x="16" y="59">deploy</tspan>
+            </text>
+        </g>
+        <g stroke-width="1.5">
+            <path fill="#000" stroke="#FD5750" d="M553.128 172.966c26.954-27.039 26.81-70.89-.32-97.933-27.133-27.044-70.982-27.044-97.935-.002-26.955 27.043-26.812 70.893.321 97.933 27.13 27.048 70.98 27.048 97.934.002z"/>
+            <g stroke="#F15953">
+                <path fill="#000" d="M515.89 113.987l8.424-13.447.117-10.43-.132-.11c-13.289 10.786-28.997 23.712-42.286 34.498.02.04.016 2.115-.013 6.223l15.707-2.445c-5.424 8.473-11.108 17.732-11.108 17.732l.035 10.542 38.816-33.32-.12-10.25s-6.999.735-9.44 1.007z"/>
+                <path d="M525.218 113.044l-38.756 33.095a.01.01 0 0 1-.015-.013l15.49-24.7-19.816 2.794a.01.01 0 0 1-.008-.018l42.072-33.957a.01.01 0 0 1 .015.014l-16.73 24.704 17.74-1.936a.01.01 0 0 1 .008.017z"/>
+            </g>
+        </g>
+        <path stroke="url(#a)" stroke-width="1.5" d="M292.5 125.998h143M574.5 125.998H961M841.5 126.5v-30"/>
+        <path stroke="url(#d)" stroke-width="1.5" d="M721.5 156.5v-30M841.5 156.5v-30M960.5 156.5v-30"/>
+        <path fill="#000" stroke="url(#e)" stroke-width="1.5" d="M895.422 45.588l-.03.001h-.023c-.027.002-.027.002-.062.002h-.702l-.046-.701c-1.61-24.76-22.2-44.14-47.131-44.14-15.462 0-29.664 7.49-38.481 19.856l-.293.411-.491-.116a37.723 37.723 0 0 0-8.729-1.028c-20.812 0-37.684 16.874-37.684 37.688 0 20.815 16.872 37.689 37.684 37.689h95.988c13.712 0 24.828-11.117 24.828-24.83 0-13.715-11.116-24.832-24.828-24.832z"/>
+        <text fill="#FD5750" font-family="Serverless-Regular, Serverless" font-size="14" letter-spacing=".583">
+            <tspan x="783" y="65">cloud provider</tspan>
+        </text>
+        <g>
+            <g transform="translate(674 200)">
+                <use fill="#000" xlink:href="#f"/>
+                <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+            </g>
+            <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M754.152 220.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            <g transform="translate(674 184)">
+                <use fill="#000" xlink:href="#h"/>
+                <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+            </g>
+            <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M754.152 204.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            <g>
+                <g transform="translate(674 168)">
+                    <use fill="#000" xlink:href="#i"/>
+                    <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+                </g>
+                <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M754.152 188.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            </g>
+            <g>
+                <g transform="translate(674 152)">
+                    <use fill="#000" xlink:href="#j"/>
+                    <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.25 12.75H.75c0 3.064 0 3.279-.002 6.32.216 2.66 4.844 5.496 13.306 7.664 18.295 4.688 47.934 4.688 66.111 0 8.301-2.14 12.846-4.931 13.085-7.49V12.75z"/>
+                </g>
+                <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M754.15 172.614c17.544-4.681 17.46-11.542-.216-16.228-18.288-4.848-47.915-4.848-66.082 0-17.547 4.681-17.463 11.542.215 16.228 18.286 4.848 47.914 4.848 66.082 0z"/>
+            </g>
+        </g>
+        <g>
+            <g transform="translate(794 200)">
+                <use fill="#000" xlink:href="#k"/>
+                <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+            </g>
+            <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M874.152 220.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            <g transform="translate(794 184)">
+                <use fill="#000" xlink:href="#l"/>
+                <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+            </g>
+            <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M874.152 204.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            <g>
+                <g transform="translate(794 168)">
+                    <use fill="#000" xlink:href="#m"/>
+                    <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+                </g>
+                <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M874.152 188.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            </g>
+            <g>
+                <g transform="translate(794 152)">
+                    <use fill="#000" xlink:href="#n"/>
+                    <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+                </g>
+                <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M874.152 172.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            </g>
+        </g>
+        <g>
+            <g transform="translate(914 200)">
+                <use fill="#000" xlink:href="#o"/>
+                <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+            </g>
+            <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M994.152 220.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            <g transform="translate(914 184)">
+                <use fill="#000" xlink:href="#p"/>
+                <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+            </g>
+            <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M994.152 204.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            <g>
+                <g transform="translate(914 168)">
+                    <use fill="#000" xlink:href="#q"/>
+                    <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+                </g>
+                <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M994.152 188.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            </g>
+            <g>
+                <g transform="translate(914 152)">
+                    <use fill="#000" xlink:href="#r"/>
+                    <path fill="url(#g)" fill-opacity=".3" stroke="#FD5750" stroke-linejoin="square" stroke-width="1.5" d="M93.237 13.031H.76c0 3.148 0 3.363-.002 6.48.218 2.732 4.843 5.63 13.307 7.846 18.288 4.791 47.917 4.791 66.087 0 8.302-2.188 12.844-5.04 13.085-7.671V13.03z"/>
+                </g>
+                <path fill="#000" stroke="#FD5750" stroke-width="1.5" d="M994.152 172.358c17.542-4.624 17.458-11.386-.216-16.015-18.289-4.79-47.918-4.79-66.087 0-17.543 4.624-17.46 11.386.216 16.014 18.288 4.791 47.917 4.791 66.087 0z"/>
+            </g>
+        </g>
+        <text fill="#F7F7F7" font-family="Soleil" font-size="12">
+            <tspan x="692" y="255">Databases</tspan>
+        </text>
+        <text fill="#F7F7F7" font-family="Soleil" font-size="12">
+            <tspan x="814" y="255">Functions</tspan>
+        </text>
+        <text fill="#F7F7F7" font-family="Soleil" font-size="12">
+            <tspan x="933" y="255">Endpoints</tspan>
+        </text>
+    </g>
+</svg>
