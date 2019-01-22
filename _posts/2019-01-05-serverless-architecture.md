@@ -14,7 +14,7 @@ excerpt_separator: <!--more-->
 ## Multi-Stack vs Single Stack Approach
 In order to minimize the risk introduced by any code integrations, organizations typically setup multiple environments (test, staging, etc..) designed to test the robustness of any delivered code before it is pushed into production. When configuring these environments in a serverless environment however, an important decision must be made as to whether a single stack or multi-stack strategy is most appropriate.
 
-![staging_prod_architecture](/images/staging_prod_multi.png)
+![staging_prod_architecture](/images/staging_prod_multi.svg)
 
 The single stack approach shares its API Gateway and Lambda functions across all environments, and uses stages, environment variables and Lambda aliases to differentiate between environments. In contrast, a multi-stack approach uses a completely separate instance of each service for every environment and refrains from utilizing API stages or Lambda aliases to so. The main differences between the two approaches is that the multi-stack approach **minimizes risk**, while the single stack approach minimizes **configuration/management effort**.
 
