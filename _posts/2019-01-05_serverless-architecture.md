@@ -88,6 +88,8 @@ A serverless framework is a command line interface for building and deploying en
 
 The [Serverless Framework](https://serverless.com) is probably the most popular framework for configuring serverless applications. It is completely cloud agnostic and support AWS, Microsoft Azure, Google Cloud Platform, IBM OpenWhisk, and more. Components presents a single experience for you to provision infrastructure and code across all cloud and SaaS vendors. Think of them like building blocks which you can use to build applications more easily.
 
+![infra_as_code](/images/infra-as-code-schema.png)
+
 They can build once, use, and reuse Serverless Components to do things like create & manage DynamoDB tables or enable authentication with Auth0. Components are open source, and there is lots of pre-built functionality developers can tap into right away.
 
 
