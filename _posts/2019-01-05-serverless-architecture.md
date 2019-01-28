@@ -32,7 +32,7 @@ Using their front end web application, Cloud providers such as Amazon Web Servic
 
 ![bitbucket_deploy](/images/deployments_video_edited.gif)
 
-Using Bitbucket pipelines, I usually use the following skeleton pipeline in multi-environment, continous delivery environments. Firstly, it checks and tests every Pull Request. Once the changes are deployed to master, it automatically updates our `STAGING` environment. Finally, our `PROD` environment is updated once the changes in `STAGING` are known to be safe using a manual trigger. If you are using AWS, checkout [this repo](https://bitbucket.org/awslabs/) for more information on the actual automated deployment of Lambda functions.
+Using Bitbucket pipelines, I usually use the following skeleton pipeline in multi-environment, continuous delivery environments. Firstly, it checks and tests every Pull Request. Once the changes are deployed to master, it automatically updates our `STAGING` environment. Finally, our `PROD` environment is updated once the changes in `STAGING` are known to be safe using a manual trigger. If you are using AWS, checkout [this repo](https://bitbucket.org/awslabs/) for more information on the actual automated deployment of Lambda functions.
 
 ```yml
 pipelines:
