@@ -11,6 +11,9 @@ excerpt_separator: <!--more-->
 
 ![cd_img](/images/Continuous-Delivery-and-Deployment.jpg)
 
+* TOC
+{:toc}
+
 ## Choose the Right Stack Approach
 In order to minimize the risk introduced by any code integrations, organizations typically setup multiple environments (test, staging, etc..) for the purpose of ensuring the robustness of any delivered code before it is pushed into production. When configuring these environments in a serverless environment however, an important decision must be made as to whether a **single stack** or **multi-stack strategy** should be used.
 
