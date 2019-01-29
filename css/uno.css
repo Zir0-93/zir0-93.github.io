@@ -78,6 +78,7 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     padding-left: 40px;
     list-style: decimal;
     display: inline-block;
+    margin: 0px;
 }
 
 table {
