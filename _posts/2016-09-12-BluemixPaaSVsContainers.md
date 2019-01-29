@@ -13,6 +13,9 @@ of vendors and solutions that be can used for hosting drastically increases. Thi
 Platform-As-A-Service [PaaS](https://www.ibm.com/cloud-computing/ca/en/paas.html) and [Container](https://www.ibm.com/cloud-computing/bluemix/containers/) based deployment solutions provided by the IBM Cloud.
 <!--more-->
 
+* TOC
+{:toc}
+
 ## Deployment Solution A: IBM Bluemix PaaS
 
 
