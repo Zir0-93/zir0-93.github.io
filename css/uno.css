@@ -55,6 +55,24 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     opacity: 1; /* Firefox */
 }
 
+#markdown-toc::before {
+    content: "Contents";
+    font-weight: bold;
+}
+
+
+// Using numbers instead of bullets for listing
+#markdown-toc ul {
+    list-style: decimal;
+}
+
+#markdown-toc {
+    border: 1px solid #aaa;
+    padding: 1.5em;
+    list-style: decimal;
+    display: inline-block;
+}
+
 table {
   border: 1px solid #ccc;
   border-collapse: collapse;
