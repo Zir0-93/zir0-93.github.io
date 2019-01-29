@@ -12,7 +12,10 @@ worked on implementing a multi-language search engine using Elastic Search and f
 <!--more--> 
 
  ![esyudothis.jpg](/images/initializeshards.png)
- 
+  
+* TOC
+{:toc}
+
 ## Dealing With Human Languages
 
 Full-text search is a battle between precision — returning as few irrelevant documents as possible, 
