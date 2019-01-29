@@ -11,7 +11,10 @@ A *code review* is a form of code inspection where a developer assesses code for
 
 <p><img style="display:block;" src="/images/i-was-told-there-would-be-a-review.jpg" alt="sample_comment"></p>
 
-## Review Comment Categories
+* TOC
+{:toc}
+
+# Review Comment Categories
 
 The list of categories we're going to incorporate into our classifier are summarized in the table below. This list was developed based on a manual survey of 
 approximately 2000 GitHub review comments I performed on randomly selected, but highly forked Java repositories on GitHub. The selected 
@@ -37,7 +40,7 @@ to the topic it spent the most words discussing.
 | Testing                           | 12    |                                                           |"is there a test for this?" |
 | Other                           | 13    | Comments not relating to categories 1-12.                                                           |"Looks good", "done", "thanks" |
 
-## SVM Classifier Implementation
+# SVM Classifier Implementation
 
 Now we'll discuss our SVM text classifier implementation. This experiment represents a typical supervised learning classification exercise.
 We'll start by first loading our training data from a local directory which consists of two files representing 2000 manually labelled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments%20(1).txt) contains a review comment on each
@@ -168,7 +171,7 @@ predicted_svm = text_clf_svm.predict(comment_test)
 np.mean(predicted_svm == classification_test)
 ```
 ``` 0.92500000000000004 ```
-## Classifying GitHub Review Comments
+# Classifying GitHub Review Comments
 We will now leverage the classifier developed in the previous section to classify over 30000 GitHub review comments from the top 100
 most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform, which we will use to mine our Review Comments. In general,
 an API provides an interface between two systems to interact with each other programmatically. Representational State Transfer (REST) 
@@ -248,7 +251,7 @@ plt.show()
 ```
 {% include amcharts.editor.html %}
 
-## Discussion
+# Discussion
 
 Many of the classifications are related to each other at a conceptual level. For example, a `Readability` problem may be caused due to poor use of `Control Structures`. Therefore, it is important to note that the classifications were based only on what the **review comments explicitly discussed**. That is to say, if a comment read, "poor readability here", we would expect it to be classified as `Readability`. However, if the comment read, "This for loop should be moved before line 2", then `Control Structures` would be its expected classification, despite readability being the motivating factor for the review suggestion. As mentioned previously, in cases where multiple classifications applied, the comment was classified to a category it spend the most words discussing.
 
