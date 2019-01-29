@@ -57,7 +57,7 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 
 #markdown-toc::before {
     content: "Contents";
-    font-size: 28px;
+    font-size: 23px;
     line-height: 1.8; 
     font-weight: bold;
 }
@@ -78,6 +78,7 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     padding-left: 40px;
     list-style: decimal;
     display: inline-block;
+    background: #8080801f;
     margin: 0px;
 }
 
