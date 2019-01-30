@@ -14,7 +14,7 @@ A *code review* is a form of code inspection where a developer assesses code for
 * TOC
 {:toc}
 
-# Review Comment Categories
+# Review Comment Classifications
 
 The list of categories we're going to incorporate into our classifier are summarized in the table below. This list was developed based on a manual survey of 
 approximately 2000 GitHub review comments I performed on randomly selected, but highly forked Java repositories on GitHub. The selected 
@@ -56,7 +56,7 @@ with open('review_comments_labels.txt') as g:
  Next, we are going to preprocess the raw data in multiple steps to prepare it for use by our SVM classifier. First, we remove all formatting characters from each comment that are associated with the Markdown syntax. Markdown is a lightweight
  markup language with plain text formatting syntax. It is designed to be easily converted to HTML and many other formats
  using a tool by the same name, and more importantly, can be used to write GitHub code review comments. This step is important because the additional formatting related characters introduced by the 
- Markdown stadard will negatively impact our classifier's ability to recognize identical words.
+ Markdown standard will negatively impact our classifier's ability to recognize identical words.
  
  ```python
 import re 
@@ -78,7 +78,7 @@ formatComments(review_comments)
 For the next phase, we are going to remove all stop the words from the review comments. A stop word is a commonly used word
 (such as “the”, “a”, “an”, “in”) that we would like to ignore. The reason is for this is that these words 
 take up valuable processing time, but are not very relevant to the classification task at hand. We can remove them easily
-by simply maintaing a list of words that are considered to be stop words. 
+by simply maintaining a list of words that are considered to be stop words. 
 Additionally, we will stem all the words in our review comments as well. Stemming is the process of reducing inflected
 (or sometimes derived) words to their word stem, base or root form. E.g. A stemming algorithm reduces the words 
 “fishing”, “fished”, and “fisher” to the root word, “fish”. The Natural Language Toolkit (NLTK) in python has a
@@ -129,8 +129,8 @@ comments_train_tfidf.shape
 ```
 ```(1036, 2787)```
 
-Now that the classifier itself is almost ready, an important consideration now is the amount of training data to use for testing the classifier. After ensuring that atleast 100 review comments for each classification are present in our labelled data set, I experimented with different numbers of review comments
-to see what gave the best results. 2000 review comments, although it may seem like a insufficient number of labelled data points for this problem, seemed to give a good enough accuracy for our purposes. We will therefore dedicate 80% of our 2000 GitHub review comments data to the training set, which we will use to train our SVM classifier. The remaining 20% of the 
+Now that the classifier itself is almost ready, an important consideration now is the amount of training data to use for testing the classifier. After ensuring that atleast 100 review comments for each classification are present in our labeled data set, I experimented with different numbers of review comments
+to see what gave the best results. 2000 review comments, although it may seem like a insufficient number of labeled data points for this problem, seemed to give a good enough accuracy for our purposes. We will therefore dedicate 80% of our 2000 GitHub review comments data to the training set, which we will use to train our SVM classifier. The remaining 20% of the 
 data will be dedicated to the test set, which we will use to test the performance of the developed classifier.
 
 ```python
@@ -138,7 +138,7 @@ from sklearn.model_selection import train_test_split
 
 comment_train, comment_test, classification_train, classification_test = train_test_split(review_comments, classifications, test_size=0.2)
 ```
-Lastly, we can complete our classifier by combining the components developed so far with the scikit SVM classifier using the scikit `Pipeline` module. The purpose of the pipeline is to assemble several steps that can be cross-validated together while setting different parameters. We also use the scikit `SGDClassifier` module to train our SVM model using Stochastic Gradient Descent (SGD). SGD is an interative based optimisation technique. In this case, the technique modifies the SVM parameters on each training iteration to find a local opitmum that produces the best results. We set the number of iterations for our estimator at 1000. As demonstrated below, our developed classifier scored an accuracy of 80.5% on the test data set.
+Lastly, we can complete our classifier by combining the components developed so far with the scikit SVM classifier using the scikit `Pipeline` module. The purpose of the pipeline is to assemble several steps that can be cross-validated together while setting different parameters. We also use the scikit `SGDClassifier` module to train our SVM model using Stochastic Gradient Descent (SGD). SGD is an iterative based optimization technique. In this case, the technique modifies the SVM parameters on each training iteration to find a local optimum that produces the best results. We set the number of iterations for our estimator at 1000. As demonstrated below, our developed classifier scored an accuracy of 80.5% on the test data set.
 
 ```python
 # Training Support Vector Machines - SVM and calculating its performance
@@ -155,7 +155,7 @@ np.mean(predicted_svm == classification_test)
 ```
 ``` 0.80500000000000005 ```
 
-An accuracy of 80.5% did not seem reliable enough for the purpose of classifying over 30 000 GitHub review comments. Moreover, I realized that the incorporation of the tf-idf statistic, while useful in other text classification activities, was not suitable for the classification of review comments. The reason for this can be traced to the treatment of uncommon words in this technique. In a regular document, an uncommon word, like "abject" for example, would be valuable in classifying that document. Review comments also contain uncommon terms; however, these terms mostly reference source code entities which we would not want to our classifier to place a major importance on. If our labeled data set for example consisted of a review comment that read, "The Foo class has some formatting issues.", we would manually assign the `Readability` classification to this comment. The problem is because `Foo` is an uncommon term, our tf-idf based SVM classifier would highly correlate this term with the `Readability` category, which is undesirable. This is because any future review comments containing the term  `Foo` would be given the `Readability` classification with a very high probability, which is undesired for obvious reasons. A solution to this problem would be to replace any source code entities referenced in review comments by a static string, like `<SYMBOL>` for example; However, this would be difficult to detect accurately. Therefore, we will simply revert the use of the tf-idf statistic, which raises the accuracy of our classifier signigicantly to 92.5%
+An accuracy of 80.5% did not seem reliable enough for the purpose of classifying over 30 000 GitHub review comments. Moreover, I realized that the incorporation of the tf-idf statistic, while useful in other text classification activities, was not suitable for the classification of review comments. The reason for this can be traced to the treatment of uncommon words in this technique. In a regular document, an uncommon word, like "abject" for example, would be valuable in classifying that document. Review comments also contain uncommon terms; however, these terms mostly reference source code entities which we would not want to our classifier to place a major importance on. If our labeled data set for example consisted of a review comment that read, "The Foo class has some formatting issues.", we would manually assign the `Readability` classification to this comment. The problem is because `Foo` is an uncommon term, our tf-idf based SVM classifier would highly correlate this term with the `Readability` category, which is undesirable. This is because any future review comments containing the term  `Foo` would be given the `Readability` classification with a very high probability, which is undesired for obvious reasons. A solution to this problem would be to replace any source code entities referenced in review comments by a static string, like `<SYMBOL>` for example; However, this would be difficult to detect accurately. Therefore, we will simply revert the use of the tf-idf statistic, which raises the accuracy of our classifier significantly to 92.5%
 
 ```python
 # Training Support Vector Machines - SVM and calculating its performance
