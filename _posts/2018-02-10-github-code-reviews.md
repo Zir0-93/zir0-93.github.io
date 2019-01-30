@@ -92,6 +92,7 @@ list of stopwords stored in 16 different languages, as well as a stemmer impleme
 from nltk.stem.snowball import SnowballStemmer
 stemmer = SnowballStemmer("english", ignore_stopwords=True)
 ```
+**A note on using stopwords and stemmers.** My experimental results showed that using off the shelf stopword lists and stemmers to preprocess the data decreased the accuracy of the final classifier. This is why I have not used any of these techniques in this experiment.
 
 The next step of our preprocessing stage is to convert the comment reviews into numerical feature vectors. This is required to
 make our review comments amenable for machine learning algorithms. To do this, we will use the bag of words method, which 
@@ -240,11 +241,7 @@ avg / total        0.95      0.94      0.94        400
 ```
 # Classifying GitHub Review Comments
 We will now leverage the classifier developed in the previous section to classify over 30000 GitHub review comments from the top 100
-most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform, which we will use to mine our Review Comments. In general,
-an API provides an interface between two systems to interact with each other programmatically. Representational State Transfer (REST) 
-is an architectural style that defines a set of constraints and properties based on HTTP. APIs that conform to the REST architectural 
-style, or RESTful web services, provide interoperability between computer systems on the Internet. We first consume the GitHub REST API to
-load repository data for the 100 most forked java repositories on GitHub.
+most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform, which we will use to mine our Review Comments. 
 
 ```python
 import urllib.request
