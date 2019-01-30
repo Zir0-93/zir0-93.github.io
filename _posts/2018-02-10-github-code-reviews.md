@@ -153,6 +153,7 @@ text_clf_svm = text_clf_svm.fit(review_comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 print(classification_report(classification_test, predicted_svm))
 ```
+```Output```
 ```
                 precision    recall  f1-score   support
                      1
@@ -200,6 +201,7 @@ text_clf_svm = text_clf_svm.fit(review_comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 print(classification_report(classification_test, predicted_svm))
 ```
+```Output```
 ```
                 precision    recall  f1-score   support
 
