@@ -1,5 +1,5 @@
 --- 
-title:  "Best Practices for Configuring Multi-Environment Serverless Architectures"
+title:  "Best Practices for Deploying Multi-Environment Serverless Architectures"
 image: /images/rocket_cd.png
 date:  2019-01-05 15:04:23
 tags: [python, AWS, lambda, continuous delivery, bitbucket]
