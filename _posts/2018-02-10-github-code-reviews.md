@@ -10,7 +10,6 @@ excerpt_separator: <!--more-->
 <br>
 #### Grab the Jupyter Notebook for this experiment on [GitHub](https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post).
 <br>
-
 A *code review* is a form of code inspection where a developer assesses code for style, defects, and other standards prior to integration into a code base. As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in factilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions. In an effort to better understand code reivewing habbits, we're going to create an SVM classifier to **classify over 30 000 GitHub review comments based on the main topic addressed by each comment** (e.g. *naming*, *readability*, etc.).
 <!--more-->
 
