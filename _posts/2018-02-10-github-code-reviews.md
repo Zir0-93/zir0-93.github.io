@@ -43,7 +43,7 @@ to the topic it spent the most words discussing.
 # SVM Classifier Implementation
 
 Now we'll discuss our SVM text classifier implementation. This experiment represents a typical supervised learning classification exercise.
-We'll start by first loading our training data from a local directory which consists of two files representing 2000 manually labelled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments%20(1).txt) contains a review comment on each
+We'll start by first loading our training data consisting of two files representing 2000 manually labelled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments%20(1).txt) contains a review comment on each
 line, while the [second file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments_labels%20(1).txt)  contains manually determined classifications for each corresponding review comment on each line.
 
 ```python
@@ -130,18 +130,18 @@ comments_train_tfidf.shape
 ```(1036, 2787)```
 
 Now that the classifier itself is almost ready, an important consideration now is the amount of training data to use for testing the classifier. After ensuring that atleast 100 review comments for each classification are present in our labeled data set, I experimented with different numbers of review comments
-to see what gave the best results. 2000 review comments, although it may seem like a insufficient number of labeled data points for this problem, seemed to give a good enough accuracy for our purposes. We will therefore dedicate 80% of our 2000 GitHub review comments data to the training set, which we will use to train our SVM classifier. The remaining 20% of the 
-data will be dedicated to the test set, which we will use to test the performance of the developed classifier.
+to see what gave the best results. 2000 review comments seemed to give a good enough accuracy for our purposes. We will therefore dedicate 80% of our 2000 GitHub review comments data to the training set, which we will use to train our SVM classifier. The remaining 20% of the data will be dedicated to the test set, which we will use to test the performance of the developed classifier.
 
 ```python
 from sklearn.model_selection import train_test_split
 
 comment_train, comment_test, classification_train, classification_test = train_test_split(review_comments, classifications, test_size=0.2)
 ```
-Lastly, we can complete our classifier by combining the components developed so far with the scikit SVM classifier using the scikit `Pipeline` module. The purpose of the pipeline is to assemble several steps that can be cross-validated together while setting different parameters. We also use the scikit `SGDClassifier` module to train our SVM model using Stochastic Gradient Descent (SGD). SGD is an iterative based optimization technique. In this case, the technique modifies the SVM parameters on each training iteration to find a local optimum that produces the best results. We set the number of iterations for our estimator at 1000. As demonstrated below, our developed classifier scored an accuracy of 80.5% on the test data set.
+Lastly, we can complete our classifier by combining the components developed so far with the scikit SVM classifier using the scikit `Pipeline` module. The purpose of the pipeline is to assemble several steps that can be cross-validated together while setting different parameters. We also use the scikit `SGDClassifier` module to train our SVM model using Stochastic Gradient Descent (SGD). SGD is an iterative based optimization technique. In this case, the technique modifies the SVM parameters on each training iteration to find a local optimum that produces the best results. We set the number of iterations for our estimator at 1000. As demonstrated below, our developed classifier scored an accuracy of 82% on the test data set.
 
 ```python
 # Training Support Vector Machines - SVM and calculating its performance
+from sklearn.metrics import classification_report
 import numpy as np
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import SGDClassifier
@@ -149,13 +149,43 @@ from sklearn.linear_model import SGDClassifier
 text_clf_svm = Pipeline([('vect', CountVectorizer()), ('tfidf', TfidfTransformer()), 
                          ('clf-svm', SGDClassifier(loss='hinge', penalty='elasticnet',alpha=1e-3, max_iter=1000, random_state=42))])
 
-text_clf_svm = text_clf_svm.fit(comments, classifications)
+text_clf_svm = text_clf_svm.fit(review_comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
-np.mean(predicted_svm == classification_test)
+print(classification_report(classification_test, predicted_svm))
 ```
-``` 0.80500000000000005 ```
+```
+                precision    recall  f1-score   support
+                     1
+                   0.83      0.83      0.83        71
+                    10
+                   0.91      0.83      0.87        24
+                    11
+                   0.88      0.70      0.78        20
+                    12
+                   0.70      0.93      0.80        15
+                    13
+                   0.76      0.93      0.84       108
+                     2
+                   0.75      0.75      0.75        16
+                     3
+                   0.91      0.86      0.89        36
+                     4
+                   0.85      0.82      0.84        28
+                     5
+                   0.86      0.74      0.79        34
+                     6
+                   0.89      0.94      0.92        18
+                     7
+                   1.00      0.25      0.40         4
+                     8
+                   1.00      0.37      0.54        19
+                     9
+                   0.86      0.86      0.86         7
 
-An accuracy of 80.5% did not seem reliable enough for the purpose of classifying over 30 000 GitHub review comments. Moreover, I realized that the incorporation of the tf-idf statistic, while useful in other text classification activities, was not suitable for the classification of review comments. The reason for this can be traced to the treatment of uncommon words in this technique. In a regular document, an uncommon word, like "abject" for example, would be valuable in classifying that document. Review comments also contain uncommon terms; however, these terms mostly reference source code entities which we would not want to our classifier to place a major importance on. If our labeled data set for example consisted of a review comment that read, "The Foo class has some formatting issues.", we would manually assign the `Readability` classification to this comment. The problem is because `Foo` is an uncommon term, our tf-idf based SVM classifier would highly correlate this term with the `Readability` category, which is undesirable. This is because any future review comments containing the term  `Foo` would be given the `Readability` classification with a very high probability, which is undesired for obvious reasons. A solution to this problem would be to replace any source code entities referenced in review comments by a static string, like `<SYMBOL>` for example; However, this would be difficult to detect accurately. Therefore, we will simply revert the use of the tf-idf statistic, which raises the accuracy of our classifier significantly to 92.5%
+avg / total        0.84      0.82      0.82        400
+```
+
+An f1-score of 82% did not seem reliable enough for the purpose of classifying over 30 000 GitHub review comments. Moreover, I realized that the incorporation of the tf-idf statistic, while useful in other text classification activities, was not suitable for the classification of review comments. The reason for this can be traced to the treatment of uncommon words in this technique. In a regular document, an uncommon word, like "abject" for example, would be valuable in classifying that document. Review comments also contain uncommon terms; however, these terms mostly reference source code entities which we would not want to our classifier to place a major importance on. If our labeled data set for example consisted of a review comment that read, "The Foo class has some formatting issues.", we would manually assign the `Readability` classification to this comment. The problem is because `Foo` is an uncommon term, our tf-idf based SVM classifier would highly correlate this term with the `Readability` category, which is undesirable. This is because any future review comments containing the term  `Foo` would be given the `Readability` classification with a very high probability, which is undesired for obvious reasons. A solution to this problem would be to replace any source code entities referenced in review comments by a static string, like `<SYMBOL>` for example; However, this would be difficult to detect accurately. Therefore, we will simply revert the use of the tf-idf statistic, which raises the accuracy of our classifier significantly to 94%
 
 ```python
 # Training Support Vector Machines - SVM and calculating its performance
@@ -166,11 +196,42 @@ from sklearn.linear_model import SGDClassifier
 text_clf_svm = Pipeline([('vect', CountVectorizer()), 
                          ('clf-svm', SGDClassifier(loss='hinge', penalty='elasticnet',alpha=1e-3, max_iter=1000, random_state=42))])
 
-text_clf_svm = text_clf_svm.fit(comments, classifications)
+text_clf_svm = text_clf_svm.fit(review_comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
-np.mean(predicted_svm == classification_test)
+print(classification_report(classification_test, predicted_svm))
 ```
-``` 0.92500000000000004 ```
+```
+                precision    recall  f1-score   support
+
+                     1
+                   0.94      0.94      0.94        71
+                    10
+                   1.00      0.92      0.96        24
+                    11
+                   1.00      0.95      0.97        20
+                    12
+                   1.00      0.93      0.97        15
+                    13
+                   0.88      0.98      0.93       108
+                     2
+                   0.94      1.00      0.97        16
+                     3
+                   0.97      1.00      0.99        36
+                     4
+                   0.96      0.93      0.95        28
+                     5
+                   1.00      0.91      0.95        34
+                     6
+                   1.00      0.94      0.97        18
+                     7
+                   1.00      0.75      0.86         4
+                     8
+                   1.00      0.74      0.85        19
+                     9
+                   1.00      1.00      1.00         7
+
+avg / total        0.95      0.94      0.94        400
+```
 # Classifying GitHub Review Comments
 We will now leverage the classifier developed in the previous section to classify over 30000 GitHub review comments from the top 100
 most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform, which we will use to mine our Review Comments. In general,
@@ -193,15 +254,19 @@ repos_json_obj = json.loads(resp_text)
 Next, we're going to use the GitHub REST API again to collect a list of all the review comments from each repository. Note, the code below will require you to add your own GitHub OAuth token if you wish to execute it yourself.
 
 ```python
-review_comments = []
+##########################################
+github_access_token = '<GITHUB OAUTH TOKEN>'
+##########################################
 
+review_comments = []
 # loop through our list of 100 most forked java repositories..
 for repo in repos_json_obj['items']:
     # i is the current page number
     for j in range(1, 11):
         # URL to consume GitHub REST API to retrieve 100 review comments
         url = 'https://api.github.com/repos/' + repo['owner']['login'] \
-        + '/' + repo['name'] + '/pulls/comments?direction=desc&per_page=100&page=' + str(j)
+        + '/' + repo['name'] + '/pulls/comments?direction=desc&per_page=100&page=' + str(j) \
+        + '&access_token=' + github_access_token
         # Execute the HTTP GET request and store response in object
         json_obj = json.loads(urllib
                               .request
