@@ -1,16 +1,16 @@
 --- 
-title:  "Insights from Analyzing Thousands of GitHub Code Review Comments: A Text Classifcation Experiment"
+title:  "Insights from Analyzing Thousands of GitHub Code Review Comments: A Text Classification Experiment"
 image: /images/1_2UjSSQwW0bns1lPIuRxccQ.png
 date:   2018-12-10 15:04:23
 tags: [machine learning, GitHub, code reviews, NLP, n-grams, pyhon, scikit]
-description: A code review is a form of code inspection where a developer assesses code for style, defects, and other standards prior to integration into a code base. As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in factilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions. In an effort to better understand code reivewing habbits, we're going to create an SVM classifier to classify over 30 000 GitHub review comments based on the main topic addressed by each comment (e.g. naming, readability, etc.).
+description: A code review is a form of code inspection where a developer assesses code for style, defects, and other standards prior to integration into a code base. As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in facilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions. In an effort to better understand code reviewing habits, we're going to create an SVM classifier to classify over 30 000 GitHub review comments based on the main topic addressed by each comment (e.g. naming, readability, etc.).
 excerpt_separator: <!--more-->
 ---
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) <a class="github-button" href="https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post" data-show-count="true" aria-label="Star Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post on GitHub">Star</a>
 <br>
 #### Grab the Jupyter Notebook for this experiment on [GitHub](https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post).
 <br>
-A *code review* is a form of code inspection where a developer assesses code for style, defects, and other standards prior to integration into a code base. As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in factilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions. In an effort to better understand code reivewing habbits, we're going to create an SVM classifier to **classify over 30 000 GitHub review comments based on the main topic addressed by each comment** (e.g. *naming*, *readability*, etc.).
+A *code review* is a form of code inspection where a developer assesses code for style, defects, and other standards prior to integration into a code base. As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in facilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions. In an effort to better understand code reviewing habits, we're going to create an SVM classifier to **classify over 30 000 GitHub review comments based on the main topic addressed by each comment** (e.g. *naming*, *readability*, etc.).
 <!--more-->
 
 <p><img style="display:block;" src="/images/i-was-told-there-would-be-a-review.jpg" alt="sample_comment"></p>
@@ -47,7 +47,7 @@ to the topic it spent the most words discussing.
 # SVM Classifier Implementation
 
 Now we'll discuss our SVM text classifier implementation. This experiment represents a typical supervised learning classification exercise.
-We'll start by first loading our training data consisting of two files representing 2000 manually labelled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments%20(1).txt) contains a review comment on each
+We'll start by first loading our training data consisting of two files representing 2000 manually labeled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments%20(1).txt) contains a review comment on each
 line, while the [second file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments_labels%20(1).txt)  contains manually determined classifications for each corresponding review comment on each line.
 
 ```python
