@@ -145,7 +145,9 @@ text_clf_svm = text_clf_svm.fit(review_comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 print(classification_report(classification_test, predicted_svm))
 ```
+
 ```Output```
+
 ```
                 precision    recall  f1-score   support
                      1
@@ -193,7 +195,9 @@ text_clf_svm = text_clf_svm.fit(review_comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 print(classification_report(classification_test, predicted_svm))
 ```
+
 ```Output```
+
 ```
                 precision    recall  f1-score   support
 
@@ -226,6 +230,7 @@ print(classification_report(classification_test, predicted_svm))
 
 avg / total        0.95      0.94      0.94        400
 ```
+
 # Classifying GitHub Review Comments
 We will now leverage the classifier developed in the previous section to classify over 30000 GitHub review comments from the top 100
 most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform, which we will use to mine our Review Comments. 
@@ -241,6 +246,7 @@ resp_text = urllib.request.urlopen(urllib.request.Request(url)).read().decode('U
 # load the JSON response in a python object
 repos_json_obj = json.loads(resp_text)
 ```
+
 Next, we're going to use the GitHub REST API again to collect a list of all the review comments from each repository. Note, the code below will require you to add your own GitHub OAuth token if you wish to execute it yourself.
 
 ```python
