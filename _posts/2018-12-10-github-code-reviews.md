@@ -202,6 +202,7 @@ print(classification_report(classification_test, predicted_svm))
 ```Output```
 
 ```
+
                 precision    recall  f1-score   support
 
                      1
@@ -232,6 +233,7 @@ print(classification_report(classification_test, predicted_svm))
                    1.00      1.00      1.00         7
 
 avg / total        0.95      0.94      0.94        400
+
 ```
 
 # Classifying GitHub Review Comments
