@@ -1,5 +1,5 @@
 --- 
-title:  "What Code Reviewers Talk About - A Machine Learning Experiment"
+title:  "Insights from Analyzing Thousands of GitHub Code Review Comments: A Text Classifcation Experiment"
 image: /images/1_2UjSSQwW0bns1lPIuRxccQ.png
 date:   2018-12-10 15:04:23
 tags: [machine learning, GitHub, code reviews, NLP, n-grams, pyhon, scikit]
@@ -145,6 +145,7 @@ text_clf_svm = text_clf_svm.fit(review_comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 print(classification_report(classification_test, predicted_svm))
 ```
+**Output**
 ```
                 precision    recall  f1-score   support
                      1
@@ -191,6 +192,7 @@ text_clf_svm = text_clf_svm.fit(review_comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 print(classification_report(classification_test, predicted_svm))
 ```
+**Output**
 ```
 
                 precision    recall  f1-score   support
