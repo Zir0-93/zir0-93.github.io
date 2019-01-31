@@ -1863,6 +1863,10 @@ input[type="tel"] {
 	.btn-mobile-menu {
 		display: block; }
 	
+	.main-post-list {
+		margin:-10px;
+	}
+	
 	#twitter_btn {
 		display:none;
 	}
