@@ -78,6 +78,7 @@ def formatComments(comments):
 
 formatComments(review_comments)
 ```
+
 **A note on using stopwords and stemmers.** My experimental results showed that using off the shelf stopword lists and stemmers to preprocess the data decreased the accuracy of the final classifier. This is why I have not used any of these techniques in this experiment.
 
 The next step of our preprocessing stage is to convert the comment reviews into numerical feature vectors. This is required to
