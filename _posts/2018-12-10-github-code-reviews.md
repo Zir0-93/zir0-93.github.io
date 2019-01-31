@@ -78,20 +78,6 @@ def formatComments(comments):
 
 formatComments(review_comments)
 ```
-
-For the next phase, we are going to remove all stop the words from the review comments. A stop word is a commonly used word
-(such as “the”, “a”, “an”, “in”) that we would like to ignore. The reason is for this is that these words 
-take up valuable processing time, but are not very relevant to the classification task at hand. We can remove them easily
-by simply maintaining a list of words that are considered to be stop words. 
-Additionally, we will stem all the words in our review comments as well. Stemming is the process of reducing inflected
-(or sometimes derived) words to their word stem, base or root form. E.g. A stemming algorithm reduces the words 
-“fishing”, “fished”, and “fisher” to the root word, “fish”. The Natural Language Toolkit (NLTK) in python has a
-list of stopwords stored in 16 different languages, as well as a stemmer implementation we can make use of.
-
-```python
-from nltk.stem.snowball import SnowballStemmer
-stemmer = SnowballStemmer("english", ignore_stopwords=True)
-```
 **A note on using stopwords and stemmers.** My experimental results showed that using off the shelf stopword lists and stemmers to preprocess the data decreased the accuracy of the final classifier. This is why I have not used any of these techniques in this experiment.
 
 The next step of our preprocessing stage is to convert the comment reviews into numerical feature vectors. This is required to
