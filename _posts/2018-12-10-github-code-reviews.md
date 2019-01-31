@@ -149,6 +149,7 @@ print(classification_report(classification_test, predicted_svm))
 ```Output```
 
 ```
+
                 precision    recall  f1-score   support
                      1
                    0.83      0.83      0.83        71
@@ -178,6 +179,8 @@ print(classification_report(classification_test, predicted_svm))
                    0.86      0.86      0.86         7
 
 avg / total        0.84      0.82      0.82        400
+
+
 ```
 
 An f1-score of 82% did not seem reliable enough for the purpose of classifying over 30 000 GitHub review comments. Moreover, I realized that the incorporation of the tf-idf statistic, while useful in other text classification activities, was not suitable for the classification of review comments. The reason for this can be traced to the treatment of uncommon words in this technique. In a regular document, an uncommon word, like "abject" for example, would be valuable in classifying that document. Review comments also contain uncommon terms; however, these terms mostly reference source code entities which we would not want to our classifier to place a major importance on. If our labeled data set for example consisted of a review comment that read, "The Foo class has some formatting issues.", we would manually assign the `Readability` classification to this comment. The problem is because `Foo` is an uncommon term, our tf-idf based SVM classifier would highly correlate this term with the `Readability` category, which is undesirable. This is because any future review comments containing the term  `Foo` would be given the `Readability` classification with a very high probability, which is undesired for obvious reasons. A solution to this problem would be to replace any source code entities referenced in review comments by a static string, like `<SYMBOL>` for example; However, this would be difficult to detect accurately. Therefore, we will simply revert the use of the tf-idf statistic, which raises the accuracy of our classifier significantly to 94%
