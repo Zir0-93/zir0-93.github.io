@@ -146,9 +146,6 @@ predicted_svm = text_clf_svm.predict(comment_test)
 print(classification_report(classification_test, predicted_svm))
 ```
 ```
-```Output```
-
-```
                 precision    recall  f1-score   support
                      1
                    0.83      0.83      0.83        71
@@ -176,7 +173,6 @@ print(classification_report(classification_test, predicted_svm))
                    1.00      0.37      0.54        19
                      9
                    0.86      0.86      0.86         7
-
 avg / total        0.84      0.82      0.82        400
 ```
 
@@ -195,9 +191,6 @@ text_clf_svm = text_clf_svm.fit(review_comments, classifications)
 predicted_svm = text_clf_svm.predict(comment_test)
 print(classification_report(classification_test, predicted_svm))
 ```
-```
-```Output```
-
 ```
 
                 precision    recall  f1-score   support
@@ -228,10 +221,7 @@ print(classification_report(classification_test, predicted_svm))
                    1.00      0.74      0.85        19
                      9
                    1.00      1.00      1.00         7
-
 avg / total        0.95      0.94      0.94        400
-
-```
 ```
 
 # Classifying GitHub Review Comments
