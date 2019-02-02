@@ -50,8 +50,8 @@ to the topic it spent the most words discussing.
 # SVM Classifier Implementation
 
 Now we'll discuss our SVM text classifier implementation. This experiment represents a typical supervised learning classification exercise.
-We'll start by first loading our training data consisting of two files representing 2000 manually labeled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments.txt) contains a review comment on each
-line, while the [second file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments_labels.txt)  contains manually determined classifications for each corresponding review comment on each line.
+We'll start by first loading our training data consisting of two files representing 2000 manually labeled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post/master/data/review_comments.txt) contains a review comment on each
+line, while the [second file](https://raw.githubusercontent.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post/master/data/review_comments_labels.txt)  contains manually determined classifications for each corresponding review comment on each line.
 
 ```python
 with open('review_comments.txt') as f:
