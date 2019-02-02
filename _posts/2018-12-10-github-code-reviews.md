@@ -1,5 +1,5 @@
 --- 
-title:  "Insights from Analyzing Thousands of GitHub Code Review Comments: A Text Classification Experiment"
+title:  "Dissecting GitHub Code Review Discussions: A Text Classification Experiment"
 image: /images/1_2UjSSQwW0bns1lPIuRxccQ.png
 date:   2018-12-10 15:04:23
 tags: [machine learning, GitHub, code reviews, NLP, n-grams, pyhon, scikit]
@@ -50,8 +50,8 @@ to the topic it spent the most words discussing.
 # SVM Classifier Implementation
 
 Now we'll discuss our SVM text classifier implementation. This experiment represents a typical supervised learning classification exercise.
-We'll start by first loading our training data consisting of two files representing 2000 manually labeled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments%20(1).txt) contains a review comment on each
-line, while the [second file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments_labels%20(1).txt)  contains manually determined classifications for each corresponding review comment on each line.
+We'll start by first loading our training data consisting of two files representing 2000 manually labeled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments.txt) contains a review comment on each
+line, while the [second file](https://raw.githubusercontent.com/Zir0-93/zir0-93.github.io/master/_posts/review_comments_labels.txt)  contains manually determined classifications for each corresponding review comment on each line.
 
 ```python
 with open('review_comments.txt') as f:
