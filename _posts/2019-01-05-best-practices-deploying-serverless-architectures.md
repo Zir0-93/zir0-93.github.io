@@ -1,5 +1,5 @@
 --- 
-title:  "4 Ways to Improve Your Serverless Deployment Strategy"
+title:  "Best Practices for Multi-Environment Serverless Application Deployments"
 image: /images/rocket_cd.png
 date:  2019-01-05 15:04:23
 tags: [python, AWS, lambda, continuous delivery, bitbucket]
