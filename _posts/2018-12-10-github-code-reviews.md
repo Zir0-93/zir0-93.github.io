@@ -1,5 +1,5 @@
 --- 
-title:  "Dissecting GitHub Code Review Discussions: A Text Classification Experiment"
+title:  "Dissecting 30,000 GitHub Code Review Discussions: A Text Classification Experiment"
 image: /images/1_2UjSSQwW0bns1lPIuRxccQ.png
 date:   2018-12-10 15:04:23
 tags: [machine learning, GitHub, code reviews, NLP, n-grams, pyhon, scikit]
