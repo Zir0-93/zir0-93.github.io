@@ -3,10 +3,10 @@ title:  "4 Ways to Improve Your Serverless Deployment Strategy"
 image: /images/rocket_cd.png
 date:  2019-01-05 15:04:23
 tags: [python, AWS, lambda, continuous delivery, bitbucket]
-description: Serverless is the new Buzz word in town being pushed by cloud service providers designed to allow organizations to focus on developing applications, and not on managing infrastructure. However, the need for minimizing the risk in the software development cycle for these applications is not such a new concept. In most organizations, code delivered by developers is typically required to flow through multiple environments (test, staging, etc..) to ensure it works as expected before it is deployed to production. That said, Serverless Architectures introduce a unique set of challenges that need to be considered when running a multi-environment setup. In this article, I'll go over a few best practices for managing multi-environment serverless architectures.
+description: Serverless is the new Buzz word in town being pushed by cloud service providers designed to allow organizations to focus on developing applications, and not on managing infrastructure. However, the need for minimizing the risk in the software development cycle for these applications is not such a new concept. In most organizations, code delivered by developers is typically required to flow through multiple environments (test, staging, etc..) to ensure it works as expected before it is deployed to production. That said, Serverless Architectures introduce a unique set of challenges that need to be considered when running a multi-environment setup. In this article, I'll go over four best practices for managing multi-environment serverless architectures.
 excerpt_separator: <!--more-->
 ---
-*Serverless* is the new Buzz word in town with the main selling point of enabling organizations to focus their software development efforts on **writing applications**, and not on **managing infrastructure**; however, the need for minimizing the risk in the software development cycle for these applications is not such a new concept. In most organizations, code delivered by developers typically flows through multiple environments (test, staging, etc..) to ensure it works as expected before it is deployed to production. Serverless architectures introduce a unique set of challenges that need to be considered when running a multi-environment setup. In this article, I'll go over a few best practices to properly handle some of these challenges.
+*Serverless* is the new Buzz word in town with the main selling point of enabling organizations to focus their software development efforts on **writing applications**, and not on **managing infrastructure**; however, the need for minimizing the risk in the software development cycle for these applications is not such a new concept. In most organizations, code delivered by developers typically flows through multiple environments (test, staging, etc..) to ensure it works as expected before it is deployed to production. Serverless architectures introduce a unique set of challenges that need to be considered when running a multi-environment setup. In this article, I'll go over a four best practices to properly handle some of these challenges.
 <!--more-->
 
 ![cd_img](/images/Continuous-Delivery-and-Deployment.jpg)
@@ -21,7 +21,9 @@ When configuring these environments in a serverless environment however, an impo
 
 ![staging_prod_architecture](/images/staging_prod_multi.svg)
 
-The *single stack* approach shares its API Gateway and Lambda functions across all environments, and uses stages, environment variables and Lambda aliases to differentiate between environments. In contrast, a *multi-stack* approach uses a completely separate instance of each service for every environment and refrains from utilizing API stages or Lambda aliases to differentiate between environments. 
+The *single stack* approach shares its API Gateway and Lambda functions across all environments, and uses stages, environment variables and Lambda aliases to differentiate between environments. 
+
+In contrast, a *multi-stack* approach uses a completely separate instance of each service for every environment and refrains from utilizing API stages or Lambda aliases to differentiate between environments. 
 
 The main differences between the two approaches is that the multi-stack approach **minimizes risk**, while the single stack approach minimizes **configuration/management effort**.
 
@@ -34,9 +36,9 @@ In the multi-stack approach, this probability is greatly reduced as a result of 
 ## Adopt Continuous Delivery
 The main idea behind Continuous delivery is to produce **production ready** artifacts from your code base frequently in an **automated fashion**. It  ensures that code can be rapidly and safely deployed to production by delivering every change to a production-like environment and that any business applications and services function as expected through rigorous automated testing. 
 
-The most important point however, is that all of this must be *automated*.
+The most important point however, is that all of this must be **automated**.
 
-Using their front end web application, Cloud providers such as Amazon Web Services *ake it easy* to spin off a new lambda function for testing purposes or to update a function's application code. However, all aspects of your continuous delivery strategy should be **automated** - the only manual step should be the push of the `deploy to production` button. This is vital for two reasons:
+Using their front end web application, Cloud providers such as Amazon Web Services *make it easy* to spin off a new lambda function for testing purposes or to update a function's application code. However, all aspects of your continuous delivery strategy should be **automated** - the only manual step should be the push of the `deploy to production` button. This is vital for two reasons:
 
 1. **Minimizing Risk** - Even with proper resource access controls in place which is seldom the case, the risk of accidentally causing bad things to happen are higher than you think. You definitely don't want be the reason for a disruption to your service.
 2. **Traceability** - When your continuous delivery strategy is an automated, often using an automated pipeline of some sort, the use of  deployments, builds and other components are better documented, making it easier to resolve issues and manage what has been used where.
