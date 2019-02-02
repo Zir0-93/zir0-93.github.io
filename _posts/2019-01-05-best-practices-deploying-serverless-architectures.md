@@ -1,5 +1,5 @@
 --- 
-title:  "Best Practices for Deploying Multi-Environment Serverless Architectures"
+title:  "4 Ways to Improve Your Serverless Architecture Deployments"
 image: /images/rocket_cd.png
 date:  2019-01-05 15:04:23
 tags: [python, AWS, lambda, continuous delivery, bitbucket]
@@ -15,27 +15,35 @@ excerpt_separator: <!--more-->
 {:toc}
 
 ## Choose the Right Stack Approach
-In order to minimize the risk introduced by any code integrations, organizations typically setup multiple environments (test, staging, etc..) for the purpose of ensuring the robustness of any delivered code before it is pushed into production. When configuring these environments in a serverless environment however, an important decision must be made as to whether a **single stack** or **multi-stack strategy** should be used.
+In order to minimize the risk introduced by any code integrations, organizations typically setup multiple environments (test, staging, etc..) for the purpose of ensuring the robustness of any delivered code before it is pushed into production. 
+
+When configuring these environments in a serverless environment however, an important decision must be made as to whether a **single stack** or **multi-stack strategy** should be used.
 
 ![staging_prod_architecture](/images/staging_prod_multi.svg)
 
-The *single stack* approach shares its API Gateway and Lambda functions across all environments, and uses stages, environment variables and Lambda aliases to differentiate between environments. In contrast, a *multi-stack* approach uses a completely separate instance of each service for every environment and refrains from utilizing API stages or Lambda aliases to differentiate between environments. The main differences between the two approaches is that the multi-stack approach **minimizes risk**, while the single stack approach minimizes **configuration/management effort**.
+The *single stack* approach shares its API Gateway and Lambda functions across all environments, and uses stages, environment variables and Lambda aliases to differentiate between environments. In contrast, a *multi-stack* approach uses a completely separate instance of each service for every environment and refrains from utilizing API stages or Lambda aliases to differentiate between environments. 
+
+The main differences between the two approaches is that the multi-stack approach **minimizes risk**, while the single stack approach minimizes **configuration/management effort**.
 
 ![staging_prod_single_architecture](/images/staging_prod_single.svg)
 
-If something goes wrong in a single stack approach, there is a much higher likelihood that your production systems are negatively impacted as well. This is due to the single stack's reliance on environment variables and lambda aliases for indirection. In the multi-stack approach, this probability is greatly reduced as a result of the use of separate resources for each environment. However, single stack approaches are usually easier to configure and keep track off. And in most scenarios, they are cheaper to run as well.
+If something goes wrong in a single stack approach, there is a much higher likelihood that your production systems are negatively impacted as well. This is due to the single stack's reliance on environment variables and lambda aliases for indirection. 
+
+In the multi-stack approach, this probability is greatly reduced as a result of the use of separate resources for each environment. However, single stack approaches are usually easier to configure and keep track off. And in most scenarios, they are cheaper to run as well.
 
 ## Adopt Continuous Delivery
-The main idea behind Continuous delivery is to produce **production ready** artifacts from your code base frequently in an **automated fashion**. It  ensures that code can be rapidly and safely deployed to production by delivering every change to a production-like environment and that any business applications and services function as expected through rigorous automated testing. The most important point however, is that all of this must be *automated*.
+The main idea behind Continuous delivery is to produce **production ready** artifacts from your code base frequently in an **automated fashion**. It  ensures that code can be rapidly and safely deployed to production by delivering every change to a production-like environment and that any business applications and services function as expected through rigorous automated testing. 
 
-Using their front end web application, Cloud providers such as Amazon Web Services make it easy to spin off a new lambda function for testing purposes or to update a function's application code. However, all aspects of your continuous delivery strategy should be automated - the only manual step should be the push of the `deploy to production` button. This is vital for two reasons:
+The most important point however, is that all of this must be *automated*.
+
+Using their front end web application, Cloud providers such as Amazon Web Services *ake it easy* to spin off a new lambda function for testing purposes or to update a function's application code. However, all aspects of your continuous delivery strategy should be **automated** - the only manual step should be the push of the `deploy to production` button. This is vital for two reasons:
 
 1. **Minimizing Risk** - Even with proper resource access controls in place which is seldom the case, the risk of accidentally causing bad things to happen are higher than you think. You definitely don't want be the reason for a disruption to your service.
 2. **Traceability** - When your continuous delivery strategy is an automated, often using an automated pipeline of some sort, the use of  deployments, builds and other components are better documented, making it easier to resolve issues and manage what has been used where.
 
 ![bitbucket_deploy](/images/deployments_video_edited.gif)
 
-Using Bitbucket pipelines, I usually use the following skeleton pipeline in multi-environment, continuous delivery environments. Firstly, it checks and tests every Pull Request. Once the changes are deployed to master, it automatically updates our `STAGING` environment. Finally, our `PROD` environment is updated once the changes in `STAGING` are known to be safe using a manual trigger. If you are using AWS, checkout [this repo](https://bitbucket.org/awslabs/) for more information on the actual automated deployment of Lambda functions.
+Using Bitbucket pipelines, I usually use the following skeleton pipeline in multi-environment, continuous delivery environments. First, it runs your static analysis tools and automated tests for every Pull Request. Once the changes are deployed to master, it automatically updates the `STAGING` environment. Finally, the `PROD` environment is updated once the changes in `STAGING` are known to be safe using a manual trigger. If you are using AWS, checkout [this repo](https://bitbucket.org/awslabs/) for more information on the actual automated deployment of Lambda functions.
 
 ```yml
 pipelines:
@@ -91,16 +99,20 @@ Rather than keeping your config data in source code, consider using consider usi
 
 IaC is all about provisioning and updating entire workloads (applications, infrastructure) using code. The idea here is that the same engineering discipline that is typically used for application code can be applied to deploying and managing workloads as well. You can implement your operations procedures as code and automate their execution by triggering them in response to events. 
 
-By using code to automate the process of setting up and configuring a virtual machine or container for example, you have a fast and repeatable method for replicating the process. So if you build a virtual environment for the development of application, once you are ready to deploy you can repeat the process of creating that VM simply by running the same code. Additionaly, IaC processes increase agility as developers will not have to wait for however long the IT department needs to provision a new VM for them to do work. 
+By using code to automate the process of setting up and configuring a virtual machine or container for example, you have a **fast** and **repeatable** method for replicating the process. So if you build a virtual environment for the development of application, once you are ready to deploy you can repeat the process of creating that VM simply by running the same code. Additionaly, IaC processes increase agility as developers will not have to wait for however long the IT department needs to provision a new VM for them to do work. 
 
 When it comes to practicing IaC in the cloud, the [Serverless Framework](https://serverless.com) is a great tool for configuring serverless architectures. It is essentially a command line interface for building and deploying entire serverless applications through the use of configuration template files. It, along with many other services including AWS's Serverless Application Model (SAM) for example, provide a scalable and systematic solution to many of the operational complexities of multi-environment serverless architectures. The [Serverless Framework](https://serverless.com) is probably the most popular cloud provider agnostic framework for configuring serverless applications and supports AWS, Microsoft Azure, Google Cloud Platform, IBM OpenWhisk, and more. 
 
 ![infra_as_code](/images/infra-as-code-schema.png)
 
-The typical serverless application uses a combination of cloud services, which often need to be configured  and setup separately for each environment. [Serverless](https://serverless.com) makes this process much more straight forward and scalable by utilizing a component based configuration where all the infrastructure and code for your entire application can be provisioned easily. Not only do these components conveniently refer to commonly used serverless services (AWS: S3 buckets, lambda functions, API Gateways, etc..), they can be re-used and  composed into higher level components to build entire serverless applications. Components are open source, and there is lots of pre-built functionality developers can tap into right away. 
+The typical serverless application uses a combination of cloud services, which often need to be configured  and setup separately for each environment. 
+
+[Serverless](https://serverless.com) makes this process much more straight forward and scalable by utilizing a component based configuration where all the infrastructure and code for your entire application can be provisioned easily. Not only do these components conveniently refer to commonly used serverless services (AWS: S3 buckets, lambda functions, API Gateways, etc..), they can be re-used and  composed into higher level components to build entire serverless applications. Components are open source, and there is lots of pre-built functionality developers can tap into right away. 
 
 As mentioned in the previous section, an automated continuous delivery solution is key for your serverless application. Serverless frameworks offer can be easily integrated into CI/CD pipeline to deploy sophisticated serverless applications in one step, making it much easier to manage multi-environment configurations.
 
-## Conclusion
+## Closing
 
-Serverless applications often consist of plucking and combining various services and packages together which can make keeping track of everything a complex process, especially when running multi-environment setups. In such scenarios, I feel it's important that processes surrounding Serverless architectures should be scalable, automated, and require little manual intervention. This list represents my thoughts on how to deal with the complexity. If you think this list could benefit from other ideas/concepts I've missed, let me know in the comments below!
+Serverless applications often consist of plucking and combining various services and packages together which can make keeping track of everything a complex process, especially when running multi-environment setups. In such scenarios, I feel it's important that processes surrounding Serverless architectures should be scalable, automated, and require little manual intervention. This list represents my thoughts on how to deal with the complexity. 
+
+If you think this list could benefit from other ideas/concepts I've missed, let me know in the comments below!
