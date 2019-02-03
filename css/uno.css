@@ -1689,6 +1689,10 @@ nav {
 .pagination__newer {
 	margin-right: 1em; }
 
+.main-post-list {
+	    width: 130%;
+    margin-left: -20%; }
+
 .pagination__older {
 	margin-left: 1em; }
 
@@ -1705,7 +1709,7 @@ i {
 	position: relative; }
 
 .post_image_description {
-		width: 80%;	
+		width: 75%;	
 }
 
 .post-list {
