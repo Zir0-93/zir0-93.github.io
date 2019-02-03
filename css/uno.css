@@ -1690,8 +1690,8 @@ nav {
 	margin-right: 1em; }
 
 .main-post-list {
-	    width: 130%;
-    margin-left: -20%; }
+	    width: 120%;
+    margin-left: -10%; }
 
 .pagination__older {
 	margin-left: 1em; }
@@ -1867,12 +1867,7 @@ input[type="tel"] {
 @media all and (max-width: 960px) {
 	.btn-mobile-menu {
 		display: block; }
-	
-	.main-post-list {
-		margin:-10px;
-		width:100%;
-	}
-	
+
 	#twitter_btn {
 		display:none;
 	}
@@ -1963,7 +1958,8 @@ input[type="tel"] {
 		margin: 0 0 .4em 0; } }
 @media all and (max-width: 640px) {
 	.main-post-list {
-	    width: 100%; }
+	    width: 100%;    width: 115%;
+    padding: 5px; }
 	
 	.post_icon {
 		display:none;	
