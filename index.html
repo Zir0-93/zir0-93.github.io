@@ -8,7 +8,7 @@ layout: default
     {% for post in paginator.posts %}
       <li>
         {% if post.icon %}
-          <img class="post_icon" style="width: 12%; vertical-align: top; margin-right: 20px;float: left;" src="{{ post.icon }}">
+          <img class="post_icon" style="width: 20%; vertical-align: top; margin-right: 20px;float: left;" src="{{ post.icon }}">
         {% endif %}
         <div class="post_image_description" style="display:inline-block;">
           <h2 class="post-list__post-title post-title"><a style="font-size: 1.6em;line-height: 1.2;" href="{{ site.baseurl }}{{ post.url | remove_first: '/' }}" title="{{ post.title }}">{{ post.title }}</a></h2>
