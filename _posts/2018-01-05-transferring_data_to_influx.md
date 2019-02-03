@@ -1,6 +1,6 @@
 --- 
 title:  "Easily Migrate Postgres/MySQL Records to InfluxDB"
-image: /images/influxdb.png
+icon: /images/influxdb.png
 date:   2018-01-05 15:04:23
 tags: [python, influxdb, time-series, postgreSQL, MySQL]
 description: Computers have been collecting and storing data in relational/schema systems for many years. However, digital storage growth outpaces that of computing processing power by leaps and bounds. Additionally, the amount of unstructured that is collected greatly exceeds that of structured data, further limiting the utility of tradional database systems. For these reasons, today's data storage technqiues call for some new technical constructs required to break the boundaries of traditional transaction-processing databases.
