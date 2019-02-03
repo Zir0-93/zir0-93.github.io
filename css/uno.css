@@ -1957,7 +1957,7 @@ input[type="tel"] {
 		width: 100%;
 		margin: 0 0 .4em 0; } }
 @media all and (max-width: 640px) {
-	.post_image {
+	.post_icon {
 		display:none;	
 	}
 	.post_image_description {
