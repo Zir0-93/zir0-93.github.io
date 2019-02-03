@@ -1,7 +1,8 @@
 --- 
 title:  "Dissecting GitHub Code Reviews: A Text Classification Experiment"
-image: /images/1_2UjSSQwW0bns1lPIuRxccQ.png
+icon: /images/1_2UjSSQwW0bns1lPIuRxccQ.png
 date:   2018-12-10 15:04:23
+og_image: /images/i-was-told-there-would-be-a-review.jpg
 tags: [machine learning, GitHub, code reviews, NLP, n-grams, pyhon, scikit]
 description: As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in facilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions. In an effort to better understand code reviewing habits, we're going to create an SVM classifier to classify over 30 000 GitHub review comments based on the main topic addressed by each comment (e.g. naming, readability, etc.).
 excerpt_separator: <!--more-->
