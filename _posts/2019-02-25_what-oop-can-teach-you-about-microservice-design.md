@@ -2,7 +2,7 @@
 ---
 title:  "What OOP Can Teach You About Good Microservice Design"
 date:   2019-02-25 15:04:23
-image: /images/badges_csharp_objects_stage01.png
+icon: /images/badges_csharp_objects_stage01.png
 tags: [oop, messaging, microservices]
 description: The Object Oriented Programming [OOP] paradigm is often associated with many great programming concepts including polymorphism, encapsulation and composition to name a few. However, even with a little experience in a functional programming language like haskell for example, you would quickly realize that these techniques are not exclusive to OOP at all. If that is the case, then what ideas does OOP bring forward that make it so well known and widely adopted in the industry?
 excerpt_separator: <!--more-->
