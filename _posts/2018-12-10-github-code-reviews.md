@@ -8,7 +8,9 @@ excerpt_separator: <!--more-->
 ---
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) <a class="github-button" href="https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post" data-show-count="true" aria-label="Star Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post on GitHub">Star</a>
 <br>
-A *code review* is a form of code inspection where a developer assesses code for style, defects, and other standards prior to integration into a code base. As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in facilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions. In an effort to better understand code reviewing habits, we're going to create an SVM classifier to **classify over 30 000 GitHub review comments based on the main topic addressed by each comment** (e.g. *naming*, *readability*, etc.).
+A *code review* is a form of code inspection where a developer assesses code for style, defects, and other standards prior to integration into a code base. As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in facilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions.
+
+In an effort to better understand code reviewing habits, we're going to create an SVM classifier to **classify over 30 000 GitHub review comments based on the main topic addressed by each comment** (e.g. *naming*, *readability*, etc.).
 <!--more-->
 
 #### Grab the Jupyter Notebook for this experiment on [GitHub](https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post).
@@ -20,11 +22,9 @@ A *code review* is a form of code inspection where a developer assesses code for
 
 # Review Comment Classifications
 
-The list of categories we're going to incorporate into our classifier are summarized in the table below. This list was developed based on a manual survey of approximately 2000 GitHub review comments I performed on randomly selected, but highly forked Java repositories on GitHub. 
+The list of classifications we're going to incorporate into our classifier are summarized in the table below. This list was developed based on a manual survey of approximately 2000 GitHub review comments I performed on randomly selected, but highly forked Java repositories on GitHub. 
 
-The selected 
-categories reflect the most frequently occurring topics encountered in the surveyed review comments. Majority of the categories 
-are related to code level concepts (e.g. variable naming, exception handling); however, certain review comments 
+The selected categories reflect the most frequently occurring topics encountered in the surveyed review comments. Majority of the categories are related to code level concepts (e.g. variable naming, exception handling); however, certain review comments 
 that did not naturally fall into any existing categories and were unrelated to the overall goal of code reviewing were placed in
 the "other" category. 
 
@@ -50,6 +50,7 @@ to the topic it spent the most words discussing.
 # SVM Classifier Implementation
 
 Now we'll discuss our SVM text classifier implementation. This experiment represents a typical supervised learning classification exercise.
+
 We'll start by first loading our training data consisting of two files representing 2000 manually labeled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post/master/data/review_comments.txt) contains a review comment on each
 line, while the [second file](https://raw.githubusercontent.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post/master/data/review_comments_labels.txt)  contains manually determined classifications for each corresponding review comment on each line.
 
@@ -80,7 +81,7 @@ def formatComments(comments):
 formatComments(review_comments)
 ```
 
-**A note on using stopwords and stemmers.** My experimental results showed that using off the shelf stopword lists and stemmers to preprocess the data decreased the accuracy of the final classifier. This is why I have not used any of these techniques in this experiment.
+**A note on using stopwords and stemmers.** My experimental results showed that using off the shelf stopword lists and stemmers to preprocess the data slightly decreased the accuracy of the final classifier. This is why I have not used any of these techniques in this experiment.
 
 The next step of our preprocessing stage is to convert the comment reviews into numerical feature vectors. This is required to
 make our review comments amenable for machine learning algorithms. To do this, we will use the bag of words method, which 
@@ -317,7 +318,7 @@ Many of the classifications are related to each other at a conceptual level. For
 
 That is to say, if a comment read, "poor readability here", we would expect it to be classified as `Readability`. However, if the comment read, "This for loop should be moved before line 2", then `Control Structures` would be its expected classification, despite readability being the motivating factor for the review suggestion. As mentioned previously, in cases where multiple classifications applied, the comment was classified to a category it spend the most words discussing.
 
-Interestingly, 15% of review comments were found to discuss `Readability`. This category of comments not only deals with formatting, project conventions and style, but also with  how easy the code is to follow for a human. While existing static analysis tools are effective in dealing with the former area, they lack the ability to check code effectively in the latter domain. This is supported by the fact that over 50% of the repositories included in our study had some form of static analysis tools checking their code. Additionally, a manual survey of 100 randomly sampled comments classified with `Readability` pointed towards this idea as well. One such comment from our study is illustrated below. While the approach taken by the code contributer is correct, the code review has suggested an alternate approach that increases the clarity of the code.
+Interestingly, 15% of review comments were found to discuss `Readability`. This category of comments not only deals with formatting, project conventions and style, but also with  how easy the code is to follow for a human. While existing static analysis tools are effective in dealing with the former area, they lack the ability to check code effectively in the latter domain. This is supported by the fact that over 50% of the repositories included in our study had some form of static analysis tools checking their code. Additionally, a manual survey of 100 randomly sampled comments classified with `Readability` pointed towards this idea as well. One such comment from my study is illustrated below. While the approach taken by the code contributer is correct, the code review has suggested an alternate approach that increases the clarity of the code.
 
 <img src="/images/readability.png" alt="read" style="margin-right:auto; margin-left:auto;" width="600px"/>
 
@@ -329,10 +330,9 @@ Without the ability to extract meaningful information from the source code along
 
 For example, the figure below illustrates a review comment targeted at a Java annotation for a field variable. However, without viewing the source code, it equally possible to suggest that the review comment is targeted at a method name, class name, or even source code documentation. 
 
-Many review comments also contain references to source code entities, which also makes their classification a difficult task without being able to reference them to the source code as well. Lastly, many review comments analyzed consisted of comments serving as a response to previous comments, which do not always reveal information on their own about the original subject of the discussion.
+Many review comments also contain references to source code entities. Without being able to reference them to the source code, their classification becomes a difficult task . Lastly, many review comments consisted of comments serving as a response to a previous comment, which do not always reveal information about the original subject of the discussion.
 
 <img src="/images/pluralize.png" alt="pluralize" style="margin-right:auto; margin-left:auto;" width="600px"/>
-
 
 # Closing
 
