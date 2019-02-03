@@ -1870,6 +1870,7 @@ input[type="tel"] {
 	
 	.main-post-list {
 		margin:-10px;
+		width:100%;
 	}
 	
 	#twitter_btn {
@@ -1962,7 +1963,7 @@ input[type="tel"] {
 		margin: 0 0 .4em 0; } }
 @media all and (max-width: 640px) {
 	.main-post-list {
-	    width: 130%; }
+	    width: 100%; }
 	
 	.post_icon {
 		display:none;	
