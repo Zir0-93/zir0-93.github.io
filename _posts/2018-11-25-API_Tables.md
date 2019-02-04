@@ -32,13 +32,13 @@ navigate. On top of this, Swagger UI will list the same endpoint multiple times 
 
 When first examining an API, developers need a high level representation of the specification that conveys the essential functionality of the specification.
 
-## Introducing API Tables
+## API Tables
 
 API Tables form the perfect solution for providing a quick overview of a group of related endpoints in a specification. The image below represents an API Table for working with Pull Requests in the [GitHub API](https://developer.github.com/v3/). The table is read left to right, where each cell builds on the cells to its left to represent a certain endpoint of the API spec. Each table cell also has buttons representing operations available at that particular endpoint (GET, POST, etc..) that users can click on to view more detailed documentation, go ahead and try it out below!
 
 {% include tabular_github_api.html %}
 
-## Compact
+### Compact
 A quick glance at the table above conveys what resources are offered by this API along with what executable operations are available on those resources. 
 
 The API Table above compactly depicts over 30 different API operations whose documentation spreads across six different and lengthy pages on GitHub. 
@@ -47,7 +47,7 @@ And this is precisely why API tables are incredibly useful, **they provide a hig
 
 Ideally, developers wishing to explore an API would start off with API Table representations of the API. Next, they would use the action verb hyperlinks in each cell to further navigate to low level documentation as done for the GitHub API above.
 
-## Easy to Read
+### Easy to Read
 These tables are also very easy to read. They consist of very little text in comparison to other documentation methods and most people prefer reading horizontally oriented tables over vertically oriented lists of text. 
 
 Most importantly, **API Tables can represent larger and more sophisticated API specs without sacrificing readability.** For example, the sample table depicted above can easily accommodate displaying up to 65 different operations!
