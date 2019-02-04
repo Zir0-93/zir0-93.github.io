@@ -1945,7 +1945,7 @@ input[type="tel"] {
 				width: 25.8%; }
 
 	.content-wrapper {
-		width: 80%;
+		width: 90%;
 		max-width: none;
 		margin: 0 auto; }
 
@@ -1959,7 +1959,7 @@ input[type="tel"] {
 @media all and (max-width: 640px) {
 	.main-post-list {
 	    width: 100%;    width: 115%;
-    padding: 5px; }
+    padding: 10px; }
 	
 	.post_icon {
 		display:none;	
