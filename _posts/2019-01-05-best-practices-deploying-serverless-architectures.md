@@ -1,5 +1,5 @@
 --- 
-title:  "4 Key Considerations for Your Serverless Deployment Strategy"
+title:  "4 Key Considerations for Your Serverless App Deployment Strategy"
 icon: /images/rocket_cd.png
 date:  2019-01-05 15:04:23
 og_image: /images/Continuous-Delivery-and-Deployment.jpg
