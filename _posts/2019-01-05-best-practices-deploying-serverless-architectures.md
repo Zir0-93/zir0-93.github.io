@@ -56,7 +56,7 @@ The most important point however, is that all of this must be **automated**.
 Using their front end web application, Cloud providers such as Amazon Web Services *make it easy* to spin off a new lambda function for testing purposes or to update a function's application code. However, all aspects of your continuous delivery strategy should be **automated** - the only manual step should be the push of the `deploy to production` button. This is vital for many reasons:
 
 1. **Minimizing Risk** - Even with proper resource access controls in place which is seldom the case, the risk of accidentally causing bad things to happen are higher than you think. You definitely don't want be the reason for a disruption to your service.
-2. **Scalability** - As the number of developers in the project grows, and by extension the volume of code deliveries, any process that is not completely automated will likely slow down your team's agility.
+2. **Scalability** - As the number of developers in the project grows, and by extension, the volume of code deliveries, any process that is not completely automated will likely slow down your team's agility.
 3. **Traceability** - When your continuous delivery strategy is an automated, often using an automated pipeline of some sort, the use of  deployments, builds and other components are better documented, making it easier to resolve and recover from failures.
 
 ![bitbucket_deploy](/images/deployments_video_edited.gif)
