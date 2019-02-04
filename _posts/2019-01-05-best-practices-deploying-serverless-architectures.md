@@ -28,11 +28,11 @@ When configuring serverless architectures in these environments, special care ne
 
 ![staging_prod_single_architecture](/images/staging_prod_single.svg)
 
-The single stack approach shares its services and infrastructure across all environments (like test, staging and prod). To differentiate between environments at runtime, environment variables or similar mechanisms are used.
+The *single stack* approach shares its services and infrastructure **across all** environments (like test, staging and prod). To differentiate between environments at runtime, environment variables or similar mechanisms are used.
 
-In the context a serverless app deployed on AWS, a single stack setup might configure a single Lambda Function with multiple aliases, an API Gateway with multiple stages, and DynamoDB service with multiple tables - all with the purpose of supporting multiple test, staging and production environments. 
+In the context of a serverless app deployed on AWS, a single stack setup might configure a single Lambda Function with multiple aliases, an API Gateway with multiple stages, and DynamoDB service with multiple tables - all with the purpose of supporting multiple test, staging and production environments. 
 
-In contrast, a multi-stack approach uses a **separate** instance of each service for every environment and does not use API stages or Lambda aliases to differentiate between environments.
+In contrast, a *multi-stack* approach uses a **separate** instance of each service for every environment and does not use API stages or Lambda aliases to differentiate between environments.
 
 Using the AWS example again, a multi-stack setup would configure a separate Lambda Function, API Gateway, and DynamoDB instance for each environment.
 
@@ -40,7 +40,7 @@ Using the AWS example again, a multi-stack setup would configure a separate Lamb
 
 The main difference between the two approaches is that the multi-stack approach minimizes **risk**, while the single stack approach minimizes **setup and maintenance** effort.
 
-If something goes wrong in a single stack approach, there is a greater chance that your production systems are negatively impacted as well. After all, the environments in this approach are provisioned on top of each other, and relies only on environment variables and lambda aliases for indirection. 
+If something goes wrong in a single stack approach, there is a greater chance that your production systems are negatively impacted as well. After all, the environments in this approach are provisioned on top of each other, and rely only on environment variables and lambda aliases for indirection. 
 
 In the multi-stack approach, this probability is decreased as a result of using separate resources for each environment. This advantage comes at a cost however - multi-stack approaches require more work to configure and maintain in comparison to single stack architectures. And in most scenarios, they are more expensive to run as well.
 
