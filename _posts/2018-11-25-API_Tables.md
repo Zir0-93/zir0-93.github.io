@@ -58,3 +58,4 @@ I strongly feel that API Tables supplement the existing [Swagger UI](http://pets
 overview of an API. 
 
 Do you think API tables can be useful for API documentation in combination with Swagger-Type specifications?  Let me know what your your thoughts are below!
+ 
