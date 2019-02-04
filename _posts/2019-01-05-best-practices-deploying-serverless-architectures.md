@@ -105,9 +105,9 @@ An app’s config consists of everything that is likely to vary between deploys 
 - Credentials to external services such as Amazon S3 or Twitter
 - Per-deploy values such as the canonical hostname for the deploy
 
-Apps sometimes store config variables as constants in source code which is problematic for several reasons. Firstly, any security sensitive related config data is visible to everyone who has access to the source code, which poses a serious security concern. 
+Apps sometimes store config variables as constants in source code which is problematic for several reasons. First, any security sensitive related config data is visible to everyone who has access to the source code, which poses a serious security concern. 
 
-Additionally, config varies substantially across deploys, whereas code does not. Therefore, developing code that dynamically detects the environment and sets the appropriate config data as required results in code that is unnecessarily complicated and difficult to maintain, especially as the number of environments/deploys increases. On top of this, any required changes to an environment config requires pushing a change through the code base and waiting for it to propagate through the software delivery pipeline which is tedious and slow.
+Additionally, config varies substantially across deploys, whereas code does not. Developing code that dynamically detects the environment and sets the appropriate config data as required results in code that is unnecessarily complicated and difficult to maintain, especially as the number of environments/deploys increases. On top of this, any required changes to an environment config requires pushing a change through the code base and waiting for it to propagate through the software delivery pipeline which is tedious and slow.
 
 ![security_keys](/images/security-keys-meme.jpg)
 
