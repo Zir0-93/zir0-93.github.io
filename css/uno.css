@@ -1690,7 +1690,7 @@ nav {
 	margin-right: 1em; }
 
 .main-post-list {
-	    width: 120%;
+	    width: 115%;
     margin-left: -10%; }
 
 .pagination__older {
@@ -1958,8 +1958,8 @@ input[type="tel"] {
 		margin: 0 0 .4em 0; } }
 @media all and (max-width: 640px) {
 	.main-post-list {
-	    width: 100%;    width: 115%;
-    padding: 10px; }
+	    width: 100%;   
+    padding: 10px;  margin:0px;}
 	
 	.post_icon {
 		display:none;	
