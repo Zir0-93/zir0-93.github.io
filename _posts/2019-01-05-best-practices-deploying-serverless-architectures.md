@@ -26,31 +26,36 @@ To lessen the risk of integrating new code, most teams  setup various environmen
 
 When configuring serverless architectures in these environments, special care needs to be taken in deciding whether a **single stack** or **multi-stack approach** architecture is best for your project. Otherwise, you might be wasting a lot of time on deployments, or even worse, introducing unnecessary risk to your application.
 
+![staging_prod_single_architecture](/images/staging_prod_single.svg)
+
+The single stack approach shares its services and infrastructure across all environments (like test, staging and prod). To differentiate between environments at runtime, environment variables or similar mechanisms are used.
+
+In the context a serverless app deployed on AWS, a single stack setup might configure a single Lambda Function with multiple aliases, an API Gateway with multiple stages, and DynamoDB service with multiple tables - all with the purpose of supporting multiple test, staging and production environments. 
+
+In contrast, a multi-stack approach uses a **separate** instance of each service for every environment and does not use API stages or Lambda aliases to differentiate between environments.
+
+Using the AWS example again, a multi-stack setup would configure a separate Lambda Function, API Gateway, and DynamoDB instance for each environment.
+
 ![staging_prod_architecture](/images/staging_prod_multi.svg)
-
-The single stack approach shares its API Gateway and Lambda functions across all environments, and uses stages, environment variables and Lambda aliases to differentiate between environments.
-
-In contrast, a multi-stack approach uses a completely separate instance of each service for every environment and does not use API stages or Lambda aliases to differentiate between environments.
 
 The main difference between the two approaches is that the multi-stack approach minimizes **risk**, while the single stack approach minimizes **setup and maintenance** effort.
 
-![staging_prod_single_architecture](/images/staging_prod_single.svg)
+If something goes wrong in a single stack approach, there is a greater chance that your production systems are negatively impacted as well. After all, the environments in this approach are provisioned on top of each other, and relies only on environment variables and lambda aliases for indirection. 
 
-If something goes wrong in a single stack approach, there is a greater chance that your production systems are negatively impacted as well. Since, this approach relies on environment variables and lambda aliases for indirection. 
+In the multi-stack approach, this probability is decreased as a result of using separate resources for each environment. This advantage comes at a cost however - multi-stack approaches require more work to configure and maintain in comparison to single stack architectures. And in most scenarios, they are more expensive to run as well.
 
-In the multi-stack approach, this probability is decreased as a result of using separate resources for each environment. This comes at a cost however - single stack approaches are much easier to configure and maintain. And in most scenarios, they are cheaper to run as well.
-
-If you are in the early stages of your project, it might be a better idea for you to run with a single stack approach. In most other cases, a multi-stack approach is the way to go.
+If you are in the early stages of your project, it might be a better idea for you to run with a single stack approach. Otherwise, a multi-stack approach is the way to go.
 
 ## Adopt Continuous Delivery
 The main idea behind Continuous delivery is to produce **production ready** artifacts from your code base frequently in an **automated fashion**. It  ensures that code can be rapidly and safely deployed to production by delivering every change to a production-like environment and that any business applications and services function as expected through rigorous automated testing. 
 
 The most important point however, is that all of this must be **automated**.
 
-Using their front end web application, Cloud providers such as Amazon Web Services *make it easy* to spin off a new lambda function for testing purposes or to update a function's application code. However, all aspects of your continuous delivery strategy should be **automated** - the only manual step should be the push of the `deploy to production` button. This is vital for two reasons:
+Using their front end web application, Cloud providers such as Amazon Web Services *make it easy* to spin off a new lambda function for testing purposes or to update a function's application code. However, all aspects of your continuous delivery strategy should be **automated** - the only manual step should be the push of the `deploy to production` button. This is vital for many reasons:
 
 1. **Minimizing Risk** - Even with proper resource access controls in place which is seldom the case, the risk of accidentally causing bad things to happen are higher than you think. You definitely don't want be the reason for a disruption to your service.
-2. **Traceability** - When your continuous delivery strategy is an automated, often using an automated pipeline of some sort, the use of  deployments, builds and other components are better documented, making it easier to resolve issues and manage what has been used where.
+2. **Scalability** - As the number of developers in the project grows, and by extension the volume of code deliveries, any process that is not completely automated will likely slow down your team's agility.
+3. **Traceability** - When your continuous delivery strategy is an automated, often using an automated pipeline of some sort, the use of  deployments, builds and other components are better documented, making it easier to resolve and recover from failures.
 
 ![bitbucket_deploy](/images/deployments_video_edited.gif)
 
@@ -104,7 +109,7 @@ Additionally, config varies substantially across deploys, whereas code does not.
 
 ![security_keys](/images/security-keys-meme.jpg)
 
-Rather than keeping your config data in source code, consider using consider using a service like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) to manage config data or storing this data in environment variables. Then, modify your applications to refer to environment variables for config info, which are dynamically set by a build pipeline during deployment. Using this method, environment variables can be leveraged to  generate flexible and infinite variations (test, staging, prod, etc..) of your environment template. Additionally, you are not required to maintain any environment specific code, and can scale to multiple environments as needed easily. Lastly, environment variables are OS and language agnostic, which means they can easily be integrated across all types of projects.
+Rather than keeping your config data in source code, consider using consider using a service dedicated for this purpose like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) to manage config data. Or as a slightly less safe but commonly used alternative, store this data in environment variables. Now your application can simply refer to abstract variables for config info, which are dynamically set by a build pipeline during deployment. In this way, environment variables can be leveraged to  generate flexible and infinite variations (test, staging, prod, etc..) of your environment template. Lastly, environment variables are OS and language agnostic, which means they can easily be integrated across all types of projects.
 
 ## Provision and Deploy Infrastructure as Code (IaC)
 
@@ -112,7 +117,7 @@ IaC is all about provisioning and updating entire workloads (applications, infra
 
 By using code to automate the process of setting up and configuring a virtual machine or container for example, you have a **fast** and **repeatable** method for replicating the process. So if you build a virtual environment for the development of an application, you can repeat the process of creating that VM simply by running the same code once you are ready to deploy. 
 
-Additionaly, IaC processes increase agility. Developers don't have to wait for however long the IT department needs to provision a new VM for them to do work. 
+Additionally, IaC processes increase agility. Developers don't have to wait for however long the IT department needs to provision a new VM for them to do work. 
 
 When it comes to practicing IaC in the cloud, the [Serverless Framework](https://serverless.com) is a great tool for configuring serverless architectures. It's a command line interface for building and deploying entire serverless applications through the use of configuration template files. It, along with many other services including AWS's Serverless Application Model (SAM) for example, provide a scalable and systematic solution to many of the operational complexities of multi-environment serverless architectures. The [Serverless Framework](https://serverless.com) is probably the most popular cloud provider agnostic framework for configuring serverless applications and supports AWS, Microsoft Azure, Google Cloud Platform, IBM OpenWhisk, and more. 
 
