@@ -128,7 +128,7 @@ comments_train_tfidf.shape
 
 Now that the classifier itself is almost ready, an important consideration now is the amount of training data to use for testing the classifier.
 
-After ensuring that atleast 100 review comments for each classification are present in our labeled data set, I experimented with different numbers of review comments
+After ensuring that atleast 100 review comments for most of the classification are present in our labeled data set, I experimented with different numbers of review comments
 to see what gave the best results. 2000 review comments seemed to give a good enough accuracy for our purposes. We will therefore dedicate 80% of our 2000 GitHub review comments data to the training set, which we will use to train our SVM classifier. The remaining 20% of the data will be dedicated to the test set, which we will use to test the performance of the developed classifier.
 
 ```python
