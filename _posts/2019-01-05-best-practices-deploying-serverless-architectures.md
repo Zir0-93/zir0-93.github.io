@@ -21,7 +21,7 @@ If you can't answer this question easily, or some part of your deploys still req
 * TOC
 {:toc}
 
-## It Uses Right Stack Approach
+## It Separates Environments Properly
 To lessen the risk of integrating new code, most teams  setup various environments to test the robustness of submitted code before it is pushed to production.
 
 When configuring serverless architectures in these environments, special care needs to be taken in deciding whether a **single stack** or **multi-stack approach** architecture is best for your project. Otherwise, you might be wasting a lot of time on deployments, or even worse, introducing unnecessary risk to your application.
