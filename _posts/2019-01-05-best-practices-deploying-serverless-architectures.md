@@ -49,7 +49,7 @@ If you are in the early stages of your project, it might be a better idea for yo
 ## Adopt Continuous Delivery
 The main idea behind Continuous delivery is to produce **production ready** artifacts from your code base frequently in an **automated fashion**. It  ensures that code can be rapidly and safely deployed to production by delivering every change to a production-like environment and that any business applications and services function as expected through rigorous automated testing. 
 
-![continuous_delivery](/images/Worked-Fine-In-Dev-Ops-Problem-Now.jpg)
+<p><img style="display:block;" src="/images/Worked-Fine-In-Dev-Ops-Problem-Now.jpg" alt="sample_comment"></p>
 
 The most important point however, is that all of this must be **automated**.
 
