@@ -48,7 +48,7 @@ to the topic it spent the most words discussing.
 | Testing                           | 12    |                                                           |"is there a test for this?" |
 | Other                           | 13    | Comments not relating to categories 1-12.                                                           |"Looks good", "done", "thanks" |
 
-## Loading The Data Set
+# Loading The Data Set
 Now we'll discuss our SVM text classifier implementation. This experiment represents a typical supervised learning classification exercise.
 
 We'll start by first loading our training data consisting of two files representing 2000 manually labeled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post/master/data/review_comments.txt) contains a review comment on each
@@ -62,7 +62,7 @@ with open('review_comments_labels.txt') as g:
     classifications = g.readlines()
  ```
  
- ## Data Preprocessing
+ # Data Preprocessing
  
  Next, we are going to preprocess the raw data in multiple steps to prepare it for use by our SVM classifier. First, we remove all formatting characters from each comment that are associated with the Markdown syntax. This step is important because the additional formatting related characters introduced by the 
  Markdown standard will negatively impact our classifier's ability to recognize identical words.
@@ -137,7 +137,7 @@ from sklearn.model_selection import train_test_split
 
 comment_train, comment_test, classification_train, classification_test = train_test_split(review_comments, classifications, test_size=0.2)
 ```
-## Training The Classifier
+# Training The Classifier
 
 Lastly, we can complete our classifier by combining the components developed so far with the scikit SVM classifier using the scikit `Pipeline` module. The purpose of the pipeline is to assemble several steps that can be cross-validated together while setting different parameters. We also use the scikit `SGDClassifier` module to train our SVM model using Stochastic Gradient Descent (SGD). SGD is an iterative based optimization technique. In this case, the technique modifies the SVM parameters on each training iteration to find a local optimum that produces the best results. We set the number of iterations for our estimator at 1000. As demonstrated below, our developed classifier scored an accuracy of 82% on the test data set.
 
