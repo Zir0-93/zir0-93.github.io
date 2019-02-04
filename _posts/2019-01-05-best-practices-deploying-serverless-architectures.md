@@ -13,7 +13,7 @@ This is true for the most part, but Serverless apps also have a certain property
 
 With that said, how do you both provision infrastructure and deploy code to test/staging/production environments in an **automated** and **risk-minimized** way?
 
-If you can't answer this question easily, or some part of your deploys require you to look at your cloud provider's console, than this post is for you.
+If you can't answer this question easily, or some part of your deploys still require you to look at your cloud provider's console, then this post is for you.
 <!--more-->
 
 ![cd_img](/images/Continuous-Delivery-and-Deployment.jpg)
