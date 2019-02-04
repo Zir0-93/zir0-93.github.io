@@ -1,5 +1,5 @@
 --- 
-title:  "4 Key Considerations for Your Serverless App Deployment Strategy"
+title:  "What a Good Serverless App Deployment Strategy Looks Like"
 icon: /images/rocket_cd.png
 date:  2019-01-05 15:04:23
 og_image: /images/Worked-Fine-In-Dev-Ops-Problem-Now.jpg
@@ -21,7 +21,7 @@ If you can't answer this question easily, or some part of your deploys still req
 * TOC
 {:toc}
 
-## Choose The Right Stack Approach
+## It Uses Right Stack Approach
 To lessen the risk of integrating new code, most teams  setup various environments to test the robustness of submitted code before it is pushed to production.
 
 When configuring serverless architectures in these environments, special care needs to be taken in deciding whether a **single stack** or **multi-stack approach** architecture is best for your project. Otherwise, you might be wasting a lot of time on deployments, or even worse, introducing unnecessary risk to your application.
@@ -46,7 +46,7 @@ In the multi-stack approach, this probability is decreased as a result of using 
 
 If you are in the early stages of your project, it might be a better idea for you to run with a single stack approach. Otherwise, a multi-stack approach is the way to go.
 
-## Adopt Continuous Delivery
+## It Practices Continuous Delivery
 The main idea behind Continuous delivery is to produce **production ready** artifacts from your code base frequently in an **automated fashion**. It  ensures that code can be rapidly and safely deployed to production by delivering every change to a production-like environment and that any business applications and services function as expected through rigorous automated testing. 
 
 <p><img style="display:block;" src="/images/Worked-Fine-In-Dev-Ops-Problem-Now.jpg" alt="sample_comment"></p>
@@ -98,7 +98,7 @@ pipelines:
 ```
 
 
-## Store App Config In the Environment
+## App Config Is Stored in the Environment
 An app’s config consists of everything that is likely to vary between deploys (staging, production, developer environments, etc). This typically includes:
 
 - Resource handles to the database, cache or any other attached resources
@@ -113,9 +113,9 @@ Additionally, config varies substantially across deploys, whereas code does not.
 
 Rather than keeping your config data in source code, consider using consider using a service dedicated for this purpose like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) to manage config data. Or as a slightly less safe but commonly used alternative, store this data in environment variables. Now your application can simply refer to abstract variables for config info, which are dynamically set by a build pipeline during deployment. In this way, environment variables can be leveraged to  generate flexible and infinite variations (test, staging, prod, etc..) of your environment template. Lastly, environment variables are OS and language agnostic, which means they can easily be integrated across all types of projects.
 
-## Provision and Deploy Infrastructure as Code (IaC)
+## Infrastructure is Provisioned and Deployed as Code
 
-IaC is all about provisioning and updating entire workloads (applications, infrastructure) using code. The idea here is that the same engineering discipline that is typically used for application code can be applied to deploying and managing workloads as well. You can implement your operations procedures as code and automate their execution by triggering them in response to events. 
+Infrastructure as Code (IaC) is all about provisioning and updating entire workloads (applications, infrastructure) using code. The idea here is that the same engineering discipline that is typically used for application code can be applied to deploying and managing workloads as well. You can implement your operations procedures as code and automate their execution by triggering them in response to events. 
 
 By using code to automate the process of setting up and configuring a virtual machine or container for example, you have a **fast** and **repeatable** method for replicating the process. So if you build a virtual environment for the development of an application, you can repeat the process of creating that VM simply by running the same code once you are ready to deploy. 
 
