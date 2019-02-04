@@ -88,8 +88,7 @@ formatComments(review_comments)
 
 # Extracting Features
 
-The next step of our preprocessing stage is to convert the comment reviews into numerical feature vectors. This is required to
-make our review comments amenable for machine learning algorithms. To do this, we will use the bag of words method, which 
+The next step of our preprocessing stage is to convert the comment reviews into numerical feature vectors. This will represent the review comments in a way that will allow them to be processed by our machine learning algorithms. To do this, we will use the bag of words method, which 
 represents a sentence using a feature vector developed based on the number of occurrences of each
 term, known as *term frequency*. We'll use the Scikit-learn Python library to create feature vectors for our 
 review comments using the `CountVectorizer` module.
