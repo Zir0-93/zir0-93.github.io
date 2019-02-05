@@ -21,6 +21,20 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     opacity: 1; /* Firefox */
 }
 
+.tweet_box {
+    width: 80%;
+    font-weight: bold;
+    min-width: 100px;
+    border: 1px solid #80808080;
+    padding: 30px 5px 30px 5px;
+    font-size: 24px;
+    color: #4a4a4a;
+    text-align: center;
+    margin: 20px;
+    background-color: #1582d01f;
+    font-family: Lato;
+}
+
 body .gist .highlight {
     background: #272822;
 }
