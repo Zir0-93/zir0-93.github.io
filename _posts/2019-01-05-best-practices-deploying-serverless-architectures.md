@@ -1,5 +1,5 @@
 --- 
-title:  "What a Good Serverless App Deployment Strategy Looks Like"
+title:  "4 Elements of A Great Serverless Application Deployment Strategy"
 icon: /images/rocket_cd.png
 date:  2019-01-05 15:04:23
 og_image: /images/Worked-Fine-In-Dev-Ops-Problem-Now.jpg
