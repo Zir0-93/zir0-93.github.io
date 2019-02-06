@@ -29,7 +29,6 @@ a.tweet_link {
 }
 
 .tweet_box {
-    width: 90%;
     font-weight: bold;
     padding-top: 15px;
     min-width: 100px;
@@ -40,7 +39,7 @@ a.tweet_link {
     color: #777777;
     text-align: center;
     padding-top: 15px;
-    margin: 20px;
+    margin: 30px;
     background-color: #f0f0f0b8;
     font-family: Lato;
     -webkit-box-shadow: 11px 15px 38px -9px rgba(112,112,112,1);
