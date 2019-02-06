@@ -32,7 +32,7 @@ The *single stack* approach shares its services and infrastructure **across all*
 
 In the context of a serverless app deployed on AWS, a single stack setup might configure a single Lambda Function with multiple aliases, an API Gateway with multiple stages, and DynamoDB service with multiple tables - all with the purpose of supporting multiple test, staging and production environments. 
 
-In contrast, a *multi-stack* approach uses a **separate** instance of each service for every environment and does not use API stages or Lambda aliases to differentiate between environments.
+In contrast, a *multi-stack* approach uses a **separate** instance of each service for every environment and does not use API stages or Lambda aliases to differentiate between them.
 
 Using the AWS example again, a multi-stack setup would configure a separate Lambda Function, API Gateway, and DynamoDB instance for each environment.
 
