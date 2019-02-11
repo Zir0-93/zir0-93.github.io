@@ -1,6 +1,6 @@
 
 ---
-title:  "How to Design Better MicroServices Using Object Oriented Principles"
+title:  "How to Write Better Serverless Functions Using Object Oriented Principles"
 date:   2019-02-25 15:04:23
 icon: /images/badges_csharp_objects_stage01.png
 tags: [oop, messaging, microservices]
