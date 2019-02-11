@@ -1,6 +1,6 @@
 
 ---
-title:  "Why You Shouldn't Do Serverless if You Don't Understand OOP"
+title:  "Why Good Serverless Functions Must Follow Object Oriented Principles"
 date:   2019-02-25 15:04:23
 icon: /images/badges_csharp_objects_stage01.png
 tags: [oop, messaging, microservices]
