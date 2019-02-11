@@ -2,7 +2,7 @@
 title:  "4 Elements of A Great Serverless Application Deployment Strategy"
 icon: /images/rocket_cd.png
 date:  2019-01-05 15:04:23
-og_image: /images/Worked-Fine-In-Dev-Ops-Problem-Now.jpg
+og_image: /images/Continuous-Delivery-and-Deployment.jpg
 tags: [python, AWS, lambda, continuous delivery, bitbucket]
 description: Serverless is the new Buzz word in town, selling developers the ability to focus on writing applications instead of managing servers. This is true for the most part, but Serverless apps also have a certain property that can make their deployment and maintenance time consuming. That is, they depend on services, lots of them. A serverless architecture is typically designed over services for storing data, load balancing, data caching and code execution, just to name a few. With that said, how do you both provision infrastructure and deploy code to test/staging/production environments in an automated and risk-minimized way?
 excerpt_separator: <!--more-->
@@ -21,7 +21,7 @@ If you can't answer this question easily, or some part of your deploys still req
 * TOC
 {:toc}
 
-## It Separates Environments Properly
+## Separate Environments Properly
 To lessen the risk of integrating new code, most teams  setup various environments to test the robustness of submitted code before it is pushed to production.
 
 When configuring serverless architectures in these environments, special care needs to be taken in deciding whether a **single stack** or **multi-stack approach** architecture is best for your project. Otherwise, you might be wasting a lot of time on deployments, or even worse, introducing unnecessary risk to your application.
@@ -46,7 +46,7 @@ In the multi-stack approach, this probability is decreased as a result of using 
 
 If you are in the early stages of your project, it might be a better idea for you to run with a single stack approach. Otherwise, a multi-stack approach is the way to go.
 
-## It Practices Continuous Delivery
+## Continuous Delivery
 The main idea behind Continuous delivery is to produce **production ready** artifacts from your code base frequently in an **automated fashion**. It  ensures that code can be rapidly and safely deployed to production by delivering every change to a production-like environment and that any business applications and services function as expected through rigorous automated testing. 
 
 <p><img style="display:block;" src="/images/Worked-Fine-In-Dev-Ops-Problem-Now.jpg" alt="sample_comment"></p>
