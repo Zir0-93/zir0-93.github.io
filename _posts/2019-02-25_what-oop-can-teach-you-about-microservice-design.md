@@ -1,16 +1,19 @@
 
 ---
-title:  "What OOP Can Teach You About Good Microservice Design"
+title:  "Why You Shouldn't Do Serverless if You Don't Understand OOP"
 date:   2019-02-25 15:04:23
 icon: /images/badges_csharp_objects_stage01.png
 tags: [oop, messaging, microservices]
-description: The Object Oriented Programming [OOP] paradigm is often associated with many great programming concepts including polymorphism, encapsulation and composition to name a few. However, even with a little experience in a functional programming language like haskell for example, you would quickly realize that these techniques are not exclusive to OOP at all. If that is the case, then what ideas does OOP bring forward that make it so well known and widely adopted in the industry?
+description: 
 excerpt_separator: <!--more-->
 ---
+Many people will start their cloud adoption journey by breaking down their existing application into smaller components hoping to migrat. them to Lambda functions. This can result in a lot of frustration, and time wasted in running doing Serverless when it was supposed to save you time and money. 
 
-Microservices includes so many concepts that it is challenging to define it
-precisely. However, all microservices architectures share some common
-characteristics, as Figure 1 illustrates:
+Writing code for Serverless applications requires a much different approach than writing code for typical monolithic applications.
+
+
+
+
 • Decentralized – Microservices architectures are distributed systems
 with decentralized data management. They don’t rely on a unifying
 schema in a central database. Each microservice has its own view on
