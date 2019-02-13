@@ -1,6 +1,6 @@
 
 ---
-title:  "How to Write Better Serverless Functions Using Object Oriented Inspired Principles"
+title:  "How Object Oriented Code can Ease Your Serverless Transformation Journey"
 date:   2019-02-25 15:04:23
 icon: /images/badges_csharp_objects_stage01.png
 tags: [oop, serverless]
@@ -11,12 +11,9 @@ Most people *underestimate* the complexity of writing code for a serverless envi
 
 When Lambda functions were first introduced, they were mostly used as simple event based mechanisms for processing and transforming data: Analyzing logs, transforming records, backing up data, and so on. Today, the level of sophistication and number of supported business use cases enabled by serverless technology has increased drastically. Using Lambda functions to implement web applications and microservice architectures has become common practice.
 
-However, writing a Lambda function to serve as a component of your microservice architecture is usually much more difficult than writing one to just insert records into a database. The former scenario typically requires developers to spend more time thinking about authentication, performance, communication, exposed interfaces and more. 
+However, writing a Lambda function to serve as a component of your microservice architecture is usually much more difficult than writing one to just insert records into a database. Thats' becasue such an endeavour requires you to spend more time thinking about authentication, performance, communication, exposed interfaces and more. Most importantly of all, it requires you to write more code - a lot more code.
 
-
-At a high level, the required code changes seem like a matter of refactoring components of software from a larger code base. This, along with migrating any data storage and authentication  them to Lambda functions. This can result in a lot of frustration, and time wasted in running doing Serverless when it was supposed to save you time and money. 
-
-Writing code for Serverless applications requires a much different approach than writing code for typical monolithic applications.
+And with more code comes increased complexity. 
 
 
 
