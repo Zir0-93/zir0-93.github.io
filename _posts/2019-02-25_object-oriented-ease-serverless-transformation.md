@@ -1,6 +1,6 @@
 
 ---
-title:  "How Object Oriented Code can Ease Your Serverless Transformation Journey"
+title:  "Why Object Oriented Code Can Streamline Your Serverless Transformation Journey"
 date:   2019-02-25 15:04:23
 icon: /images/badges_csharp_objects_stage01.png
 tags: [oop, serverless]
@@ -30,6 +30,9 @@ the functioning of other components. Similarly, the teams responsible
 for different microservices are enabled to act independently from each
 other.
 
+ Is there over-reliance between services? (Message Passing)
+ 
+ 
 • Do one thing well – Each microservice component is designed for a
 set of capabilities and focuses on a specific domain. If developers
 contribute so much code to a particular component of a service that the
