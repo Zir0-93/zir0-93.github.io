@@ -1,26 +1,29 @@
 
 ---
-title:  "4 Ways Object Oriented Code Can Streamline Your App's Serverless Transformation"
+title:  "How to Avoid a Serverless Transformation Nightmare Through Object Oriented Code"
 date:   2019-02-25 15:04:23
 icon: /images/badges_csharp_objects_stage01.png
 tags: [oop, serverless]
 description: 
-excerpt_separator: <!--more-->
+excerpt_separator: 
 ---
-Even with the best avialble architects and money, your serverless transformation will not be good if you code isn't OOP....
+Even with the best solution architects and resources available, your application's serverless transformation journey will be a lot more painful than it needs to be if your code is **not** *object oriented*.
+<!--more-->
 
-![]()
+![serverless_meme](/images/2u3jzm.jpg)
 
 When Lambda functions were first introduced, they were mostly used as simple event based mechanisms for processing and transforming data. Common use cases included analyzing logs, transforming records, and storing data. Today, the level of sophistication and variety of solutions enabled by serverless technology has increased drastically. Powering web applications and microservice architectures using Lambda functions has become common practice.
 
-Wanting to benefit from scalability and cost-efficiency of serverless technology, organizations are increasingly migrating their monolothic applications to serverless architectures. However, this migration is a difficult process.
+Wanting to benefit from scalability and cost-efficiency of serverless technology, organizations are increasingly migrating their monolothic applications to serverless architectures. However, this migration can be a very difficult process.
 
-And with more code, comes increased complexity. As if things aren't difficult enough already,  
-
-
+**Why?** Because the most significant part of the migration process will involve deconstructing the application into components and services. If your code is procedural in nature, you're in a for a long and painful process. But, if you're code is clean, object oriented, and organized, than it can easily be adapted to run in a serverless environment.
 
 
-• Decentralized – Microservices architectures are distributed systems
+In this article I'll outline **four design principles** for Serverless functions and demonstrate how an object oriented code base faciltates the transformation of a monolithic application into functions that can satisfy these principles.
+
+## Decentralized
+
+Microservices architectures are distributed systems
 with decentralized data management. They don’t rely on a unifying
 schema in a central database. Each microservice has its own view on
 data models. Microservices are also decentralized in the way they are
