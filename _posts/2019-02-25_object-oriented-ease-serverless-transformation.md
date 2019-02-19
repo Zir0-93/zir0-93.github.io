@@ -1,6 +1,6 @@
 
 ---
-title:  "Why Object Oriented Code Can Streamline Your Serverless Transformation Journey"
+title:  "How Object Oriented Code Can Streamline Your Serverless Transformation Journey"
 date:   2019-02-25 15:04:23
 icon: /images/badges_csharp_objects_stage01.png
 tags: [oop, serverless]
@@ -9,11 +9,11 @@ excerpt_separator: <!--more-->
 ---
 Most people *underestimate* the complexity of writing code for a serverless environment. 
 
-When Lambda functions were first introduced, they were mostly used as simple event based mechanisms for processing and transforming data: Analyzing logs, transforming records, backing up data, and so on. Today, the level of sophistication and number of supported business use cases enabled by serverless technology has increased drastically. Using Lambda functions to implement web applications and microservice architectures has become common practice.
+When Lambda functions were first introduced, they were mostly used as simple event based mechanisms for processing and transforming data. Common use cases included analyzing logs, transforming records, and storing data. Today, the level of sophistication and variety of solutions enabled by serverless technology has increased drastically. Powering web applications and microservice architectures using Lambda functions has become common practice.
 
-However, writing a Lambda function to serve as a component of your microservice architecture is usually much more difficult than writing one to just insert records into a database. Thats' becasue such an endeavour requires you to spend more time thinking about authentication, performance, communication, exposed interfaces and more. Most importantly of all, it requires you to write more code - a lot more code.
+Wanting to benefit from scalability and cost-efficiency of serverless technology, organizations are increasingly migrating their monolothic applications to serverless architectures. However, this migration is a difficult process.
 
-And with more code comes increased complexity. 
+And with more code, comes increased complexity. As if things aren't difficult enough already,  
 
 
 
