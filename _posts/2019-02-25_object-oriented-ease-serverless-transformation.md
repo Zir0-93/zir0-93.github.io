@@ -1,13 +1,15 @@
 
 ---
-title:  "How Object Oriented Code Can Streamline Your Serverless Transformation Journey"
+title:  "4 Ways Object Oriented Code Can Streamline Your App's Serverless Transformation"
 date:   2019-02-25 15:04:23
 icon: /images/badges_csharp_objects_stage01.png
 tags: [oop, serverless]
 description: 
 excerpt_separator: <!--more-->
 ---
-Most people *underestimate* the complexity of writing code for a serverless environment. 
+Even with the best avialble architects and money, your serverless transformation will not be good if you code isn't OOP....
+
+![]()
 
 When Lambda functions were first introduced, they were mostly used as simple event based mechanisms for processing and transforming data. Common use cases included analyzing logs, transforming records, and storing data. Today, the level of sophistication and variety of solutions enabled by serverless technology has increased drastically. Powering web applications and microservice architectures using Lambda functions has become common practice.
 
