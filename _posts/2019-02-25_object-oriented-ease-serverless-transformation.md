@@ -7,17 +7,16 @@ tags: [oop, serverless]
 description: 
 excerpt_separator: 
 ---
-Even with the best solution architects and resources available, your application's serverless transformation journey will be a lot more painful than it needs to be if your code is **not** *object oriented*.
+Even with the best solution architects and resources available, your application's serverless transformation journey will be a nightmare if your code is **not** *object oriented*.
 <!--more-->
 
 ![serverless_meme](/images/2u3jzm.jpg)
 
 When Lambda functions were first introduced, they were mostly used as simple event based mechanisms for processing and transforming data. Common use cases included analyzing logs, transforming records, and storing data. Today, the level of sophistication and variety of solutions enabled by serverless technology has increased drastically. Powering web applications and microservice architectures using Lambda functions has become common practice.
 
-Wanting to benefit from scalability and cost-efficiency of serverless technology, organizations are increasingly migrating their monolothic applications to serverless architectures. However, this migration can be a very difficult process.
+Wanting to benefit from scalability and cost-efficiency of serverless technology, organizations are increasingly migrating their monolothic applications to serverless architectures. This migration can be a very difficult process.
 
-**Why?** Because the most significant part of the migration process will involve deconstructing the application into components and services. If your code is procedural in nature, you're in a for a long and painful process. But, if you're code is clean, object oriented, and organized, than it can easily be adapted to run in a serverless environment.
-
+**Why?** Because the most significant part of the migration process will involve deconstructing the application into components and services. If your code is procedural in nature, you're in a for a long and painful process. However, if you're code is clean, object oriented, and organized, than it can easily be adapted for a serverless environment.
 
 In this article I'll outline **four design principles** for Serverless functions and demonstrate how an object oriented code base faciltates the transformation of a monolithic application into functions that can satisfy these principles.
 
