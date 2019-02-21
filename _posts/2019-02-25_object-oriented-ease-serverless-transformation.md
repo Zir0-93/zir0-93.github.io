@@ -16,7 +16,9 @@ When Lambda functions were first introduced, they were mostly used as simple eve
 
 Wanting to benefit from scalability and cost-efficiency of serverless technology, organizations are increasingly migrating their monolothic applications to serverless architectures. This migration can be a very difficult process.
 
-**Why?** Because the most significant part of the migration process will involve deconstructing the application into components and services. If your code is procedural in nature, you're in a for a long and painful process. However, if you're code is clean, object oriented, and organized, than it can easily be adapted for a serverless environment.
+**Why?** Because the most significant part of the migration process will involve **decoupling**.
+
+the application into components and services. If your code is procedural in nature, you're in a for a long and painful process. However, if you're code is clean, object oriented, and organized, than it can easily be adapted for a serverless environment.
 
 In this article I'll outline **four design principles** for Serverless functions and demonstrate how an object oriented code base faciltates the transformation of a monolithic application into functions that can satisfy these principles.
 
