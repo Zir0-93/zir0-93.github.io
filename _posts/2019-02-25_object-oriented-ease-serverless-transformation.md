@@ -22,27 +22,21 @@ In this article I'll outline **four design principles** for Serverless functions
 
 ## Decentralized
 
-Microservices architectures are distributed systems
-with decentralized data management. They don’t rely on a unifying
-schema in a central database. Each microservice has its own view on
-data models. Microservices are also decentralized in the way they are
-developed, deployed, managed, and operated.
+Serverless architectures are distributed systems with decentralized data management. One consequence of this principle is that they don’t rely on a unifying schema in a central database. Each microservice has its own view on data models. Microservices are also decentralized in the way they are developed, deployed, managed, and operated. 
 
-• Independent – Different components in a microservices architecture
-can be changed, upgraded, or replaced independently without affecting
-the functioning of other components. Similarly, the teams responsible
-for different microservices are enabled to act independently from each
-other.
 
- Is there over-reliance between services? (Message Passing)
+## Independent 
+
+Different components in a microservices architecture can be changed, upgraded, or replaced independently without affecting the functioning of other components. Similarly, the teams responsible for different microservices are enabled to act independently from each
+other. 
+
+
+## Message Passing
  
  
-• Do one thing well – Each microservice component is designed for a
-set of capabilities and focuses on a specific domain. If developers
-contribute so much code to a particular component of a service that the
-component reaches a certain level of complexity, then the service could
-be split into two or more services.
+## Do one thing well
+Each microservice component is designed for a set of capabilities and focuses on a specific domain. If developers contribute so much code to a particular component of a service that the component reaches a certain level of complexity, then the service could be split into two or more services.
 
-• Black box – Individual microservice components are designed as black
-boxes, that is, they hide the details of their complexity from other
-components. Any communication between services happens via welldefined APIs to prevent implicit and hidden dependencies.
+## Black box
+
+Individual microservice components are designed as black boxes, that is, they hide the details of their complexity from other components. Any communication between services happens via welldefined APIs to prevent implicit and hidden dependencies.
