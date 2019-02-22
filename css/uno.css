@@ -1238,13 +1238,13 @@ h2,
 h3,
 h4,
 h5,
-h5 {
-	margin-top: 1em;
-    	margin-bottom: .6em;
-	font-family: Lato, Source Sans Pro, "Roboto Slab", serif;
-	color: #2b2b2b;
-	font-weight: bold;
-	-webkit-font-smoothing: antialiased; }
+h5 { 
+    margin-top: 1em;
+    margin-bottom: .6em;
+    font-family: Open Sans;
+    color: #2b2b2b;
+    font-weight: bolder;
+    -webkit-font-smoothing: antialiased; }
 
 h1 {
 	font-size: 3.0em;
@@ -1342,10 +1342,11 @@ pre {
 			color: #b9301c; }
 
 .excerpt {
-	margin: 0;
-	margin-top:15px;
-	font-size: 0.9em;
-	color: #000000; }
+	    margin: 0;
+    margin-top: 15px;
+    font-size: 1.2em;
+    font-weight: 300;
+    color: #000000; }
 
 .intro {
 	font-family: "Roboto Slab", serif;
@@ -1493,8 +1494,10 @@ hr {
 	vertical-align: middle; }
 
 .panel-title {
-	font-size: 2.6em;
-	color: rgb(34, 223, 165);
+     font-size: 2.0em;
+    font-weight: bold;
+    color: rgb(34, 223, 165);
+    margin-bottom: 30px;
 }
 
 .panel-subtitle {
@@ -1739,10 +1742,10 @@ i {
 }
 
 .post-list {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-	text-align: left; }
+    margin-top: 0;
+    font-size: 1.3em;
+    line-height: 1.3em;
+}
 	.post-list li {
 		margin: 0 0 2.2em 0; }
 		.post-list li:last-child hr {
