@@ -1498,7 +1498,7 @@ hr {
 .panel-title {
      font-size: 2.1em;
     font-weight: bold;
-    color: rgb(34, 223, 165);
+    color: #2196F3;
     margin-bottom: 30px;
 }
 
@@ -1693,8 +1693,8 @@ nav {
 		color: #FFF;
 		opacity: .8; }
 		.navigation__item a:hover {
-			color: rgb(34, 223, 165);
-			border-color: rgb(34, 223, 165);
+			color: #2196F3;
+			border-color: #2196F3;
 			opacity: 1;
     background: transparent; }
 
