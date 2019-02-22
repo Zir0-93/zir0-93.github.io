@@ -48,7 +48,7 @@ to the topic it spent the most words discussing.
 | Testing                           | 12    |                                                           |"is there a test for this?" |
 | Other                           | 13    | Comments not relating to categories 1-12.                                                           |"Looks good", "done", "thanks" |
 
-# Loading The Data Set
+## Loading The Data Set
 Now we'll discuss our SVM text classifier implementation. This experiment represents a typical supervised learning classification exercise.
 
 We'll start by first loading our training data consisting of two files representing 2000 manually labeled comment-classification pairs. The [first file](https://raw.githubusercontent.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post/master/data/review_comments.txt) contains a review comment on each
