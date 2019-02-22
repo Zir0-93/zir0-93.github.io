@@ -2,7 +2,7 @@
 ---
 title:  "The Harmony between Cloud and Object Oriented Code"
 date:   2019-02-25 15:04:23
-icon: /images/badges_csharp_objects_stage01.png
+icon: /images/2udfzo.png
 tags: [oop, serverless]
 description: 
 excerpt_separator: 
@@ -10,7 +10,7 @@ excerpt_separator:
 Even with the best solution architects and resources available, your application's cloud transformation journey will be a nightmare if your code is **not** *object oriented*.
 <!--more-->
 
-![serverless_meme](/images/2u3jzm.jpg)
+![serverless_meme](/images/2udfzo.jpg)
 
 Wanting to benefit from scalability and cost-efficiency of cloud technologies, organizations are increasingly migrating their monolothic applications to microservice and serverless based architectures. This migration is usally a long and difficult process.
 
