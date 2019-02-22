@@ -1341,7 +1341,7 @@ pre {
 		.time a:hover,
 		.author a:hover,
 		.tags a:hover {
-			color: #b9301c; }
+			color: rgb(0, 98, 255); }
 
 .excerpt {
 	    margin: 0;
