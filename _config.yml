@@ -1,6 +1,6 @@
 # Site settings
 title: Muntazir Fadhel
-# description: 'www.mfadhel.com'
+description: 'Muntazir's Blog'
 url: 'https://zir0-93.github.io'
 baseurl: '/'
 google_analytics: 'UA-80543111-1'
