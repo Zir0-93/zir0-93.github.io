@@ -1496,7 +1496,7 @@ hr {
 	vertical-align: middle; }
 
 .panel-title {
-     font-size: 2.0em;
+     font-size: 2.1em;
     font-weight: bold;
     color: rgb(34, 223, 165);
     margin-bottom: 30px;
@@ -1722,7 +1722,7 @@ nav {
 
 .main-post-list {
 	    width: 115%;
-    margin-left: -10%; }
+     }
 
 .pagination__older {
 	margin-left: 1em; }
