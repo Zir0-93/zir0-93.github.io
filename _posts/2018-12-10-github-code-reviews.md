@@ -60,12 +60,12 @@ with open('review_comments.txt') as f:
     
 with open('review_comments_labels.txt') as g:
     classifications = g.readlines()
+    
  ```
- 
- 
+  
  ## Data Preprocessing
  
- 
+
  Next, we are going to preprocess the raw data in multiple steps to prepare it for use by our SVM classifier. First, we remove all formatting characters from each comment that are associated with the Markdown syntax. This step is important because the additional formatting related characters introduced by the 
  Markdown standard will negatively impact our classifier's ability to recognize identical words.
  
