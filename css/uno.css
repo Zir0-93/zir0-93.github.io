@@ -1227,7 +1227,7 @@ a {
 		-moz-transition: .5s;
 		-webkit-transition: .5s; }
 
-.post_tags:hover {
+.__tags:hover {
 	background-color:#2196F3;
 		color:white;
 		border-color:white;	
@@ -1344,7 +1344,7 @@ pre {
 .excerpt {
 	    margin: 0;
     margin-top: 15px;
-    font-size: 1.2em;
+    font-size: 20px;
     font-weight: 300;
     color: #000000; }
 
@@ -1738,7 +1738,7 @@ i {
 	position: relative; }
 
 .post_image_description {
-		width: 75%;	
+		width: 90%;	
 }
 
 .post-list {
@@ -1754,7 +1754,7 @@ i {
 .post-list__post-title {
 	margin-top: 0;
 	margin-bottom: .2em;
-	font-size: 1.5em;
+	    font-size: 1.1em;
 	line-height: 1.3em; }
 	.post-list__post-title a {
 		color: #151414e0; }
