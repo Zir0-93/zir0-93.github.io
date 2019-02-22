@@ -21,7 +21,7 @@ In an effort to better understand code reviewing habits, we're going to create a
 * TOC
 {:toc}
 
-# Review Comment Classifications
+## Review Comment Classifications
 
 The list of classifications we're going to incorporate into our classifier are summarized in the table below. This list was developed based on a manual survey of approximately 2000 GitHub review comments I performed on randomly selected, but highly forked Java repositories on GitHub. 
 
@@ -62,7 +62,9 @@ with open('review_comments_labels.txt') as g:
     classifications = g.readlines()
  ```
  
- # Data Preprocessing
+ 
+ ## Data Preprocessing
+ 
  
  Next, we are going to preprocess the raw data in multiple steps to prepare it for use by our SVM classifier. First, we remove all formatting characters from each comment that are associated with the Markdown syntax. This step is important because the additional formatting related characters introduced by the 
  Markdown standard will negatively impact our classifier's ability to recognize identical words.
@@ -86,7 +88,7 @@ formatComments(review_comments)
 
 **A note on using stopwords and stemmers.** My experimental results showed that using off the shelf stopword lists and stemmers to preprocess the data slightly decreased the accuracy of the final classifier. This is why I have not used any of these techniques in this experiment.
 
-# Extracting Features
+## Extracting Features
 
 The next step of our preprocessing stage is to convert the comment reviews into numerical feature vectors. This will represent the review comments in a way that will allow them to be processed by our machine learning algorithms. To do this, we will use the bag of words method, which 
 represents a sentence using a feature vector developed based on the number of occurrences of each
@@ -136,7 +138,8 @@ from sklearn.model_selection import train_test_split
 
 comment_train, comment_test, classification_train, classification_test = train_test_split(review_comments, classifications, test_size=0.2)
 ```
-# Training The Classifier
+
+## Training The Classifier
 
 Lastly, we can complete our classifier by combining the components developed so far with the scikit SVM classifier using the scikit `Pipeline` module. The purpose of the pipeline is to assemble several steps that can be cross-validated together while setting different parameters. We also use the scikit `SGDClassifier` module to train our SVM model using Stochastic Gradient Descent (SGD). SGD is an iterative based optimization technique. In this case, the technique modifies the SVM parameters on each training iteration to find a local optimum that produces the best results. We set the number of iterations for our estimator at 1000. As demonstrated below, our developed classifier scored an accuracy of 82% on the test data set.
 
@@ -241,7 +244,8 @@ print(classification_report(classification_test, predicted_svm))
 avg / total        0.95      0.94      0.94        400
 ```
 
-# Classifying GitHub Review Comments
+## Classifying GitHub Review Comments
+
 We will now leverage the classifier we created in the previous section to classify over 30000 GitHub review comments from the top 100
 most forked Java repositories on GitHub. GitHub exposes a REST API that allows developers to interact with the platform, which we will use to mine our Review Comments. 
 
@@ -322,7 +326,7 @@ plt.show()
 ```
 {% include amcharts.editor.html %}
 
-# Discussion
+## Discussion
 
 Many of the classifications are related to each other at a conceptual level. For example, a `Readability` problem may be caused due to poor use of `Control Structures`. Therefore, it is important to note that the classifications were based only on what the **review comments explicitly discussed**. 
 
@@ -348,7 +352,7 @@ Many review comments also contain references to source code entities. Without be
 
 <img src="/images/pluralize.png" alt="pluralize" style="margin-right:auto; margin-left:auto;" width="600px"/>
 
-# Closing
+## Closing
 
 This wraps up our experiment on classifying GitHub code review comments! Unfortunately, this experiment only sampled the top 100 most forked Java repositories on GitHub, I wonder how the results would change for different programming languages. If you do end up researching this, please share your results with me!
 
