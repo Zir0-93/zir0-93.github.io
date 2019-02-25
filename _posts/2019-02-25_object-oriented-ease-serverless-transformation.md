@@ -14,16 +14,18 @@ Even with the best solution architects and resources available, your application
 
 Wanting to benefit from scalability and cost-efficiency of cloud technologies, organizations are increasingly migrating their monolothic applications to microservice and serverless based architectures. This migration is usally a long and difficult process.
 
-**Why?** Because whether you are implementing a microservices or serverless based architecture, the most time consuming part of the migration process is the **decoupling** of the monolith base into smaller, more refined components.
+**Why?** Because whether you are implementing a microservices or serverless based architecture, the most time consuming part of the migration process involves **decoupling** the monolith base into smaller, more refined components.
 
 And this decoupling process will be much more frustrating and tedious than neccessary if the code does not have certain **characteristics** that make it easy *to split up into smaller pieces*. 
 
-In this article I'll outline four principles of object oriented code and how each of them **faciltate** the process ofdecoupling of a monolithic application into smaller components intended to run in the cloud.
+In this article I'll outline four principles of object oriented code and how each of them **faciltate** the process of decoupling of a monolithic application into smaller components intended to run in the cloud.
 
-## Single Responsibility Principle
+## Do One Thing Well
+Classes that take on many responsibilities, also known as God Classes, are very difficult to read, maintain, and extend due to their enormous size. For this reason, classes in an Object Oriented design should **focus** on doing one thing well. If the complexity of a class exceeds a reasonable level, it should be refactored into two or more separate ones.
 
-Each microservice component is designed for a set of capabilities and focuses on a specific domain. If developers contribute so much code to a particular component of a service that the component reaches a certain level of complexity, then the service could be split into two or more services.
+When we consider that each microservice component in a microservices architecture is designed to focus on a specific domain, this principle gives us a great deal of **flexibility** in determining how we want to decouple a monolithic application into smaller components. 
 
+As an example, consider a scenario where a codebase consists of many God Classes. Your ability to decouple application into services that focus on a specific domains is severely limited because the basic building blocks of these services (the clasess themselves), are large, complex entities with many unrelated responsibilities. In such cases, you'll have to refactor those large classes into more modularized components before you can develop microservice components with the correct level of granularity.
 
 ## Encapsulation
 
