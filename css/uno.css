@@ -1243,7 +1243,7 @@ h5 {
     margin-bottom: .6em;
 	line-height: 1.2;
     font-family: Open Sans;
-    color: #252525e0;
+    color: #0e0e0ee0;
     font-weight: bolder;
     -webkit-font-smoothing: antialiased; }
 
@@ -1760,7 +1760,7 @@ i {
 	    font-size: 1.1em;
 	line-height: 1.3em; }
 	.post-list__post-title a {
-		color: #252525e0; }
+		color: #0e0e0ee0; }
 		.post-list__post-title a:hover {
     			    text-decoration: underline; }
 
