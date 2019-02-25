@@ -25,6 +25,8 @@ Classes that take on many responsibilities, also known as God Classes, are very 
 
 When we consider that each microservice component in a microservices architecture is designed to focus on a specific domain, this principle gives us a great deal of **flexibility** in determining how we want to decouple a monolithic application into smaller components. 
 
+![do-one-thing-well](/images/do_one_thing_well.svg)
+
 As an example, consider a scenario where a codebase consists of many God Classes. Your ability to decouple application into services that focus on a specific domains is severely limited because the basic building blocks of these services (the clasess themselves), are large, complex entities with many unrelated responsibilities. In such cases, you'll have to refactor those large classes into more modularized components before you can develop microservice components with the correct level of granularity.
 
 ## Encapsulation
