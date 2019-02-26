@@ -30,7 +30,7 @@ When configuring serverless architectures in these environments, special care ne
 
 The *single stack* approach shares its services and infrastructure **across all** environments (like test, staging and prod). To differentiate between environments at runtime, environment variables or similar mechanisms are used.
 
-In the context of a serverless app deployed on AWS, a single stack setup might configure a single Lambda Function with multiple aliases, an API Gateway with multiple stages, and DynamoDB service with multiple tables - all with the purpose of supporting multiple test, staging and production environments. 
+In the context of a serverless app deployed on AWS, a single stack setup might configure a single Lambda Function with multiple aliases, an API Gateway with multiple stages, and a DynamoDB service with multiple tables - all with the purpose of supporting multiple test, staging and production environments. 
 
 In contrast, a *multi-stack* approach uses a **separate** instance of each service for every environment and does not use API stages or Lambda aliases to differentiate between them.
 
@@ -104,14 +104,14 @@ An app’s config consists of everything that is likely to vary between deploys 
 - Resource handles to the database, cache or any other attached resources
 - Credentials to external services such as Amazon S3 or Twitter
 - Per-deploy values such as the canonical hostname for the deploy
-
+<br>
 Apps sometimes store config variables as constants in source code which is problematic for several reasons. First, any security sensitive related config data is visible to everyone who has access to the source code, which poses a serious security concern. 
 
 Additionally, config varies substantially across deploys, whereas code does not. Developing code that dynamically detects the environment and sets the appropriate config data as required results in code that is unnecessarily complicated and difficult to maintain, especially as the number of environments/deploys increases. On top of this, any required changes to an environment config requires pushing a change through the code base and waiting for it to propagate through the software delivery pipeline which is tedious and slow.
 
 ![security_keys](/images/security-keys-meme.jpg)
 
-Rather than keeping your config data in source code, consider using consider using a service dedicated for this purpose like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) to manage config data. Or as a slightly less safe but commonly used alternative, store this data in environment variables. Now your application can simply refer to abstract variables for config info, which are dynamically set by a build pipeline during deployment. In this way, environment variables can be leveraged to  generate flexible and infinite variations (test, staging, prod, etc..) of your environment template. Lastly, environment variables are OS and language agnostic, which means they can easily be integrated across all types of projects.
+Rather than keeping your config data in source code, consider using consider using a service dedicated for this purpose like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/). Or as a slightly less safe but commonly used alternative, store this data in environment variables. Now your application can simply refer to abstract variables for config info, which are dynamically set by a build pipeline during deployment. In this way, environment variables can be leveraged to  generate flexible and infinite variations (test, staging, prod, etc..) of your environment template. Lastly, environment variables are OS and language agnostic, which means they can easily be integrated across all types of projects.
 
 ## Infrastructure is Provisioned and Deployed as Code
 
@@ -129,7 +129,7 @@ The typical serverless application uses a combination of cloud services, which o
 
 [Serverless](https://serverless.com) makes this process much more straight forward and scalable by utilizing a component based configuration where all the infrastructure and code for your entire application can be provisioned easily. Not only do these components conveniently refer to commonly used serverless services (AWS: S3 buckets, lambda functions, API Gateways, etc..), they can be re-used and  composed into higher level components to build entire serverless applications. Components are open source, and there is lots of pre-built functionality developers can tap into right away. 
 
-As mentioned in the previous section, an automated continuous delivery solution is key for your serverless application. Serverless frameworks offer can be easily integrated into CI/CD pipeline to deploy sophisticated serverless applications in one step, making it much easier to manage multi-environment configurations.
+As mentioned in the previous section, an automated continuous delivery solution is key for your serverless application. Serverless frameworks can be easily integrated into CI/CD pipeline to deploy sophisticated serverless applications in one step, making it much easier to manage multi-environment configurations.
 
 ## Closing
 
