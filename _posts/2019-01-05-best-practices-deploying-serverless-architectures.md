@@ -32,13 +32,14 @@ The *single stack* approach shares its services and infrastructure **across all*
 
 In the context of a serverless app deployed on AWS, a single stack setup might configure a single Lambda Function with multiple aliases, an API Gateway with multiple stages, and a DynamoDB service with multiple tables - all with the purpose of supporting multiple test, staging and production environments. 
 
+![staging_prod_architecture](/images/staging_prod_multi.svg)
+
 In contrast, a *multi-stack* approach uses a **separate** instance of each service for every environment and does not use API stages or Lambda aliases to differentiate between them.
 
 Using the AWS example again, a multi-stack setup would configure a separate Lambda Function, API Gateway, and DynamoDB instance for each environment.
 
-![staging_prod_architecture](/images/staging_prod_multi.svg)
-
-The main difference between the two approaches is that the multi-stack approach minimizes **risk**, while the single stack approach minimizes **setup and maintenance** effort.
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">The main difference between a multi-stack and single stack approach in multi-environment serverless architectures is that multi-stack approaches minimizes risk, while single stack approaches minimize setup and maintenance effort. <a href="https://twitter.com/hashtag/Serverless?src=hash&amp;ref_src=twsrc%5Etfw">#Serverless</a> <a href="https://twitter.com/hashtag/AWS?src=hash&amp;ref_src=twsrc%5Etfw">#AWS</a> <a href="https://twitter.com/hashtag/deployment?src=hash&amp;ref_src=twsrc%5Etfw">#deployment</a></p>&mdash; Muntazir Fadhel (@FadhelMuntazir) <a href="https://twitter.com/FadhelMuntazir/status/1101122890601324544?ref_src=twsrc%5Etfw">February 28, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 If something goes wrong in a single stack approach, there is a greater chance that your production systems are negatively impacted as well. After all, the environments in this approach are provisioned on top of each other, and rely only on environment variables and lambda aliases for indirection. 
 
