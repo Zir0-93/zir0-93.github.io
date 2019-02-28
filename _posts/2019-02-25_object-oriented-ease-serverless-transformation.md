@@ -39,38 +39,13 @@ It should be easy to see now why the process of decoupling a monolith that pract
 
 ## Coupling
 
-Coupling represents the degree to which a module or object is independent from others. A module that is highly coupled relies on many other modules to do it's job, whereas a module that is slightly Coupled relies on a few modules to acheive it's goal. 
+Coupling represents the degree to which a module or object is independent from others. A module that is highly coupled relies on many other modules to do it's job, whereas a module that is slightly Coupled relies on a few modules to do it's job. 
 
-Object Oriented systems generally avoid highly Coupled modules because they are time consuming to maintain and difficult to test. That is, changes to other parts of the code base will constantly require updates to a tightly Coupled module on a continual basis since the module depends on many other parts of the code base by definition. Additionally, any tests developed for a highly Coupled module will require testing of the dependencies of that module, which increases the complexity of the testing effort if there are many dependecies.
+Object Oriented systems generally avoid highly Coupled modules because such modules are time consuming to maintain and difficult to test. More specifically, progressive changes to a code base will constantly require updates to a tightly Coupled module since the module is highly dependant on other parts of the code base by definition. Additionally, any tests developed for a module will require testing of the dependancies of that module, which can get complicated very quickly if there are many dependancies.
 
+In a distributed, cloud based architecture, components should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This allows teams responsible for different services to act independently from each other.
 
- 
- 
-
-## Abstraction
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+L
 
 
 
