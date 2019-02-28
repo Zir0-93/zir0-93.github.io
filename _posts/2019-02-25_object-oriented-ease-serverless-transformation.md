@@ -23,11 +23,11 @@ In this article I'll outline four principles of object oriented code and how eac
 ## Do One Thing Well
 Classes that take on many responsibilities, also known as God Classes, are very difficult to read, maintain, and extend due to their enormous size. For this reason, classes in an Object Oriented design should **focus** on doing one thing well. If the complexity of a class exceeds a reasonable level, it should be refactored into two or more separate ones.
 
-When we consider that each service in a microservices architecture is designed to focus on a specific domain, this principle gives us a great deal of **flexibility** in determining how we want to decouple a monolithic application into such services. 
+When we consider that each service in a microservices architecture should focus on a specific domain, this method of designing classes gives us a great deal of **flexibility** in determining how we want to decouple a monolithic application into such services. 
 
 ![do-one-thing-well](/images/do_one_thing_well.svg)
 
-As an example, consider a scenario where a codebase consists of many God Classes. Your ability to decouple application into services that focus on a specific domains is severely limited because the basic building blocks of these services (i.e the clasess themselves), are overly complex entities with many unrelated responsibilities. In such scenarios, you'll have to refactor those large classes into modularized components before you can develop microservice components with a decreased level of granularity.
+As an example, consider a scenario where a codebase consists of many God Classes. Your ability to decouple application into services that focus on a specific domains is severely limited because the basic building blocks of these services (i.e the clasess themselves), are extremely complex, multi-purpose entities. In such scenarios, you'll have to refactor those large classes into components that have fewer responsibilities before you can compose them into microservice components with the desired level granularity.
 
 ## Information Hiding
 
@@ -35,7 +35,7 @@ Information Hiding refers to the process of designing objects in a way that keep
 
 This principle is also a desirable property for components in micoservices/serverless based architecture. Microservices for example, should be designed as a black box in which the service's internal complexity and details are hidden from other services in the system. Because of this, communication between services will take place via welldefined APIs, which is a desirable trait of microservice architectures.
 
-It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. It's because each class would behave as a mini black box itself, which would make the process of composing them into larger microservices that behave as black boxes a trivial exercise. However, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that depend on the internal workings of other microservices to provide their service. Obviously, this is not a desirable characteristic of microservices. 
+It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. Simply put, each class that practcies Information Hiding already behaves as a mini black box, which would make the process of composing them into larger microservices that behave as black boxes a trivial exercise. However, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that depend on the internal workings of other microservices to provide their service. Obviously, this is not a desirable characteristic of microservices. 
 
 ## Message Passing
  
