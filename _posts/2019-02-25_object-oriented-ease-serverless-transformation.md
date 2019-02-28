@@ -41,13 +41,15 @@ It should be easy to see now why the process of decoupling a monolith that pract
 
 Coupling represents the degree to which a module or object is independent from others. A module that is highly coupled relies on many other modules to do it's job, whereas a module that is slightly Coupled relies on a few modules to do it's job. 
 
-Object Oriented systems generally avoid highly Coupled modules because such modules are time consuming to maintain and difficult to test. More specifically, progressive changes to a code base will constantly require updates to a tightly Coupled module since the module is highly dependant on other parts of the code base by definition. Additionally, any tests developed for a module will require testing of the dependancies of that module, which can get complicated very quickly if there are many dependancies.
+Object Oriented systems generally avoid highly Coupled modules because they are difficult and time consuming to maintain and test. More specifically, progressive changes to a code base will constantly require updates to a tightly Coupled module since the module is highly dependant on other parts of the code base by definition. Additionally, any tests developed for such a module will require testing of the dependancies of that module, which can get complicated very quickly due to their large number.
 
-In a distributed, cloud based architecture, components should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This allows teams responsible for different services to act independently from each other.
+Moving over to the cloud-migration side of things, let's first note that components in a distributed architecture should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This allows teams responsible for different services to act independently from each other. Slightly coupled code facilitates the decoupling of a monolithic application into independant components to a great degree.
 
-L
+![]()
 
 
+
+## Complexity In Interactions
 
 
 
