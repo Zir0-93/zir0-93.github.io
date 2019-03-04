@@ -21,6 +21,9 @@ In an effort to better understand code reviewing habits, we're going to create a
 * TOC
 {:toc}
 
+{% include wide_short_ad.html %}
+
+
 ## Review Comment Classifications
 
 The list of classifications we're going to incorporate into our classifier are summarized in the table below. This list was developed based on a manual survey of approximately 2000 GitHub review comments I performed on randomly selected, but highly forked Java repositories on GitHub. 
