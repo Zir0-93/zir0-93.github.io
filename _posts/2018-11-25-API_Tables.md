@@ -7,6 +7,7 @@ description: It's well known that APIs need developer-friendly docs in order to 
 
 excerpt_separator: <!--more-->
 ---
+{% include slim_tall_ad.html %}
 
 It's well known that APIs need developer-friendly docs in order to gain widespread adoption. However, little if any improvement in the REST API visualization methods have been made over the past few years. 
 
