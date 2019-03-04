@@ -20,6 +20,7 @@ This format does a good job of communicating the low-level details of each endpo
 * TOC
 {:toc}
 
+
 {% include wide_short_ad.html %}
 
 ## Existing API Visualization Methods
