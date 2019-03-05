@@ -20,11 +20,11 @@ This format does a good job of communicating the low-level details of each endpo
 {:toc}
 
 <script id="mNCC" language="javascript">
-   if (window.innerWidth &gt;= 960) {
+   if (window.innerWidth >= 960) {
         medianet_width='728';
         medianet_height= '90';
         medianet_crid = "473665967";
-   } else if (window.innerWidth &gt;= 728) {
+   } else if (window.innerWidth >= 528) {
         medianet_width='468';
         medianet_height= '60';
         medianet_crid = "436877765";
