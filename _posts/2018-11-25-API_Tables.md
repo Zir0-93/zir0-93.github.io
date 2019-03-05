@@ -19,6 +19,15 @@ This format does a good job of communicating the low-level details of each endpo
 * TOC
 {:toc}
 
+<script id="mNCC" language="javascript">
+    medianet_width = "728";
+    medianet_height = "90";
+    medianet_crid = "473665967";
+    medianet_versionId = "3111299"; 
+  </script>
+<script src="//contextual.media.net/nmedianet.js?cid=8CUJKKM6U"></script>
+
+
 ## Existing API Visualization Methods
 
 The image above depicts [Swagger UI](http://petstore.swagger.io/) documentation for a sample API. As an API specification grows in complexity, I find it increasingly difficult to answer the following questions using the aforementioned format:
