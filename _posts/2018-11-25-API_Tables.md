@@ -20,10 +20,24 @@ This format does a good job of communicating the low-level details of each endpo
 {:toc}
 
 <script id="mNCC" language="javascript">
-    medianet_width = "728";
-    medianet_height = "90";
-    medianet_crid = "473665967";
-    medianet_versionId = "3111299"; 
+   if (window.innerWidth &gt;= 960) {
+        medianet_width='728';
+        medianet_height= '90';
+    
+   } else if (window.innerWidth &gt;= 728) {
+        medianet_width='468';
+        medianet_height= '60';
+        medianet_crid='YOURCRID';
+
+   } else {
+        medianet_width='160';
+        medianet_height= '90';
+        medianet_crid='YOURCRID';
+   }
+   
+   medianet_crid = "473665967";
+   medianet_versionId = "3111299"; 
+  
   </script>
 <script src="//contextual.media.net/nmedianet.js?cid=8CUJKKM6U"></script>
 
