@@ -27,12 +27,10 @@ This format does a good job of communicating the low-level details of each endpo
    } else if (window.innerWidth &gt;= 728) {
         medianet_width='468';
         medianet_height= '60';
-        medianet_crid='YOURCRID';
 
    } else {
         medianet_width='160';
         medianet_height= '90';
-        medianet_crid='YOURCRID';
    }
    
    medianet_crid = "473665967";
