@@ -21,6 +21,8 @@ In an effort to better understand code reviewing habits, we're going to create a
 * TOC
 {:toc}
 
+{% include in_article_add.html %}
+
 ## Review Comment Classifications
 
 The list of classifications we're going to incorporate into our classifier are summarized in the table below. This list was developed based on a manual survey of approximately 2000 GitHub review comments I performed on randomly selected, but highly forked Java repositories on GitHub. 
@@ -356,3 +358,6 @@ Many review comments also contain references to source code entities. Without be
 This wraps up our experiment on classifying GitHub code review comments! Unfortunately, this experiment only sampled the top 100 most forked Java repositories on GitHub, I wonder how the results would change for different programming languages. If you do end up researching this, please share your results with me!
 
 Did these results match what you had in mind based on your experience doing code reviews? Let me know in the comments below.
+
+{% include in_article_add.html %}
+<br/>
