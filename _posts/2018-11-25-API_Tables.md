@@ -19,8 +19,6 @@ This format does a good job of communicating the low-level details of each endpo
 * TOC
 {:toc}
 
-{% include in_article_add.html %}
-
 ## Existing API Visualization Methods
 
 The image above depicts [Swagger UI](http://petstore.swagger.io/) documentation for a sample API. As an API specification grows in complexity, I find it increasingly difficult to answer the following questions using the aforementioned format:
@@ -53,8 +51,6 @@ Ideally, developers wishing to explore an API would start off with API Table rep
 These tables are also very easy to read. They consist of very little text in comparison to other documentation methods and most people prefer reading horizontally oriented tables over vertically oriented lists of text. 
 
 Most importantly, **API Tables can represent larger and more sophisticated API specs without sacrificing readability.** For example, the sample table depicted above can easily accommodate displaying up to 65 different operations!
-
-{% include in_article_add.html %}
 
 ## Closing
 
