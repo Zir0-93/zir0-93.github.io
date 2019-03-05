@@ -23,20 +23,18 @@ This format does a good job of communicating the low-level details of each endpo
    if (window.innerWidth &gt;= 960) {
         medianet_width='728';
         medianet_height= '90';
-    
+        medianet_crid = "473665967";
    } else if (window.innerWidth &gt;= 728) {
         medianet_width='468';
         medianet_height= '60';
-
+        medianet_crid = "436877765";
    } else {
         medianet_width='160';
         medianet_height= '90';
+        medianet_crid = "894515278";
    }
-   
-   medianet_crid = "473665967";
    medianet_versionId = "3111299"; 
-  
-  </script>
+</script>
 <script src="//contextual.media.net/nmedianet.js?cid=8CUJKKM6U"></script>
 
 
