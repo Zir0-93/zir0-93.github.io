@@ -27,7 +27,7 @@ When we consider that each service in a microservices architecture should focus 
 
 ![do-one-thing-well](/images/do_one_thing_well.svg)
 
-As an example, consider a scenario where a codebase consists of many God Classes. Your ability to decouple application into services that focus on a specific domains is severely limited because the basic building blocks of these services (i.e the clasess themselves), are extremely broad and unfocussed. In such scenarios, you'll have to refactor those large classes into components that have fewer responsibilities before you can compose them into microservice components with the desired level granularity.
+As an example, consider a scenario where a codebase consists of many God Classes. Your ability to decouple application into services that focus on a specific domains is severely limited because the basic building blocks of these services (i.e the objects themselves), are extremely broad and unfocussed. In such scenarios, you'll have to refactor those large classes into components that have fewer responsibilities before you can compose them into microservice components with the desired level granularity.
 
 ## Information Hiding
 
@@ -35,19 +35,21 @@ Information Hiding refers to the process of writing modules in a way that keeps 
 
 This principle is also a desirable property for components in micoservices/serverless based architecture. Microservices for example, should be designed as a black box in which the service's internal complexity and details are hidden from other services in the system. Because of this, communication between services will take place via welldefined APIs, which is a desirable trait of microservice architectures.
 
-It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. Simply put, each class that practcies Information Hiding already behaves as a mini black box, which would make the process of composing them into larger microservices that behave as black boxes a trivial exercise. However, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that depend on the internal workings of other microservices to provide their service. Obviously, this is not a desirable characteristic of microservices. 
+It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. Simply put, each class that practcies Information Hiding already behaves as a mini black box, which would make the process of composing them into larger microservices that behave as black boxes a trivial exercise. However, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that depend on the internal workings of other microservices to provide their service. Obviously, this will hurt the maintainability and evolution of the overall architecture.
 
 ## Coupling
 
-Coupling represents the degree to which a module or object is independent from others. A module that is highly coupled relies on many other modules to do it's job, whereas a module that is slightly Coupled relies on a few modules to do it's job. 
+Coupling represents the degree to which a module or object is independent from others. A highly Coupled module relies on many other modules to do it's job, whereas a slightly Coupled module relies on a few modules to do it's job. 
 
-Object Oriented systems generally avoid highly Coupled modules because they are difficult and time consuming to maintain and test. More specifically, progressive changes to a code base will constantly require updates to a tightly Coupled module since the module is highly dependant on other parts of the code base by definition. Additionally, any tests developed for such a module will require testing of the dependancies of that module, which can get complicated very quickly due to their large number.
+Object Oriented systems generally avoid highly Coupled modules because as more components are introduced into a system, they become increasingly more difficult to maintain and test. Unsurprisingly, distributed cloud architectures also favour the design of services and components that do not rely on many other components to do it's job, but the motivating factor for this design principle is to support **component evolution**.
 
-Moving over to the cloud-migration side of things, let's first note that components in a distributed architecture should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This allows teams responsible for different services to act independently from each other. Slightly coupled code facilitates the decoupling of a monolithic application into independant components to a great degree.
+That is to say, components in a distributed architecture should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This requires microservices to be designed in a way that makes them primarily responsible for *running their own show*, and gives teams responsible for different services the autonomy to make decisions and act independently from each other.
 
-![]()
+Needless to say, a monolithic application cannot be decoupled into more refined services if the code is highly coupled without re-implementing significant parts of the code base. On the other hand, slightly coupled code will help architects decouple monoliths into service based architectures in numberous ways:
 
-
+1. **Self-forming Dependancy Networks**: 
+2. **Microservice Granularities**:
+3. 
 
 ## Complexity In Interactions
 
