@@ -19,24 +19,7 @@ This format does a good job of communicating the low-level details of each endpo
 * TOC
 {:toc}
 
-<script id="mNCC" language="javascript">
-   if (window.innerWidth >= 960) {
-        medianet_width= '728'
-        medianet_height= '90';
-        medianet_crid = "473665967";
-   } else if (window.innerWidth >= 628) {
-        medianet_width= '468'
-        medianet_height= '60';
-        medianet_crid = "436877765";
-   } else {
-        medianet_width='160';
-        medianet_height= '90';
-        medianet_crid = "894515278";
-   }
-   medianet_versionId = "3111299"; 
-</script>
-<script src="//contextual.media.net/nmedianet.js?cid=8CUJKKM6U"></script>
-
+{% include in_article_add.html %}
 
 ## Existing API Visualization Methods
 
@@ -70,6 +53,8 @@ Ideally, developers wishing to explore an API would start off with API Table rep
 These tables are also very easy to read. They consist of very little text in comparison to other documentation methods and most people prefer reading horizontally oriented tables over vertically oriented lists of text. 
 
 Most importantly, **API Tables can represent larger and more sophisticated API specs without sacrificing readability.** For example, the sample table depicted above can easily accommodate displaying up to 65 different operations!
+
+{% include in_article_add.html %}
 
 ## Closing
 
