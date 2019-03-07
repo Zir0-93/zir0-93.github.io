@@ -47,9 +47,9 @@ Perhaps the most misunderstood aspect of Object Oriented systems is inter-object
 <br/>
 The difference between them can be seen in the way we perceive method calls versus messages. Calling a method essentially puts the person making the method call in control of running the process. The caller gets the callee to do something and prevents it from doing something that the caller does not want. Message passing on the other hand revolves around negotiation, and this is the key in building object oriented systems.
 
-A major challenge in converting a monolith into microservices based architecture lies in re-designing it's communication mechanism. Microservices are ideally integrated using asynchronous communication in order to enforce microservice autonomy and to develop an architecture that is resillient when microservices fail or underperform. However, code is typically written in a procedural and synchronous manner.
+A major challenge in converting a monolith into microservices based architecture lies in re-designing it's communication mechanism. Microservices are ideally integrated using asynchronous communication in order to enforce microservice autonomy and to develop an architecture that is resillient when microservices fail or underperform. The problem with all of this is that code is typically written in a procedural and synchronous manner. Breaking such a monolith into microservices will force architects to use a synchornous communication scheme.
 
-On the other hand, code that practices message passing facilitates the decopling of a monolith into microservices that communicate using asynchronous patterns to a great degree. This is because message passing does not require any response from the client in other for the calling module to do it's job. When we compose such modules into a microservice, the microservice will also not depend on the response from other microservices to it's job, which gives it the abillity to benefit from asynchornous communication patterns right from the get-go. 
+On the other hand, code that practices message passing facilitates the decopling of a monolith into microservices that communicate using asynchronous patterns to a great degree. **How?** Because a module that practices message passing properly does not require any response from the client in other for it to continue doing it's job. It does not control it's clients, and assumes that modules recieving messagings are smart enough to do whatever needs to be done next. The end result of composing such objects into microservices is an architecture that can be adapted to use asynchronous communication mechanisms with little effort. 
 
 ## Coupling
 
@@ -59,7 +59,7 @@ Object Oriented systems generally avoid highly Coupled modules. As more componen
 
 That is to say, components in a distributed architecture should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This requires microservices to be designed in a way that makes them primarily responsible for *running their own show*, and gives the teams responsible for different services the autonomy to make decisions and act independently from each other.
 
-Needless to say, a monolithic application cannot be broken up into more refined services if the code is highly coupled without re-implementing significant parts of the code base. Additioanlly, slightly coupled code will help architects decouple monoliths into service based architectures in numberous ways:
+Needless to say, a monolithic application **cannot** be broken up into more refined services if the code is highly coupled without re-implementing significant parts of the code base. On the other hand, *slightly* coupled code will help architects decouple monoliths into service based architectures in numberous ways:
 
 1. **Self-forming Dependancy Networks**: 
 2. **Microservice Granularities**:
