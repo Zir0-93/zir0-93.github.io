@@ -41,18 +41,15 @@ It should be easy to see now why the process of decoupling a monolith that pract
 
 ## Message Passing
 
-Perhaps the most misunderstood aspect of Object Oriented systems is inter-object communication. In fact, **a method call was not the way modules in an Object Oriented system intended to communicate**, rather it was through [messaging](http://mfadhel.com/lost-oop/#inter-object-communication).
+Perhaps the most misunderstood aspect of Object Oriented systems is inter-object communication. In fact, **a method call was not the way modules in an Object Oriented system were intended to communicate**, rather it was through [messaging](http://mfadhel.com/lost-oop/#inter-object-communication).
 <br/>
 <blockquote class="twitter-tweet tw-align-center"><p lang="en" dir="ltr">Communication in OOP should be thought as message passing, not method calls. Message passing results in smart objects that accomplish tasks together via content negotiation. Method calls result in many unintelligent objects that are constantly told how to do their job. <a href="https://twitter.com/hashtag/oop?src=hash&amp;ref_src=twsrc%5Etfw">#oop</a></p>&mdash; Muntazir Fadhel (@FadhelMuntazir) <a href="https://twitter.com/FadhelMuntazir/status/1103057880520052736?ref_src=twsrc%5Etfw">March 5, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <br/>
 The difference between them can be seen in the way we perceive method calls versus messages. Calling a method essentially puts the person making the method call in control of running the process. The caller gets the callee to do something and prevents it from doing something that the caller does not want. Message passing on the other hand revolves around negotiation, and this is the key in building object oriented systems.
 
-A major challenge in converting a monolith into microservices based architecture lies in re-designing it's communication mechanism. Simply replacing in memory method calls to HTTP based calls would result extremely chatty communications which do not perform well in distributed cloud environments. There are two guiding principles for communication mechanisms such environments:
+A major challenge in converting a monolith into microservices based architecture lies in re-designing it's communication mechanism. Microservices are ideally integrated using asynchronous communication in order to enforce microservice autonomy and to develop an architecture that is resillient when microservices fail or underperform. However, code is typically written in a procedural and synchronous manner.
 
-1. **Minimize Inter-Component Communication**: Any architecture that is sending many, unecessary requests across services and components will not scale well.
-2. **Commmunication Should Be Asynchronous**: The goal of each component is to be autonomous and available to the client consumer, even if the other services that are part of the end-to-end application are down or unhealthy. Any sort of communication that requires a response from invoked services will result in an architecture that won't be resilient when some services fail.
-
-In both respect, writing code that thinks about communication between objects as message passing and not simply method calls will faciliate changing a monolith into a microservices based application to a great degree. 
+On the other hand, code that practices message passing facilitates the decopling of a monolith into microservices that communicate using asynchronous patterns to a great degree. This is because message passing does not require any response from the client in other for the calling module to do it's job. When we compose such modules into a microservice, the microservice will also not depend on the response from other microservices to it's job, which gives it the abillity to benefit from asynchornous communication patterns right from the get-go. 
 
 ## Coupling
 
