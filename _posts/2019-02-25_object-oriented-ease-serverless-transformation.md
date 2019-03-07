@@ -22,6 +22,7 @@ In this article I'll outline four principles of object oriented code and how eac
 
 
 ## Do One Thing Well
+
 Classes that take on many responsibilities, also known as God Classes, are very difficult to read, maintain, and extend due to their enormous size. For this reason, classes in an Object Oriented design should **focus** on doing one thing well, and behave as a logically single, atomic unit. If the complexity of an object exceeds a reasonable level, it should be refactored into two or more separate entities.
 
 When we consider that each service in a microservices architecture should focus on a specific domain, this method of designing classes gives us a great deal of **flexibility** in determining how we want to decouple a monolithic application into such services. 
@@ -36,17 +37,22 @@ Information Hiding refers to the process of writing modules in a way that keeps 
 
 This principle is also a desirable property for components in micoservices/serverless based architecture. Microservices for example, should be designed as a black box in which the service's internal complexity and details are hidden from other services in the system. Because of this, communication between services will take place via welldefined APIs, which is a desirable trait of microservice architectures.
 
-It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. Simply put, each class that practcies Information Hiding already behaves as a mini black box, which would make the process of composing them into larger microservices that behave as black boxes a trivial exercise. However, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that depend on the internal workings of other microservices to provide their service. Obviously, this will hurt the maintainability and evolution of the overall architecture.
+It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. Simply put, each class that practices Information Hiding already behaves as a mini black box, which makes composing them into larger microservices that behave as black boxes a trivial exercise. However, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that depend on the internal workings of other microservices to provide their service. Obviously, this will hurt the maintainability and evolution of the overall architecture.
 
 ## Message Passing
 
-Perhaps the most misunderstood aspect of Object Oriented systems is inter-object communication. A method call was not the way modules in an Object Oriented system intended to communicate, rather it was through [messaging](http://mfadhel.com/lost-oop/#inter-object-communication).
+Perhaps the most misunderstood aspect of Object Oriented systems is inter-object communication. In fact, **a method call was not the way modules in an Object Oriented system intended to communicate**, rather it was through [messaging](http://mfadhel.com/lost-oop/#inter-object-communication).
 <br/>
 <blockquote class="twitter-tweet tw-align-center"><p lang="en" dir="ltr">Communication in OOP should be thought as message passing, not method calls. Message passing results in smart objects that accomplish tasks together via content negotiation. Method calls result in many unintelligent objects that are constantly told how to do their job. <a href="https://twitter.com/hashtag/oop?src=hash&amp;ref_src=twsrc%5Etfw">#oop</a></p>&mdash; Muntazir Fadhel (@FadhelMuntazir) <a href="https://twitter.com/FadhelMuntazir/status/1103057880520052736?ref_src=twsrc%5Etfw">March 5, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <br/>
-The difference is in the way we perceive method calls versus messages. Calling a method essentially puts the person making the method call in control of running the process. The caller gets the callee to do something and prevents it from doing something that the caller does not want. Message passing on the other hand revolves around negotiation, and this is the key in building object oriented systems.
+The difference between them can be seen in the way we perceive method calls versus messages. Calling a method essentially puts the person making the method call in control of running the process. The caller gets the callee to do something and prevents it from doing something that the caller does not want. Message passing on the other hand revolves around negotiation, and this is the key in building object oriented systems.
 
-The biggest issue in changing a monolith into microservices lies in changing the communication pattern. A naive conversion from in-memory method calls to REST HTTP calls leads to chatty communications which don't perform well. Instead you need to replace the fine-grained communication with a coarser -grained approach.
+A major challenge in converting a monolith into microservices based architecture lies in re-designing it's communication mechanism. Simply replacing in memory method calls to HTTP based calls would result extremely chatty communications which do not perform well in distributed cloud environments. There are two guiding principles for communication mechanisms such environments:
+
+1. **Minimize Inter-Component Communication**: Any architecture that is sending many, unecessary requests across services and components will not scale well.
+2. **Commmunication Should Be Asynchronous**: The goal of each component is to be autonomous and available to the client consumer, even if the other services that are part of the end-to-end application are down or unhealthy. Any sort of communication that requires a response from invoked services will result in an architecture that won't be resilient when some services fail.
+
+In both respect, writing code that thinks about communication between objects as message passing and not simply method calls will faciliate changing a monolith into a microservices based application to a great degree. 
 
 ## Coupling
 
