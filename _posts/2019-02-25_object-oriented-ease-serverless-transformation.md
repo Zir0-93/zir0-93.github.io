@@ -59,7 +59,7 @@ Object Oriented systems generally avoid highly Coupled modules. As more componen
 
 That is to say, components in a distributed architecture should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This requires microservices to be designed in a way that makes them primarily responsible for *running their own show*, and gives the teams responsible for different services the autonomy to make decisions and act independently from each other.
 
-Needless to say, a monolithic application **cannot** be broken up into more refined services if the code is highly coupled without re-implementing significant parts of the code base. On the other hand, *slightly* coupled code will help architects decouple monoliths into service based architectures in numberous ways:
+Needless to say, a monolithic application **cannot** be broken up into more refined services if the code is highly coupled without re-implementing significant parts of the code base. On the other hand, *slightly* coupled code will help architects decouple monoliths into service based architectures in numerous ways:
 
 1. **Self-forming Dependancy Networks**: 
 2. **Microservice Granularities**:
