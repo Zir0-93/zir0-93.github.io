@@ -117,8 +117,8 @@ We wil also experiment with incorporating the inverse document frequency statist
 1. Highest when the term occurs many times within a small number of review comments
 2. Lower when the term occurs fewer times in a review comment, or occurs in many review comments
 3. Lowest when the term occurs in virtually all review comments.
-<br/>
-\n
+
+****
 At this point, we can view each review comment as a vector with one component corresponding to each term in the dictionary, together
 with a weight for each component that is given by the tf-idf statistic. For dictionary terms that do not occur in a document, this
 weight is zero. This vector form will prove to be crucial to the scoring and ranking capabilities of our SVM classifier.
