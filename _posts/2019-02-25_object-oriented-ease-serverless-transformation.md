@@ -24,7 +24,7 @@ In this article I'll outline four principles of object oriented code and how eac
 
 Classes that take on many responsibilities, also known as God Classes, are very difficult to read, maintain, and extend due to their enormous size. For this reason, classes in an Object Oriented design should **focus** on doing one thing well, and behave as a logically single, atomic unit. If the complexity of an object exceeds a reasonable level, it should be refactored into two or more separate entities.
 
-![do-one-thing-well](/images/srp.jpg)
+<img src="/images/srp.jpg" style="width:400px;"/>
 
 When we consider that each service in a microservices architecture should focus on a specific domain, this method of designing classes gives us a great deal of **flexibility** in determining how we want to decouple a monolithic application into such services. 
 
