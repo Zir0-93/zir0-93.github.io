@@ -24,9 +24,10 @@ In this article I'll outline four principles of object oriented code and how eac
 
 Classes that take on many responsibilities, also known as God Classes, are very difficult to read, maintain, and extend due to their enormous size. For this reason, classes in an Object Oriented design should **focus** on doing one thing well, and behave as a logically single, atomic unit. If the complexity of an object exceeds a reasonable level, it should be refactored into two or more separate entities.
 
+![do-one-thing-well](/images/srp.jpg)
+
 When we consider that each service in a microservices architecture should focus on a specific domain, this method of designing classes gives us a great deal of **flexibility** in determining how we want to decouple a monolithic application into such services. 
 
-![do-one-thing-well](/images/do_one_thing_well.svg)
 
 As an example, consider a scenario where a codebase consists of many God Classes. Your ability to decouple application into services that focus on a specific domains is severely limited because the basic building blocks of these services (i.e the objects themselves), are extremely broad and unfocussed. In such scenarios, you'll have to refactor those large classes into components that have fewer responsibilities before you can compose them into microservice components with the desired level granularity.
 
@@ -34,7 +35,10 @@ As an example, consider a scenario where a codebase consists of many God Classes
 
 Information Hiding refers to the process of writing modules in a way that keeps their details relating to core design decisions, especially those that are expected to change, **hidden** from other objects. As a result, callers of an object are effectively decoupled from it's internal workings, which makes it possible for the 'hidden' parts to change without needing to change the way the object is called.
 
+![information-hiding](/images/Information-hiding.png)
+
 This principle is also a desirable property for components in micoservices/serverless based architecture. Microservices for example, should be designed as a black box in which the service's internal complexity and details are hidden from other services in the system. Because of this, communication between services will take place via welldefined APIs, which is a desirable trait of microservice architectures.
+
 
 It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. Simply put, each class that practices Information Hiding already behaves as a mini black box, which makes composing them into larger microservices that behave as black boxes a trivial exercise. However, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that depend on the internal workings of other microservices to provide their service. Obviously, this will hurt the maintainability and evolution of the overall architecture.
 
@@ -46,7 +50,16 @@ Perhaps the most misunderstood aspect of Object Oriented systems is inter-object
 <br/>
 The difference between them can be seen in the way we perceive method calls versus messages. Calling a method essentially puts the person making the method call in control of running the process. The caller gets the callee to do something and prevents it from doing something that the caller does not want. Message passing on the other hand revolves around **negotiation**, and this is the key in building object oriented systems.
 
+
+![message-passing](/images/sciencev2.svg)
+**Method calling vs content negotiation via message passing**
+
+
 A major challenge in converting a monolith into microservices based architecture lies in re-designing it's communication mechanism. Microservices are ideally integrated using asynchronous communication in order to enforce microservice autonomy and to develop an architecture that is resillient when microservices fail or underperform. The problem with all of this is that code is typically written in a procedural and synchronous manner. Breaking up a monolith that consists of such code into microservices will force architects to implicitly use a synchornous communication scheme right from the get-go.
+
+
+![sync-vs-async](/images/sync_vs_async.PNG)
+
 
 On the other hand, code that practices message passing facilitates the decopling of a monolith into microservices that communicate using asynchronous patterns to a great degree. **How?** Because a module that practices message passing properly does not require any response from the client in other for it to continue doing it's job. It does not control it's clients, and assumes that modules recieving messagings are smart enough to do whatever needs to be done next. The end result of composing such objects into microservices is an architecture that can be adapted to use asynchronous communication mechanisms with little effort. 
 
@@ -54,7 +67,7 @@ On the other hand, code that practices message passing facilitates the decopling
 
 Coupling represents the degree to which a module or object is independent from others. A highly Coupled module relies on and modifies the states and internals of other objects to do it's job, whereas a slightly Coupled module relies on a minimal set of interfaces belonging to other objects to do it's job. 
 
-Object Oriented systems generally avoid highly Coupled modules since they become increasingly more difficult to maintain and test as more components are introduced into the system. Unsurprisingly, distributed cloud architectures also favour the design of services and components that do not rely on many other components to do it's job. In this case however, the motivating goal is to support **component evolution**.
+Object Oriented systems generally avoid highly Coupled modules since they are increasingly difficult to maintain and test as more components are introduced into the system. Unsurprisingly, distributed cloud architectures also favour the design of services and components that do not rely on many other components to do it's job. In this case however, the motivating goal is to support **component evolution**.
 
 That is to say, components in a distributed architecture should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This requires microservices to be designed in a way that makes them primarily responsible for *running their own show*, and gives the teams responsible for different services the autonomy to make decisions and act independently from each other.
 
@@ -62,8 +75,6 @@ And you can only decouple your monolith into services that maintain their autono
 
 ## In Closing
 The services and components that build a distributed architecture share many desired characteristics with the way objects work in an object oriented system. For this reason, any process of migrating a monolithic application to such an architecture will be simplified if the application exhibits good object oriented practices.
-
-
 
 
 
