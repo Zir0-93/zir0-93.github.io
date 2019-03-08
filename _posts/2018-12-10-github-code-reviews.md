@@ -44,7 +44,7 @@ to the topic it spent the most words discussing.
 | Error/Resource Handling         | 4     | Comments related to exception/resource handling, program failure,  termination analysis, resource . |"Forgot to catch a possible exception here" |
 | Control Structures/Program Flow | 5     | Comments related to usage of loops, if-statements, placement of individual lines of code.           |"This if-statement should be moved after the while loop" |
 | Visibility/ Access              | 6     | Comments related to access level for classes, fields, methods and local variables.                  |"Make this final" |
-| Efficiency / Optimization       | 7     |                                                                                                     |"Many uneccessary calls to foo() here" |
+| Efficiency / Optimization       | 7     |                                                                                                     |"Many unnecessary  calls to foo() here" |
 | Code Organization/ Refactoring  | 8     | Comments related to extracting code from methods and classes, moving large chunks of code around.   |"Please extract this logic into a separate method" |
 | Concurrency                     | 9    | Comments related to threads, synchronization, parallelism.                                          |"This class does not look thread safe" |
 | High Level Method Semantics & Design                           | 10    | Comments relating to method design and semantics.                                                           |"This method should return a String" |
@@ -67,7 +67,7 @@ with open('review_comments_labels.txt') as g:
     
  ```
 ****
-## Data Preprocessing
+## Preprocessing The Data
 
 Next, we are going to preprocess the raw data in multiple steps to prepare it for use by our SVM classifier. First, we remove all
 formatting characters from each comment that are associated with the Markdown syntax. This step is important because the additional 
@@ -134,7 +134,7 @@ comments_train_tfidf.shape
 
 Now that the classifier itself is almost ready, an important consideration now is the amount of training data to use for testing the classifier.
 
-After ensuring that atleast 100 review comments for most of the classification are present in our labeled data set, I experimented with different numbers of review comments
+After ensuring that at least 100 review comments for most of the classification are present in our labeled data set, I experimented with different numbers of review comments
 to see what gave the best results. 2000 review comments seemed to give a good enough accuracy for our purposes. We will therefore dedicate 80% of our 2000 GitHub review comments data to the training set, which we will use to train our SVM classifier. The remaining 20% of the data will be dedicated to the test set, which we will use to test the performance of the developed classifier.
 
 ```python
@@ -334,13 +334,13 @@ plt.show()
 
 Many of the classifications are related to each other at a conceptual level. For example, a `Readability` problem may be caused due to poor use of `Control Structures`. Therefore, it is important to note that the classifications were based only on what the **review comments explicitly discussed**. 
 
-That is to say, if a comment read, "poor readability here", we would expect it to be classified as `Readability`. However, if the comment read, "This for loop should be moved before line 2", then `Control Structures` would be its expected classification, despite readability being the motivating factor for the review suggestion. As mentioned previously, in cases where multiple classifications applied, the comment was classified to a category it spend the most words discussing.
+That is to say, if a comment read, "poor readability here", we would expect it to be classified as `Readability`. However, if the comment read, "This for loop should be moved before line 2", then `Control Structures` would be its expected classification, despite readability being the motivating factor for the review suggestion. As mentioned previously, in cases where multiple classifications applied, the comment was classified to a category it spent the most words discussing.
 
 Interestingly, 15% of review comments were found to discuss `Readability`. This category of comments not only deals with formatting, project conventions and style, but also with  how easy the code is to follow for a human. 
 
 {% include tweet_box.html quote="15% of code review comment in top Java code bases on Github discuss readability!" hashtag_1="MachineLearning" hashtag_2="github" hashtag_3="Java" %} 
 
-While existing static analysis tools are effective in dealing with the former area, they lack the ability to check code effectively in the latter domain. This is supported by the fact that over 50% of the repositories included in our study had some form of static analysis tools checking their code. Additionally, a manual survey of 100 randomly sampled comments classified with `Readability` pointed towards this idea as well. One such comment from my study is illustrated below. While the approach taken by the code contributer is correct, the code review has suggested an alternate approach that increases the clarity of the code.
+While existing static analysis tools are effective in dealing with the former area, they lack the ability to check code effectively in the latter domain. This is supported by the fact that over 50% of the repositories included in our study had some form of static analysis tools checking their code. Additionally, a manual survey of 100 randomly sampled comments classified with `Readability` pointed towards this idea as well. One such comment from my study is illustrated below. While the approach taken by the code contributor is correct, the code review has suggested an alternate approach that increases the clarity of the code.
 
 <img src="/images/readability.png" alt="read" style="margin-right:auto; margin-left:auto;" width="600px"/>
 
