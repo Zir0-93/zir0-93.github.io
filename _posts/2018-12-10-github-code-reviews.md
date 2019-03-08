@@ -4,7 +4,7 @@ icon: /images/1_2UjSSQwW0bns1lPIuRxccQ.png
 date:   2018-12-10 15:04:23
 og_image: /images/i-was-told-there-would-be-a-review.jpg
 tags: [machine learning, GitHub, code reviews, NLP, n-grams, pyhon, scikit]
-description: As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in facilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions. In an effort to better understand code reviewing habits, we're going to create an SVM classifier to classify over 30 000 GitHub review comments based on the main topic addressed by each comment (e.g. naming, readability, etc.).
+description: In an effort to better understand code reviewing discussions, we’re going to create an SVM classifier to classify over 30 000 GitHub review comments based on the main topic addressed by each comment.
 excerpt_separator: <!--more-->
 ---
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) <a class="github-button" href="https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post" data-show-count="true" aria-label="Star Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post on GitHub">Star</a>
@@ -13,7 +13,7 @@ As part of the code review process on GitHub, developers can leave comments on p
 
 **But what do code reviewers usually discuss in these comments?**
 
-In an effort to better understand code reviewing discussions, we're going to create an SVM classifier to classify over 30 000 GitHub review comments based on the main topic addressed by each comment (e.g. naming, readability, etc.).
+In an effort to better understand code reviewing discussions, we're going to create an SVM classifier to classify over 30 000 GitHub review comments based on the main code-related topic addressed by each comment (e.g. naming, readability, etc.).
 <!--more-->
 
 **Grab the Jupyter Notebook for this experiment on [GitHub](https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post).**
