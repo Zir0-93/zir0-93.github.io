@@ -9,12 +9,14 @@ excerpt_separator: <!--more-->
 ---
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) <a class="github-button" href="https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post" data-show-count="true" aria-label="Star Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post on GitHub">Star</a>
 <br>
-A *code review* is a form of code inspection where a developer assesses code for style, defects, and other standards prior to integration into a code base. As part of the code review process on GitHub, developers may leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in facilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions.
+As part of the code review process on GitHub, developers can leave comments on portions of the unified diff of a GitHub pull request. These comments are extremely valuable in facilitating technical discussion amongst developers, and in allowing developers to get feedback on their code submissions.
 
-In an effort to better understand code reviewing habits, we're going to create an SVM classifier to classify over 30 000 GitHub review comments based on the main topic addressed by each comment (e.g. naming, readability, etc.).
+**But what do code reviewers usually discuss in these comments?**
+
+In an effort to better understand code reviewing discussions, we're going to create an SVM classifier to classify over 30 000 GitHub review comments based on the main topic addressed by each comment (e.g. naming, readability, etc.).
 <!--more-->
 
-#### Grab the Jupyter Notebook for this experiment on [GitHub](https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post).
+**Grab the Jupyter Notebook for this experiment on [GitHub](https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post).**
 
 <p><img style="display:block;" src="/images/i-was-told-there-would-be-a-review.jpg" alt="sample_comment"></p>
 
@@ -36,7 +38,7 @@ to the topic it spent the most words discussing.
 
 | Category| Label | Further Explanation|  &nbsp; &nbsp; &nbsp;Sample Comment &nbsp; &nbsp; &nbsp;    |    
 |-------------------|-------|--------------|-------------------------------------------------------|
-| Readability                     | 1     | Comments related to readability, style, general project conventions.                                | "Please split this statement into two separate ones" |
+| Readability                     | 1     | Comments related to readability, style, general project conventions.                                | "This code looks very convoluted to me" |
 | Naming                          | 2     |                                                                                                     | "I think foo would be a more appropriate name" |
 | Documentation                   | 3     | Comments related to licenses, package info, module documentation, commenting.                       |"Please add a comment here explaining this logic" |
 | Error/Resource Handling         | 4     | Comments related to exception/resource handling, program failure,  termination analysis, resource . |"Forgot to catch a possible exception here" |
