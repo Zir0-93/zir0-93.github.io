@@ -3,7 +3,7 @@
 title:  "The Harmony between Cloud and Object Oriented Code"
 date:   2019-02-25 15:04:23
 icon: /images/2udfzo.png
-tags: [oop, serverless]
+tags: [oop, serverless, microservices]
 description: 
 excerpt_separator: 
 ---
@@ -14,12 +14,11 @@ Even with the best solution architects and resources available, your application
 
 Wanting to benefit from scalability and cost-efficiency of cloud technologies, organizations are increasingly migrating their monolothic applications to microservice and serverless based architectures. This migration is usally a long and difficult process.
 
-**Why?** Because whether you are implementing a microservices or serverless based architecture, the most time consuming part of the migration process involves **decoupling** the monolith base into smaller, more refined components.
+**Why?** Because whether you are implementing a microservices or serverless based architecture, the most time consuming part of the migration process involves **decoupling** the monolith base into smaller, more refined services while ensuring that those services maintain desirable properties of a distributed system (autonomy, scalability, etc..).
 
 And this decoupling process will be much more frustrating and tedious than neccessary if the code does not have certain **characteristics** that make it easy *to split up into smaller pieces*. 
 
 In this article I'll outline four principles of object oriented code and how each of them **faciltate** the process of decoupling of a monolithic application into smaller components intended to run in the cloud.
-
 
 ## Do One Thing Well
 
@@ -45,25 +44,25 @@ Perhaps the most misunderstood aspect of Object Oriented systems is inter-object
 <br/>
 <blockquote class="twitter-tweet tw-align-center"><p lang="en" dir="ltr">Communication in OOP should be thought as message passing, not method calls. Message passing results in smart objects that accomplish tasks together via content negotiation. Method calls result in many unintelligent objects that are constantly told how to do their job. <a href="https://twitter.com/hashtag/oop?src=hash&amp;ref_src=twsrc%5Etfw">#oop</a></p>&mdash; Muntazir Fadhel (@FadhelMuntazir) <a href="https://twitter.com/FadhelMuntazir/status/1103057880520052736?ref_src=twsrc%5Etfw">March 5, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <br/>
-The difference between them can be seen in the way we perceive method calls versus messages. Calling a method essentially puts the person making the method call in control of running the process. The caller gets the callee to do something and prevents it from doing something that the caller does not want. Message passing on the other hand revolves around negotiation, and this is the key in building object oriented systems.
+The difference between them can be seen in the way we perceive method calls versus messages. Calling a method essentially puts the person making the method call in control of running the process. The caller gets the callee to do something and prevents it from doing something that the caller does not want. Message passing on the other hand revolves around **negotiation**, and this is the key in building object oriented systems.
 
-A major challenge in converting a monolith into microservices based architecture lies in re-designing it's communication mechanism. Microservices are ideally integrated using asynchronous communication in order to enforce microservice autonomy and to develop an architecture that is resillient when microservices fail or underperform. The problem with all of this is that code is typically written in a procedural and synchronous manner. Breaking such a monolith into microservices will force architects to use a synchornous communication scheme.
+A major challenge in converting a monolith into microservices based architecture lies in re-designing it's communication mechanism. Microservices are ideally integrated using asynchronous communication in order to enforce microservice autonomy and to develop an architecture that is resillient when microservices fail or underperform. The problem with all of this is that code is typically written in a procedural and synchronous manner. Breaking up a monolith that consists of such code into microservices will force architects to implicitly use a synchornous communication scheme right from the get-go.
 
 On the other hand, code that practices message passing facilitates the decopling of a monolith into microservices that communicate using asynchronous patterns to a great degree. **How?** Because a module that practices message passing properly does not require any response from the client in other for it to continue doing it's job. It does not control it's clients, and assumes that modules recieving messagings are smart enough to do whatever needs to be done next. The end result of composing such objects into microservices is an architecture that can be adapted to use asynchronous communication mechanisms with little effort. 
 
 ## Coupling
 
-Coupling represents the degree to which a module or object is independent from others. A highly Coupled module relies on many other modules to do it's job, whereas a slightly Coupled module relies on a few modules to do it's job. 
+Coupling represents the degree to which a module or object is independent from others. A highly Coupled module relies on and modifies the states and internals of other objects to do it's job, whereas a slightly Coupled module relies on a minimal set of interfaces belonging to other objects to do it's job. 
 
-Object Oriented systems generally avoid highly Coupled modules. As more components are introduced into a system, they become increasingly more difficult to maintain and test. Unsurprisingly, distributed cloud architectures also favour the design of services and components that do not rely on many other components to do it's job. In this case however, the motivating goal is to support **component evolution**.
+Object Oriented systems generally avoid highly Coupled modules since they become increasingly more difficult to maintain and test as more components are introduced into the system. Unsurprisingly, distributed cloud architectures also favour the design of services and components that do not rely on many other components to do it's job. In this case however, the motivating goal is to support **component evolution**.
 
 That is to say, components in a distributed architecture should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This requires microservices to be designed in a way that makes them primarily responsible for *running their own show*, and gives the teams responsible for different services the autonomy to make decisions and act independently from each other.
 
-Needless to say, a monolithic application **cannot** be broken up into more refined services if the code is highly coupled without re-implementing significant parts of the code base. On the other hand, *slightly* coupled code will help architects decouple monoliths into service based architectures in numerous ways:
+And you can only decouple your monolith into services that maintain their autonomy to the degree of autonomy the individual objects composing those services have, which comes down to Coupling. At the end of the day, *loosely* coupled code will lend itself to autonomous services, while highly coupled code will require a great deal of refactoring before it can achieve this goal.
 
-1. **Self-forming Dependancy Networks**: 
-2. **Microservice Granularities**:
-3. 
+## In Closing
+The services and components that build a distributed architecture share many desired characteristics with the way objects work in an object oriented system. For this reason, any process of migrating a monolithic application to such an architecture will be simplified if the application exhibits good object oriented practices.
+
 
 
 
