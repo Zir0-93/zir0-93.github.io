@@ -66,7 +66,7 @@ with open('review_comments_labels.txt') as g:
     classifications = g.readlines()
     
  ```
- 
+ <br/>
  ## Data Preprocessing
 
 Next, we are going to preprocess the raw data in multiple steps to prepare it for use by our SVM classifier. First, we remove all
