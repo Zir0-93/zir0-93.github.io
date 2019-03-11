@@ -1,7 +1,7 @@
 
 ---
-title:  "How a 1960's Programming Paradigm can Accelerate Your App's Cloud Migration"
-date:   2019-02-25 15:04:23
+title: "How a 1960's Programming Paradigm can Accelerate Your App's Cloud Migration"
+date: 2019-02-25 15:04:23
 icon: /images/2udfzo.png
 tags: [oop, serverless, microservices]
 description: Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is not object oriented.
