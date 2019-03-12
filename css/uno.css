@@ -245,13 +245,17 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 }
 
 #popular-list {
-    border: 1px solid #aaa;
+    border: 1px solid #ffffff61;
     padding: 1.5em;
     padding-left: 40px;
     list-style: decimal;
+    text-align: left;
     display: inline-block;
-    background: #8080801f;
     margin: 0px;
+    margin-top: 50%;
+    width: 70%;
+    font-weight: bold;
+    min-width: 180px;
 }
 
 
@@ -1611,7 +1615,7 @@ hr {
 	color: #FFF;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4); }
 	.panel-inverted a {
-		color: #FFF; }
+		    color: #ffffffad; }
 
 .cover-navigation {
 	margin-top: 10px; }
