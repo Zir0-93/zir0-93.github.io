@@ -247,7 +247,7 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 }
 
 #popular-list a:hover {
-    color:#2196F3;
+        color: #8cccff;
 }
 
 #popular-list {
