@@ -236,6 +236,34 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 
 
 // Using numbers instead of bullets for listing
+#popular-list ul {
+    list-style: decimal;
+}
+
+#popular-list a {
+    font-weight: normal;
+}
+
+#popular-list {
+    border: 1px solid #aaa;
+    padding: 1.5em;
+    padding-left: 40px;
+    list-style: decimal;
+    display: inline-block;
+    background: #8080801f;
+    margin: 0px;
+}
+
+
+#popular-list::before {
+    content: "Popular Posts";
+    font-size: 23px;
+    line-height: 1.8; 
+    font-weight: bold;
+}
+
+
+// Using numbers instead of bullets for listing
 #markdown-toc ul {
     list-style: decimal;
 }
