@@ -5,7 +5,8 @@ icon: /images/2udfzo.png
 tags: [oop, serverless, microservices]
 description: Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is not object oriented.
 excerpt_separator: <!--more-->
----
+--- 
+
 Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is **not** *object oriented*.
 <!--more-->
 
