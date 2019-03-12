@@ -48,16 +48,6 @@ The problem arises when code is written in a procedural and synchronous manner. 
 
 On the other hand, code that practices message passing facilitates the decopling of a monolith into microservices that communicate using asynchronous patterns to a great degree. This is because a module that practices message passing properly does not require any response from the client in other for it to continue doing it's job. It does not control it's clients, and assumes that any client modules recieving it's messagings are smart enough to do whatever needs to be done next on their end. The final result of composing such objects into microservices is an architecture that can be adapted to use asynchronous communication mechanisms with little effort and impact.
 
-## Information Hiding
-
-Information Hiding refers to the process of writing modules in a way that keeps their details relating to core design decisions, especially those that are expected to change, **hidden** from other objects. As a result, callers of an object are effectively decoupled from it's internal workings, which makes it possible for the 'hidden' parts to change without needing to change the way the object is called.
-
-<img src="/images/Information-hiding.png" style="margin-left:auto; margin-right:auto;"/>
-
-This principle is also a desirable property for components in micoservices/serverless based architecture. A microservice for example, should be designed as a black box in which its internal complexity and details are hidden from other services in the system. Because of this, communication between services can now take place via welldefined APIs, which is a desirable trait of microservice architectures.
-
-It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. Simply put, each class that practices Information Hiding already behaves as a mini black box, which makes composing them into larger microservices that behave as black boxes a trivial exercise. However, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that depend on the internal workings of other microservices to provide their service. Obviously, this will hurt the maintainability and evolution of the overall architecture.
-
 ## Coupling
 
 Coupling represents the degree to which a module or object is independent from others. A highly Coupled module relies on and modifies the states and internals of other objects to do it's job, whereas a loosely Coupled module relies on a minimal set of interfaces belonging to other objects to do it's job. 
@@ -69,6 +59,16 @@ Object Oriented systems generally avoid highly Coupled modules since they are in
 That is to say, components in a distributed architecture should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This requires microservices to be designed in a way that makes them primarily responsible for *running their own show*. In return, teams responsible for different services will have the autonomy to make decisions and act independently from each other.
 
 With that said, you can only decouple your monolith into services that maintain their autonomy to the degree of autonomy the individual objects composing those services have, which comes down to Coupling. Therefore, *loosely* coupled code will lend itself to autonomous services, while highly coupled code will require a great deal of refactoring before it can achieve this goal.
+
+## Information Hiding
+
+Information Hiding refers to the process of writing modules in a way that keeps their details relating to core design decisions, especially those that are expected to change, **hidden** from other objects. As a result, callers of an object are effectively decoupled from it's internal workings, which makes it possible for the 'hidden' parts to change without needing to change the way the object is called.
+
+<img src="/images/Information-hiding.png" style="margin-left:auto; margin-right:auto;"/>
+
+This principle is also a desirable property for components in micoservices/serverless based architecture. A microservice for example, should be designed as a black box in which its internal complexity and details are hidden from other services in the system. Because of this, communication between services can now take place via welldefined APIs, which is a desirable trait of microservice architectures.
+
+It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. Simply put, each class that practices Information Hiding already behaves as a mini black box, which makes composing them into larger microservices that behave as black boxes a trivial exercise. However, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that depend on the internal workings of other microservices to provide their service. Obviously, this will hurt the maintainability and evolution of the overall architecture.
 
 ## In Closing
 
