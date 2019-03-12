@@ -1,5 +1,5 @@
 ---
-title: "How a 1960s Programming Paradigm can Accelerate Your App's Cloud Migration"
+title: "How Object Oriented Code can Facilitate Microservices Adoption"
 date: 2019-02-25 15:04:23
 icon: /images/2udfzo.png
 tags: [oop, serverless, microservices]
