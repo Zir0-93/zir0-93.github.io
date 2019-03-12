@@ -246,6 +246,10 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     margin-bottom: 5px;
 }
 
+#popular-list a:hover {
+    color:blue;
+}
+
 #popular-list {
     border: 1px solid #ffffff85;
     padding: 1.5em;
