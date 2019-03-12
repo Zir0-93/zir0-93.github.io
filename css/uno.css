@@ -251,14 +251,14 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 }
 
 #popular-list {
-    border: 1px solid #ffffff85;
+    #border: 1px solid #ffffff85;
     padding: 1.5em;
     padding-left: 40px;
     list-style: decimal;
     text-align: left;
     display: inline-block;
     margin: 0px;
-    margin-top: 20%;
+    margin-top: 50%;
     width: 70%;
     font-weight: bold;
     min-width: 180px;
