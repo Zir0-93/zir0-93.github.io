@@ -1537,7 +1537,7 @@ hr {
 .panel-title {
      font-size: 2.1em;
     font-weight: bold;
-    color: #2196F3;
+    color: #ff8c8c;
     margin-bottom: 30px;
 }
 
@@ -1732,8 +1732,8 @@ nav {
 		color: #FFF;
 		opacity: .8; }
 		.navigation__item a:hover {
-			color: #2196F3;
-			border-color: #2196F3;
+			color: #ff8c8c;
+			border-color: #ff8c8c
 			opacity: 1;
     background: transparent; }
 
