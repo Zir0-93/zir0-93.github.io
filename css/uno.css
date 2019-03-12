@@ -245,7 +245,7 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 }
 
 #popular-list {
-    border: 1px solid #ffffff61;
+    border: 1px solid #ffffff85;
     padding: 1.5em;
     padding-left: 40px;
     list-style: decimal;
@@ -264,6 +264,7 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     font-size: 23px;
     line-height: 1.8; 
     font-weight: bold;
+    text-decoration:underline;
 }
 
 
