@@ -23,7 +23,7 @@ In this article I'll demonstrate how four principles, which are at the core of O
 
 Classes that take on many responsibilities or contain a lot of data, also known as God Classes, are very difficult to read, maintain, and extend due to their enormous size. For this reason, classes in an Object Oriented design should **focus** on doing one thing well, and behave as a logically single, atomic unit. If the complexity of an object exceeds a reasonable level, it should be refactored into two or more separate entities.
 
-<img src="/images/srp.jpg" style="width:400px;"/>
+<img src="/images/single-responsibility-principle.png" style="margin-left:auto; margin-right:auto;"/>
 
 When we consider that each service in a microservices architecture should focus on a specific domain, this method of designing classes gives us a great deal of **flexibility** in determining how we want to decouple a monolithic application into such services. 
 
@@ -44,7 +44,7 @@ A major challenge in converting a monolith into microservices based architecture
 
 The problem arises when code is written in a procedural and synchronous manner. Breaking up a monolith that consists of such code into microservices will force architects to implicitly use an inferior synchornous communication pattern right from the onset.
 
-![sync-vs-async](/images/sync_vs_async.PNG)
+<img src="/images/sync_vs_async.PNG" style="margin-left:auto; margin-right:auto;"/>
 
 On the other hand, code that practices message passing facilitates the decopling of a monolith into microservices that communicate using asynchronous patterns to a great degree. This is because a module that practices message passing properly does not require any response from the client in other for it to continue doing it's job. It does not control it's clients, and assumes that any client modules recieving it's messagings are smart enough to do whatever needs to be done next on their end. The final result of composing such objects into microservices is an architecture that can be adapted to use asynchronous communication mechanisms with little effort and impact.
 
@@ -52,7 +52,7 @@ On the other hand, code that practices message passing facilitates the decopling
 
 Information Hiding refers to the process of writing modules in a way that keeps their details relating to core design decisions, especially those that are expected to change, **hidden** from other objects. As a result, callers of an object are effectively decoupled from it's internal workings, which makes it possible for the 'hidden' parts to change without needing to change the way the object is called.
 
-![information-hiding](/images/Information-hiding.png)
+<img src="/images/Information-hiding.png" style="margin-left:auto; margin-right:auto;"/>
 
 This principle is also a desirable property for components in micoservices/serverless based architecture. A microservice for example, should be designed as a black box in which its internal complexity and details are hidden from other services in the system. Because of this, communication between services can now take place via welldefined APIs, which is a desirable trait of microservice architectures.
 
@@ -61,6 +61,8 @@ It should be easy to see now why the process of decoupling a monolith that pract
 ## Coupling
 
 Coupling represents the degree to which a module or object is independent from others. A highly Coupled module relies on and modifies the states and internals of other objects to do it's job, whereas a loosely Coupled module relies on a minimal set of interfaces belonging to other objects to do it's job. 
+
+<img src="/images/coupling.PNG" style="margin-left:auto; margin-right:auto;"/>
 
 Object Oriented systems generally avoid highly Coupled modules since they are increasingly difficult to maintain and test as more components are introduced into the system. Unsurprisingly, distributed cloud architectures also favour the design of services and components that do not rely on many other components to do it's job. In this case however, the motivating goal is to support **component evolution**.
 
