@@ -242,6 +242,8 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 
 #popular-list a {
     font-weight: normal;
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
 #popular-list {
