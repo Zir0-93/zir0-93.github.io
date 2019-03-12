@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is **not** *object-oriented*.
 <!--more-->
 
-![serverless_meme](/images/2udfzo.jpg)
+<img src="/images/2udfzo.jpg" style="margin-left:auto; margin-right:auto;"/>
 
 Wanting to benefit from scalability and cost-efficiency of cloud technologies, organizations are increasingly migrating their monolithic applications to microservices and serverless based architectures. Due to the nature of typical monoliths however, this migration is often a long and difficult process.
 
@@ -50,9 +50,9 @@ On the other hand, code that practices message passing facilitates the decouplin
 
 Coupling represents the degree to which a module or object is independent from others. A highly Coupled module relies on and modifies the states and internals of other objects to do its job, whereas a loosely Coupled module relies on a minimal set of interfaces belonging to other objects to do its job. 
 
-<img src="/images/coupling.PNG" style="margin-left:auto; margin-right:auto;"/>
-
 Object Oriented systems generally avoid highly Coupled modules since they are increasingly difficult to maintain and test as more components are introduced into the system. Unsurprisingly, distributed cloud architectures also favour the design of services and components that do not rely on many other components to do its job. In this case however, the motivating goal is to support **component evolution**.
+
+<img src="/images/coupling.PNG" style="margin-left:auto; margin-right:auto;"/>
 
 That is to say, components in a distributed architecture should have the ability to be changed, upgraded, or replaced independently without affecting the functioning of other components. This requires microservices to be designed in a way that makes them primarily responsible for *running their own show*. In return, teams responsible for different services will have the autonomy to make decisions and act independently from each other.
 
