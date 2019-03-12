@@ -1665,8 +1665,8 @@ hr {
 	color: #e25440;
 	-webkit-font-smoothing: antialiased; }
 	.btn:hover, .navigation__item a:hover {
-		color: #b9301c;
-		border-color: #b9301c; }
+		    color: #ff8c8c;
+    border-color: #e8a2a3; }
 
 .btn-secondary {
 	border-color: #5ba4e5;
