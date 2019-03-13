@@ -7,7 +7,7 @@ description: Even with the best solution architects, developers, and financial r
 excerpt_separator: <!--more-->
 --- 
 {% include in_article_add.html %}
-
+<br/>
 Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is **not** *object-oriented*.
 <!--more-->
 
