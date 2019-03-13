@@ -240,6 +240,11 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     list-style: decimal;
 }
 
+#popular-list li {
+    margin: 0 0 .5em 0;
+    line-height: 1.2em;
+}
+
 #popular-list a {
     font-weight: normal;
     font-size: 16px;
