@@ -6,6 +6,8 @@ tags: [oop, serverless, microservices]
 description: Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is not object oriented.
 excerpt_separator: <!--more-->
 --- 
+{% include in_article_add.html %}
+
 Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is **not** *object-oriented*.
 <!--more-->
 
@@ -18,6 +20,9 @@ That's because the most time consuming aspect of the migration journey involves 
 And this decoupling process will be much more frustrating and tedious than necessary if the code does not have certain **characteristics** that make it easy to split up and compose into smaller and more focussed components.
 
 In this article I'll show how four principles, which are at the core of Object Oriented Programming, **accelerate** this process.
+
+* TOC
+{:toc}
 
 ## Do One Thing Well
 
@@ -74,3 +79,5 @@ The functioning and design of an ideal microservice shares many characteristics 
 
 Do you think there are any other programming principles in or outside OOP that can benefit the migration of a monlithic application to the cloud? Let me know in the comments below!
 
+{% include in_article_add.html %}
+<br/>
