@@ -15,9 +15,9 @@ Even with the best solution architects, developers, and financial resources avai
 
 Wanting to benefit from scalability and cost-efficiency of cloud technologies, organizations are increasingly migrating their monolithic applications to microservices and serverless based architectures. Due to the nature of typical monoliths however, this migration is often a long and difficult process.
 
-That's because the most time consuming aspect of the migration journey involves **decoupling** the monolith base into smaller, more refined services while ensuring that these new components have desirable properties of a distributed system (autonomy, scalability, and so on).
+**Why you ask?** That's because the most time consuming aspect of the migration journey involves *decoupling* the monolith base into smaller, more refined services while ensuring that these new components have desirable properties of a distributed system (autonomy, scalability, and so on).
 
-And this decoupling process will be much more frustrating and tedious than necessary if the code does not have certain **characteristics** that make it easy to split up and compose into smaller and more focussed components.
+And this decoupling process will be much more frustrating and tedious than necessary if the code does not have certain characteristics that make it easy to split up and compose into smaller and more focussed components.
 
 In this article I'll show how four principles, which are at the core of Object Oriented Programming, **accelerate** this process.
 
