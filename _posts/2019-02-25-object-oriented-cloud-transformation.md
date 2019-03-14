@@ -1,12 +1,12 @@
 ---
-title: "How Object Oriented Code Can Accelerate Your App's Microservices Migration"
+title: "How Object Oriented Code Facilitates The Adoption of Microservices"
 date: 2019-02-25 15:04:23
 icon: /images/2udfzo.png
 tags: [oop, serverless, microservices]
-description: Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is not object oriented.
+description: Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be a nightmare if the code is not object oriented.
 excerpt_separator: <!--more-->
 --- 
-Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is **not** *object-oriented*.
+Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be a nightmare if the code is **not** *object-oriented*.
 <!--more-->
 
 <img src="/images/2udfzo.jpg" style="margin-left:auto; margin-right:auto; display: block;"/>
