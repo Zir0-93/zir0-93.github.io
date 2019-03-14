@@ -6,8 +6,6 @@ tags: [oop, serverless, microservices]
 description: Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is not object oriented.
 excerpt_separator: <!--more-->
 --- 
-{% include in_article_add.html %}
-<br/>
 Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be an absolute nightmare if the code is **not** *object-oriented*.
 <!--more-->
 
@@ -23,6 +21,8 @@ In this article I'll show how four principles, which are at the core of Object O
 
 * TOC
 {:toc}
+
+{% include in_article_add.html %}
 
 ## Do One Thing Well
 
