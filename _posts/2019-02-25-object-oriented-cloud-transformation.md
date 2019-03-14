@@ -79,4 +79,6 @@ The functioning and design of an ideal microservice shares many characteristics 
 
 Do you think there are any other programming principles in or outside OOP that can benefit the migration of a monlithic application to the cloud? Let me know in the comments below!
 
+{% include in_article_add.html %}
+<br/>
 
