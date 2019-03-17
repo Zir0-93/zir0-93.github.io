@@ -37,7 +37,9 @@ As an example, consider a scenario where a code base consists of many God classe
 ## Message Passing
 
 Perhaps the most misunderstood aspect of Object Oriented systems is inter-object communication. In fact, **a method call was not the way modules in an Object Oriented system were intended to communicate**, rather it was through [messaging](http://mfadhel.com/lost-oop/#inter-object-communication).
-
+<br/>
+<blockquote class="twitter-tweet tw-align-center"><p lang="en" dir="ltr">Communication in OOP should be thought as message passing, not method calls. Message passing results in smart objects that accomplish tasks together via content negotiation. Method calls result in many unintelligent objects that are constantly told how to do their job. <a href="https://twitter.com/hashtag/oop?src=hash&amp;ref_src=twsrc%5Etfw">#oop</a></p>&mdash; Muntazir Fadhel (@FadhelMuntazir) <a href="https://twitter.com/FadhelMuntazir/status/1103057880520052736?ref_src=twsrc%5Etfw">March 5, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<br/>
 The difference between them is in the way we perceive method calls versus messages. Calling a method essentially puts the person making the method call in control of running the process. The caller gets the callee to do something and prevents it from doing something that the caller does not want. Message passing on the other hand revolves around **negotiation**, and this is the key in building object-oriented systems.
 
 ![message-passing](/images/sciencev2.svg)
