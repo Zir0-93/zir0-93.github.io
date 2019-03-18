@@ -1,23 +1,23 @@
 ---
-title: "How Object Oriented Code Facilitates The Adoption of Microservices"
+title: "How To Accelerate Microservices Adoption With Object Oriented Code"
 date: 2019-02-25 15:04:23
 icon: /images/2udfzo.png
 tags: [oop, serverless, microservices]
-description: Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be a nightmare if the code is not object oriented.
+description: Even with the best solution architects, developers, and financial resources available, an application's microservices migration journey will be a nightmare if the code not object oriented to some degree.
 excerpt_separator: <!--more-->
 --- 
-Even with the best solution architects, developers, and financial resources available, an application's cloud transformation journey will be a nightmare if the code is **not** *object-oriented*.
+**All monoliths are not created equal**. Even with the best solution architects, developers, and financial resources available, a legacy application's microservices transformation journey will be a nightmare if the code is *not object-oriented* to some degree.
 <!--more-->
 
 <img src="/images/2udfzo.jpg" style="margin-left:auto; margin-right:auto; display: block;"/>
 
 Wanting to benefit from scalability and cost-efficiency of cloud technologies, organizations are increasingly migrating their monolithic applications to microservices and serverless based architectures. Due to the nature of typical monoliths however, this migration is often a long and difficult process.
 
-**Why you ask?** Because the most time consuming aspect of the migration journey involves *decoupling* the monolith base into smaller, more refined services while ensuring that these new components have desirable properties of a distributed system (autonomy, scalability, and so on).
+**Why you ask?** Because the most time consuming aspect of the migration journey involves *decoupling* the monolith into smaller, more refined services while ensuring that these new components have desirable properties of a distributed system (autonomy, scalability, and so on).
 
-And this decoupling process will be much more frustrating and tedious than necessary if the code does not have certain characteristics that make it easy to split up and compose into smaller and more focussed components.
+And this decoupling process will be much more frustrating and tedious than necessary if the code does not have certain characteristics that make it easy to split up and compose into smaller and more focussed components. In this article I'll demonstrate how four principles key Object Oriented Programming principles **accelerate** this process. 
 
-In this article I'll show how four principles, which are at the core of Object Oriented Programming, **accelerate** this process.
+By the end, I'm hopefull that you'll seriously consider writing high quality Object Oriented code when starting your next greenfield project so that you can avoid many of the difficulties typically associated with microservices adoption down the road.
 
 * TOC
 {:toc}
@@ -47,11 +47,11 @@ The difference between them is in the way we perceive method calls versus messag
 
 A major challenge in converting a monolith into microservices based architecture lies in re-designing its communication mechanism. Microservices are ideally integrated using asynchronous communication to enforce microservice autonomy and to develop an architecture that is resilient when microservices fail or underperform. 
 
-The problem arises when code is written in a procedural and synchronous way. Breaking up a monolith that consists of such code into microservices will force architects to implicitly use an inferior synchronous communication pattern right from the onset.
+The problem arises when code is written in a procedural and imperative way. Breaking up a monolith that consists of such code into microservices will **force** architects to implicitly use a synchronous communication pattern right from the onset when that might not be the most optimal solution.
 
 <img src="/images/sync_vs_async.PNG" style="margin-left:auto; margin-right:auto; display: block;"/>
 
-On the other hand, code that practices message passing facilitates the decoupling of a monolith into microservices that communicate using asynchronous patterns to a great degree. This is because a module that practices message passing properly does not require any response from the client in other for it to continue doing it's job. It does not control it's clients, and assumes that any client modules receiving it's messages are smart enough to do whatever needs to be done next. The final result of composing such objects into microservices is an architecture that can be adapted to use asynchronous communication mechanisms with little effort.
+On the other hand, code that practices message passing facilitates the decoupling of a monolith into microservices that communicate using asynchronous patterns to a great degree. A module that practices message passing properly does not require any response from the client in other for it to continue doing it's job. It does not control it's clients, and assumes that any client modules receiving it's messages are smart enough to do whatever needs to be done next. The final result of composing such objects into microservices is an architecture that can be adapted to use asynchronous communication mechanisms with little effort.
 
 ## Coupling
 
@@ -73,7 +73,9 @@ Information Hiding refers to the process of writing modules in a way that keeps 
 
 This principle is also a desirable property for components in micoservices/serverless based architecture. A microservice for example, should be designed as a black box in which its internal complexity and details are hidden from other services in the system. Because of this, communication between services can now take place via well defined APIs, which is a desirable trait of microservice architectures.
 
-It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. Simply put, each class that practices Information Hiding already behaves as a mini black box, which makes composing them into larger microservices that behave as black boxes a trivial exercise. However, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that depend on the internal workings of other microservices to provide their service. Obviously, this will hurt the maintainability and evolution of the overall architecture.
+It should be easy to see now why the process of decoupling a monolith that practices Information Hiding into microservices that behave as black boxes is a straight forward task. Simply put, each class that practices Information Hiding already behaves as a mini black box of sorts, which makes composing them into larger microservices that behave as black boxes a trivial exercise. 
+
+On the other hand, if Information Hiding is not properly observed in the original code, you are at risk of decoupling the monolith into microservices that *depend on the internal workings of other microservices to provide their service*. Obviously, this will hurt the maintainability and evolution of the overall architecture.
 
 ## In Closing
 
