@@ -15,7 +15,7 @@ Wanting to benefit from scalability and cost-efficiency of cloud technologies, o
 
 **Why you ask?** Because the most time consuming aspect of the migration journey involves *decoupling* the monolith into smaller, more refined services while ensuring that these new components have desirable properties of a distributed system (autonomy, scalability, and so on).
 
-And this decoupling process will be much more frustrating and tedious than necessary if the code does not have certain characteristics that make it easy to split up and compose into smaller and more focussed components. In this article I'll demonstrate how four principles key Object Oriented Programming principles **accelerate** this process. 
+And this decoupling process will be much more frustrating and tedious than necessary if the code does not have certain characteristics that make it easy to split up and compose into smaller and more focussed components. In this article I'll demonstrate how four key Object Oriented Programming principles **accelerate** this process. 
 
 By the end, I'm hopefull that you'll seriously consider writing high quality Object Oriented code when starting your next greenfield project so that you can avoid many of the difficulties typically associated with microservices adoption down the road.
 
