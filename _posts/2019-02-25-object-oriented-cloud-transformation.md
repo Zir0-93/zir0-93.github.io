@@ -1,5 +1,5 @@
 ---
-title: "How To Accelerate Microservices Adoption With Object Oriented Code"
+title: "Why Object Oriented Code Accelerates Microservices Adoption"
 date: 2019-02-25 15:04:23
 icon: /images/2udfzo.png
 tags: [oop, serverless, microservices]
