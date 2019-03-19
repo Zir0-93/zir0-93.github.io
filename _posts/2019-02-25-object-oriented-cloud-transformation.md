@@ -8,10 +8,9 @@ excerpt_separator: <!--more-->
 --- 
 **All monoliths are not created equal**. Even with the best solution architects, developers, and financial resources available, a legacy application's microservices transformation journey will be a nightmare if the code is *not object-oriented* to some degree.
 <!--more-->
+Wanting to benefit from scalability and cost-efficiency of cloud technologies, organizations are increasingly migrating their monolithic applications to microservices and serverless based architectures. Due to the nature of typical monoliths however, this migration is often a long and difficult process.
 
 <img src="/images/2udfzo.jpg" style="margin-left:auto; margin-right:auto; display: block;"/>
-
-Wanting to benefit from scalability and cost-efficiency of cloud technologies, organizations are increasingly migrating their monolithic applications to microservices and serverless based architectures. Due to the nature of typical monoliths however, this migration is often a long and difficult process.
 
 **Why you ask?** Because the most time consuming aspect of the migration journey involves *decoupling* the monolith into smaller, more refined services while ensuring that these new components have desirable properties of a distributed system (autonomy, scalability, and so on).
 
