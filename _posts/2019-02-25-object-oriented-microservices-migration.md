@@ -1,7 +1,7 @@
 ---
 title: "Why Object Oriented Code Accelerates Microservices Adoption"
 date: 2019-02-25 15:04:23
-icon: /images/2udfzo.png
+icon: /images/single-responsibility-principle.png
 tags: [oop, serverless, microservices]
 description: Even with the best solution architects, developers, and financial resources available, an application's microservices migration journey will be a nightmare if the code not object oriented to some degree.
 excerpt_separator: <!--more-->
