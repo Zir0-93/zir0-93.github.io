@@ -6,7 +6,7 @@ tags: [oop, serverless, microservices]
 description: Even with the best solution architects, developers, and financial resources available, an application's microservices migration journey will be a nightmare if the code not object oriented to some degree.
 excerpt_separator: <!--more-->
 --- 
-**All monoliths are not created equal**. Even with the best solution architects, developers, and financial resources available, a legacy application's microservices transformation journey will be a nightmare if the code is *not object-oriented* to some degree.
+**All monoliths are not created equal**. Even with the best solution architects, developers, and financial resources available, a legacy application's microservices transformation journey will be a nightmare if the code is *not object-oriented*.
 <!--more-->
 
 Wanting to benefit from scalability and cost-efficiency of cloud technologies, organizations are increasingly migrating their monolithic applications to microservices and serverless based architectures. Due to the nature of typical monoliths however, this migration is often a long and difficult process.
