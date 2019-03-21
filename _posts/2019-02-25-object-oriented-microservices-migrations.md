@@ -1,7 +1,7 @@
 ---
 title: "Why Object Oriented Code Accelerates Microservices Adoption"
 date: 2019-02-25 15:04:23
-icon: /images/single-responsibility-principle.png
+icon: /images/shutterstock_189638822_copy3-720x479.jpg
 tags: [oop, serverless, microservices]
 description: Even with the best solution architects, developers, and financial resources available, an application's microservices migration journey will be a nightmare if the code not object oriented to some degree.
 excerpt_separator: <!--more-->
@@ -13,7 +13,7 @@ Wanting to benefit from scalability and cost-efficiency of cloud technologies, o
 
 <img src="/images/2udfzo.jpg" style="margin-left:auto; margin-right:auto; display: block;"/>
 
-**Why you ask?** Because the most time consuming aspect of the migration journey involves *decoupling* the monolith into smaller, more refined services while ensuring that these new components have desirable properties of a distributed system (autonomy, scalability, and so on).
+**The reason?** The most time consuming aspect of the migration journey involves *decoupling* the monolith into smaller, more refined services while ensuring that these new components have desirable properties of a distributed system (autonomy, scalability, and so on).
 
 And this decoupling process will be much more frustrating and tedious than necessary if the code does not have certain characteristics that make it easy to split up and compose into smaller and more focussed components. In this article I'll demonstrate how four key Object Oriented Programming principles **accelerate** this process. 
 
