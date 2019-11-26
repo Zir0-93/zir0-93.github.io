@@ -21,6 +21,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     opacity: 1; /* Firefox */
 }
 
+.twitter-share-button { min-width: 80px !important; width: auto !important;}
+
 a.tweet_link { 
     width: 100%;
     height: 100%;
