@@ -22,8 +22,6 @@ By the end, I'm hopefull that you'll seriously consider writing high quality Obj
 * TOC
 {:toc}
 
-{% include in_article_add.html %}
-
 ## Do One Thing Well
 
 Classes that take on many responsibilities or contain a lot of data, also known as God Classes, are very difficult to read, maintain, and extend due to their enormous size. For this reason, classes in an Object Oriented design should **focus** on doing one thing well, and behave as a logically single, atomic unit. If the complexity of an object exceeds a reasonable level, it should be refactored into two or more separate entities.
@@ -82,7 +80,4 @@ On the other hand, if Information Hiding is not properly observed in the origina
 The functioning and design of an ideal microservice shares many characteristics with the functioning and design of an ideal object in an object-oriented system. For this reason, any process of migrating a monolithic application to a microservices-like architecture will be greatly simplified if the application exhibits good object-oriented practices in the first place.
 
 Do you think there are any other programming principles in or outside OOP that can benefit the migration of a monlithic application to the cloud? Let me know in the comments below!
-
-{% include in_article_add.html %}
-<br/>
 
