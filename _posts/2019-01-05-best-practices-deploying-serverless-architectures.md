@@ -21,9 +21,6 @@ If you can't answer this question easily, or some part of your deploys still req
 * TOC
 {:toc}
 
-
-{% include in_article_add.html %}
-
 ## Separate Environments Properly
 To lessen the risk of integrating new code, most teams  setup various environments to test the robustness of submitted code before it is pushed to production.
 
@@ -142,6 +139,3 @@ Serverless applications often consist of plucking and combining various services
 In such scenarios, I feel it's important that processes surrounding Serverless architectures should be scalable, automated, and require little manual intervention. This list represents my thoughts on how to deal with the complexity. 
 
 If you think this list could benefit from other ideas/concepts I've missed, let me know in the comments below!
-
-{% include in_article_add.html %}
-<br/>
