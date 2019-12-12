@@ -158,9 +158,8 @@ eventual consistency. This also has the advantage that you can translate that da
 ![eventual_consistency](/images/indepentent-microservice-databases.png)
 
 The point here is that asynchronous service integration is an architectural design decision that is **independent** of the specific
-communication mechanism used. In theory, message queues could be used in a *synchronous* service integration process where services 
-are designed to deliver and wait for messages in a stateful way. This would be very poor architectural design but the point is clear,
-message queues are not more "asynchronous" than traditional RESTful HTTP calls at a service integration level.
+communication mechanism used. In theory, message queues could be used to *synchronously* integrate services where they 
+are designed to deliver and wait for messages from a message queue in a stateful way. Ofcourse, that would be a really poor design.
 
 # Do you Agree?
 I hope this blog post has shed some light on some common misunderstandings when it comes to the RESTful HTTP Calls Vs Message Queue
