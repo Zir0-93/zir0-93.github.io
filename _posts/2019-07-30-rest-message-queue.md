@@ -11,9 +11,10 @@ Think back to the last time you worked in a distributed system, did you consider
 <!--more-->
 
 In the world of microservices, the problem of inter-service communication has given rise to two main solutions. The first solution is based on the use of
-[RESTful](https://www.programmableweb.com/news/why-messaging-queues-suck/analysis/2017/02/13) HTTP calls, while the other solution revolves around the use of [message queues](https://dev.to/matteojoliveau/microservices-communications-why-you-should-switch-to-message-queues--48ia) for such a purpose.
+[RESTful](https://www.programmableweb.com/news/why-messaging-queues-suck/analysis/2017/02/13) HTTP calls, while the other solution revolves around the use of
+[message queues](https://dev.to/matteojoliveau/microservices-communications-why-you-should-switch-to-message-queues--48ia).
 
-As is typically the case when making any such design decisions, the right decision is made based on a firm understanding of your requirements and the tradeoffs involved in either approach. In this post, we'll try to improve our understanding of these trade offs by analyzing some widely held misconceptions found on either side of the debate.
+As is typically the case when making such design decisions, the right one is made based on a firm understanding of your requirements and the trade-offs involved in either approach. In this post, we'll try to improve our understanding of these trade offs by analyzing some widely held misconceptions found on either side of the debate.
 
 ![cd_img](/images/1536697037-consul-dynamic-infrastructure.svg)
 
@@ -23,19 +24,19 @@ As is typically the case when making any such design decisions, the right decisi
 
 # Overview
 Ideally, services are self contained in a distributed system and don't need to rely on each other to do their job. This is one of the many parallels between services in a MicroServices architecture and [objects](http://mfadhel.com/lost-oop/#objects-are-intelligent-and-self-contained) in an object oriented system. However, as is commonly found in both domains, such a thing is not possible 100% of the time. To introduce this discussion of communication patterns in Microservices, lets define some key concepts:
-* **Microservices**: both a software development method and architectural style for that focusses on building sophsiticated software systems as a collection of loosely coupled and highly maintainable single-function modules with well-defined interfaces and operations. Our discussion revolves around the communication between services in such systems. 
+* **Microservices**: both a software development method and architectural style for that focuses on building sophisticated software systems as a collection of loosely coupled and highly maintainable single-function modules with well-defined interfaces and operations. Our discussion revolves around the communication between services in such systems. 
 * **REST**: An architectural design patten for APIs that revolves around the concept of resources. For our discussion, it is sufficient to understand that communication in a REST architecture is typically implemented via HTTP protocols.
-* **Message Queue**: A decoupled form of service-to-service communication in which senders of data place messages in a message queue untill they are processed and deleted by recieving services. Message queuses typically implement lighter weight, asynchronous protocols and allow services to be more decoupled from each other by preventing them from directly invoking each other.
+* **Message Queue**: A decoupled form of service-to-service communication in which senders of data place messages in a message queue until they are processed and deleted by receiving services. Message queues typically implement lighter weight, asynchronous protocols and allow services to be more decoupled from each other by preventing them from directly invoking each other.
 
 For the last few years, microservices have witnessed a tremendous growth in popularity as organizations are increasingly transforming
 their monolithic applications into microservices. However, it is interesting to see that most introductory articles, tutorials, and
 guides on the subject of microservices implement inter-service communication using synchronous RESTfull communication patterns. 
 
-{% include image_with_caption.html url="/images/interest_micro.png" description="Google trends chart for interest over time for the search term `microservices`." %}
+{% include image_with_caption.html url="/images/interest_micro.png" description="Google trends chart for interest over time for the search term "microservices"." %}
 
 This is not surprising, as this communication mechanism is easiest to adopt by clients, widely understood, and has extensive libraries
 to support it in every programming language. Not to mention, RESTful systems can be documented in
-[intutive ways](http://mfadhel.com/API_Tables/#api-tables) due to its reliance on the concept of resources. However, as Martin Thompson
+[intuitive ways](http://mfadhel.com/API_Tables/#api-tables) due to its reliance on the concept of resources. However, as Martin Thompson
 puts it, "Synchronous communication is the crystal meth of distributed software," and is generally overused in most microservices
 implementations and data pipelines.
 
@@ -51,7 +52,7 @@ In this post however, I want to **focus on some of the wrong reasons** common
 **Rationale**: The cost of the message queue infrastructure to persist messages introduces a significant expenses to the system
 
 **Response**: Firstly, HTTP communication would typically be routed through
-a load balancer in the absence of a message queue which would incurr expenses, albeit not as significant.
+a load balancer in the absence of a message queue which would incur expenses, albeit not as significant.
 
 Secondly, message queues typically operate over much lighter weight protocols than HTTP, thereby reducing the overall load on your
 infrastructure and costs incurred as a result. When two services are experiencing 
@@ -75,7 +76,7 @@ of the following two options:
 2. Use a message queue
 
 Option `1` would typically involve the use of additional infrastructure components such as a database/caching system.
-Additionally, the level of complexity and sophistication involved in developing resillient and robust inter-services data 
+Additionally, the level of complexity and sophistication involved in developing resilient and robust inter-services data 
 transmission mechanisms would far outweigh the cost of using a ready-made tool designed to solve exactly that problem.
 In this scenario, more cost would be incurred to an organization that chooses not to use a message queue, and so this statement 
 would not be true in this case.
@@ -84,20 +85,20 @@ would not be true in this case.
 
 **Rationale**: Message queues introduce an entirely new piece of infrastructure to your architecture. As a result of being solely responsible for enabling communication between services, such a component introduces a massive SPOF.
 
-**Response**: Minus any extra architectural concerns to make them Highly Available (HA), messaque queues are a SPOF. However, they certainly 
+**Response**: Minus any extra architectural concerns to make them Highly Available (HA), message queues are a SPOF. However, they certainly
 **do not introduce** a SPOF to any existing microservices implementation.
 Mechanisms like load balancers and API Gateways are SPOFs that are considered integral to any microservices architecture. They too,
 like message queues, must be designed to be HA any microservices implementation.
 
 {% include image_with_caption.html url="/images/microservice_spof.png" description="Like a message queue, an API gateway needs to be HA to avoid being a SPOF." %}
 
-One disadvantage of RESTful HTTP calls however is that service recieveves communications directly from senders, which represents a
-SPOF. If the recieving service becomes 
+One disadvantage of RESTful HTTP calls however is that service receive communications directly from senders, which represents a
+SPOF. If the receiving service becomes 
 unavailable for any reason, the system will lose any transmitted data and essentially fail in the sense of being unable to move forward
 with the process.
 
 The advantage of message queues here lies in its ability to handle downtime for individual services. That is to say, the queue can
-still keep the messages transmitted to it by a sender service until the recieving service is available again and able to consume them. 
+still keep the messages transmitted to it by a sender service until the receiving service is available again and able to consume them. 
 Moreover, we would only have to worry about making our message queue highly available as opposed to every single service within our 
 system. 
 
@@ -108,7 +109,7 @@ Rationale:  Unlike AMQP, HTTP is a synchronous protocol which prevents services
 **Response**: HTTP is certainly a synchronous protocol, but the terms synchronous and asynchronous have different connotations depending on which domain it is used in, making over oversimplifications such as these all too common. Lets analyze it at three levels:
 
 **Input/Output Level**:  At this level, asynchronous means that requests made to other services do not block the main executing
-thread untill the service has responded. This allows the thread to complete other tasks in the meantime, and increases the efficiency
+thread until the service has responded. This allows the thread to complete other tasks in the meantime, and increases the efficiency
 of your CPU by allowing you to serve more requests. 
 
 This level of asynchronization can be implemented in both RESTful calls and 
@@ -152,7 +153,7 @@ If a service needs to trigger some action in another service, it should be done 
 Additionally, if a service relies on data that is located in another service, data should be replicated across the services using
 eventual consistency. This also has the advantage that you can translate that data into the language of your own Bounded Context.
 
-The point here is that asynchronous service integration is an architectural design decision that is **independant** of the specific
+The point here is that asynchronous service integration is an architectural design decision that is **independent** of the specific
 communication mechanism used. In theory, message queues could be used in a *synchronous* service integration process where services 
 are designed to deliver and wait for messages in a stateful way. This would be very poor architectural design but the point is clear,
 message queues are not more "asynchronous" than traditional RESTful HTTP calls at a service integration level.
