@@ -108,7 +108,7 @@ Rationale:  Unlike AMQP, HTTP is a synchronous protocol which prevents services
 
 **Response**: HTTP is certainly a synchronous protocol, but the terms synchronous and asynchronous have different connotations depending on which domain it is used in, making over oversimplifications such as these all too common. Lets analyze it at three levels:
 
-**Input/Output Level**:  At this level, asynchronous means that requests made to other services do not block the main executing
+**1 - Input/Output Level**:  At this level, asynchronous means that requests made to other services do not block the main executing
 thread until the service has responded. This allows the thread to complete other tasks in the meantime, and increases the efficiency
 of your CPU by allowing you to serve more requests. 
 
@@ -127,7 +127,7 @@ public CompletableFuture<String> get(String uri) {
           .thenApply(HttpResponse::body);
 }
 ```
-**Protocol Level**: As mentioned previously, HTTP is a synchronous protocol. The client issues a request and waits
+**2 - Protocol Level**: As mentioned previously, HTTP is a synchronous protocol. The client issues a request and waits
 for a response. Message queues on the other hand, are typically based on asynchronous protocols. RabbitMQ for example, 
 is based on AMQP which is a much lighter weight protocol than HTTP and can operate in a "fire and forget" manner.
 Using the `nucleon.amqp` python library, we can write code to publish an event to an AMQP based message queue in the following way. 
@@ -145,7 +145,7 @@ with conn.channel() as channel:
         body='Hello world!'
     )
  ```
-**Service Integration Level**:  Asynchronous communication at this level is concerned with designing micoservices so that they do
+**3 - Service Integration Level**:  Asynchronous communication at this level is concerned with designing micoservices so that they do
 not need to communicate with other services during their request/response cycle.  Why? Because at the end of day, the goal for a 
 service is to be available to the end-user even if other services that are part of the whole system are offline or unhealthy.
 
