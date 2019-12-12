@@ -161,5 +161,7 @@ message queues are not more "asynchronous" than traditional RESTful HTTP calls a
 # Do you Agree?
 I hope this blog post has shed some light on some common misunderstandings when it comes to the RESTful HTTP Calls Vs Message Queue
 debate. I strongly feel that important architectural decisions such as these cannot be made with a "surface level" understanding of the
-technologies involved, which is why I've tried to improve my understanding in this area. If you disagree with some of the points I've mentioned, 
+technologies involved, which is why I've tried to improve my understanding in this area. 
+
+If you disagree with some of the points I've mentioned, 
 or think I've missed some good points in my list, let me know in the comments below or on twitter!
