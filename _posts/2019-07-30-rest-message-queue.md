@@ -112,6 +112,8 @@ system. 
 thread until the service has responded. This allows the thread to complete other tasks in the meantime, and increases the efficiency
 of your CPU by allowing you to serve more requests. 
 
+{% include image_with_caption.html url="/images/ansychronous-synchronous-requests-android-preview-opt.png" description="RESTFul HTTP calls can be implemented in both a synchronous and asynchronous fashion at an IO level." %}
+
 This level of asynchronization can be implemented in both RESTful calls and 
 message queues. For example I can use the `CompletableFuture` mechanism introduced in Java 8 to make an asynchronous HTTP call 
 to an API with following code. It's asynchronous because the request completes in a separate thread and notifies the main thread upon
@@ -152,6 +154,8 @@ service is to be available to the end-user even if other services that are part 
 If a service needs to trigger some action in another service, it should be done outside of the request/response cycle.
 Additionally, if a service relies on data that is located in another service, data should be replicated across the services using
 eventual consistency. This also has the advantage that you can translate that data into the language of your own Bounded Context.
+
+![eventual_consistency](/images/indepentent-microservice-databases.png)
 
 The point here is that asynchronous service integration is an architectural design decision that is **independent** of the specific
 communication mechanism used. In theory, message queues could be used in a *synchronous* service integration process where services 
