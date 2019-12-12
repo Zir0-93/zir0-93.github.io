@@ -41,7 +41,7 @@ puts it, "Synchronous communication is the crystal meth of distributed softw
 implementations and data pipelines.
 
 Although less formal support is natively provided for security, caching, and documentation in message queues, they have their own set of
-advantages over RESTful HTTP calls. Not only do message queues decouple senders from recievers, but they also make systems much more
+advantages over RESTful HTTP calls. Not only do message queues decouple senders from receivers, but they also make systems much more
 fault tolerant. That is, messages can be persisted in the queue even when individual services go down. These services can then resume
 reading messages from the queue when they are back online. 
 
