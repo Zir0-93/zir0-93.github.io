@@ -1,6 +1,6 @@
 --- 
 title:  "RESTFul HTTP Calls Or Message Queues? 3 Common Misconceptions"
-date:  2019-01-05 15:04:23
+date:  2019-12-05 15:04:23
 og_image: /images/microservices.png
 tags: [microservices, rest, messaging]
 description: Think back to the last time you worked in a distributed system, did you consider using something other than RESTfull HTTP calls as the method of communication between components in this system?
