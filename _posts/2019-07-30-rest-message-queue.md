@@ -90,7 +90,7 @@ would not be true in this case.
 Mechanisms like load balancers and API Gateways are SPOFs that are considered integral to any microservices architecture. They too,
 like message queues, must be designed to be HA any microservices implementation.
 
-{% include image_with_caption.html url="/images/microservice_spof.png" description="Like a message queue, an API gateway needs to be HA to avoid being a SPOF." %}
+{% include image_with_caption.html url="/images/microservices_diag.png" description="Like a message queue, an API gateway needs to be HA to avoid being a SPOF." %}
 
 One disadvantage of RESTful HTTP calls however is that service receive communications directly from senders, which represents a
 SPOF. If the receiving service becomes 
