@@ -49,9 +49,9 @@ At the end of the day, there are usually good reasons to use both mechanisms in 
 In this post however, I want to **focus on some of the wrong reasons** commonly given to use one communication mechanism over the other.
 
 # Message Queues Add Additional Cost
-**Rationale**: The cost of the message queue infrastructure to persist messages introduces a significant expenses to the system.
+> "The cost of the message queue infrastructure to persist messages introduces a significant expenses to the system."
 
-**Response**: Firstly, HTTP communication would typically be routed through
+Firstly, HTTP communication would typically be routed through
 a load balancer in the absence of a message queue which would incur expenses, albeit not as significant.
 
 Secondly, message queues typically operate over much lighter weight protocols than HTTP, thereby reducing the overall load on your
@@ -83,9 +83,9 @@ would not be true in this case.
 
 # Message Queues Introduce a Single point of failure (SPOF)
 
-**Rationale**: Message queues introduce an entirely new piece of infrastructure to your architecture. As a result of being solely responsible for enabling communication between services, such a component introduces a massive SPOF.
+> "Message queues introduce an entirely new piece of infrastructure to your architecture. As a result of being solely responsible for enabling communication between services, such a component introduces a massive SPOF."
 
-**Response**: Minus any extra architectural concerns to make them Highly Available (HA), message queues are a SPOF. However, they certainly
+Minus any extra architectural concerns to make them Highly Available (HA), message queues are a SPOF. However, they certainly
 **do not introduce** a SPOF to any existing microservices implementation.
 Mechanisms like load balancers and API Gateways are SPOFs that are considered integral to any microservices architecture. They too,
 like message queues, must be designed to be HA any microservices implementation.
@@ -104,9 +104,9 @@ system. 
 
 # Unlike HTTP Calls, Messaging is Asynchronous
 
-**Rationale**:  Unlike AMQP, HTTP is a synchronous protocol which prevents services that use it from communicating with each other in an asynchronous way.
+> "Unlike AMQP, HTTP is a synchronous protocol which prevents services that use it from communicating with each other in an asynchronous way."
 
-**Response**: HTTP is certainly a synchronous protocol, but the terms synchronous and asynchronous have different connotations depending on which domain it is used in, making over oversimplifications such as these all too common. Lets analyze it at three levels:
+HTTP is certainly a synchronous protocol, but the terms synchronous and asynchronous have different connotations depending on which domain it is used in, making over oversimplifications such as these all too common. Lets analyze it at three levels:
 
 **1 - Input/Output Level**:  At this level, asynchronous means that requests made to other services do not block the main executing
 thread until the service has responded. This allows the thread to complete other tasks in the meantime, and increases the efficiency
