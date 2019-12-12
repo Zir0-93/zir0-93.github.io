@@ -32,7 +32,7 @@ For the last few years, microservices have witnessed a tremendous growth in popu
 their monolithic applications into microservices. However, it is interesting to see that most introductory articles, tutorials, and
 guides on the subject of microservices implement inter-service communication using synchronous RESTfull communication patterns. 
 
-{% include image_with_caption.html url="/images/interest_micro.png" description="Google trends chart for interest over time for the search term "microservices"." %}
+{% include image_with_caption.html url="/images/interest_micro.png" description="Google trends chart for interest over time for the search term 'microservices'." %}
 
 This is not surprising, as this communication mechanism is easiest to adopt by clients, widely understood, and has extensive libraries
 to support it in every programming language. Not to mention, RESTful systems can be documented in
