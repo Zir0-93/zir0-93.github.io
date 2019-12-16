@@ -3,16 +3,16 @@ title:  "RESTFul HTTP Calls Or Message Queues? 3 Common Misconceptions"
 date:  2019-12-05 15:04:23
 og_image: /images/microservices.png
 tags: [microservices, rest, messaging]
-description: Think back to the last time you worked in a distributed system, did you consider using something other than RESTfull HTTP calls as the method of communication between components in this system?
+description: Think back to the last time you worked in a distributed system, did you consider using something other than RESTful HTTP calls as the method of communication between components in this system?
 excerpt_separator: <!--more-->
 ---
 
-Think back to the last time you worked in a distributed system, did you consider using something **other** than RESTfull HTTP calls as the method of communication *between components in this system*?
+Think back to the last time you worked in a distributed system, did you consider using something **other** than RESTful HTTP calls as the method of communication *between components in this system*?
 <!--more-->
 
 In the world of microservices, the problem of inter-service communication has given rise to two main solutions. The first solution is based on the use of
-[RESTful](https://www.programmableweb.com/news/why-messaging-queues-suck/analysis/2017/02/13) HTTP calls, while the other solution revolves around the use of
-[message queues](https://dev.to/matteojoliveau/microservices-communications-why-you-should-switch-to-message-queues--48ia).
+[RESTful](https://www.programmableweb.com/news/why-messaging-queues-suck/analysis/2017/02/13){:target="_blank"} HTTP calls, while the other solution revolves around the use of
+[message queues](https://dev.to/matteojoliveau/microservices-communications-why-you-should-switch-to-message-queues--48ia){:target="_blank"}.
 
 As is typically the case when making such design decisions, the right one is made based on a firm understanding of your requirements and the trade-offs involved in either approach. In this post, we'll try to improve our understanding of these trade offs by analyzing some widely held misconceptions found on either side of the debate.
 
@@ -30,7 +30,7 @@ Ideally, services are self contained in a distributed system and don't need to r
 
 For the last few years, microservices have witnessed a tremendous growth in popularity as organizations are increasingly transforming
 their monolithic applications into microservices. However, it is interesting to see that most introductory articles, tutorials, and
-guides on the subject of microservices implement inter-service communication using synchronous RESTfull communication patterns. 
+guides on the subject of microservices implement inter-service communication using synchronous RESTful communication patterns. 
 
 {% include image_with_caption.html url="/images/interest_micro.png" description="Google trends chart for interest over time for the search term 'microservices'." %}
 
