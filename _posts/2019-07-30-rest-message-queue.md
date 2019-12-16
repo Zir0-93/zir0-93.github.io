@@ -22,7 +22,7 @@ As is typically the case when making such design decisions, the right decision i
 {:toc}
 
 
-# Overview
+## Overview
 Ideally, services are self contained in a distributed system and don't need to rely on each other to do their job. This is one of the many parallels between services in a MicroServices architecture and [objects](http://mfadhel.com/lost-oop/#objects-are-intelligent-and-self-contained) in an object oriented system. However, as is commonly found in both domains, such a thing is not possible 100% of the time. As a result, services need a way to communicate with each other.
 
 To introduce this discussion of inter-service communication approaches, let's first define some key concepts:
@@ -50,7 +50,7 @@ reading messages from the queue when they are back online. 
 At the end of the day, there are usually good reasons to use both mechanisms in a distributed system.
 In this post however, I want to **focus on some of the wrong reasons** commonly given to use one communication mechanism over the other.
 
-# Message Queues Add Additional Cost
+## Message Queues Add Additional Cost
 > "The cost of the message queue infrastructure to persist messages introduces significantly increased costs to the system."
 
 Firstly, HTTP communication would typically be routed through
@@ -83,7 +83,7 @@ transmission mechanisms would far outweigh the cost of using a ready-made tool d
 In this scenario, more cost would be incurred to an organization that chooses not to use a message queue, and so this statement 
 would not be true in this case.
 
-# Message Queues Introduce a Single point of failure (SPOF)
+## Message Queues Introduce a Single point of failure (SPOF)
 
 > "Message queues introduce an entirely new piece of infrastructure to your architecture. As a result of being solely responsible for enabling communication between services, such a component introduces a massive SPOF."
 
@@ -104,7 +104,7 @@ still keep the messages transmitted to it by a sender service until the receivi
 Moreover, we would only have to worry about making our message queue highly available as opposed to every single service within our 
 system. 
 
-# Unlike HTTP Calls, Messaging is Asynchronous
+## Unlike HTTP Calls, Messaging is Asynchronous
 
 > "Unlike AMQP, HTTP is a synchronous protocol which prevents services that use it from communicating in an asynchronous way"
 
@@ -163,7 +163,7 @@ The point here is that asynchronous service integration is an architectural desi
 communication mechanism used. In theory, message queues could be used to *synchronously* integrate services where they 
 are designed to deliver and wait for messages from a message queue in a stateful way. Ofcourse, that would be a really poor design. 
 
-# Do you Agree?
+## Do you Agree?
 I hope this blog post has shed some light on some common misunderstandings when it comes to the RESTful HTTP Calls Vs Message Queue
 debate. I strongly feel that important architectural decisions such as these cannot be made with a "surface level" understanding of the
 technologies involved, which is why I've tried to improve my understanding in this area. 
