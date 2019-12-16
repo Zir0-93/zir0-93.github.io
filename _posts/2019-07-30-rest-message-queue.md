@@ -23,7 +23,7 @@ As is typically the case when making such design decisions, the right decision i
 
 
 ## Overview
-Ideally, services are self contained in a distributed system and don't need to rely on each other to do their job. This is one of the many parallels between services in a MicroServices architecture and [objects](http://mfadhel.com/lost-oop/#objects-are-intelligent-and-self-contained) in an object oriented system. However, as is commonly found in both domains, such a thing is not possible 100% of the time. As a result, services need a way to communicate with each other.
+Ideally, services are self contained in a distributed system and don't need to rely on each other to do their job. This is one of the many parallels between services in a MicroServices architecture and [objects](http://mfadhel.com/lost-oop/#objects-are-intelligent-and-self-contained){:target="_blank"} in an object oriented system. However, as is commonly found in both domains, such a thing is not possible 100% of the time. As a result, services need a way to communicate with each other.
 
 To introduce this discussion of inter-service communication approaches, let's first define some key concepts:
 
@@ -38,7 +38,7 @@ guides on the subject of microservices implement inter-service communication usi
 {% include image_with_caption.html url="/images/interest_micro.png" description="Google trends chart for interest over time for the search term 'microservices'." %}
 
 This is not surprising, as this communication mechanism is easiest to adopt by clients due to its simplicity and extensive support in the form of libraries in every programming language. Not to mention, RESTful systems can be documented in some pretty
-[intuitive ways](http://mfadhel.com/API_Tables/#api-tables) due to its reliance on the concept of resources. However, as Martin Thompson
+[intuitive ways](http://mfadhel.com/API_Tables/#api-tables){:target="_blank"} due to its reliance on the concept of resources. However, as Martin Thompson
 puts it, "Synchronous communication is the crystal meth of distributed software," and is generally overused in most microservices
 implementations and data pipelines.
 
@@ -61,7 +61,7 @@ infrastructure and lowers costs incurred as a result. When two services are expe
 a large amount of traffic between each other, the overhead of creating the TCP connection and negotiating SSL/TLS for all the 
 requests sent between these two services is extremely large since HTTP cannot keep a connection open.
 
-On the other hand, protocols like [Advaned Message Queuing Protocol](https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol)
+On the other hand, protocols like [Advaned Message Queuing Protocol](https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol){:target="_blank"}
 (AMQP) over which many message queue technologies are based on create a connection at the start
 and persist it. They keep messages flowing between service on top of the TCP connection, and so the TCP and SSL/TLS cost is only paid
 once. The protocol minimizes the number of bytes that flow over the wire, and is ideally suited for systems that need to exchange
