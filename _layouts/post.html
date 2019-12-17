@@ -8,9 +8,10 @@ layout: default
    <section class="post">
       {{ content }}
    </section>
+   {% include tweet_box.html" %}
    <div style="padding: 7px;padding-bottom: 25px;display: flex;margin-top: 40px;align-items: center;padding-left: 20px;justify-content: center;">
       <h4 style="margin-top: 15px;">SHARE ON</h4>
-      <a target="_blank" href="https://twitter.com/intent/tweet?text="{{ page.title | url_encode }}"%20{% for tag in page.tags %}%23{{ tag }}%20{% endfor %}&url=http%3A//mfadhel.com{{page.url}}&related={{ site.author.twitter_username }}" style="margin: 4px;">
+      <a target="_blank" href="https://twitter.com/intent/tweet?text=%22{{ page.title | url_encode }}%22%20{% for tag in page.tags %}%23{{ tag }}%20{% endfor %}&url=http%3A//mfadhel.com{{page.url}}&related={{ site.author.twitter_username }}" style="margin: 4px;">
          <div style="background-color: #3399ff;font-size: 14px;font-family: margin-bottom: 5px;Raleway;display:inline-block;color:white;height: 30;padding: 10px;margin-right:2px;border-radius: 50%;text-align:center;"><i style="font-size: 20px;display: inline-block; font-size:20px;" class="fa fa-twitter" aria-hidden="true"></i><span style="display:inline-block;"></span></div>
       </a>
       <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A//mfadhel.com{{page.url}}&amp;title={{ page.title }}&amp;source=LinkedIn" style="
