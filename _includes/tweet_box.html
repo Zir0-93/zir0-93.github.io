@@ -1,5 +1,5 @@
 <div class="tweet_box" >
-      <a target="_blank" style="color:#636363;" class="tweet_link" href="https://twitter.com/intent/tweet?text="{{ page.title | url_encode }}"%20{% for tag in page.tags %}%23{{ tag }}%20{% endfor %}&url=http%3A//mfadhel.com{{page.url}}&related={{ site.author.twitter_username }}">
+      <a target="_blank" style="color:#636363;" class="tweet_link" href="https://twitter.com/intent/tweet?text=#22{{ page.title | url_encode }}#22%20{% for tag in page.tags %}%23{{ tag }}%20{% endfor %}&url=http%3A//mfadhel.com{{page.url}}&related={{ site.author.twitter_username }}">
             "{{page.title}}" {% for tag in page.tags %}#{{ tag }} {% endfor %}
             <div style="bottom: 0px; right: 2px; position: relative; padding: 0; margin: 0; margin-bottom: -40px; padding-top: 10px; font-size: 13px; text-align:right;">
                   <p style="display:inline-block;  display: inline-block; color: #404040; font-family: Open Sans; font-weight: 600;">CLICK TO TWEET</p>
