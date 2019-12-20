@@ -61,7 +61,7 @@ infrastructure and lowers costs incurred as a result. When two services are expe
 a large amount of traffic between each other, the overhead of creating the TCP connection and negotiating SSL/TLS for all the 
 requests sent between these two services is extremely large since HTTP cannot keep a connection open.
 
-On the other hand, protocols like [Advaned Message Queuing Protocol](https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol){:target="_blank"}
+On the other hand, protocols like [Advanced Message Queuing Protocol](https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol){:target="_blank"}
 (AMQP) over which many message queue technologies are based on create a connection at the start
 and persist it. They keep messages flowing between service on top of the TCP connection, and so the TCP and SSL/TLS cost is only paid
 once. The protocol minimizes the number of bytes that flow over the wire, and is ideally suited for systems that need to exchange
