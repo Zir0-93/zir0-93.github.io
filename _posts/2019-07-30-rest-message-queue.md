@@ -149,6 +149,7 @@ with conn.channel() as channel:
     )
  ```
 Unlike an HTTP call, no response is returned from publishing a message to a queue, and the `basic_publish` method returns immidiately. For this reason, the above statement regarding asynchronicity is true. 
+
 **3 - Service Integration Level**: Asynchronous communication at this level is concerned with designing micoservices so that they do
 not need to communicate with other services during their request/response cycle.  Why? Because at the end of day, the goal for a 
 service is to be available to the end-user even if other services that are part of the whole system are offline or unhealthy.
