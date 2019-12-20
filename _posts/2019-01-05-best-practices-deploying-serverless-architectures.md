@@ -138,5 +138,3 @@ As mentioned in the previous section, an automated continuous delivery solution 
 Serverless applications often consist of plucking and combining various services and packages together which can make keeping track of everything a complex process, especially when running multi-environment setups. 
 
 In such scenarios, I feel it's important that processes surrounding Serverless architectures should be scalable, automated, and require little manual intervention. This list represents my thoughts on how to deal with the complexity. 
-
-If you think this list could benefit from other ideas/concepts I've missed, let me know in the comments below!
