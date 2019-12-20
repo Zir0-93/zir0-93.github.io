@@ -79,5 +79,3 @@ On the other hand, if Information Hiding is not properly observed in the origina
 
 The functioning and design of an ideal microservice shares many characteristics with the functioning and design of an ideal object in an object-oriented system. For this reason, any process of migrating a monolithic application to a microservices-like architecture will be greatly simplified if the application exhibits good object-oriented practices in the first place.
 
-Do you think there are any other programming principles in or outside OOP that can benefit the migration of a monlithic application to the cloud? Let me know in the comments below!
-
