@@ -168,5 +168,3 @@ are designed to deliver and wait for messages from a message queue in a stateful
 I hope this blog post has shed some light on some common misunderstandings when it comes to the RESTful HTTP Calls Vs Message Queue
 debate. I strongly feel that important architectural decisions such as these cannot be made with a "surface level" understanding of the
 technologies involved, which is why I've tried to improve my understanding in this area. 
-
-If you disagree with some of the points I've mentioned, or think I've missed some good points in my list, let me know in the comments below or on twitter!
