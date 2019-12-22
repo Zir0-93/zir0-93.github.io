@@ -38,9 +38,10 @@ guides on the subject of microservices implement inter-service communication usi
 {% include image_with_caption.html url="/images/interest_micro.png" description="Google trends chart for interest over time for the search term 'microservices'." %}
 
 This is not surprising, as this communication mechanism is easiest to adopt by clients due to its simplicity and extensive support in the form of libraries in every programming language. Not to mention, RESTful systems can be documented in some pretty
-[intuitive ways](http://mfadhel.com/API_Tables/#api-tables){:target="_blank"} due to its reliance on the concept of resources. However, as Martin Thompson
-puts it, "Synchronous communication is the crystal meth of distributed software," and is generally overused in most microservices
-implementations and data pipelines.
+[intuitive ways](http://mfadhel.com/API_Tables/#api-tables){:target="_blank"} due to its reliance on the concept of resources. However, as Martin Thompson puts it, 
+> "Synchronous communication is the crystal meth of distributed software"
+
+and is generally overused in most microservices implementations and data pipelines.
 
 Although less formal support is natively provided for security, caching, and documentation in message queues, they have their own set of
 advantages over RESTful HTTP calls. Not only do message queues decouple senders from receivers, but they also make systems much more
