@@ -1687,7 +1687,7 @@ hr {
 	-webkit-font-smoothing: antialiased; }
 	.btn:hover, .navigation__item a:hover {
 		    color: #ccb4f7;
-    border-color: #e8a2a3; }
+    border-color: #ccb4f7; }
 
 .btn-secondary {
 	border-color: #5ba4e5;
