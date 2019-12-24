@@ -265,7 +265,7 @@ input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 }
 
 #popular-list a:hover {
-            color: #ff8c8c;
+            color: #ccb4f7;
 }
 
 #popular-list {
@@ -1558,7 +1558,7 @@ hr {
 .panel-title {
      font-size: 2.1em;
     font-weight: bold;
-    color: #ff8c8c;
+    color: #ccb4f7;
     margin-bottom: 30px;
 }
 
@@ -1686,7 +1686,7 @@ hr {
 	color: #e25440;
 	-webkit-font-smoothing: antialiased; }
 	.btn:hover, .navigation__item a:hover {
-		    color: #ff8c8c;
+		    color: #ccb4f7;
     border-color: #e8a2a3; }
 
 .btn-secondary {
@@ -1753,8 +1753,8 @@ nav {
 		color: #FFF;
 		opacity: .8; }
 		.navigation__item a:hover {
-			color: #ff8c8c;
-			border-color: #ff8c8c
+			color: #ccb4f7;
+			border-color: #ccb4f7
 			opacity: 1;
     background: transparent; }
 
