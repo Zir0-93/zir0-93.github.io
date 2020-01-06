@@ -115,7 +115,7 @@ HTTP is certainly a synchronous protocol, but the terms synchronous and asynchro
 thread until the service has responded. This allows the thread to complete other tasks in the meantime, and increases the efficiency
 of your CPU by allowing you to serve more requests. 
 
-{% include image_with_caption.html url="/images/ansychronous-synchronous-requests-android-preview-opt.png" description="RESTFul HTTP calls can be implemented in both a synchronous and asynchronous fashion at an IO level." %}
+{% include image_with_caption.html url="images/1_Y41dOkntUbR3I4UCJBx9Xg.png" description="RESTFul HTTP calls can be implemented in both a synchronous and asynchronous fashion at an IO level." %}
 
 This level of asynchronization can be implemented in both RESTful calls and 
 message queues, which makes the statement above false. I've illustrated an example below using the `CompletableFuture` mechanism introduced in Java 8 to make an asynchronous HTTP call 
