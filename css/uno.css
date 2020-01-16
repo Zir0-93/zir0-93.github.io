@@ -1363,7 +1363,7 @@ ol {
 ol.post-list {
     list-style-type: decimal;
     margin-bottom: 1.3em;
-    padding-left: }
+    padding-left: 0px; }
 
 ul {
 	list-style-type: disc;
