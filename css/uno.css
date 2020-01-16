@@ -1358,7 +1358,7 @@ ol, ul {
 ol {
     list-style-type: decimal;
     margin-bottom: 1.3em;
-    padding-left: 50px;}
+   }
 
 ul {
 	list-style-type: disc;
