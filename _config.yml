@@ -1,7 +1,7 @@
 # Site settings
 title: Muntazir Fadhel
 description: 'The Software Engineering Blog of Muntazir Fadhel'
-url: 'localhost:4000'
+url: 'www.mfadhel.com'
 baseurl: '/'
 google_analytics: 'UA-80543111-1'
 disqus_shortname: 'MuntazirFadhel'
