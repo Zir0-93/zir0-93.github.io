@@ -1909,6 +1909,13 @@ input[type="tel"] {
 	.navigation__item {
 		width: 100%;
 		margin: 0 0 .4em 0; } }
+	.main-post-list {
+	    width: 100%;
+	}
+	.post_image_description {
+		width:100%;
+	}
+			
 @media all and (max-width: 640px) {
 	.main-post-list {
 	    width: 100%;   
