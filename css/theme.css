@@ -1381,9 +1381,6 @@ blockquote {
 #markdown-toc li {
 	margin: 0px;
 }
-
-ol, ul {
-	 }
 	ol li, ul li {
 		line-height: 1.6em; }
 	ol ol, ol ul, ul ol, ul ul {
@@ -1451,8 +1448,6 @@ pre {
 
 .block-heading {
 	display: inline;
-	float: left;
-	width: 940px;
 	margin: 0 10px;
 	position: relative;
 	bottom: -15px;
@@ -1557,8 +1552,6 @@ hr {
 .post-meta__date {
 	margin-right: .5em; }
 
-.post-meta__tags {
-	 }
 
 .post-meta__author {
 	margin-left: 1.5em; }
@@ -1688,7 +1681,6 @@ nav {
 }
 .navigation {
 	display: inline-block;
-	float: left;
 	position: relative;
 	margin: 0;
 	list-style-type: none; }
@@ -1705,12 +1697,10 @@ nav {
 		opacity: .8; }
 		.navigation__item a:hover {
 			color: #0062ff;
-			border-color: #0062ff
+			border-color: #0062ff;
 			opacity: 1;
     background: transparent; }
 
-.navigation--social {
-	 }
 	.navigation--social a {
 		padding: 6px 8px 6px 9px; }
 		.navigation--social a .label {
@@ -1760,8 +1750,6 @@ i {
     font-size: 1.3em;
     line-height: 1.3em;
 }
-	.post-list li {
-		 }
 		.post-list li:last-child hr {
 			display: none; }
 
