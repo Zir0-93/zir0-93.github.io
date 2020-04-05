@@ -1,79 +1,19 @@
-<span class="mobile btn-mobile-menu">
-<i class="icon icon-list btn-mobile-menu__icon"></i>
-<i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
-</span>
-<header class="panel-cover">
-   <div class="panel-main">
-      <div class="panel-main__inner panel-inverted">
-         <div class="panel-main__content">
-            <a href="/" title="link to home of {{ site.title }}">
-               <h1 class="panel-cover__title panel-title">{{ site.title }}</h1>
-               <img style="margin-left: auto; margin-right: auto; display: block; margin-bottom: 20px;" src="/images/g746.png">
-            </a>
-            <div class="navigation-wrapper">
-               <nav class="cover-navigation navigation--social">
-                  <ul class="navigation" style="padding-left:0px;">
-                     {% if site.author.twitter_username %}
-                     <!-- Twitter -->
-                     <li class="navigation__item">
-                        <a href="http://twitter.com/{{ site.author.twitter_username }}" title="@{{ site.author.twitter_username }} on Twitter" target="_blank">
-                        <i class="icon icon-social-twitter"></i>
-                        <span class="label">Twitter</span>
-                        </a>
-                     </li>
-                     {% endif %}
-                     {% if site.author.facebook_username %}
-                     <!-- Facebook -->
-                     <li class="navigation__item">
-                        <a href="http://fb.me/{{ site.author.facebook_username }}" title="{{ site.author.facebook_username }} on Facebook" target="_blank">
-                        <i class="icon icon-social-facebook"></i>
-                        <span class="label">Facebook</span>
-                        </a>
-                     </li>
-                     {% endif %}
-                     {% if site.author.linkedin_username %}
-                     <!-- LinkedIn -->
-                     <li class="navigation__item">
-                        <a href="https://www.linkedin.com/in/{{ site.author.linkedin_username }}" title="{{ site.author.linkedin_username }} on LinkedIn" target="_blank">
-                        <i class="icon icon-social-linkedin"></i>
-                        <span class="label">LinkedIn</span>
-                        </a>
-                     </li>
-                     {% endif %}
-                     {% if site.author.github_username %}
-                     <!-- GitHub -->
-                     <li class="navigation__item">
-                        <a href="https://www.github.com/{{ site.author.github_username }}" title="{{ site.author.github_username }} on GitHub" target="_blank">
-                        <i class="icon icon-social-github"></i>
-                        <span class="label">GitHub</span>
-                        </a>
-                     </li>
-                     {% endif %}
-                     {% if site.author.email %}
-                     <!-- Email -->
-                     <li class="navigation__item">
-                        <a href="mailto:{{ site.author.email }}" title="Email {{ site.author.email }}" target="_blank">
-                        <i class="icon icon-mail"></i>
-                        <span class="label">Email</span>
-                        </a>
-                     </li>
-                     {% endif %}
-                  </ul>
-               </nav>
-               <p style="padding: 20px 40px 0px 40px;font-weight: 600;">
-                  <span style="font-style: oblique;">Infrastructure Developer</span> at <a target="_blank" href="https://www.borealisai.com/en/" style="color: #15ffd8ed;">Borealis AI</a>. I regularly post on software architecture and deployment.
-               </p>
-               <div style="display:block;">
-                  <a style="display:inline-block;" href="https://twitter.com/FadhelMuntazir?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-screen-name="false" data-show-count="false">Follow @FadhelMuntazir</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                  <a target="_blank" href="https://mailchi.mp/c976e4a02c94/mfadhel" style="border: 1px solid #ccb4f7;;padding: 10px;vertical-align: top;margin: 0px;height: 8px;width: 30%; min-width:110px; margin-left: 10px; color: #ccb4f7; display:inline-block;background-color: transparent;" class="post_tags">STAY INFORMED</a>               
-               </div>
-               <ul id="popular-list">
-                 <li><a href="http://mfadhel.com/rest-message-queue/" >3 Common Misunderstandings of Inter-Service Communication in MicroServices</a></li>
-                 <li><a href="http://mfadhel.com/best-practices-deploying-serverless-architectures/">4 Elements of A Great Serverless Application Deployment Strategy</a></li>
-               </ul>
-            </div>
-         </div>
-      </div>
-      <div class="panel-cover--overlay"></div>
-   </div>
-</header>
+<div class="nav-bar">
+   <div><a class="name-logo" href="http://{{ site.url }}">{{ site.title }}</a></div>   
+   <ul class="nav-bar">
+      <li class="nav-bar"><a href="http://{{ site.url }}">Home</a></li>
+      <li class="nav-bar-small"><a href="http://{{ site.url }}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+      
+      <li class="nav-bar"><a target="_blank" href="https://www.linkedin.com/in/{{ linkedin_username }}">About</a></li>
+      <li class="nav-bar-small"><a target="_blank" href="https://www.linkedin.com/in/{{ linkedin_username }}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
+      
+      <li class="nav-bar" style="width:150px;" ><a target="_blank" href="{{ site.mailchimp_subscribe_page }}">Stay Informed</a></li>
+      <li class="nav-bar-small"><a target="_blank" href="{{ site.mailchimp_subscribe_page }}"><i class="fa fa-book" aria-hidden="true"></i></a></li>
+      
+      <li class="nav-bar" style="width:100px;"><a target="_blank" href="https://github.com/{{ github_username}}">Portfolio</a></li>
+      <li class="nav-bar-small"><a target="_blank"href="https://github.com/{{ github_username}}"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+      
+      <li class="nav-bar" style="width:110px;"><a href="https://twitter.com/{{ twitter_username}}">Contact</a></li>
+      <li class="nav-bar-small"><a target="_blank" href="https://twitter.com/{{ twitter_username}}"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+   </ul>
+</div>

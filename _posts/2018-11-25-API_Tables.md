@@ -23,9 +23,9 @@ This format does a good job of communicating the low-level details of each endpo
 
 The image above depicts [Swagger UI](http://petstore.swagger.io/) documentation for a sample API. As an API specification grows in complexity, I find it increasingly difficult to answer the following questions using the aforementioned format:
 
-**1. What are all the resources that this API exposes?**
+   1. **What are all the resources that this API exposes?**
 
-**2. What operations are available on key resources?**
+   2. **What operations are available on key resources?**
 
 It's easy to see why these problems exist. Even with tags, an API specification with many endpoints will take a long time to
 navigate. On top of this, Swagger UI will list the same endpoint multiple times for each action (GET, POST, etc..) that is available at that endpoint, resulting in a large amount of duplicated text. As a result, determining basic information about an API such as what resources are available can be a difficult task. 

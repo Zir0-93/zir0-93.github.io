@@ -120,6 +120,7 @@ of your CPU by allowing you to serve more requests.
 This level of asynchronization can be implemented in both RESTful calls and 
 message queues, which makes the statement above false. I've illustrated an example below using the `CompletableFuture` mechanism introduced in Java 8 to make an asynchronous HTTP call 
 to an API. It's asynchronous because the request completes in a separate thread and does not block the main thread.
+
 ```java
 public CompletableFuture<String> get(String uri) {
     HttpClient client = HttpClient.newHttpClient();
@@ -135,7 +136,9 @@ public CompletableFuture<String> get(String uri) {
 for a response. Message queues on the other hand, are typically based on asynchronous protocols. RabbitMQ for example, 
 is based on AMQP which is a much lighter weight protocol than HTTP and can operate in a "fire and forget" manner.
 Using the `nucleon.amqp` python library, we can write code to publish an event to an AMQP based message queue in the following way. 
+
 ```python
+
 from nucleon.amqp import Connection
 
 conn = Connection('amqp://localhost/')
@@ -149,6 +152,7 @@ with conn.channel() as channel:
         body='Hello world!'
     )
  ```
+
 Unlike an HTTP call, no response is returned from publishing a message to a queue, and the `basic_publish` method returns immidiately. For this reason, the above statement regarding asynchronicity is true. 
 
 **3 - Service Integration Level**: Asynchronous communication at this level is concerned with designing micoservices so that they do

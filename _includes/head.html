@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Muntazir Fadhel - {% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <title>{{site.title}} - {% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
   <meta name="author" content="{{ site.author.name }}">
   <meta name="HandheldFriendly" content="True">
@@ -19,33 +19,36 @@
   <meta property="og:image:height" content="300" />
   <meta property="og:image:width" content="300" />
   <meta name="twitter:card" content="summary">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta name="twitter:image" content="{{ site.url }}{% if page.og_image %}{{ page.og_image }}{% else %}{{ page.icon }}{% endif %}" />
   <meta name="twitter:creator" content="{{ @FadhelMuntazir }}" />
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,800,800i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="apple-touch-icon" sizes="57x57" href="{{ "/images/favicons/apple-touch-icon-57x57.png" | prepend: site.url }}">
-  <link rel="apple-touch-icon" sizes="60x60" href="{{ "/images/favicons/apple-touch-icon-60x60.png" | prepend: site.url }}">
-  <link rel="apple-touch-icon" sizes="72x72" href="{{ "/images/favicons/apple-touch-icon-72x72.png" | prepend: site.url }}">
-  <link rel="apple-touch-icon" sizes="76x76" href="{{ "/images/favicons/apple-touch-icon-76x76.png" | prepend: site.url }}">
-  <link rel="apple-touch-icon" sizes="114x114" href="{{ "/images/favicons/apple-touch-icon-114x114.png" | prepend: site.url }}">
-  <link rel="apple-touch-icon" sizes="120x120" href="{{ "/images/favicons/apple-touch-icon-120x120.png" | prepend: site.url }}">
-  <link rel="apple-touch-icon" sizes="144x144" href="{{ "/images/favicons/apple-touch-icon-144x144.png" | prepend: site.url }}">
-  <link rel="apple-touch-icon" sizes="152x152" href="{{ "/images/favicons/apple-touch-icon-152x152.png" | prepend: site.url }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ "/images/favicons/apple-touch-icon-180x180.png" | prepend: site.url }}">
-  <link rel="icon" type="image/png" href="{{ "/images/favicons/favicon-32x32.png" | prepend: site.url }}" sizes="32x32">
-  <link rel="icon" type="image/png" href="{{ "/images/favicons/favicon-194x194.png" | prepend: site.url }}" sizes="194x194">
-  <link rel="icon" type="image/png" href="{{ "/images/favicons/favicon-96x96.png" | prepend: site.url }}" sizes="96x96">
-  <link rel="icon" type="image/png" href="{{ "/images/favicons/android-chrome-192x192.png" | prepend: site.url }}" sizes="192x192">
-  <link rel="icon" type="image/png" href="{{ "/images/favicons/favicon-16x16.png" | prepend: site.baseurl }}" sizes="16x16">
-  <link rel="manifest" href="{{ "/images/favicons/manifest.json" | prepend: site.baseurl }}">
-  <link rel="shortcut icon" href="{{ "/images/favicons/favicon.ico" | prepend: site.baseurl }}">
+  <link rel="apple-touch-icon" sizes="57x57" href="{{ "{{ site.url }}/images/favicons/apple-touch-icon-57x57.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{{ "{{ site.url }}/images/favicons/apple-touch-icon-60x60.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ "{{ site.url }}/images/favicons/apple-touch-icon-72x72.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ "{{ site.url }}/images/favicons/apple-touch-icon-76x76.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ "{{ site.url }}/images/favicons/apple-touch-icon-114x114.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{{ "{{ site.url }}/images/favicons/apple-touch-icon-120x120.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ "{{ site.url }}/images/favicons/apple-touch-icon-144x144.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{{ "{{ site.url }}/images/favicons/apple-touch-icon-152x152.png" | prepend: site.url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ "{{ site.url }}/images/favicons/apple-touch-icon-180x180.png" | prepend: site.url }}">
+  <link rel="icon" type="image/png" href="{{ "{{ site.url }}/images/favicons/favicon-32x32.png" | prepend: site.url }}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ "{{ site.url }}/images/favicons/favicon-194x194.png" | prepend: site.url }}" sizes="194x194">
+  <link rel="icon" type="image/png" href="{{ "{{ site.url }}/images/favicons/favicon-96x96.png" | prepend: site.url }}" sizes="96x96">
+  <link rel="icon" type="image/png" href="{{ "{{ site.url }}/images/favicons/android-chrome-192x192.png" | prepend: site.url }}" sizes="192x192">
+  <link rel="icon" type="image/png" href="{{ "{{ site.url }}/images/favicons/favicon-16x16.png" | prepend: site.baseurl }}" sizes="16x16">
+  <link rel="manifest" href="{{ "{{ site.url }}/images/favicons/manifest.json" | prepend: site.baseurl }}">
+  <link rel="shortcut icon" href="{{ "{{ site.url }}/images/favicons/favicon.ico" | prepend: site.baseurl }}">
   <meta name="msapplication-TileColor" content="#ffc40d">
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <meta name="msapplication-TileImage" content="{{ "/images/favicons/mstile-144x144.png" | prepend: site.baseurl }}">
+  <meta name="msapplication-TileImage" content="{{ "{{ site.url }}/images/favicons/mstile-144x144.png" | prepend: site.baseurl }}">
   <meta name="theme-color" content="#ffffff">
-  <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="{{ "{{ site.url }}/css/main.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.baseurl }}feed.xml">
   <style type="text/css">

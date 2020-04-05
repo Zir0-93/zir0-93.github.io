@@ -336,8 +336,6 @@ That is to say, if a comment read, "poor readability here", we would expect it t
 
 Interestingly, 15% of review comments were found to discuss `Readability`. This category of comments not only deals with formatting, project conventions and style, but also with  how easy the code is to follow for a human. 
 
-{% include tweet_box.html quote="15% of code review comment in top Java code bases on Github discuss readability!" hashtag_1="MachineLearning" hashtag_2="github" hashtag_3="Java" %} 
-
 While existing static analysis tools are effective in dealing with the former area, they lack the ability to check code effectively in the latter domain. This is supported by the fact that over 50% of the repositories included in our study had some form of static analysis tools checking their code. Additionally, a manual survey of 100 randomly sampled comments classified with `Readability` pointed towards this idea as well. One such comment from my study is illustrated below. While the approach taken by the code contributor is correct, the code review has suggested an alternate approach that increases the clarity of the code.
 
 <img src="/images/readability.png" alt="read" style="margin-right:auto; margin-left:auto;" width="600px"/>

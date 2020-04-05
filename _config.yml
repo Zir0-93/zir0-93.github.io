@@ -1,17 +1,20 @@
 # Site settings
 title: Muntazir Fadhel
 description: 'The Software Engineering Blog of Muntazir Fadhel'
-url: 'https://zir0-93.github.io'
+url: 'localhost:4000'
 baseurl: '/'
 google_analytics: 'UA-80543111-1'
 disqus_shortname: 'MuntazirFadhel'
+mailchimp_subscribe_page: https://mailchi.mp/c976e4a02c94/mfadhel
+
 
 author:
   name: ''
-  email: muntazir@live.ca
+  email: muntazirfadhel@gmail.com
   github_username: zir0-93
   linkedin_username: muntazirfadhel
-  twitter_username: FadhelMuntazir
+  twitter_username: MuntazirFadhel
+  img: /images/muntazir_fadhel.png
 
 defaults:
   -
@@ -23,8 +26,8 @@ defaults:
 
 # Build settings
 destination: _site
-paginate: 20
-permalink: /:title/
+paginate: 10
+permalink: /:title
 markdown: kramdown
 highlighter: rouge
 
