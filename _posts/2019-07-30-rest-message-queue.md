@@ -2,6 +2,7 @@
 title:  "3 Common Misunderstandings of Inter-Service Communication in MicroServices"
 date:  2019-12-05 15:04:23
 og_image: /images/microservices.png
+redirect_to: "https://www.hadii.ca/insights/microservice-communication"
 tags: [microservices, rest, messaging]
 description: Think back to the last time you worked in a distributed system, did you consider using something other than RESTful HTTP calls as the method of communication between components in this system?
 excerpt_separator: <!--more-->
