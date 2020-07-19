@@ -1,6 +1,6 @@
 # Site settings
 title: Muntazir Fadhel
-description: 'The Software Engineering Blog of Muntazir Fadhel'
+description: 'The Personal Blog of Muntazir Fadhel'
 url: 'mfadhel.com'
 baseurl: '/'
 google_analytics: 'UA-80543111-1'
@@ -10,7 +10,7 @@ mailchimp_subscribe_page: https://mailchi.mp/c976e4a02c94/mfadhel
 
 author:
   name: ''
-  email: muntazirfadhel@gmail.com
+  email: mfadhel@hadii.ca
   github_username: zir0-93
   linkedin_username: muntazirfadhel
   twitter_username: MuntazirFadhel
@@ -37,5 +37,5 @@ kramdown:
   # do not replace newlines by <br>s
   hard_wrap: false
 
-gems: ['jekyll-paginate']
+gems: ['jekyll-paginate', 'jekyll-redirect-from']
 exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
