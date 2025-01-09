@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 
 My team recently embarked on a quest to **categorize and analyze GitHub pull requests** using a deep-learning model. This might sound straightforward—fetch PR data, preprocess it, train a model, then serve predictions. But like many ML projects, it quickly became evident that **infrastructure** and **operational concerns** could dwarf the modeling tasks if not handled carefully.<!--more-->
 
-In this post, I’ll share how we designed our MLOps pipeline to address **common pitfalls**—secret handling, environment drift, clumsy CI/CD, downtime risks for model updates, and large data transformations. Along the way, I’ll reference the [**GitHub repository**](#) we created (insert link to your repo) so you can see **implementation details** for each stage.
+In this post, I’ll share how we designed our MLOps pipeline to address **common pitfalls**—secret handling, environment drift, clumsy CI/CD, downtime risks for model updates, and large data transformations. Along the way, I’ll reference the [**GitHub repository**](https://github.com/hadii-tech/mlops-blueprint) we created so you can see **implementation details** for each stage.
 
 ---
 
@@ -35,8 +35,8 @@ We first realized that each stage needed different credentials—GitHub tokens f
 **What We Did**  
 - Adopted **Vault** to store and manage all secrets.  
 - Each pipeline stage references only a few environment variables like `VAULT_ADDR`, `VAULT_ROLE`, and `VAULT_SECRET_PATH`.  
-- The actual tokens/URIs remain inside Vault. Our containers pull them **at runtime** using the [**hvac** Python library](#).  
-- In the [**GitHub repo**](#), you’ll see that every Dockerfile-based stage uses those `VAULT_*` environment variables, letting the code authenticate securely.
+- The actual tokens/URIs remain inside Vault. Our containers pull them **at runtime** using the **hvac** python library.  
+- In the [**GitHub repo**](https://github.com/hadii-tech/mlops-blueprint), you’ll see that every Dockerfile-based stage uses those `VAULT_*` environment variables, letting the code authenticate securely.
 
 **Why It Helped**  
 - We never commit sensitive data.  
@@ -54,7 +54,7 @@ A big headache is keeping “staging” (or any test environment) aligned with �
 - Use **two** main Git branches: `staging` and `main`.  
 - Each cluster’s Argo CD references the same “base” K8s manifests but from a **different** branch.
 
-If you look at our [**`argo-apps/base/` folder**](#) in the repo, you’ll see the single set of YAML definitions (Jobs for data fetch/preprocessing/training and a Rollout for model-serving). But staging references that folder in the `staging` branch, while production references the same folder in the `main` branch. When staging is validated, we simply merge `staging → main`—the simplest form of “promotion.”
+If you look at our [**`argo-apps/base/` folder**](https://github.com/hadii-tech/mlops-blueprint/tree/main/argo-apps/base) in the repo, you’ll see the single set of YAML definitions (Jobs for data fetch/preprocessing/training and a Rollout for model-serving). But staging references that folder in the `staging` branch, while production references the same folder in the `main` branch. When staging is validated, we simply merge `staging → main`—the simplest form of “promotion.”
 
 **Why This Helps**  
 - Staging is always a near clone of production’s config.  
@@ -70,7 +70,7 @@ It’s common to build containers separately for staging and production. But if 
 - **Single-build** ephemeral approach: For each pipeline stage, we build the Docker image once, ephemeral-test it, then push the same image to production after it’s validated in staging.  
 - This ensures staging runs the exact container that will eventually run in production—no second build.
 
-You can see this logic in our [**GitHub Actions workflows**](#) for data-fetch, spark-preprocess, ml-training, or model-serving. Each workflow:
+You can see this logic in our [**GitHub Actions workflows**](https://github.com/hadii-tech/mlops-blueprint/tree/main/.github/workflows) for data-fetch, spark-preprocess, ml-training, or model-serving. Each workflow:
 
 1. **Builds** the image if code changed.  
 2. **Runs ephemeral container tests** (like a local run that checks logs or an endpoint).  
@@ -92,7 +92,7 @@ For real-time inference, downtime is a no-go. If you deploy a new model, you can
 - Use **Argo Rollouts** with **blue/green** strategy for the model-serving stage.  
 - We define a “preview” service and an “active” service. We spin up new pods as the “blue” version while the “green” version remains live. Once tested, we flip traffic to the new version.
 
-In the [**model-serving rollout YAML**](#) in our repo, you’ll see how the code references the same container image but performs a controlled switch from old to new. We also run **Locust** performance tests to ensure it meets latency requirements before finalizing the switchover.
+In the [**model-serving rollout YAML**](https://github.com/hadii-tech/mlops-blueprint/blob/main/.github/workflows/model-serving.yml) in our repo, you’ll see how the code references the same container image but performs a controlled switch from old to new. We also run **Locust** performance tests to ensure it meets latency requirements before finalizing the switchover.
 
 **Why It Helps**  
 - Minimal or zero downtime.  
@@ -120,4 +120,4 @@ Large datasets can’t be processed in a single Python script, so we rely on **S
 
 All of these design decisions—**Vault** for secrets, **two-branch environment separation**, **single-build ephemeral container tests**, **blue/green** rollouts for model-serving, plus synergy with **Spark** and **MLflow**—combine to address the *biggest* pain points that MLOps teams typically face. 
 
-By applying them to our **PR-categorization** experiment, we’ve built a reliable pipeline. If you want to see exactly how we did it, check out our [**GitHub repository**](#) where we have Dockerfiles, the CI/CD workflows, Argo manifests, and ephemeral container test scripts. We hope these principles inspire you to approach MLOps with a focus on **security**, **consistency**, **low downtime**, and **scalability**—making it easier to keep track of complex ML projects while shipping models confidently to production.
+By applying them to our **PR-categorization** experiment, we’ve built a reliable pipeline. If you want to see exactly how we did it, check out our [**GitHub repository**](https://github.com/hadii-tech/mlops-blueprint) where we have Dockerfiles, the CI/CD workflows, Argo manifests, and ephemeral container test scripts. We hope these principles inspire you to approach MLOps with a focus on **security**, **consistency**, **low downtime**, and **scalability**—making it easier to keep track of complex ML projects while shipping models confidently to production.
