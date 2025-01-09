@@ -9,9 +9,6 @@ excerpt_separator: <!--more-->
 
 My team recently embarked on a quest to **categorize and analyze GitHub pull requests** using a deep-learning model. This might sound straightforward—fetch PR data, preprocess it, train a model, then serve predictions. But like many ML projects, it quickly became evident that **infrastructure** and **operational concerns** could dwarf the modeling tasks if not handled carefully.<!--more-->
 
-
-My team recently embarked on a quest to **categorize and analyze GitHub pull requests** using a deep-learning model. This might sound straightforward—fetch PR data, preprocess it, train a model, then serve predictions. But like many ML projects, it quickly became evident that **infrastructure** and **operational concerns** could dwarf the modeling tasks if not handled carefully.
-
 In this post, I’ll share how we designed our MLOps pipeline to address **common pitfalls**—secret handling, environment drift, clumsy CI/CD, downtime risks for model updates, and large data transformations. Along the way, I’ll reference the [**GitHub repository**](#) we created (insert link to your repo) so you can see **implementation details** for each stage.
 
 ---
