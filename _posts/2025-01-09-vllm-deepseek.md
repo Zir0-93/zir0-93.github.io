@@ -47,12 +47,7 @@ One of the most important decisions when deploying **DeepSeek-R1** is selecting 
 3. **Batch size (number of concurrent inference requests)**  
 
 ### **VRAM Estimates for DeepSeek-R1**
-| **Precision**  | **VRAM Needed (Estimated)**  | **Recommended GPU** |
-|---------------|----------------------------|---------------------|
-| **FP32**      | ~56GB                        | **A100 80GB, H100 80GB** |
-| **FP16**      | ~28GB                        | **A100 40GB, A10 24GB** |
-| **8-bit**     | ~14GB                        | **A10 24GB, RTX 4090** |
-| **4-bit**     | ~7GB                         | **T4 16GB, L4 24GB** |
+![image](https://github.com/user-attachments/assets/fbee2f1a-d8f9-4354-b369-331130fbff44)
 
 If your workload **requires handling multiple concurrent users**, you’ll need to **increase VRAM accordingly**. For instance:  
 
