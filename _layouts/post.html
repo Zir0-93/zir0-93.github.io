@@ -15,24 +15,9 @@ layout: default
       {% if site.author.img %}<img class="bio-img" src="{{ site.author.img }}" >{% endif %}
       <p class="bio-title"> {{ site.title }}</p>
       <hr style="border: 0.5px solid #8080801f;width: 80%;">
-      <p class="bio-passage"> Muntazir Fadhel is an Cloud|MLOps Engineer with over 7 years of experience in developing and deploying distributed architectures including microservices and machine learning pipelines. He's pacticularly interested in software architecture and deployment, especially as they relate to cloud environments. </p>
+      <p class="bio-passage"> Muntazir Fadhel is an MLOps|Cloud Infrastructure Engineer specializing in designing scalable, secure, and automated ML pipelines. Proficient in CI/CD for model lifecycle management, big data processing, Kubernetes orchestration, and zero-downtime deployments. Adept at bridging data science and engineering to deliver reliable, production-grade ML systems that streamline workflows and ensure reproducibility across environments.. </p>
    </div>
-   <div style="padding: 7px;padding-bottom: 25px;display: flex;margin-bottom: 40px; margin-top: 40px;align-items: center;padding-left: 20px;justify-content: center;">
-      <h4 style="margin-top: 15px;">SHARE ON</h4>
-      <a target="_blank" href="https://twitter.com/intent/tweet?text=%22{{ page.title | url_encode }}%22%20{% for tag in page.tags %}%23{{ tag }}%20{% endfor %}&url=http%3A//{{ site.url }}{{page.url}}&related={{ site.author.twitter_username }}" style="margin: 4px;">
-         <div style="background-color: #3399ff;font-size: 14px;font-family: margin-bottom: 5px;Raleway;display:inline-block;color:white;height: 30;padding: 10px;margin-right:2px;border-radius: 50%;text-align:center;"><i style="font-size: 20px;display: inline-block; font-size:20px;" class="fa fa-twitter" aria-hidden="true"></i><span style="display:inline-block;"></span></div>
-      </a>
-      <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A//{{ site.url }}{{page.url}}&amp;title={{ page.title }}&amp;source=LinkedIn" style="
-         margin: 4px;
-         ">
-         <div style="background-color: #57afaf;font-family: Raleway;margin-bottom: 5px;font-size: 14px;color:white;display:inline-block;margin-right:2px;padding: 10px;border-radius: 50%;text-align:center;"><i style="display: inline-block;font-size: 20px;" class="fa fa-linkedin" aria-hidden="true"></i><span style="display:inline-block;"></span></div>
-      </a>
-      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A//{{ site.url }}{{page.url}}" style="
-         margin: 4px;
-         ">
-         <div style="background-color: #3b5998;font-family: Raleway;margin-bottom: 5px;font-size: 14px;display:inline-block;color:white;padding: 10px;margin-right:2px;border-radius: 50%;text-align:center;"><i style="display: inline-block;padding-left: 2px;font-size: 20px;padding-right: 2px;" class="fa fa-facebook" aria-hidden="true"></i><span style="display:inline-block;"></span></div>
-      </a>
-   </div>
+  
    {% if page.comments != false and site.disqus_shortname %}
    <section id="disqus_thread"></section>
    <!-- /#disqus_thread -->{% endif %}
