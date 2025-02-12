@@ -10,7 +10,7 @@ excerpt_separator: <!--more-->
 Large language models (LLMs) require significant compute power and optimized infrastructure to serve real-time inference at scale. Deploying these models in a production environment involves managing GPU resources efficiently, handling incoming requests with minimal latency, and ensuring scalability based on workload demand.  
 <!--more-->
 
-In this post, I’ll walk through how I deployed **DeepSeek-R1** on **vLLM** within a **Kubernetes cluster**, leveraging GPU acceleration and autoscaling to deliver high-throughput inference. The reference GitHub repository can be found [here]([url](https://github.com/hadii-tech/vllm-mlops)).
+In this post, I’ll walk through how I deployed **DeepSeek-R1** on **vLLM** within a **Kubernetes cluster**, leveraging GPU acceleration and autoscaling to deliver high-throughput inference. The reference GitHub repository can be found [here](https://github.com/hadii-tech/vllm-mlops).
 
 ## Why vLLM Over Other Serving Solutions?  
 
