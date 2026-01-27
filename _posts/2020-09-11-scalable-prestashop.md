@@ -2,7 +2,7 @@
 title:  "Deploy A Production-Ready E-Commerce Solution on AWS with CloudFormation"
 date:  2020-09-11 15:04:23
 og_image: https://raw.githubusercontent.com/hadii-tech/production-ready-prestashop/master/resources/scalable_presta.png
-redirect_to: "https://www.hadii.ca/insights/scalable-prestashop"
+redirect_to: "https://github.com/hadii-tech/production-ready-prestashop/issues"
 tags: [aws, ecommerce]
 description: Think back to the last time you worked in a distributed system, did you consider using something other than RESTful HTTP calls as the method of communication between components in this system?
 excerpt_separator: <!--more-->
