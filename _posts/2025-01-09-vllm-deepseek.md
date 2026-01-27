@@ -33,14 +33,14 @@ The result is a clean separation of concerns: vLLM handles inference, while Kube
 KubeAI is installed using Helm.
 
 Add the Helm repository:
-
+```
 $ helm repo add kubeai https://www.kubeai.org  
 $ helm repo update  
-
+```
 Install KubeAI into the cluster:
-
+```
 $ helm install kubeai kubeai/kubeai --wait --timeout 10m  
-
+```
 After installation, the `kubeai` Service becomes the main entry point for OpenAI-compatible requests.
 
 ## Defining the DeepSeek-R1 Model
@@ -48,7 +48,7 @@ After installation, the `kubeai` Service becomes the main entry point for OpenAI
 In KubeAI, models are defined using a Model custom resource. This describes what to run, not how to deploy it.
 
 Create a file named `deepseek-r1-model.yaml` with the following contents:
-
+```
 apiVersion: kubeai.org/v1  
 kind: Model  
 metadata:  
@@ -66,13 +66,13 @@ spec:
     - --disable-log-requests  
   resourceProfile: nvidia-gpu-h100:1  
   # minReplicas: 1  
-
+```
 Apply the model:
-
+```
 $ kubectl apply -f deepseek-r1-model.yaml  
 $ kubectl get models  
 $ kubectl get pods --watch  
-
+```
 KubeAI will pull the model, cache it, and launch vLLM backend pods as needed. The model name `deepseek-r1` becomes the identifier used in OpenAI-compatible requests.
 
 ## How Requests Flow Through KubeAI
@@ -91,10 +91,10 @@ This avoids sending traffic to cold pods and helps preserve KV cache locality.
 
 Inside the cluster, the base API URL is:
 
-http://kubeai/openai/v1  
+`http://kubeai/openai/v1`
 
 To expose it externally, create an Ingress that routes traffic to the `kubeai` Service:
-
+```
 apiVersion: networking.k8s.io/v1  
 kind: Ingress  
 metadata:  
@@ -111,7 +111,7 @@ spec:
                 name: kubeai  
                 port:  
                   number: 80  
-
+```
 After DNS is configured, the external base URL becomes:
 
 https://llm.example.com/openai/v1  
@@ -119,15 +119,15 @@ https://llm.example.com/openai/v1
 ## Testing the Deployment
 
 List models:
-
+```
 $ curl https://llm.example.com/openai/v1/models  
-
+```
 Send a chat completion request:
-
+```
 $ curl https://llm.example.com/openai/v1/chat/completions  
   -H "Content-Type: application/json"  
   -d '{"model":"deepseek-r1","messages":[{"role":"system","content":"You are a helpful assistant."},{"role":"user","content":"Write a haiku about Kubernetes autoscaling."}]}'  
-
+```
 ## Precision and Resource Profiles
 
 DeepSeek-R1 is large enough that GPU choice and precision settings have a noticeable impact.
