@@ -34,7 +34,9 @@ KubeAI is installed using Helm.
 
 Add the Helm repository:
 ```
-$ helm repo add kubeai https://www.kubeai.org  
+$ helm repo add kubeai https://www.kubeai.org
+```
+```
 $ helm repo update  
 ```
 Install KubeAI into the cluster:
@@ -69,9 +71,13 @@ spec:
 ```
 Apply the model:
 ```
-$ kubectl apply -f deepseek-r1-model.yaml  
-$ kubectl get models  
-$ kubectl get pods --watch  
+$ kubectl apply -f deepseek-r1-model.yaml
+```
+```
+$ kubectl get models
+```
+```
+$ kubectl get pods --watch
 ```
 KubeAI will pull the model, cache it, and launch vLLM backend pods as needed. The model name `deepseek-r1` becomes the identifier used in OpenAI-compatible requests.
 
