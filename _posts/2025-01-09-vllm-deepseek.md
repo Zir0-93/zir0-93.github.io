@@ -1,151 +1,165 @@
 ---
-title: "Deploying DeepSeek-R1 with vLLM on KubeAI"
+title: "Self-Hosting LLMs in Production: The vLLM + KubeAI Stack"
 date: 2025-01-09 15:04:23
 og_image: /images/microservices.png
 tags: [mlops, LLMOps, gitops, kubernetes, vLLM, kubeai]
-description: Deploying large language models in production requires efficient GPU utilization, predictable latency, and a clean operational model. This post shows how to serve DeepSeek-R1 using vLLM through KubeAI on Kubernetes.
+description: This post walks through an architecture developed at HADI Technology for clients including [Joinable](https://www.joinable.ai) and others running self-hosted LLM inference in production.
 excerpt_separator: <!--more-->
 ---
 
-Large language models (LLMs) place heavy demands on infrastructure. Beyond raw GPU capacity, production deployments need controlled startup behavior, efficient request batching, and a stable API surface that clients can depend on.
+
+
+
+Deploying a large language model is not the hard part. Deploying one in a way that is safe to operate, cost-effective to scale, and straightforward to reason about under load is where most teams run into trouble.
+
+This post walks through an architecture developed at HADI Technology for clients including [Joinable](https://www.joinable.ai) and others running self-hosted LLM inference in production. It uses vLLM as the inference engine and KubeAI to handle model lifecycle and operational concerns. The reference implementation is available at [github.com/hadi-technology/vllm-mlops](https://github.com/hadi-technology/vllm-mlops).
 <!--more-->
+Rather than a step-by-step tutorial, the intent here is to explain the tradeoffs that led to this architecture and where it fits, and where it does not fit, compared to alternatives.
 
-In this post, I’ll walk through deploying DeepSeek-R1 using vLLM as the inference engine, with KubeAI managing model lifecycle, scaling, and API exposure. Rather than deploying vLLM pods directly, we rely on KubeAI’s Model abstraction to keep the setup declarative and operationally simple.
+![LLM Serving Architecture: vLLM + KubeAI on Kubernetes](vllm-kubeai-diagram.svg)
 
-A reference repository is available here: https://github.com/hadii-tech/vllm-mlops
+---
 
-## Why vLLM on KubeAI?
+## The Core Operational Problem with Self-Hosted LLM Inference
 
-vLLM is a high-performance inference engine designed specifically for large language models. It focuses on GPU efficiency and predictable latency under load, which makes it a strong backend choice for models like DeepSeek-R1.
+Running vLLM directly on Kubernetes is not complicated. You deploy a pod with GPU resources, expose a port, and route traffic to it. The problems that emerge are operational:
 
-KubeAI sits one layer above the inference engine and provides:
+- How do you handle cold start? A vLLM pod serving DeepSeek-R1 can take several minutes to initialize. Traffic routed to a cold pod will either fail or stack up in ways that are hard to recover from.
+- How do you scale from zero without dropping requests during the ramp-up window?
+- How do you maintain KV cache locality across replicas? Stateful LLM backends have characteristics that standard round-robin load balancing is not designed for.
+- How do you present a stable, OpenAI-compatible API surface that survives backend changes, scaling events, and model version updates?
 
-- A Kubernetes-native Model API for declaring models  
-- Automated backend orchestration (vLLM, TGI, etc.)  
-- Scale-from-zero with request buffering  
-- Centralized, OpenAI-compatible API routing  
-- Smarter load balancing for stateful LLM backends  
+Deploying vLLM pods directly answers none of these questions. You end up building an operations layer on top of raw Kubernetes primitives, and that layer tends to grow in complexity over time as each operational problem gets patched individually.
 
-The result is a clean separation of concerns: vLLM handles inference, while KubeAI handles operations.
+KubeAI sits one layer above vLLM and handles these concerns natively. The tradeoff is a dependency on an additional platform component. Whether that tradeoff is worth it depends on the operational context, which we will get to.
 
-## Installing KubeAI
+---
 
-KubeAI is installed using Helm.
+## What KubeAI Actually Does
 
-Add the Helm repository:
+KubeAI introduces a `Model` custom resource that describes what to run rather than how to deploy it:
+
+```yaml
+apiVersion: kubeai.org/v1
+kind: Model
+metadata:
+  name: deepseek-r1
+spec:
+  features:
+    - TextGeneration
+  url: hf://deepseek-ai/DeepSeek-R1
+  engine: VLLM
+  args:
+    - --dtype=float16
+    - --max-model-len=32768
+    - --max-num-batched-tokens=8192
+    - --gpu-memory-utilization=0.90
+    - --disable-log-requests
+  resourceProfile: nvidia-gpu-h100:1
 ```
-$ helm repo add kubeai https://www.kubeai.org
+
+The model name `deepseek-r1` becomes the identifier used in OpenAI-compatible requests. KubeAI owns the rest: pulling the model, caching it, launching vLLM backend pods, buffering requests during initialization, and routing traffic once the backend is ready.
+
+The request flow through the stack:
+
+1. Traffic arrives at the KubeAI OpenAI-compatible proxy
+2. KubeAI selects or spins up a backend for the target model
+3. Requests are queued while the backend initializes, rather than being dropped or returning errors
+4. The request is forwarded to vLLM
+5. Responses stream back through the proxy
+
+The queuing behavior during cold start is the most practically important property KubeAI provides. It is the difference between a scale-from-zero deployment that works reliably and one that causes cascading failures when the first wave of traffic hits a cold pod.
+
+---
+
+## Precision and GPU Sizing: Decisions That Compound
+
+For a model like DeepSeek-R1, these are not configuration details. They are architectural decisions that affect cost, latency, and reliability.
+
+**Precision.** FP16 is a reliable default on A100 and H100-class hardware. BF16 can be preferable on some newer hardware due to its wider dynamic range and better numerical stability for certain workloads. The practical difference in most serving scenarios is small, but it matters when debugging unexpected inference behavior. 8-bit and 4-bit quantization can meaningfully reduce VRAM pressure (running a 70B model at INT4 is the difference between one H100 and four), but quantization introduces accuracy tradeoffs that need to be validated carefully against your specific use case before deploying to production.
+
+**GPU sizing.** The `resourceProfile` field in the Model spec makes GPU requirements explicit and decoupled from model configuration. In direct vLLM deployments, GPU sizing often ends up embedded in Deployment specs alongside model configuration, which makes it easy to change one without reviewing the other. Keeping the GPU profile as a named, versioned resource makes changes reviewable.
+
+**Batching.** The `--max-num-batched-tokens` parameter controls continuous batching behavior, which is one of vLLM's core performance advantages over naive request-by-request inference. Getting this right requires understanding the request latency profile you are targeting and the typical prompt/completion length distribution for your workload. Too conservative and you leave GPU utilization on the table. Too aggressive and tail latency suffers.
+
+---
+
+## When This Architecture Makes Sense and When It Does Not
+
+This stack is a good fit when:
+
+- You need to run self-hosted inference for data residency, cost, or customization reasons and cannot use a managed API provider
+- You are serving multiple models that need independent lifecycle management, where model A and model B should be able to update, scale, and fail independently
+- You need scale-from-zero behavior to manage GPU costs, but cannot afford to drop requests during the warmup window
+- You want a stable OpenAI-compatible API surface that allows client code to be model-agnostic
+
+It is not the right fit when:
+
+- A managed API provider (OpenAI, Anthropic, Vertex AI) meets your requirements, since managed endpoints abstract away all of this complexity and the operational cost is lower at moderate scale
+- You are prototyping or running experiments where operational overhead is more costly than GPU spend
+- You are serving a model that fits comfortably in CPU memory or on a single GPU with no scaling requirements, in which case deploying KubeAI adds unnecessary overhead
+
+In client work through HADI Technology, the decision to go self-hosted rather than managed typically comes down to one of three things: a hard data residency requirement, a model that is not available through managed APIs, or a cost calculation at high enough inference volume that managed API pricing becomes prohibitive.
+
+---
+
+## Exposing the API and Multi-Tenant Considerations
+
+The KubeAI service provides an OpenAI-compatible API internally at `http://kubeai/openai/v1`. Exposing it externally involves a standard Kubernetes Ingress:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubeai-ingress
+spec:
+  rules:
+    - host: llm.example.com
+      http:
+        paths:
+          - path: /openai
+            pathType: Prefix
+            backend:
+              service:
+                name: kubeai
+                port:
+                  number: 80
 ```
-```
-$ helm repo update  
-```
-Install KubeAI into the cluster:
-```
-$ helm install kubeai kubeai/kubeai --wait --timeout 10m  
-```
-After installation, the `kubeai` Service becomes the main entry point for OpenAI-compatible requests.
 
-## Defining the DeepSeek-R1 Model
+In multi-tenant deployments, which is the typical case for clients like Joinable where the inference infrastructure serves multiple downstream applications, this is where authentication and per-tenant rate limiting need to be layered in. KubeAI does not provide tenant isolation natively. That sits in the API gateway layer in front of it. The clean separation of concerns here is an advantage: the inference infrastructure does not need to carry application-level concerns about who is calling it.
 
-In KubeAI, models are defined using a Model custom resource. This describes what to run, not how to deploy it.
+---
 
-Create a file named `deepseek-r1-model.yaml` with the following contents:
-```
-apiVersion: kubeai.org/v1  
-kind: Model  
-metadata:  
-  name: deepseek-r1  
-spec:  
-  features:  
-    - TextGeneration  
-  url: hf://deepseek-ai/DeepSeek-R1  
-  engine: VLLM  
-  args:  
-    - --dtype=float16  
-    - --max-model-len=32768  
-    - --max-num-batched-tokens=8192  
-    - --gpu-memory-utilization=0.90  
-    - --disable-log-requests  
-  resourceProfile: nvidia-gpu-h100:1  
-  # minReplicas: 1  
-```
-Apply the model:
-```
-$ kubectl apply -f deepseek-r1-model.yaml
-```
-```
-$ kubectl get models
-```
-```
-$ kubectl get pods --watch
-```
-KubeAI will pull the model, cache it, and launch vLLM backend pods as needed. The model name `deepseek-r1` becomes the identifier used in OpenAI-compatible requests.
+## Observability: What to Instrument and Why
 
-## How Requests Flow Through KubeAI
+A self-hosted LLM deployment without proper observability is one incident away from an extended outage. The metrics that matter most in practice are not the generic Kubernetes resource metrics. They are inference-specific signals:
 
-When a request arrives:
+**Token throughput.** Are you fully utilizing the GPU's batching capacity, or are requests being processed one at a time? This is the difference between a deployment that is cost-efficient and one that is burning GPU budget without proportional output.
 
-1. Traffic hits the KubeAI OpenAI-compatible proxy  
-2. KubeAI selects or spins up a backend for the target model  
-3. Requests are queued while the backend initializes  
-4. The request is forwarded to vLLM  
-5. Responses are streamed back through the proxy  
+**Queue depth.** How many requests are waiting for a backend? Sustained queue depth is an early warning of capacity exhaustion, visible well before latency metrics deteriorate.
 
-This avoids sending traffic to cold pods and helps preserve KV cache locality.
+**Time-to-first-token (TTFT) and inter-token latency.** These have different sensitivity profiles for different applications. A chatbot application cares more about TTFT. A batch processing pipeline cares more about total throughput. Knowing which one matters for your use case determines where to optimize.
 
-## Exposing the OpenAI-Compatible API
+**Cold start frequency.** If you have scale-from-zero enabled, tracking how often pods are spinning up from zero tells you whether the cost savings from idle scale-down are worth the latency impact.
 
-Inside the cluster, the base API URL is:
+The vLLM `/metrics` endpoint exposes Prometheus-compatible metrics. The KubeAI ServiceMonitor wires those into Prometheus scraping. From there, the standard observability stack (Prometheus, Grafana) gives you the visibility you need.
 
-`http://kubeai/openai/v1`
+---
 
-To expose it externally, create an Ingress that routes traffic to the `kubeai` Service:
-```
-apiVersion: networking.k8s.io/v1  
-kind: Ingress  
-metadata:  
-  name: kubeai-ingress  
-spec:  
-  rules:  
-    - host: llm.example.com  
-      http:  
-        paths:  
-          - path: /openai  
-            pathType: Prefix  
-            backend:  
-              service:  
-                name: kubeai  
-                port:  
-                  number: 80  
-```
-After DNS is configured, the external base URL becomes:
+## Operational Cost as a Design Input
 
-https://llm.example.com/openai/v1  
+One framing that tends to change how these decisions get made: GPU time is expensive, and most teams underestimate how much of their GPU spend goes toward idle capacity rather than actual inference.
 
-## Testing the Deployment
+Scale-from-zero with request buffering is not just a nice operational feature. For workloads with bursty or time-of-day traffic patterns, it can meaningfully reduce the cost of running the infrastructure. The cost of the cold start latency (a few minutes) has to be weighed against the cost of keeping a GPU pod warm during idle periods. For most non-latency-critical workloads, scale-from-zero wins.
 
-List models:
-```
-$ curl https://llm.example.com/openai/v1/models  
-```
-Send a chat completion request:
-```
-$ curl https://llm.example.com/openai/v1/chat/completions  
-  -H "Content-Type: application/json"  
-  -d '{"model":"deepseek-r1","messages":[{"role":"system","content":"You are a helpful assistant."},{"role":"user","content":"Write a haiku about Kubernetes autoscaling."}]}'  
-```
-## Precision and Resource Profiles
+The precision decision is also a cost decision. A model that can run at INT4 rather than FP16 may fit on a smaller GPU class, which changes the instance pricing significantly. Validating quantization accuracy early in the project is worth the investment.
 
-DeepSeek-R1 is large enough that GPU choice and precision settings have a noticeable impact.
+---
 
-FP16 is a solid default on A100 and H100-class GPUs.  
-BF16 can be preferable on some newer hardware.  
-8-bit and 4-bit quantization can significantly reduce VRAM usage but should be validated carefully.
+## Closing Thoughts
 
-KubeAI’s resourceProfile abstraction keeps GPU sizing explicit and decoupled from model configuration.
+The combination of vLLM and KubeAI is not the simplest possible way to self-host an LLM. It is the simplest way to self-host an LLM that is safe to operate at production scale, where cold starts, traffic spikes, model updates, and cost management are daily concerns rather than edge cases.
 
-## Final Thoughts
+The architecture buys you a clean separation between inference performance (vLLM's domain) and operational concerns including lifecycle management, scaling, API stability, and request buffering, which KubeAI handles. That separation makes each layer easier to reason about, debug, and evolve independently.
 
-Using vLLM directly gives you raw performance. Using vLLM through KubeAI gives you that performance with a cleaner operational model. You declare the model once, and KubeAI handles backend orchestration, scaling behavior, and OpenAI-compatible routing.
-
-For teams serving large language models in production, this combination provides a practical balance between control and simplicity—without building an entire inference platform from scratch.
+The reference implementation is at [github.com/hadi-technology/vllm-mlops](https://github.com/hadi-technology/vllm-mlops).
