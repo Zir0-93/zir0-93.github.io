@@ -12,7 +12,7 @@ Across client engagements at HADI Technology, one pattern shows up consistently:
 This post distills a reference architecture we built to address that. The context is a pipeline for categorizing and analyzing GitHub pull requests using a PyTorch autoencoder, developed as a reusable blueprint based on what we have seen fail repeatedly in production ML systems. The intent was not to solve a difficult modeling problem but to demonstrate the infrastructure patterns that determine whether a system holds up over time. The full implementation is available at [github.com/hadi-technology/mlops-blueprint](https://github.com/hadi-technology/mlops-blueprint).
 <!--more-->
 
-![MLOps Pipeline Architecture](/images/mlops-pipeline-diagram.svg)
+<img src="/images/mlops-pipeline-diagram.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
 
 ---
 
