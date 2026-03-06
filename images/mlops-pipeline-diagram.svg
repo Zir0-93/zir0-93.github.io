@@ -1,0 +1,275 @@
+<svg viewBox="0 0 1060 620" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L0,7 L10,3.5 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1060" height="620" fill="#f8fafc" rx="14"/>
+
+  <!-- Title -->
+  <text x="530" y="34" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e293b">MLOps Pipeline — Process Flow</text>
+  <text x="530" y="52" text-anchor="middle" font-size="10.5" fill="#94a3b8">github.com/hadi-technology/mlops-blueprint</text>
+
+  <!-- Spine -->
+  <line x1="70" y1="215" x2="990" y2="215" stroke="#e2e8f0" stroke-width="2.5" stroke-dasharray="7,5"/>
+
+  <!-- ╔══════════════════════════════╗
+       STAGE 1 — INGEST
+  ╚══════════════════════════════╝ -->
+  <rect x="22" y="70" width="158" height="24" rx="6" fill="#3b82f6"/>
+  <text x="101" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff" letter-spacing="0.5">① INGEST</text>
+
+  <!-- GitHub API box: icon left of title, text lines below -->
+  <rect x="22" y="102" width="158" height="108" rx="8" fill="#fff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <rect x="22" y="102" width="158" height="7" rx="4" fill="#3b82f6"/>
+  <!-- Icon: git circle, left side, vertically centered in top row -->
+  <circle cx="44" cy="125" r="9" fill="none" stroke="#3b82f6" stroke-width="1.8"/>
+  <line x1="39" y1="132" x2="37" y2="139" stroke="#3b82f6" stroke-width="1.5"/>
+  <line x1="49" y1="132" x2="51" y2="139" stroke="#3b82f6" stroke-width="1.5"/>
+  <circle cx="37" cy="141" r="2.5" fill="#3b82f6"/>
+  <circle cx="51" cy="141" r="2.5" fill="#3b82f6"/>
+  <!-- Title right of icon -->
+  <text x="60" y="130" font-size="11" font-weight="bold" fill="#1e293b">GitHub API</text>
+  <!-- Text lines below, plenty of space -->
+  <text x="101" y="154" text-anchor="middle" font-size="9.5" fill="#64748b">PR metadata source</text>
+  <text x="101" y="172" text-anchor="middle" font-size="9" fill="#94a3b8">additions · labels · author</text>
+  <text x="101" y="189" text-anchor="middle" font-size="9" fill="#94a3b8">Kubernetes Job fetch</text>
+
+  <!-- Vault box -->
+  <rect x="22" y="222" width="158" height="108" rx="8" fill="#fff" stroke="#e9d5ff" stroke-width="1.5"/>
+  <rect x="22" y="222" width="158" height="7" rx="4" fill="#7c3aed"/>
+  <!-- Lock icon left of title -->
+  <rect x="35" y="242" width="13" height="11" rx="2" fill="none" stroke="#7c3aed" stroke-width="1.8"/>
+  <path d="M38,242 Q41.5,236 45,242" fill="none" stroke="#7c3aed" stroke-width="1.8"/>
+  <circle cx="41" cy="248" r="2" fill="#7c3aed"/>
+  <text x="56" y="251" font-size="11" font-weight="bold" fill="#1e293b">Vault</text>
+  <text x="101" y="274" text-anchor="middle" font-size="9.5" fill="#64748b">Runtime secret injection</text>
+  <text x="101" y="292" text-anchor="middle" font-size="9" fill="#94a3b8">no creds in Git or images</text>
+  <text x="101" y="309" text-anchor="middle" font-size="9" fill="#94a3b8">rotated without rebuilds</text>
+
+  <!-- MongoDB box -->
+  <rect x="22" y="342" width="158" height="108" rx="8" fill="#fff" stroke="#bbf7d0" stroke-width="1.5"/>
+  <rect x="22" y="342" width="158" height="7" rx="4" fill="#10b981"/>
+  <!-- DB cylinder icon left of title -->
+  <ellipse cx="40" cy="362" rx="8" ry="3.5" fill="none" stroke="#10b981" stroke-width="1.8"/>
+  <line x1="32" y1="362" x2="32" y2="373" stroke="#10b981" stroke-width="1.8"/>
+  <line x1="48" y1="362" x2="48" y2="373" stroke="#10b981" stroke-width="1.8"/>
+  <ellipse cx="40" cy="373" rx="8" ry="3.5" fill="#dcfce7" stroke="#10b981" stroke-width="1.8"/>
+  <text x="58" y="368" font-size="11" font-weight="bold" fill="#1e293b">MongoDB</text>
+  <text x="101" y="394" text-anchor="middle" font-size="9.5" fill="#64748b">Raw PR store</text>
+  <text x="101" y="412" text-anchor="middle" font-size="9" fill="#94a3b8">upserted per run</text>
+  <text x="101" y="429" text-anchor="middle" font-size="9" fill="#94a3b8">URI via Vault</text>
+
+  <line x1="180" y1="215" x2="216" y2="215" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- ╔══════════════════════════════╗
+       STAGE 2 — PREPROCESS
+  ╚══════════════════════════════╝ -->
+  <rect x="220" y="70" width="164" height="24" rx="6" fill="#f59e0b"/>
+  <text x="302" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff" letter-spacing="0.5">② PREPROCESS</text>
+
+  <!-- Spark box -->
+  <rect x="220" y="102" width="164" height="108" rx="8" fill="#fff" stroke="#fde68a" stroke-width="1.5"/>
+  <rect x="220" y="102" width="164" height="7" rx="4" fill="#f59e0b"/>
+  <!-- Lightning bolt left of title -->
+  <polygon points="240,118 233,131 238,131 234,145 242,132 237,132" fill="#f59e0b"/>
+  <text x="249" y="130" font-size="11" font-weight="bold" fill="#1e293b">Spark</text>
+  <text x="302" y="154" text-anchor="middle" font-size="9.5" fill="#64748b">Feature engineering</text>
+  <text x="302" y="172" text-anchor="middle" font-size="9" fill="#94a3b8">normalize · enrich</text>
+  <text x="302" y="189" text-anchor="middle" font-size="9" fill="#94a3b8">write parquet · scales</text>
+
+  <!-- Object Storage box -->
+  <rect x="220" y="222" width="164" height="108" rx="8" fill="#fff" stroke="#bbf7d0" stroke-width="1.5"/>
+  <rect x="220" y="222" width="164" height="7" rx="4" fill="#10b981"/>
+  <!-- Cloud icon left of title -->
+  <path d="M232,248 Q232,241 238,241 Q239,235 246,235 Q253,235 254,241 Q260,241 260,248 Z" fill="#dcfce7" stroke="#10b981" stroke-width="1.5"/>
+  <text x="266" y="249" font-size="11" font-weight="bold" fill="#1e293b">Object Storage</text>
+  <text x="302" y="274" text-anchor="middle" font-size="9.5" fill="#64748b">Feature store</text>
+  <text x="302" y="292" text-anchor="middle" font-size="9" fill="#94a3b8">S3 / DO Spaces</text>
+  <text x="302" y="309" text-anchor="middle" font-size="9" fill="#94a3b8">parquet feature files</text>
+
+  <line x1="384" y1="215" x2="420" y2="215" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- ╔══════════════════════════════╗
+       STAGE 3 — TRAIN
+  ╚══════════════════════════════╝ -->
+  <rect x="424" y="70" width="164" height="24" rx="6" fill="#7c3aed"/>
+  <text x="506" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff" letter-spacing="0.5">③ TRAIN</text>
+
+  <!-- Autoencoder box -->
+  <rect x="424" y="102" width="164" height="108" rx="8" fill="#fff" stroke="#e9d5ff" stroke-width="1.5"/>
+  <rect x="424" y="102" width="164" height="7" rx="4" fill="#7c3aed"/>
+  <!-- Neural net icon left of title -->
+  <circle cx="438" cy="120" r="3.5" fill="#7c3aed"/>
+  <circle cx="438" cy="130" r="3.5" fill="#7c3aed"/>
+  <circle cx="438" cy="140" r="3.5" fill="#7c3aed"/>
+  <circle cx="449" cy="124" r="3.5" fill="#a855f7"/>
+  <circle cx="449" cy="136" r="3.5" fill="#a855f7"/>
+  <circle cx="460" cy="130" r="3.5" fill="#7c3aed"/>
+  <line x1="441" y1="120" x2="446" y2="124" stroke="#c4b5fd" stroke-width="1"/>
+  <line x1="441" y1="130" x2="446" y2="124" stroke="#c4b5fd" stroke-width="1"/>
+  <line x1="441" y1="130" x2="446" y2="136" stroke="#c4b5fd" stroke-width="1"/>
+  <line x1="441" y1="140" x2="446" y2="136" stroke="#c4b5fd" stroke-width="1"/>
+  <line x1="452" y1="124" x2="457" y2="130" stroke="#c4b5fd" stroke-width="1"/>
+  <line x1="452" y1="136" x2="457" y2="130" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="470" y="130" font-size="11" font-weight="bold" fill="#1e293b">Autoencoder</text>
+  <text x="506" y="154" text-anchor="middle" font-size="9.5" fill="#64748b">PyTorch anomaly detection</text>
+  <text x="506" y="172" text-anchor="middle" font-size="9" fill="#94a3b8">threshold from recon. error</text>
+  <text x="506" y="189" text-anchor="middle" font-size="9" fill="#94a3b8">no labeled data required</text>
+
+  <!-- MLflow box -->
+  <rect x="424" y="222" width="164" height="108" rx="8" fill="#fff" stroke="#e9d5ff" stroke-width="1.5"/>
+  <rect x="424" y="222" width="164" height="7" rx="4" fill="#7c3aed"/>
+  <!-- Bar chart icon left of title -->
+  <rect x="435" y="242" width="5" height="14" fill="#7c3aed"/>
+  <rect x="443" y="237" width="5" height="19" fill="#a855f7"/>
+  <rect x="451" y="245" width="5" height="11" fill="#7c3aed"/>
+  <text x="464" y="251" font-size="11" font-weight="bold" fill="#1e293b">MLflow</text>
+  <text x="506" y="274" text-anchor="middle" font-size="9.5" fill="#64748b">Experiment tracking</text>
+  <text x="506" y="292" text-anchor="middle" font-size="9" fill="#94a3b8">metrics versioned</text>
+  <text x="506" y="309" text-anchor="middle" font-size="9" fill="#94a3b8">model registry + rollback</text>
+
+  <line x1="588" y1="215" x2="624" y2="215" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- ╔══════════════════════════════╗
+       STAGE 4 — VALIDATE
+  ╚══════════════════════════════╝ -->
+  <rect x="628" y="70" width="158" height="24" rx="6" fill="#10b981"/>
+  <text x="707" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff" letter-spacing="0.5">④ VALIDATE</text>
+
+  <!-- Locust box -->
+  <rect x="628" y="102" width="158" height="108" rx="8" fill="#fff" stroke="#a7f3d0" stroke-width="1.5"/>
+  <rect x="628" y="102" width="158" height="7" rx="4" fill="#10b981"/>
+  <!-- Gauge icon left of title -->
+  <path d="M641,140 A14,14 0 0,1 669,140" fill="none" stroke="#10b981" stroke-width="2"/>
+  <line x1="655" y1="140" x2="648" y2="128" stroke="#10b981" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="655" cy="140" r="2.5" fill="#10b981"/>
+  <text x="676" y="130" font-size="11" font-weight="bold" fill="#1e293b">Locust</text>
+  <text x="707" y="154" text-anchor="middle" font-size="9.5" fill="#64748b">Pre-rollout load testing</text>
+  <text x="707" y="172" text-anchor="middle" font-size="9" fill="#94a3b8">inference endpoint</text>
+  <text x="707" y="189" text-anchor="middle" font-size="9" fill="#94a3b8">catches OOM early</text>
+
+  <!-- Env Parity box -->
+  <rect x="628" y="222" width="158" height="108" rx="8" fill="#fff" stroke="#a7f3d0" stroke-width="1.5"/>
+  <rect x="628" y="222" width="158" height="7" rx="4" fill="#10b981"/>
+  <!-- Two cluster boxes icon -->
+  <rect x="635" y="241" width="16" height="12" rx="2" fill="none" stroke="#10b981" stroke-width="1.5"/>
+  <rect x="655" y="241" width="16" height="12" rx="2" fill="none" stroke="#10b981" stroke-width="1.5"/>
+  <line x1="651" y1="247" x2="655" y2="247" stroke="#10b981" stroke-width="1.5"/>
+  <text x="677" y="250" font-size="11" font-weight="bold" fill="#1e293b">Env Parity</text>
+  <text x="707" y="274" text-anchor="middle" font-size="9.5" fill="#64748b">Shared base manifests</text>
+  <text x="707" y="292" text-anchor="middle" font-size="9" fill="#94a3b8">staging + prod clusters</text>
+  <text x="707" y="309" text-anchor="middle" font-size="9" fill="#94a3b8">merge = promotion</text>
+
+  <line x1="786" y1="215" x2="822" y2="215" stroke="#64748b" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- ╔══════════════════════════════╗
+       STAGE 5 — DEPLOY
+  ╚══════════════════════════════╝ -->
+  <rect x="826" y="70" width="212" height="24" rx="6" fill="#f43f5e"/>
+  <text x="932" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff" letter-spacing="0.5">⑤ DEPLOY</text>
+
+  <!-- Argo Rollouts box -->
+  <rect x="826" y="102" width="212" height="108" rx="8" fill="#fff" stroke="#fecdd3" stroke-width="1.5"/>
+  <rect x="826" y="102" width="212" height="7" rx="4" fill="#f43f5e"/>
+  <!-- Blue/green pods left of title -->
+  <rect x="836" y="118" width="22" height="14" rx="2" fill="#3b82f6"/>
+  <text x="847" y="129" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="bold">BLUE</text>
+  <rect x="862" y="118" width="22" height="14" rx="2" fill="#10b981"/>
+  <text x="873" y="129" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="bold">GRN</text>
+  <text x="932" y="130" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">Argo Rollouts</text>
+  <text x="932" y="154" text-anchor="middle" font-size="9.5" fill="#64748b">Blue/green deployment</text>
+  <text x="932" y="172" text-anchor="middle" font-size="9" fill="#94a3b8">preview validates before cutover</text>
+  <text x="932" y="189" text-anchor="middle" font-size="9" fill="#94a3b8">instant rollback if needed</text>
+
+  <!-- Argo CD box -->
+  <rect x="826" y="222" width="212" height="108" rx="8" fill="#fff" stroke="#fecdd3" stroke-width="1.5"/>
+  <rect x="826" y="222" width="212" height="7" rx="4" fill="#f59e0b"/>
+  <!-- Git branch icon left of title -->
+  <circle cx="840" cy="242" r="4" fill="none" stroke="#f59e0b" stroke-width="1.8"/>
+  <circle cx="840" cy="257" r="4" fill="none" stroke="#f59e0b" stroke-width="1.8"/>
+  <circle cx="851" cy="249" r="4" fill="none" stroke="#f59e0b" stroke-width="1.8"/>
+  <line x1="840" y1="246" x2="840" y2="253" stroke="#f59e0b" stroke-width="1.8"/>
+  <line x1="843" y1="244" x2="848" y2="247" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="868" y="251" font-size="11" font-weight="bold" fill="#1e293b">Argo CD</text>
+  <text x="932" y="274" text-anchor="middle" font-size="9.5" fill="#64748b">Branch merge = promotion</text>
+  <text x="932" y="292" text-anchor="middle" font-size="9" fill="#94a3b8">no manual kubectl to prod</text>
+  <text x="932" y="309" text-anchor="middle" font-size="9" fill="#94a3b8">same digest: staging → prod</text>
+
+  <!-- ╔══════════════════════════════════════════╗
+       CROSS-CUTTING BAND
+  ╚══════════════════════════════════════════╝ -->
+  <rect x="22" y="462" width="1016" height="136" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="78" y="481" font-size="10" font-weight="bold" fill="#475569" letter-spacing="0.8">CROSS-CUTTING</text>
+
+  <!-- Vault pill -->
+  <rect x="30" y="488" width="183" height="100" rx="7" fill="#fff" stroke="#e9d5ff" stroke-width="1.5"/>
+  <rect x="30" y="488" width="183" height="6" rx="3" fill="#7c3aed"/>
+  <rect x="44" y="508" width="12" height="10" rx="2" fill="none" stroke="#7c3aed" stroke-width="1.8"/>
+  <path d="M47,508 Q50,502 53,508" fill="none" stroke="#7c3aed" stroke-width="1.8"/>
+  <circle cx="50" cy="513" r="2" fill="#7c3aed"/>
+  <text x="64" y="517" font-size="10.5" font-weight="bold" fill="#7c3aed">Vault</text>
+  <text x="121" y="540" text-anchor="middle" font-size="9" fill="#64748b">Secrets across all stages</text>
+  <text x="121" y="557" text-anchor="middle" font-size="8.5" fill="#94a3b8">fetched at runtime</text>
+  <text x="121" y="572" text-anchor="middle" font-size="8.5" fill="#94a3b8">never baked into images</text>
+
+  <!-- GitHub Actions pill -->
+  <rect x="225" y="488" width="195" height="100" rx="7" fill="#fff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <rect x="225" y="488" width="195" height="6" rx="3" fill="#3b82f6"/>
+  <circle cx="243" cy="513" r="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <polygon points="239,508 239,518 250,513" fill="#3b82f6"/>
+  <text x="261" y="517" font-size="10.5" font-weight="bold" fill="#3b82f6">GitHub Actions</text>
+  <text x="322" y="540" text-anchor="middle" font-size="9" fill="#64748b">Build once per commit</text>
+  <text x="322" y="557" text-anchor="middle" font-size="8.5" fill="#94a3b8">same digest staging → prod</text>
+  <text x="322" y="572" text-anchor="middle" font-size="8.5" fill="#94a3b8">no second build</text>
+
+  <!-- Prometheus + Grafana pill -->
+  <rect x="432" y="488" width="195" height="100" rx="7" fill="#fff" stroke="#fecdd3" stroke-width="1.5"/>
+  <rect x="432" y="488" width="195" height="6" rx="3" fill="#f43f5e"/>
+  <rect x="447" y="506" width="5" height="16" fill="#f43f5e"/>
+  <rect x="455" y="500" width="5" height="22" fill="#f43f5e" opacity="0.7"/>
+  <rect x="463" y="508" width="5" height="14" fill="#f43f5e" opacity="0.5"/>
+  <text x="476" y="517" font-size="10.5" font-weight="bold" fill="#f43f5e">Prometheus + Grafana</text>
+  <text x="529" y="540" text-anchor="middle" font-size="9" fill="#64748b">Latency · throughput · drift</text>
+  <text x="529" y="557" text-anchor="middle" font-size="8.5" fill="#94a3b8">resource utilization</text>
+  <text x="529" y="572" text-anchor="middle" font-size="8.5" fill="#94a3b8">per-stage observability</text>
+
+  <!-- MLflow Registry pill -->
+  <rect x="639" y="488" width="195" height="100" rx="7" fill="#fff" stroke="#e9d5ff" stroke-width="1.5"/>
+  <rect x="639" y="488" width="195" height="6" rx="3" fill="#7c3aed"/>
+  <rect x="651" y="506" width="5" height="18" fill="#7c3aed"/>
+  <rect x="659" y="500" width="5" height="24" fill="#a855f7"/>
+  <rect x="667" y="509" width="5" height="15" fill="#7c3aed"/>
+  <text x="680" y="517" font-size="10.5" font-weight="bold" fill="#7c3aed">MLflow Registry</text>
+  <text x="736" y="540" text-anchor="middle" font-size="9" fill="#64748b">All runs versioned</text>
+  <text x="736" y="557" text-anchor="middle" font-size="8.5" fill="#94a3b8">model artifacts tracked</text>
+  <text x="736" y="572" text-anchor="middle" font-size="8.5" fill="#94a3b8">rollback to any version</text>
+
+  <!-- Kubernetes pill -->
+  <rect x="846" y="488" width="184" height="100" rx="7" fill="#fff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <rect x="846" y="488" width="184" height="6" rx="3" fill="#3b82f6"/>
+  <circle cx="864" cy="513" r="10" fill="none" stroke="#3b82f6" stroke-width="1.8"/>
+  <circle cx="864" cy="513" r="3.5" fill="#3b82f6"/>
+  <line x1="864" y1="503" x2="864" y2="500" stroke="#3b82f6" stroke-width="1.8"/>
+  <line x1="864" y1="523" x2="864" y2="526" stroke="#3b82f6" stroke-width="1.8"/>
+  <line x1="854" y1="513" x2="851" y2="513" stroke="#3b82f6" stroke-width="1.8"/>
+  <line x1="874" y1="513" x2="877" y2="513" stroke="#3b82f6" stroke-width="1.8"/>
+  <line x1="857" y1="506" x2="855" y2="504" stroke="#3b82f6" stroke-width="1.3"/>
+  <line x1="871" y1="520" x2="873" y2="522" stroke="#3b82f6" stroke-width="1.3"/>
+  <line x1="871" y1="506" x2="873" y2="504" stroke="#3b82f6" stroke-width="1.3"/>
+  <line x1="857" y1="520" x2="855" y2="522" stroke="#3b82f6" stroke-width="1.3"/>
+  <text x="882" y="517" font-size="10.5" font-weight="bold" fill="#3b82f6">Kubernetes</text>
+  <text x="938" y="540" text-anchor="middle" font-size="9" fill="#64748b">All workloads scheduled</text>
+  <text x="938" y="557" text-anchor="middle" font-size="8.5" fill="#94a3b8">Jobs · Deployments</text>
+  <text x="938" y="572" text-anchor="middle" font-size="8.5" fill="#94a3b8">staging + prod clusters</text>
+
+  <!-- Connector ticks -->
+  <line x1="101" y1="454" x2="101" y2="488" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="302" y1="454" x2="322" y2="488" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="506" y1="454" x2="529" y2="488" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="707" y1="454" x2="736" y2="488" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="932" y1="454" x2="938" y2="488" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+
+</svg>
