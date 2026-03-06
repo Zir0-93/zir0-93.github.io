@@ -1,0 +1,150 @@
+<svg viewBox="0 0 1060 620" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto">
+      <path d="M0,0 L0,7 L10,3.5 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect width="1060" height="620" fill="#f8fafc" rx="14"/>
+
+  <text x="530" y="34" text-anchor="middle" font-size="15" font-weight="bold" fill="#1e293b">Self-Hosting LLMs in Production: The vLLM + KubeAI Stack</text>
+  <text x="530" y="50" text-anchor="middle" font-size="10" fill="#94a3b8">github.com/hadi-technology/vllm-mlops  ·  read top to bottom</text>
+
+  <!-- ══════════════════════════════
+       LAYER 1 — CLIENT & ROUTING  (y=66)
+  ══════════════════════════════ -->
+  <rect x="20" y="66" width="1020" height="22" rx="5" fill="#10b981"/>
+  <text x="530" y="81" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff" letter-spacing="0.5">① CLIENT &amp; ROUTING</text>
+
+  <rect x="36" y="102" width="196" height="96" rx="8" fill="#fff" stroke="#bbf7d0" stroke-width="1.5"/>
+  <rect x="36" y="102" width="196" height="6" rx="3" fill="#10b981"/>
+  <rect x="56" y="122" width="26" height="18" rx="2" fill="none" stroke="#10b981" stroke-width="1.5"/>
+  <line x1="62" y1="140" x2="76" y2="140" stroke="#10b981" stroke-width="1.5"/>
+  <line x1="69" y1="140" x2="69" y2="146" stroke="#10b981" stroke-width="1.5"/>
+  <text x="134" y="122" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">Client App</text>
+  <text x="134" y="146" text-anchor="middle" font-size="9.5" fill="#64748b">OpenAI-compat. SDK</text>
+  <text x="134" y="162" text-anchor="middle" font-size="9" fill="#94a3b8">POST /v1/chat/completions</text>
+  <text x="134" y="178" text-anchor="middle" font-size="9" fill="#94a3b8">model: "deepseek-r1"</text>
+
+  <line x1="232" y1="150" x2="272" y2="150" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="272" y="102" width="196" height="96" rx="8" fill="#fff" stroke="#bbf7d0" stroke-width="1.5"/>
+  <rect x="272" y="102" width="196" height="6" rx="3" fill="#10b981"/>
+  <circle cx="296" cy="138" r="13" fill="none" stroke="#10b981" stroke-width="1.5"/>
+  <ellipse cx="296" cy="138" rx="6" ry="13" fill="none" stroke="#10b981" stroke-width="1"/>
+  <line x1="283" y1="138" x2="309" y2="138" stroke="#10b981" stroke-width="1"/>
+  <text x="370" y="122" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">NGINX Ingress</text>
+  <text x="370" y="146" text-anchor="middle" font-size="9.5" fill="#64748b">TLS termination</text>
+  <text x="370" y="162" text-anchor="middle" font-size="9" fill="#94a3b8">llm.example.com/openai</text>
+  <text x="370" y="178" text-anchor="middle" font-size="9" fill="#94a3b8">routes to KubeAI service</text>
+
+  <line x1="468" y1="150" x2="508" y2="150" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="508" y="102" width="532" height="96" rx="8" fill="#fff" stroke="#bbf7d0" stroke-width="2"/>
+  <rect x="508" y="102" width="532" height="6" rx="3" fill="#10b981"/>
+  <rect x="528" y="122" width="24" height="16" rx="2" fill="none" stroke="#10b981" stroke-width="1.5"/>
+  <line x1="532" y1="128" x2="548" y2="128" stroke="#10b981" stroke-width="1"/>
+  <line x1="532" y1="133" x2="548" y2="133" stroke="#10b981" stroke-width="1"/>
+  <circle cx="530" cy="140" r="2.5" fill="#10b981"/>
+  <circle cx="540" cy="140" r="2.5" fill="#10b981"/>
+  <circle cx="550" cy="140" r="2.5" fill="#10b981"/>
+  <text x="774" y="122" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">KubeAI Proxy — OpenAI-Compatible API Router</text>
+  <text x="774" y="142" text-anchor="middle" font-size="9.5" fill="#64748b">Buffers requests during cold start · No dropped requests on scale-up</text>
+  <text x="774" y="158" text-anchor="middle" font-size="9" fill="#94a3b8">Model-aware load balancing · KV cache locality routing</text>
+  <text x="774" y="174" text-anchor="middle" font-size="9" fill="#94a3b8">Stable API surface across backend changes and model updates</text>
+
+  <!-- DOWN ARROW (generous gap) -->
+  <line x1="530" y1="210" x2="530" y2="268" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- ══════════════════════════════
+       LAYER 2 — KUBEAI ORCHESTRATION  (y=272)
+  ══════════════════════════════ -->
+  <rect x="20" y="272" width="1020" height="22" rx="5" fill="#3b82f6"/>
+  <text x="530" y="287" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff" letter-spacing="0.5">② KUBEAI ORCHESTRATION</text>
+
+  <rect x="36" y="308" width="226" height="96" rx="8" fill="#fff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <rect x="36" y="308" width="226" height="6" rx="3" fill="#3b82f6"/>
+  <circle cx="64" cy="342" r="10" fill="none" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="64" cy="342" r="4" fill="#3b82f6"/>
+  <line x1="64" y1="330" x2="64" y2="327" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="64" y1="354" x2="64" y2="357" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="76" y1="342" x2="79" y2="342" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="52" y1="342" x2="49" y2="342" stroke="#3b82f6" stroke-width="2"/>
+  <text x="149" y="328" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">Model CRD</text>
+  <text x="149" y="348" text-anchor="middle" font-size="9.5" fill="#64748b">declares what to run</text>
+  <text x="149" y="366" text-anchor="middle" font-size="9" fill="#94a3b8">engine: VLLM</text>
+  <text x="149" y="382" text-anchor="middle" font-size="9" fill="#94a3b8">resourceProfile: h100:1</text>
+
+  <rect x="280" y="308" width="226" height="96" rx="8" fill="#fff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <rect x="280" y="308" width="226" height="6" rx="3" fill="#3b82f6"/>
+  <rect x="300" y="338" width="7" height="14" fill="#3b82f6"/>
+  <rect x="311" y="331" width="7" height="21" fill="#3b82f6" opacity="0.7"/>
+  <rect x="322" y="325" width="7" height="27" fill="#3b82f6" opacity="0.45"/>
+  <text x="393" y="328" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">HPA</text>
+  <text x="393" y="348" text-anchor="middle" font-size="9.5" fill="#64748b">scale-from-zero</text>
+  <text x="393" y="366" text-anchor="middle" font-size="9" fill="#94a3b8">CPU / memory thresholds</text>
+  <text x="393" y="382" text-anchor="middle" font-size="9" fill="#94a3b8">request buffering on warmup</text>
+
+  <rect x="524" y="308" width="226" height="96" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5"/>
+  <rect x="524" y="308" width="226" height="6" rx="3" fill="#f59e0b"/>
+  <rect x="544" y="332" width="32" height="6" rx="2" fill="#f59e0b"/>
+  <rect x="544" y="342" width="24" height="6" rx="2" fill="#f59e0b" opacity="0.7"/>
+  <rect x="544" y="352" width="16" height="6" rx="2" fill="#f59e0b" opacity="0.4"/>
+  <text x="637" y="328" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">Request Queue</text>
+  <text x="637" y="348" text-anchor="middle" font-size="9.5" fill="#64748b">buffers on cold start</text>
+  <text x="637" y="366" text-anchor="middle" font-size="9" fill="#94a3b8">no dropped requests</text>
+  <text x="637" y="382" text-anchor="middle" font-size="9" fill="#94a3b8">KV cache locality routing</text>
+
+  <rect x="768" y="308" width="272" height="96" rx="8" fill="#fff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <rect x="768" y="308" width="272" height="6" rx="3" fill="#f59e0b"/>
+  <circle cx="790" cy="334" r="5" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+  <circle cx="790" cy="352" r="5" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+  <circle cx="804" cy="343" r="5" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+  <line x1="790" y1="339" x2="790" y2="347" stroke="#f59e0b" stroke-width="1.5"/>
+  <line x1="794" y1="337" x2="800" y2="340" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="904" y="328" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">Argo CD (GitOps)</text>
+  <text x="904" y="348" text-anchor="middle" font-size="9.5" fill="#64748b">Kustomize manifests · auto-sync</text>
+  <text x="904" y="366" text-anchor="middle" font-size="9" fill="#94a3b8">CI gate: kubectl dry-run</text>
+  <text x="904" y="382" text-anchor="middle" font-size="9" fill="#94a3b8">prune + self-heal</text>
+
+  <!-- DOWN ARROW (generous gap) -->
+  <line x1="530" y1="416" x2="530" y2="474" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- ══════════════════════════════
+       LAYER 3 — VLLM INFERENCE  (y=478)
+  ══════════════════════════════ -->
+  <rect x="20" y="478" width="1020" height="22" rx="5" fill="#7c3aed"/>
+  <text x="530" y="493" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff" letter-spacing="0.5">③ VLLM INFERENCE (GPU-SCHEDULED PODS)</text>
+
+  <rect x="36" y="514" width="250" height="82" rx="8" fill="#fff" stroke="#e9d5ff" stroke-width="2"/>
+  <rect x="36" y="514" width="250" height="6" rx="3" fill="#7c3aed"/>
+  <rect x="56" y="532" width="26" height="18" rx="2" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+  <line x1="56" y1="539" x2="82" y2="539" stroke="#7c3aed" stroke-width="1"/>
+  <circle cx="61" cy="535" r="1.5" fill="#7c3aed"/>
+  <circle cx="66" cy="535" r="1.5" fill="#7c3aed"/>
+  <text x="161" y="534" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">vLLM Pod (active)</text>
+  <text x="161" y="552" text-anchor="middle" font-size="9.5" fill="#64748b">continuous batching · KV cache</text>
+  <text x="161" y="568" text-anchor="middle" font-size="9" fill="#94a3b8">dtype=float16 · /health probe</text>
+
+  <rect x="304" y="514" width="250" height="82" rx="8" fill="#fff" stroke="#e9d5ff" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="429" y="534" text-anchor="middle" font-size="11" font-weight="bold" fill="#94a3b8">vLLM Pod (HPA scale-out)</text>
+  <text x="429" y="552" text-anchor="middle" font-size="9.5" fill="#94a3b8">spun up under load</text>
+  <text x="429" y="568" text-anchor="middle" font-size="9" fill="#94a3b8">shared weights via PVC</text>
+
+  <rect x="572" y="514" width="220" height="82" rx="8" fill="#fff" stroke="#e9d5ff" stroke-width="1.5"/>
+  <rect x="572" y="514" width="220" height="6" rx="3" fill="#7c3aed"/>
+  <ellipse cx="598" cy="538" rx="11" ry="4.5" fill="none" stroke="#7c3aed" stroke-width="1.5"/>
+  <line x1="587" y1="538" x2="587" y2="552" stroke="#7c3aed" stroke-width="1.5"/>
+  <line x1="609" y1="538" x2="609" y2="552" stroke="#7c3aed" stroke-width="1.5"/>
+  <ellipse cx="598" cy="552" rx="11" ry="4.5" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="682" y="534" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">Model Cache PVC</text>
+  <text x="682" y="552" text-anchor="middle" font-size="9.5" fill="#64748b">HuggingFace weights</text>
+  <text x="682" y="568" text-anchor="middle" font-size="9" fill="#94a3b8">persisted across restarts</text>
+
+  <rect x="810" y="514" width="230" height="82" rx="8" fill="#fff" stroke="#e9d5ff" stroke-width="1.5"/>
+  <rect x="810" y="514" width="230" height="6" rx="3" fill="#7c3aed"/>
+  <text x="925" y="534" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">Precision Config</text>
+  <text x="925" y="552" text-anchor="middle" font-size="9.5" fill="#64748b">FP16 / BF16</text>
+  <text x="925" y="568" text-anchor="middle" font-size="9" fill="#94a3b8">INT4/INT8 — validate accuracy first</text>
+
+</svg>
