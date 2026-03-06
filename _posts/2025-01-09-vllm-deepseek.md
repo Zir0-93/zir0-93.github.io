@@ -16,7 +16,7 @@ This post walks through an architecture developed at HADI Technology for clients
 <!--more-->
 Rather than a step-by-step tutorial, the intent here is to explain the tradeoffs that led to this architecture and where it fits, and where it does not fit, compared to alternatives.
 
-![LLM Serving Architecture: vLLM + KubeAI on Kubernetes](/images/vllm-kubeai-diagram.svg)
+<img src="/images/vllm-kubeai-diagram.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
 
 ---
 
