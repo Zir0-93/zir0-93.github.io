@@ -1,18 +1,34 @@
-<div class="nav-bar">
-   <div>
-      <a class="name-logo" href="http://{{ site.url }}">{{ site.title }}</a>
-      <div style="margin-top: 15px;width: 220px;">Machine Learning Architect </div>
-   </div>   
-   <ul class="nav-bar" style="width: 280px;  margin-left: auto; margin-top:0px;  margin-right: auto;">
-      <li class="nav-bar"><a href="http://{{ site.url }}">Home</a></li>
-      <li class="nav-bar-small"><a href="http://{{ site.url }}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-      
-      <li class="nav-bar"><a target="_blank" href="https://www.linkedin.com/in/{{ site.author.linkedin_username }}">About</a></li>
-      <li class="nav-bar-small"><a target="_blank" href="https://www.linkedin.com/in/{{ site.author.linkedin_username }}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></li>
-      
-      <li class="nav-bar" style="width:100px;"><a target="_blank" href="https://github.com/{{ site.author.github_username}}">Portfolio</a></li>
-      <li class="nav-bar-small"><a target="_blank"href="https://github.com/{{ site.author.github_username}}"><i class="fa fa-github" aria-hidden="true"></i></a></li>
-      
-     
-   </ul>
-</div>
+{% assign home_url = '/' | relative_url %}
+<header class="site-header">
+  <div class="site-header__identity">
+    {% if site.author.img %}
+      <a class="site-header__avatar-link" href="{{ home_url }}" aria-label="{{ site.title }}">
+        <img class="site-header__avatar" src="{{ site.author.img | relative_url }}" alt="{{ site.title }}">
+      </a>
+    {% endif %}
+    <div class="site-header__copy">
+      <a class="name-logo" href="{{ home_url }}">{{ site.title }}</a>
+      <p class="site-header__role">ML Systems Architect</p>
+    </div>
+  </div>
+
+  <section class="site-header__bio" aria-label="Profile">
+    <p class="site-header__bio-title">Profile</p>
+    <p class="site-header__bio-text">With a decade of experience across enterprise-scale organizations and startups, I design production AI platforms spanning data pipelines, model training and evaluation, serving infrastructure, observability, and cloud architecture.</p>
+  </section>
+
+  <nav class="site-nav" aria-label="Primary">
+    <a class="site-nav__link site-nav__link--primary" href="{{ home_url }}">
+      <i class="fa fa-home" aria-hidden="true"></i>
+      <span>Home</span>
+    </a>
+    <a class="site-nav__link" target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/{{ site.author.linkedin_username }}">
+      <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+      <span>About</span>
+    </a>
+    <a class="site-nav__link" target="_blank" rel="noreferrer" href="https://github.com/{{ site.author.github_username }}">
+      <i class="fa fa-github" aria-hidden="true"></i>
+      <span>Portfolio</span>
+    </a>
+  </nav>
+</header>

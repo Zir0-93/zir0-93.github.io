@@ -2,7 +2,7 @@
 title: "Self-Hosting LLMs in Production: The vLLM + KubeAI Stack"
 date: 2025-01-09 15:04:23
 og_image: /images/microservices.png
-tags: [mlops, LLMOps, gitops, kubernetes, vLLM, kubeai]
+tags: [llmops, mlops, kubernetes, vllm, model serving]
 description: This post walks through an architecture developed at HADI Technology for clients including [Joinable](https://www.joinable.ai) and others running self-hosted LLM inference in production.
 excerpt_separator: <!--more-->
 ---

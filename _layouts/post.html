@@ -1,21 +1,28 @@
 ---
 layout: default
 ---
+{% assign show_recent_multipart_toc = false %}
+{% assign recent_heading_count = page.content | split: '## ' | size | minus: 1 %}
+{% for recent_post in site.posts limit: 3 %}
+  {% if recent_post.url == page.url and recent_heading_count > 1 %}
+    {% assign show_recent_multipart_toc = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
 <article class="post-container post-container--single">
-   <header class="post-header" style="margin-top: -60px;">
-      <h1 class="post-title">{{ page.title }}</h1>
-   </header>
-   <section class="post" style="margin-bottom: 60px;">
-      {{ content }}
-      
-   </section>
-   <p>
-   
-   <div style="padding: 7px; border: 1px solid #8080805c; background-color: #f7f7f7;padding-left: 20px;margin-top: 120px;border-radius: 10px;margin-bottom: 30px;">
-      {% if site.author.img %}<img class="bio-img" src="{{ site.author.img }}" >{% endif %}
-      <p class="bio-title"> {{ site.title }}</p>
-      <hr style="border: 0.5px solid #8080801f;width: 80%;">
-      <p class="bio-passage">Muntazir Fadhel is an AI Systems Architect and consultant specializing in the design and operationalization of production ML platforms. Through HADI Technology, he works with engineering teams to architect multi-tenant model serving infrastructure, LLM inference systems, and end-to-end MLOps pipelines that bridge the gap between research and reliable production deployment. </p>
-   </div>
-</article>
+  <header class="post-header post-header--single">
+    <h1 class="post-title">{{ page.title }}</h1>
+  </header>
 
+  {% if show_recent_multipart_toc %}
+    <nav class="post-toc" aria-label="Article contents" data-post-toc>
+      <p class="post-toc__eyebrow">Article map</p>
+      <p class="post-toc__title">Contents</p>
+      <ol class="post-toc__list"></ol>
+    </nav>
+  {% endif %}
+
+  <section class="post post--single">
+    {{ content }}
+  </section>
+</article>

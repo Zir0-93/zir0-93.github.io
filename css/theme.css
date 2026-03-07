@@ -301,7 +301,7 @@ div.nav-bar {
 a.name-logo {
 	margin-left: auto;
     margin-right: auto;
-    font-size: 38px;
+    font-size: 30px;
     font-weight: 800;
     color:#191919e0;
     font-family: Open Sans;
@@ -1436,8 +1436,7 @@ pre {
 .excerpt {
 	margin: 0;
     margin-top: 15px;
-    font-size: 18px;
-    font-weight: 300;
+    font-weight: 500;
     color: #000000; }
 
 .intro {

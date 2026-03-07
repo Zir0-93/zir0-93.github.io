@@ -1,29 +1,29 @@
 ---
 layout: default
 ---
-<h2>Tags:</h2>
-<div class="tags"> 
-{% for tagitem in site.tags  %} 
-  <a href="#{{  tagitem[0] }}">{{  tagitem[0] }}</a>
-{% endfor %}
-</div>
+<section class="tags-page">
+  <h1 class="tags-page__title">Tags</h1>
 
-<!-- iterate through all tags on the site --> 
-{% for tagitem in site.tags %} 
-  <!-- for each tag, create an anchor by using the tag name as an id --> 
-  <div id="{{ tagitem[0] }}">  
-    <h3> {{ tagitem[0] }} </h3>  <!-- for create a heading --> 
-
-    <ul> <!-- create the list of posts -->
-      <!-- iterate through all the posts on the site --> 
-      {% for post in site.posts %} 
-        <!-- list only those which contain the current tag --> 
-        {% if post.tags contains tagitem[0] %} 
-            <li>
-              <a href="{{ post.url }}">{{ post.title }}</a>
-            </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
+  <div class="tags-page__cloud tags">
+    {% for tagitem in site.tags %}
+      {% assign tag_id = tagitem[0] | slugify %}
+      <a href="#{{ tag_id }}">{{ tagitem[0] }}</a>
+    {% endfor %}
   </div>
-{% endfor %}
+
+  {% for tagitem in site.tags %}
+    {% assign tag_id = tagitem[0] | slugify %}
+    <section class="tag-section" id="{{ tag_id }}">
+      <h2 class="tag-section__title">{{ tagitem[0] }}</h2>
+      <ul class="tag-section__list">
+        {% for post in site.posts %}
+          {% if post.tags contains tagitem[0] %}
+            <li>
+              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </section>
+  {% endfor %}
+</section>

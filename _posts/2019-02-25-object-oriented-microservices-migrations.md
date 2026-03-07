@@ -2,7 +2,7 @@
 title: "Why Object Oriented Code Accelerates Microservices Adoption"
 date: 2019-02-25 15:04:23
 icon: /images/shutterstock_189638822_copy3-720x479.jpg
-tags: [oop, serverless, microservices]
+tags: [microservices, oop, software architecture, refactoring]
 description: Even with the best solution architects, developers, and financial resources available, an application's microservices migration journey will be a nightmare if the code not object oriented to some degree.
 excerpt_separator: <!--more-->
 --- 
@@ -78,4 +78,3 @@ On the other hand, if Information Hiding is not properly observed in the origina
 ## In Closing
 
 The functioning and design of an ideal microservice shares many characteristics with the functioning and design of an ideal object in an object-oriented system. For this reason, any process of migrating a monolithic application to a microservices-like architecture will be greatly simplified if the application exhibits good object-oriented practices in the first place.
-

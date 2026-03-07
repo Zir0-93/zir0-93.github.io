@@ -1,16 +1,45 @@
 <!DOCTYPE html>
 <html>
   {% include head.html %}
-  <body>
-    {% include header.html %}
-    <div class="content-wrapper">
-      <div class="content-wrapper__inner">
-        {{ content }}
-      </div>
-      {% include footer.html %}
+  <body class="site-shell">
+    <div class="site-frame">
+      {% include header.html %}
+      <main class="content-wrapper" role="main">
+        <div class="content-wrapper__inner">
+          {{ content }}
+        </div>
+        {% include footer.html %}
+      </main>
     </div>
     <script>
-      anchors.add();
+      if (window.anchors) {
+        anchors.add();
+      }
+
+      const tocRoot = document.querySelector("[data-post-toc]");
+      const postRoot = document.querySelector(".post--single");
+
+      if (tocRoot && postRoot) {
+        const tocList = tocRoot.querySelector(".post-toc__list");
+        const headings = Array.from(postRoot.querySelectorAll("h2"));
+
+        headings.forEach((heading) => {
+          if (!heading.id) {
+            return;
+          }
+
+          const item = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = "#" + heading.id;
+          link.textContent = heading.textContent.trim();
+          item.appendChild(link);
+          tocList.appendChild(item);
+        });
+
+        if (headings.length < 2) {
+          tocRoot.hidden = true;
+        }
+      }
     </script>
   </body>
 </html>
