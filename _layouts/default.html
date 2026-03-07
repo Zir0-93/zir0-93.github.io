@@ -38,6 +38,17 @@
 
         if (headings.length < 2) {
           tocRoot.hidden = true;
+        } else {
+          let insertionPoint = headings[0];
+          const previousElement = insertionPoint.previousElementSibling;
+
+          // If the article uses an image/hr break before the first section,
+          // place the TOC ahead of that break so it follows the intro block.
+          if (previousElement && previousElement.tagName === "HR") {
+            insertionPoint = previousElement;
+          }
+
+          postRoot.insertBefore(tocRoot, insertionPoint);
         }
       }
     </script>
