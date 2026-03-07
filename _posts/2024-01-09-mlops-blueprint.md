@@ -3,6 +3,7 @@ title: "Designing a Production MLOps Pipeline: The Decisions That Actually Deter
 date: 2024-01-09 15:04:23
 og_image: /images/mlops-pipeline-diagram.svg
 tags: [mlops, gitops, kubernetes, machine learning, system design]
+toc: true
 description: This post distills a reference architecture we built to address that. The context is a pipeline for categorizing and analyzing GitHub pull requests using a PyTorch autoencoder, developed as a reusable blueprint based on what we have seen fail repeatedly in production ML systems.
 excerpt_separator: <!--more-->
 ---

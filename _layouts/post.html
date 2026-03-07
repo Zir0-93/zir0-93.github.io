@@ -1,14 +1,16 @@
 ---
 layout: default
 ---
-{% assign show_recent_multipart_toc = false %}
+{% assign show_recent_multipart_toc = page.toc | default: false %}
 {% assign recent_heading_count = page.content | split: '## ' | size | minus: 1 %}
-{% for recent_post in site.posts limit: 3 %}
-  {% if recent_post.url == page.url and recent_heading_count > 1 %}
+{% assign recent_cutoff_post = site.posts | slice: 2, 1 | first %}
+{% if show_recent_multipart_toc != true and recent_cutoff_post %}
+  {% if recent_heading_count > 1 and page.date >= recent_cutoff_post.date %}
     {% assign show_recent_multipart_toc = true %}
-    {% break %}
   {% endif %}
-{% endfor %}
+{% elsif show_recent_multipart_toc != true and recent_heading_count > 1 %}
+  {% assign show_recent_multipart_toc = true %}
+{% endif %}
 <article class="post-container post-container--single">
   <header class="post-header post-header--single">
     <h1 class="post-title">{{ page.title }}</h1>
