@@ -4,7 +4,7 @@ icon: /images/1_2UjSSQwW0bns1lPIuRxccQ.png
 date:   2018-12-10 15:04:23
 og_image: /images/i-was-told-there-would-be-a-review.jpg
 tags: [machine learning, github, code review, nlp, python]
-description: In an effort to better understand code reviewing discussions, we’re going to create an SVM classifier to classify over 30 000 GitHub review comments based on the main topic addressed by each comment.
+description: "Code review comments on GitHub contain a wealth of signal about what engineers care about — naming, logic, performance, test coverage — but that signal is buried in unstructured free text. This post builds an SVM classifier to categorize over 30,000 GitHub pull request review comments by the main technical topic each addresses. The dataset, feature engineering approach, and model evaluation are walked through in a Jupyter notebook available on GitHub. The results reveal which topics dominate code review discussions and how that distribution shifts across different types of repositories."
 excerpt_separator: <!--more-->
 ---
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) <a class="github-button" href="https://github.com/Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post" data-show-count="true" aria-label="Star Zir0-93/What-Code-Reviewers-Talk-About-Blog-Post on GitHub">Star</a>

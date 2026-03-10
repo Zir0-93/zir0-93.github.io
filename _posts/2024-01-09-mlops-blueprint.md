@@ -4,7 +4,7 @@ date: 2024-01-09 15:04:23
 og_image: /images/mlops-pipeline-diagram.svg
 tags: [mlops, gitops, kubernetes, machine learning, system design]
 toc: true
-description: This post distills a reference architecture we built to address that. The context is a pipeline for categorizing and analyzing GitHub pull requests using a PyTorch autoencoder, developed as a reusable blueprint based on what we have seen fail repeatedly in production ML systems.
+description: "Teams that invest heavily in model development often ship the surrounding infrastructure as an afterthought — and pay for it later in operational failures that are difficult to diagnose and expensive to fix. This post distills a reference MLOps architecture built from repeated production engagements, using a GitHub pull request categorization pipeline with a PyTorch autoencoder as the concrete example. It covers the decisions that determine whether a production ML system holds up over time: anomaly detection before classification, experiment tracking, model registry integration, containerized training, and CI/CD for model deployment. The full implementation is available on GitHub as a reusable blueprint."
 excerpt_separator: <!--more-->
 ---
 

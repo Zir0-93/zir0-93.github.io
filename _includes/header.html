@@ -30,5 +30,40 @@
       <i class="fa fa-github" aria-hidden="true"></i>
       <span>Portfolio</span>
     </a>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+      <span class="theme-toggle__icon" id="theme-icon">&#9790;</span>
+      <span id="theme-label">Dark mode</span>
+    </button>
   </nav>
+
+  <script>
+    (function () {
+      var btn = document.getElementById("theme-toggle");
+      var icon = document.getElementById("theme-icon");
+      var label = document.getElementById("theme-label");
+
+      function applyTheme(dark) {
+        if (dark) {
+          document.documentElement.setAttribute("data-theme", "dark");
+          icon.textContent = "\u2600"; // sun
+          label.textContent = "Light mode";
+          localStorage.setItem("theme", "dark");
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+          icon.textContent = "\u263E"; // moon
+          label.textContent = "Dark mode";
+          localStorage.setItem("theme", "light");
+        }
+      }
+
+      // Sync button state with current theme on load
+      var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      applyTheme(isDark);
+
+      btn.addEventListener("click", function () {
+        var currentlyDark = document.documentElement.getAttribute("data-theme") === "dark";
+        applyTheme(!currentlyDark);
+      });
+    })();
+  </script>
 </header>

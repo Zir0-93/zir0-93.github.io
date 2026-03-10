@@ -8,19 +8,21 @@ layout: default
       {% assign post_word_count = post.content | markdownify | strip_html | number_of_words %}
       {% assign post_read_time = post_word_count | plus: 179 | divided_by: 180 %}
       {% assign home_excerpt_source = post.description | default: post.excerpt %}
-      {% assign home_excerpt = home_excerpt_source | markdownify | strip_html | strip_newlines | truncatewords: 50 %}
+      {% assign home_excerpt = home_excerpt_source | markdownify | strip_html | strip_newlines | truncatewords: 150 %}
       {% if post_read_time < 1 %}
         {% assign post_read_time = 1 %}
       {% endif %}
       <li>
-        <article class="post_image_description">
+        <article class="post_image_description{% if forloop.first %} post-card--featured{% endif %}">
           <div class="post-card__eyebrow">
             <span class="post-card__index">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+            {% if forloop.first %}<span class="post-card__badge">Latest</span>{% endif %}
             <span class="post-card__reading-time">{{ post_read_time }} min read</span>
           </div>
           <h2 class="post-list__post-title"><a href="{{ post.url | relative_url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
           <p class="excerpt">{{ home_excerpt }}</p>
           <div class="post-list__meta"><span class="post-meta__tags">{% for tag in post.tags %}<a class="post_tags" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a> {% endfor %}</span></div>
+          <a class="post-card__cta" href="{{ post.url | relative_url }}">Read article &#8599;</a>
           <hr class="post-list__divider">
         </article>
       </li>

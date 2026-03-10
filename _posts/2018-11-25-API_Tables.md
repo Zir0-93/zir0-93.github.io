@@ -3,7 +3,7 @@ title:  "API Documentation Using Tables"
 icon: /images/api-settings.png
 date:   2018-11-20 15:04:23
 tags: [api design, api documentation, rest]
-description: It's well known that APIs need developer-friendly docs in order to gain widespread adoption. However, little if any improvement in the REST API visualization methods have been made over the past few years. Nowadays, most API docs and developer portals adopt a Swagger UI type of format where all the endpoints in the specification are simply listed, one after another within categories. This format does a good job of communicating the low-level details of each endpoint; However, when dealing with increased API complexity, developers need a way to get a high level understanding of the API **before** diving down into those low-level details.
+description: "Swagger UI communicates endpoint details well but fails at conveying the shape of a complex API at a glance. When an API exposes dozens of resources and hundreds of operations, developers need a high-level map before they can navigate the detail. This post proposes a table-based documentation format that presents resources, operations, and their relationships in a compact, scannable structure. The approach is complementary to existing spec-driven tooling and can be generated directly from an OpenAPI definition — a live demo built against the GitHub API is included."
 
 excerpt_separator: <!--more-->
 ---

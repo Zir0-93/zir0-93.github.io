@@ -4,7 +4,7 @@ date: 2025-01-09 15:04:23
 og_image: /images/vllm-kubeai-diagram.svg
 tags: [llmops, mlops, kubernetes, vllm, model serving]
 toc: true
-description: This post walks through an architecture developed at HADI Technology for clients including [Joinable](https://www.joinable.ai) and others running self-hosted LLM inference in production.
+description: "Deploying a large language model is not the hard part — deploying one that is safe to operate, cost-effective to scale, and straightforward to reason about under load is where most teams run into trouble. This post walks through an architecture developed at HADI Technology for running self-hosted LLM inference in production, using vLLM as the inference engine and KubeAI for model lifecycle management. Rather than a step-by-step tutorial, it explains the tradeoffs that led to this architecture and where it fits compared to alternatives like managed API endpoints or simpler single-instance deployments. The reference implementation is open-source and available on GitHub."
 excerpt_separator: <!--more-->
 ---
 

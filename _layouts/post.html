@@ -11,6 +11,8 @@ layout: default
 {% elsif show_recent_multipart_toc != true and recent_heading_count > 1 %}
   {% assign show_recent_multipart_toc = true %}
 {% endif %}
+<div class="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
 <article class="post-container post-container--single">
   <header class="post-header post-header--single">
     <h1 class="post-title">{{ page.title }}</h1>
@@ -28,3 +30,58 @@ layout: default
     {{ content }}
   </section>
 </article>
+
+<script>
+  (function () {
+    // Reading progress bar
+    var bar = document.querySelector(".reading-progress");
+    var article = document.querySelector(".post-container--single");
+
+    if (bar && article) {
+      function updateProgress() {
+        var rect = article.getBoundingClientRect();
+        var total = article.offsetHeight - window.innerHeight;
+        var scrolled = -rect.top;
+        var pct = total > 0 ? Math.min(100, Math.max(0, (scrolled / total) * 100)) : 0;
+        bar.style.width = pct + "%";
+        bar.setAttribute("aria-valuenow", Math.round(pct));
+      }
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      updateProgress();
+    }
+
+    // TOC active section highlighting
+    var tocLinks = Array.from(document.querySelectorAll(".post-toc__list a"));
+    var headings = Array.from(document.querySelectorAll(".post--single h2[id]"));
+
+    if (tocLinks.length > 0 && headings.length > 0) {
+      function setActive(id) {
+        tocLinks.forEach(function (link) {
+          if (link.getAttribute("href") === "#" + id) {
+            link.classList.add("is-active");
+          } else {
+            link.classList.remove("is-active");
+          }
+        });
+      }
+
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              setActive(entry.target.id);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -70% 0px", threshold: 0 }
+      );
+
+      headings.forEach(function (h) { observer.observe(h); });
+
+      // Highlight first section by default before any scroll
+      if (headings[0]) {
+        setActive(headings[0].id);
+      }
+    }
+  })();
+</script>

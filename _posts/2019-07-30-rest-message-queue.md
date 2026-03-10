@@ -3,7 +3,7 @@ title:  "3 Common Misunderstandings of Inter-Service Communication in MicroServi
 date:  2019-12-05 15:04:23
 og_image: /images/microservices.png
 tags: [microservices, distributed systems, rest, messaging]
-description: Think back to the last time you worked in a distributed system, did you consider using something other than RESTful HTTP calls as the method of communication between components in this system?
+description: "REST and message queues are the two dominant approaches to inter-service communication in distributed systems, and teams frequently choose between them based on assumptions that do not hold under scrutiny. Synchronous HTTP calls are not always simpler or more reliable than async messaging, and message queues are not always the right choice when decoupling is the goal. This post examines three specific misconceptions that lead teams to make this decision poorly — around coupling, reliability, and operational complexity — and replaces them with a more grounded analysis of what each approach actually trades off. The goal is not to recommend one over the other but to help teams make the call with clear eyes."
 excerpt_separator: <!--more-->
 ---
 

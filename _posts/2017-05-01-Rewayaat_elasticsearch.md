@@ -3,7 +3,7 @@ title:  "Developing a Search Engine using Elastic Search"
 date:   2017-05-01 15:04:23
 icon: /images/elasticsearchicon.png
 tags: [elasticsearch, search, text analysis, information retrieval]
-description: ElasticSearch is an open-source, broadly-distributable, readily-scalable, enterprise-grade search engine. Accessible through an extensive and elaborate API, Elasticsearch can power extremely fast searches that support your data discovery applications. I recently worked on implementing a multi-language search engine using Elastic Search and found that for certain use cases, rolling Elastic Search for your back end offers significant advantages over conventional SQL database systems.
+description: "Building a search engine that works well across Arabic and English content is harder than it looks — tokenization, stemming, and relevance ranking all behave differently across language families. This post documents the architecture of a multi-language search system built with Elasticsearch, including the index configuration, language-specific analyzers, and query strategies that made retrieval accurate across both languages. It covers the practical edge cases that appear when users mix languages within a single query and how those were handled at the application layer. The lessons apply to any multilingual content platform that needs more than naive keyword matching."
 excerpt_separator: <!--more-->
 ---
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is an open-source, broadly-distributable, readily-scalable, enterprise-grade search engine. Accessible through an extensive

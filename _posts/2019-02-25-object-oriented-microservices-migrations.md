@@ -3,7 +3,7 @@ title: "Why Object Oriented Code Accelerates Microservices Adoption"
 date: 2019-02-25 15:04:23
 icon: /images/shutterstock_189638822_copy3-720x479.jpg
 tags: [microservices, oop, software architecture, refactoring]
-description: Even with the best solution architects, developers, and financial resources available, an application's microservices migration journey will be a nightmare if the code not object oriented to some degree.
+description: "Migrating a monolith to microservices is a difficult undertaking regardless of technical quality, but the difficulty scales dramatically with how coupled and procedural the source code is. When a codebase lacks clear object boundaries, the decomposition process becomes a guessing game about which pieces can be extracted without breaking everything else. This post demonstrates how four core OOP principles — single responsibility, encapsulation, dependency inversion, and composition — directly reduce the mechanical effort of splitting a legacy system into services. The argument is not that OOP is required for microservices, but that investing in it before a migration begins pays back measurably during the decomposition."
 excerpt_separator: <!--more-->
 --- 
 **All monoliths are not created equal**. Even with the best solution architects, developers, and financial resources available, a legacy application's microservices transformation journey will be a nightmare if the code is *not object-oriented*.

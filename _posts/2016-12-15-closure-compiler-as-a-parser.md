@@ -3,7 +3,7 @@ title:  "Analyzing JavaScript Programmatically In Java Using The Google-Closure 
 date:   2016-12-15 15:04:23
 icon: /images/closurecompiler.png
 tags: [javascript, java, parsing, static analysis, compiler]
-description: The Google Closure Compiler is a tool for making JavaScript download and run faster. Instead of compiling from a source language to machine code, it compiles from JavaScript to better JavaScript. It parses your JavaScript, analyzes it, removes dead code and rewrites and minimizes what's left. It also checks syntax, variable references, and types, and warns about common JavaScript pitfalls.
+description: "The Google Closure Compiler is designed to minify and optimize JavaScript, but its internals include a full AST parser that can be repurposed for programmatic code analysis. This post demonstrates how to use the Closure Compiler as a JavaScript parsing backend from Java, giving you access to a structured representation of any JavaScript source file without writing your own parser. The approach enables use cases like dependency analysis, code quality checks, and automated refactoring tooling. It is particularly useful when you need to reason about JavaScript code programmatically within a JVM-based toolchain."
 excerpt_separator: <!--more-->
 ---
 The Closure Compiler is a tool for making JavaScript download and run faster. Instead of compiling from a source language to 
