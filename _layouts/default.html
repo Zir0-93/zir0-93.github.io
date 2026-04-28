@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   {% include head.html %}
-  <body class="site-shell">
+  <body class="site-shell page-{{ page.layout }}">
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="site-frame">
       {% include header.html %}
-      <main class="content-wrapper" role="main">
+      <main class="content-wrapper" role="main" id="main-content">
         <div class="content-wrapper__inner">
           {{ content }}
         </div>
@@ -42,8 +43,6 @@
           let insertionPoint = headings[0];
           const previousElement = insertionPoint.previousElementSibling;
 
-          // If the article uses an image/hr break before the first section,
-          // place the TOC ahead of that break so it follows the intro block.
           if (previousElement && previousElement.tagName === "HR") {
             insertionPoint = previousElement;
           }
@@ -51,6 +50,37 @@
           postRoot.insertBefore(tocRoot, insertionPoint);
         }
       }
+
+      // Code copy buttons
+      document.querySelectorAll("pre.highlight, .highlight pre").forEach(function(pre) {
+        var wrapper = document.createElement("div");
+        wrapper.className = "code-block-wrapper";
+        var btn = document.createElement("button");
+        btn.className = "code-copy-btn";
+        btn.textContent = "Copy";
+        btn.setAttribute("aria-label", "Copy code to clipboard");
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        wrapper.appendChild(btn);
+        btn.addEventListener("click", function() {
+          var code = pre.querySelector("code");
+          navigator.clipboard.writeText(code ? code.textContent : pre.textContent).then(function() {
+            btn.textContent = "Copied";
+            btn.setAttribute("data-copied", "");
+            setTimeout(function() {
+              btn.textContent = "Copy";
+              btn.removeAttribute("data-copied");
+            }, 2000);
+          });
+        });
+      });
+
+      // Lazy load post images
+      document.querySelectorAll(".post img").forEach(function(img, i) {
+        if (i > 0) {
+          img.setAttribute("loading", "lazy");
+        }
+      });
     </script>
   </body>
 </html>

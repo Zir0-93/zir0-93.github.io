@@ -8,7 +8,7 @@ layout: default
       {% assign post_word_count = post.content | markdownify | strip_html | number_of_words %}
       {% assign post_read_time = post_word_count | plus: 179 | divided_by: 180 %}
       {% assign home_excerpt_source = post.description | default: post.excerpt %}
-      {% assign home_excerpt = home_excerpt_source | markdownify | strip_html | strip_newlines | truncatewords: 150 %}
+      {% assign home_excerpt = home_excerpt_source | markdownify | strip_newlines | truncatewords: 150 %}
       {% if post_read_time < 1 %}
         {% assign post_read_time = 1 %}
       {% endif %}

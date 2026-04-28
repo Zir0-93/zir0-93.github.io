@@ -14,6 +14,13 @@ excerpt_separator: <!--more-->
 Deploying a large language model is not the hard part. Deploying one in a way that is safe to operate, cost-effective to scale, and straightforward to reason about under load is where most teams run into trouble.
 
 This post walks through an architecture developed at HADI Technology for clients including [Joinable](https://www.joinable.ai) and others running self-hosted LLM inference in production. It uses vLLM as the inference engine and KubeAI to handle model lifecycle and operational concerns. The reference implementation is available at [github.com/hadi-technology/vllm-mlops](https://github.com/hadi-technology/vllm-mlops).
+
+<div style="border:1px solid rgba(15,23,42,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;background:rgba(255,255,255,0.6);">
+<p style="margin:0 0 8px 0;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b7280;">Relevant Repos</p>
+<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+<a href="https://github.com/hadi-technology/vllm-mlops"><img src="https://img.shields.io/badge/vLLM%20MLOps-vllm--mlops-blue?logo=github" alt="vllm-mlops"></a>
+</div>
+</div>
 <!--more-->
 Rather than a step-by-step tutorial, the intent here is to explain the tradeoffs that led to this architecture and where it fits, and where it does not fit, compared to alternatives.
 
@@ -149,7 +156,7 @@ The vLLM `/metrics` endpoint exposes Prometheus-compatible metrics. The KubeAI S
 
 ## Operational Cost as a Design Input
 
-One framing that tends to change how these decisions get made: GPU time is expensive, and most teams underestimate how much of their GPU spend goes toward idle capacity rather than actual inference.
+One framing that tends to change how these decisions get made: GPU time is expensive, and most teams underestimate how much of their GPU spend goes to idle capacity rather than actual inference. I have seen teams discover that two-thirds of their GPU budget was burning on pods sitting idle between traffic bursts.
 
 Scale-from-zero with request buffering is not just a nice operational feature. For workloads with bursty or time-of-day traffic patterns, it can meaningfully reduce the cost of running the infrastructure. The cost of the cold start latency (a few minutes) has to be weighed against the cost of keeping a GPU pod warm during idle periods. For most non-latency-critical workloads, scale-from-zero wins.
 
@@ -161,6 +168,6 @@ The precision decision is also a cost decision. A model that can run at INT4 rat
 
 The combination of vLLM and KubeAI is not the simplest possible way to self-host an LLM. It is the simplest way to self-host an LLM that is safe to operate at production scale, where cold starts, traffic spikes, model updates, and cost management are daily concerns rather than edge cases.
 
-The architecture buys you a clean separation between inference performance (vLLM's domain) and operational concerns including lifecycle management, scaling, API stability, and request buffering, which KubeAI handles. That separation makes each layer easier to reason about, debug, and evolve independently.
+The architecture buys you a clean separation between inference performance (vLLM's domain) and operational concerns including lifecycle management, scaling, API stability, and request buffering, which KubeAI handles. That separation is worth the extra component. Each layer is easier to reason about, debug, and evolve independently.
 
 The reference implementation is at [github.com/hadi-technology/vllm-mlops](https://github.com/hadi-technology/vllm-mlops).

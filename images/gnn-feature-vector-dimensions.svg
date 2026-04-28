@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <style>
+      .title { font-size: 15px; font-weight: 600; fill: #1a1a2e; }
+      .subtitle { font-size: 11px; fill: #6b7280; }
+      .dim-label { font-size: 10.5px; fill: #374151; font-weight: 500; }
+      .dim-range { font-size: 9.5px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
+      .legend-label { font-size: 10px; fill: #374151; }
+      .legend-dims { font-size: 9px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
+      .total-label { font-size: 10px; fill: #6b7280; font-weight: 500; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="320" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+
+  <!-- Title -->
+  <text x="400" y="32" text-anchor="middle" class="title">404-Dimensional Node Feature Vector</text>
+  <text x="400" y="50" text-anchor="middle" class="subtitle">Breakdown by feature group</text>
+
+  <!-- Main segmented bar -->
+  <g transform="translate(50, 75)">
+
+    <!-- Segment 1: Text Embeddings [0-383] - 384/404 = ~95% of 700 = 665 -->
+    <rect x="0" y="0" width="665" height="50" rx="4" fill="#3b82f6" opacity="0.85"/>
+    <rect x="0" y="0" width="665" height="50" rx="4" fill="none" stroke="#2563eb" stroke-width="0.5"/>
+    <text x="332" y="22" text-anchor="middle" class="dim-label" fill="#ffffff" font-size="12" font-weight="600">MiniLM Text Embedding</text>
+    <text x="332" y="38" text-anchor="middle" class="dim-range" fill="#dbeafe">384 dims</text>
+
+    <!-- Segment 2: OOP Metrics [384-392] - 9/404 = ~2.2% of 700 = 15.5, min 16 -->
+    <rect x="665" y="0" width="16" height="50" fill="#f59e0b" opacity="0.9"/>
+    <rect x="665" y="0" width="16" height="50" fill="none" stroke="#d97706" stroke-width="0.5"/>
+
+    <!-- Segment 3: Type one-hot [393-399] - 7/404 = ~1.7% of 700 = 12, min 12 -->
+    <rect x="681" y="0" width="12" height="50" fill="#10b981" opacity="0.9"/>
+    <rect x="681" y="0" width="12" height="50" fill="none" stroke="#059669" stroke-width="0.5"/>
+
+    <!-- Segment 4: Language one-hot [400-402] - 3/404 = ~0.7% of 700 = 5, min 5 -->
+    <rect x="693" y="0" width="5" height="50" fill="#8b5cf6" opacity="0.9"/>
+    <rect x="693" y="0" width="5" height="50" fill="none" stroke="#7c3aed" stroke-width="0.5"/>
+
+    <!-- Segment 5: Synthetic flag [403] - 1/404 = ~0.25% of 700 = 2, min 2 -->
+    <rect x="698" y="0" width="2" height="50" rx="0" fill="#ef4444" opacity="0.9"/>
+    <rect x="698" y="0" width="2" height="50" fill="none" stroke="#dc2626" stroke-width="0.5"/>
+
+    <!-- Right edge rounding for last segment -->
+    <rect x="695" y="0" width="5" height="50" rx="4" fill="#8b5cf6" opacity="0.9"/>
+    <rect x="695" y="0" width="5" height="50" rx="4" fill="none" stroke="#7c3aed" stroke-width="0.5"/>
+    <rect x="698" y="0" width="2" height="50" fill="#ef4444" opacity="0.9"/>
+
+    <!-- Bracket lines for small segments -->
+    <!-- OOP Metrics bracket -->
+    <line x1="665" y1="58" x2="681" y2="58" stroke="#d97706" stroke-width="1.5"/>
+    <line x1="665" y1="54" x2="665" y2="58" stroke="#d97706" stroke-width="1.5"/>
+    <line x1="681" y1="54" x2="681" y2="58" stroke="#d97706" stroke-width="1.5"/>
+    <text x="673" y="70" text-anchor="middle" class="dim-label" fill="#b45309" font-size="9">OOP Metrics</text>
+    <text x="673" y="80" text-anchor="middle" class="dim-range" font-size="8">[384-392]</text>
+
+    <!-- Type bracket -->
+    <line x1="681" y1="88" x2="693" y2="88" stroke="#059669" stroke-width="1.5"/>
+    <line x1="681" y1="84" x2="681" y2="88" stroke="#059669" stroke-width="1.5"/>
+    <line x1="693" y1="84" x2="693" y2="88" stroke="#059669" stroke-width="1.5"/>
+    <text x="687" y="100" text-anchor="middle" class="dim-label" fill="#047857" font-size="9">Type</text>
+    <text x="687" y="110" text-anchor="middle" class="dim-range" font-size="8">[393-399]</text>
+
+    <!-- Language bracket -->
+    <line x1="693" y1="118" x2="700" y2="118" stroke="#7c3aed" stroke-width="1.5"/>
+    <line x1="693" y1="114" x2="693" y2="118" stroke="#7c3aed" stroke-width="1.5"/>
+    <line x1="700" y1="114" x2="700" y2="118" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="696" y="130" text-anchor="middle" class="dim-label" fill="#6d28d9" font-size="9">Lang</text>
+    <text x="696" y="140" text-anchor="middle" class="dim-range" font-size="8">[400-402]</text>
+
+    <!-- Synthetic bracket -->
+    <line x1="700" y1="148" x2="700" y2="148" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="696" y="160" text-anchor="middle" class="dim-label" fill="#b91c1c" font-size="9">Syn</text>
+    <text x="696" y="170" text-anchor="middle" class="dim-range" font-size="8">[403]</text>
+
+  </g>
+
+  <!-- Dimension range below main bar -->
+  <text x="50" y="270" class="dim-range">0</text>
+  <text x="710" y="270" text-anchor="end" class="dim-range">403</text>
+  <text x="715" y="270" class="total-label">404 dims total</text>
+
+  <!-- Legend -->
+  <g transform="translate(50, 285)">
+    <rect x="0" y="0" width="12" height="12" rx="2" fill="#3b82f6" opacity="0.85"/>
+    <text x="16" y="10" class="legend-label">Text Embedding (384)</text>
+
+    <rect x="145" y="0" width="12" height="12" rx="2" fill="#f59e0b" opacity="0.9"/>
+    <text x="161" y="10" class="legend-label">OOP Metrics (9)</text>
+
+    <rect x="275" y="0" width="12" height="12" rx="2" fill="#10b981" opacity="0.9"/>
+    <text x="291" y="10" class="legend-label">Type One-Hot (7)</text>
+
+    <rect x="405" y="0" width="12" height="12" rx="2" fill="#8b5cf6" opacity="0.9"/>
+    <text x="421" y="10" class="legend-label">Language One-Hot (3)</text>
+
+    <rect x="555" y="0" width="12" height="12" rx="2" fill="#ef4444" opacity="0.9"/>
+    <text x="571" y="10" class="legend-label">Synthetic Flag (1)</text>
+  </g>
+</svg>

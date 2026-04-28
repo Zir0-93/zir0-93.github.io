@@ -11,6 +11,15 @@ excerpt_separator: <!--more-->
 Across client engagements at HADI Technology, one pattern shows up consistently: teams invest heavily in model development and then ship the surrounding infrastructure as an afterthought. The ML code works. The pipeline that runs it in production slowly becomes a liability.
 
 This post distills a reference architecture we built to address that. The context is a pipeline for categorizing and analyzing GitHub pull requests using a PyTorch autoencoder, developed as a reusable blueprint based on what we have seen fail repeatedly in production ML systems. The intent was not to solve a difficult modeling problem but to demonstrate the infrastructure patterns that determine whether a system holds up over time. The full implementation is available at [github.com/hadi-technology/mlops-blueprint](https://github.com/hadi-technology/mlops-blueprint).
+
+These same patterns -- reproducible pipelines, blue/green rollouts, single-build artifacts, and Vault-based secret management -- later became the foundation for [striff.io](https://striff.io)'s production ML system. The architecture described in the [ML infrastructure behind striff.io]({% post_url 2026-04-28-striff-io-ml-infrastructure %}) extends this blueprint with an async Kafka-staged pipeline and Triton-based inference serving.
+
+<div style="border:1px solid rgba(15,23,42,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;background:rgba(255,255,255,0.6);">
+<p style="margin:0 0 8px 0;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b7280;">Relevant Repos</p>
+<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+<a href="https://github.com/hadi-technology/mlops-blueprint"><img src="https://img.shields.io/badge/MLOps%20Pipeline-mlops--blueprint-teal?logo=github" alt="mlops-blueprint"></a>
+</div>
+</div>
 <!--more-->
 
 <img src="/images/mlops-pipeline-diagram.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
@@ -35,7 +44,7 @@ The problem with that approach is not just security. It is operational fragility
 
 We standardized on Vault for all secrets. Each container receives only three environment variables at startup: `VAULT_ADDR`, `VAULT_ROLE`, and `VAULT_SECRET_PATH`. Actual credentials are fetched at runtime using the `hvac` Python client. Nothing sensitive ever lands in Git or in a container layer.
 
-The architectural consequence is that secret rotation requires no code changes and no image rebuilds. Rotating a GitHub token or MongoDB credential is a Vault operation, not a deployment event. Over time, this matters more than it seems upfront.
+The architectural consequence is that secret rotation requires no code changes and no image rebuilds. Rotating a GitHub token or MongoDB credential is a Vault operation, not a deployment event. Over time, this compounds.
 
 ---
 
@@ -64,7 +73,7 @@ The CI workflow pattern is consistent across all stages:
 3. Deploy to staging
 4. Promote to production via branch merge, using the same image tag
 
-The practical effect is that if something passes staging, it will not fail in production due to a build artifact difference. This sounds obvious, but the number of production incidents that trace back to "worked in staging" is high enough that it warrants an architectural constraint rather than a best-effort practice.
+The practical effect is that if something passes staging, it will not fail in production due to a build artifact difference. The number of production incidents that trace back to "worked in staging" is high enough that this warrants an architectural constraint rather than a best-effort practice.
 
 ---
 
@@ -74,7 +83,7 @@ Model updates are different from regular service deployments in one important wa
 
 We use Argo Rollouts with a blue/green strategy for the inference serving component. New model versions are deployed alongside the active version. Traffic continues flowing to the current version while the new version handles requests through a preview service. Load tests run against the preview, and only after those pass does traffic cut over. Rollback is instantaneous because the previous version is still running.
 
-The cost of this approach is resource usage: you are briefly running two full serving stacks. For a production system handling real traffic at scale, this is an acceptable trade. For a smaller experiment, it might feel like over-engineering. Our position, shaped by what we have seen happen when teams skip this pattern, is that it is better to practice these rollout patterns on small systems than to discover their importance for the first time on a system that cannot afford downtime.
+The cost of this approach is resource usage: you are briefly running two full serving stacks. For a production system handling real traffic at scale, this is an acceptable trade. For a smaller experiment, it might feel like over-engineering. It is better to practice these rollout patterns on small systems than to discover their importance for the first time on a system that cannot afford downtime.
 
 The alternative, a rolling update that replaces pods incrementally, is fine for stateless services where any request can be handled by any pod. It is less appropriate for model serving, where the inference behavior changes discretely between versions and you want a clear before/after boundary rather than a window where both old and new model versions are simultaneously handling traffic.
 
@@ -102,7 +111,7 @@ In client work through HADI Technology, the framing we bring to these decisions 
 
 ## Closing Thoughts
 
-The PR categorization experiment is a relatively small ML use case. The infrastructure around it is not. That gap is intentional: the value of working through these design decisions on a contained problem is that the patterns are ready when the problem gets larger.
+The PR categorization experiment is a relatively small ML use case. The infrastructure around it is not. That gap is intentional: the value of working through these design decisions on a contained problem is that the patterns are ready when the problem gets larger. They were. The same decisions described here -- single-build artifacts, shared manifests, blue/green rollouts, Vault -- now run in production at [striff.io](https://striff.io) at higher volume and with additional complexity (Kafka staging, Triton inference, GNN scoring) layered on top.
 
 Promotion to production is a single merge. Secret rotation does not require rebuilds. New models can be shipped without downtime. These properties did not emerge from the tools. They came from the decisions made before the tools were chosen.
 

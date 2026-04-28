@@ -22,13 +22,61 @@ layout: default
     <nav class="post-toc" aria-label="Article contents" data-post-toc>
       <p class="post-toc__eyebrow">Navigation</p>
       <p class="post-toc__title">On this page</p>
-      <ol class="post-toc__list"></ol>
+      <ul class="post-toc__list"></ul>
     </nav>
   {% endif %}
 
   <section class="post post--single">
     {{ content }}
   </section>
+
+  {% assign max_related = 3 %}
+  {% assign related_count = 0 %}
+  {% for post in site.posts %}
+    {% if post.url == page.url %}
+      {% continue %}
+    {% endif %}
+    {% assign common_tags = 0 %}
+    {% for tag in page.tags %}
+      {% if post.tags contains tag %}
+        {% assign common_tags = common_tags | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+    {% if common_tags > 0 %}
+      {% assign related_count = related_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+
+  {% if related_count > 0 %}
+  <section class="related-posts">
+    <p class="related-posts__title">Related articles</p>
+    <ul class="related-posts__list">
+      {% assign shown = 0 %}
+      {% for post in site.posts %}
+        {% if shown >= max_related %}
+          {% break %}
+        {% endif %}
+        {% if post.url == page.url %}
+          {% continue %}
+        {% endif %}
+        {% assign common_tags = 0 %}
+        {% for tag in page.tags %}
+          {% if post.tags contains tag %}
+            {% assign common_tags = common_tags | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+        {% if common_tags > 0 %}
+        <li class="related-posts__item">
+          <a href="{{ post.url | relative_url }}">
+            <p class="related-posts__item-title">{{ post.title }}</p>
+          </a>
+        </li>
+        {% assign shown = shown | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
 </article>
 
 <script>

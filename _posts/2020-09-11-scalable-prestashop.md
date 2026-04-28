@@ -8,6 +8,13 @@ description: "Shopify works until it doesn't — vendor lock-in and transaction 
 excerpt_separator: <!--more-->
 ---
 
-E-commerce platforms like Shopify have dominated the e-commerce industry for many years due to their low upfront setup costs and ease of use. 
-However, after a recent engagement with a large online merchant, our team found two significant reasons as to why a commercial solution such as Shopify may not always make sense for an organisation: 
+E-commerce platforms like Shopify have dominated the e-commerce industry for many years due to their low upfront setup costs and ease of use.
+However, after a recent engagement with a large online merchant, our team found two significant reasons as to why a commercial solution such as Shopify may not always make sense for an organisation:
+
+<div style="border:1px solid rgba(15,23,42,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;background:rgba(255,255,255,0.6);">
+<p style="margin:0 0 8px 0;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b7280;">Relevant Repos</p>
+<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+<a href="https://github.com/hadii-tech/production-ready-prestashop"><img src="https://img.shields.io/badge/AWS-Prestashop-ff69b4?logo=github" alt="production-ready-prestashop"></a>
+</div>
+</div>
 <!--more-->

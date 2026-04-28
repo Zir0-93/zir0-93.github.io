@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>striff.io ML Infrastructure Pipeline</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d1117;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  .container {
+    padding: 24px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <!-- Arrow marker -->
+    <marker id="arrow" viewBox="0 0 10 7" refX="9" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 7" refX="9" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8b949e"/>
+    </marker>
+    <!-- Glow filter -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Subtle shadow -->
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <!-- Gradient backgrounds -->
+    <linearGradient id="kafkaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <linearGradient id="apiGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#238636"/>
+      <stop offset="100%" stop-color="#1a7f37"/>
+    </linearGradient>
+    <linearGradient id="workerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1f2937"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="infraGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3b1d6e"/>
+      <stop offset="100%" stop-color="#2d1b4e"/>
+    </linearGradient>
+    <linearGradient id="monitorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c2d3f"/>
+      <stop offset="100%" stop-color="#142030"/>
+    </linearGradient>
+    <linearGradient id="platformGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a2332"/>
+      <stop offset="100%" stop-color="#121c28"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Kubernetes cluster boundary -->
+  <rect x="10" y="10" width="1180" height="680" rx="12" fill="none" stroke="#30363d" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="24" y="30" fill="#8b949e" font-size="11" font-weight="600" letter-spacing="0.5">DIGITALOCEAN KUBERNETES CLUSTER</text>
+
+  <!-- ==================== LEFT SIDE: API + KAFKA ==================== -->
+
+  <!-- GitHub Webhook source -->
+  <rect x="30" y="60" width="140" height="56" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" filter="url(#shadow)"/>
+  <circle cx="58" cy="82" r="10" fill="#24292e" stroke="#8b949e" stroke-width="0.8"/>
+  <path d="M53 82 L58 76 L63 82 L58 88 Z" fill="none" stroke="#f0f0f0" stroke-width="1"/>
+  <text x="78" y="86" fill="#c9d1d9" font-size="12" font-weight="600">GitHub</text>
+  <text x="78" y="100" fill="#8b949e" font-size="9">Webhook</text>
+
+  <!-- Arrow: GitHub -> Spring Boot API -->
+  <line x1="170" y1="88" x2="205" y2="88" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Spring Boot API -->
+  <rect x="210" y="50" width="170" height="76" rx="8" fill="url(#apiGrad)" stroke="#2ea043" stroke-width="1" filter="url(#shadow)"/>
+  <text x="295" y="74" fill="#ffffff" font-size="13" font-weight="700" text-anchor="middle">Spring Boot API</text>
+  <text x="295" y="90" fill="#aff5b4" font-size="9" text-anchor="middle">REST + WebSocket</text>
+  <rect x="268" y="98" width="54" height="16" rx="3" fill="#0d1117" opacity="0.4"/>
+  <text x="295" y="110" fill="#aff5b4" font-size="9" text-anchor="middle" font-weight="500">HPA 2-6</text>
+
+  <!-- Arrow: API -> Kafka -->
+  <line x1="380" y1="88" x2="415" y2="88" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="397" y="82" fill="#8b949e" font-size="8" text-anchor="middle">publish</text>
+
+  <!-- Kafka Broker -->
+  <rect x="420" y="42" width="130" height="92" rx="8" fill="url(#kafkaGrad)" stroke="#e8590c" stroke-width="1.2" filter="url(#shadow)"/>
+  <!-- Kafka icon -->
+  <rect x="435" y="52" width="18" height="18" rx="2" fill="none" stroke="#e8590c" stroke-width="1"/>
+  <line x1="439" y1="56" x2="439" y2="66" stroke="#e8590c" stroke-width="1.2"/>
+  <line x1="444" y1="56" x2="444" y2="66" stroke="#e8590c" stroke-width="1.2"/>
+  <line x1="449" y1="56" x2="449" y2="66" stroke="#e8590c" stroke-width="1.2"/>
+  <text x="460" y="66" fill="#f0883e" font-size="13" font-weight="700">Kafka</text>
+  <text x="485" y="82" fill="#8b949e" font-size="9" text-anchor="middle">Broker</text>
+
+  <!-- Topic labels inside Kafka -->
+  <rect x="430" y="92" width="50" height="14" rx="3" fill="#1e2937" stroke="#30363d" stroke-width="0.5"/>
+  <text x="455" y="102" fill="#79c0ff" font-size="7" text-anchor="middle">review.req</text>
+  <rect x="485" y="92" width="46" height="14" rx="3" fill="#1e2937" stroke="#30363d" stroke-width="0.5"/>
+  <text x="508" y="102" fill="#79c0ff" font-size="7" text-anchor="middle">graph.rdy</text>
+  <rect x="430" y="110" width="48" height="14" rx="3" fill="#1e2937" stroke="#30363d" stroke-width="0.5"/>
+  <text x="454" y="120" fill="#79c0ff" font-size="7" text-anchor="middle">scores.rdy</text>
+  <rect x="483" y="110" width="52" height="14" rx="3" fill="#1e2937" stroke="#30363d" stroke-width="0.5"/>
+  <text x="509" y="120" fill="#79c0ff" font-size="7" text-anchor="middle">review.done</text>
+
+  <!-- ==================== WORKER TIERS ==================== -->
+
+  <!-- Arrows from Kafka to workers -->
+  <line x1="455" y1="134" x2="455" y2="175" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="485" y1="134" x2="485" y2="270" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="515" y1="134" x2="645" y2="270" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arrow)" stroke-dasharray="4 2"/>
+
+  <!-- Worker Tier 1: Graph Workers -->
+  <rect x="370" y="180" width="170" height="70" rx="8" fill="url(#workerGrad)" stroke="#388bfd" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="380" y="190" width="10" height="10" rx="2" fill="#388bfd" opacity="0.6"/>
+  <text x="396" y="199" fill="#c9d1d9" font-size="12" font-weight="600">Graph Workers</text>
+  <text x="455" y="216" fill="#8b949e" font-size="9" text-anchor="middle">consume review.requested</text>
+  <text x="455" y="230" fill="#8b949e" font-size="9" text-anchor="middle">produce graph.ready</text>
+  <rect x="420" y="236" width="70" height="10" rx="2" fill="#0d1117" stroke="#30363d" stroke-width="0.5"/>
+  <!-- HPA bar -->
+  <rect x="420" y="236" width="28" height="10" rx="2" fill="#388bfd" opacity="0.5"/>
+
+  <!-- Arrow: Graph Workers -> GNN Workers (vertical) -->
+  <line x1="455" y1="250" x2="455" y2="275" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Worker Tier 2: GNN Workers -->
+  <rect x="370" y="280" width="170" height="70" rx="8" fill="url(#workerGrad)" stroke="#a371f7" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="380" y="290" width="10" height="10" rx="2" fill="#a371f7" opacity="0.6"/>
+  <text x="396" y="299" fill="#c9d1d9" font-size="12" font-weight="600">GNN Workers</text>
+  <text x="455" y="316" fill="#8b949e" font-size="9" text-anchor="middle">consume graph.ready</text>
+  <text x="455" y="330" fill="#8b949e" font-size="9" text-anchor="middle">produce scores.ready</text>
+  <rect x="420" y="336" width="70" height="10" rx="2" fill="#0d1117" stroke="#30363d" stroke-width="0.5"/>
+  <rect x="420" y="336" width="35" height="10" rx="2" fill="#a371f7" opacity="0.5"/>
+
+  <!-- Arrow: GNN -> Triton -->
+  <line x1="540" y1="310" x2="610" y2="270" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arrow)" stroke-dasharray="4 2"/>
+  <text x="582" y="283" fill="#8b949e" font-size="8">inference</text>
+
+  <!-- Arrow: GNN Workers -> LLM Workers (vertical) -->
+  <line x1="455" y1="350" x2="455" y2="375" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Worker Tier 3: LLM Workers -->
+  <rect x="370" y="380" width="170" height="70" rx="8" fill="url(#workerGrad)" stroke="#3fb950" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="380" y="390" width="10" height="10" rx="2" fill="#3fb950" opacity="0.6"/>
+  <text x="396" y="399" fill="#c9d1d9" font-size="12" font-weight="600">LLM Workers</text>
+  <text x="455" y="416" fill="#8b949e" font-size="9" text-anchor="middle">consume scores.ready</text>
+  <text x="455" y="430" fill="#8b949e" font-size="9" text-anchor="middle">produce review.complete</text>
+  <rect x="420" y="436" width="70" height="10" rx="2" fill="#0d1117" stroke="#30363d" stroke-width="0.5"/>
+  <rect x="420" y="436" width="35" height="10" rx="2" fill="#3fb950" opacity="0.5"/>
+
+  <!-- Arrow: LLM -> External LLM API -->
+  <line x1="540" y1="415" x2="610" y2="415" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arrow)" stroke-dasharray="4 2"/>
+  <text x="575" y="409" fill="#8b949e" font-size="8">API call</text>
+
+  <!-- Flow label on left -->
+  <text x="348" y="300" fill="#484f58" font-size="9" text-anchor="middle" transform="rotate(-90 348 300)" font-weight="500" letter-spacing="1">PIPELINE FLOW</text>
+
+  <!-- ==================== RIGHT SIDE: INFRASTRUCTURE ==================== -->
+
+  <!-- Section label -->
+  <text x="830" y="62" fill="#8b949e" font-size="10" font-weight="600" letter-spacing="0.5" text-anchor="middle">INFRASTRUCTURE</text>
+
+  <!-- Triton Inference Server -->
+  <rect x="615" y="200" width="180" height="80" rx="8" fill="url(#infraGrad)" stroke="#8957e5" stroke-width="1.2" filter="url(#shadow)"/>
+  <!-- GPU badge -->
+  <rect x="625" y="210" width="36" height="16" rx="3" fill="#8957e5" opacity="0.3"/>
+  <text x="643" y="222" fill="#d2a8ff" font-size="9" text-anchor="middle" font-weight="700">GPU</text>
+  <text x="705" y="222" fill="#d2a8ff" font-size="13" font-weight="600">Triton</text>
+  <text x="705" y="238" fill="#8b949e" font-size="9" text-anchor="middle">Inference Server</text>
+  <text x="705" y="256" fill="#8957e5" font-size="8" text-anchor="middle">NVIDIA A100 / L4</text>
+  <text x="705" y="268" fill="#6e40c9" font-size="8" text-anchor="middle">Model Serving</text>
+
+  <!-- External LLM API -->
+  <rect x="615" y="390" width="180" height="56" rx="8" fill="url(#infraGrad)" stroke="#da3633" stroke-width="1" filter="url(#shadow)"/>
+  <circle cx="638" cy="412" r="8" fill="none" stroke="#da3633" stroke-width="1"/>
+  <text x="638" y="415" fill="#f85149" font-size="7" text-anchor="middle" font-weight="700">Ext</text>
+  <text x="720" y="415" fill="#f85149" font-size="12" font-weight="600">External LLM API</text>
+  <text x="705" y="432" fill="#8b949e" font-size="9" text-anchor="middle">OpenAI / Anthropic / vLLM</text>
+
+  <!-- MongoDB -->
+  <rect x="830" y="120" width="170" height="70" rx="8" fill="#161b22" stroke="#238636" stroke-width="1" filter="url(#shadow)"/>
+  <!-- DB icon -->
+  <ellipse cx="856" cy="145" rx="10" ry="5" fill="none" stroke="#238636" stroke-width="1"/>
+  <path d="M846 145 L846 160 Q856 168 866 160 L866 145" fill="none" stroke="#238636" stroke-width="1"/>
+  <text x="876" y="153" fill="#3fb950" font-size="13" font-weight="600">MongoDB</text>
+  <text x="915" y="170" fill="#8b949e" font-size="9" text-anchor="middle">Job Storage</text>
+  <text x="915" y="182" fill="#6e7681" font-size="8" text-anchor="middle">Reviews, Graphs, Scores</text>
+
+  <!-- Arrow: API -> MongoDB (diagonal) -->
+  <line x1="340" y1="126" x2="828" y2="148" stroke="#8b949e" stroke-width="0.8" marker-end="url(#arrow-gray)" stroke-dasharray="3 2"/>
+  <text x="580" y="132" fill="#6e7681" font-size="7" text-anchor="middle">persist jobs</text>
+
+  <!-- Arrow: Workers -> MongoDB -->
+  <line x1="540" y1="340" x2="828" y2="172" stroke="#8b949e" stroke-width="0.8" marker-end="url(#arrow-gray)" stroke-dasharray="3 2"/>
+
+  <!-- Redis -->
+  <rect x="830" y="210" width="170" height="70" rx="8" fill="#161b22" stroke="#da3633" stroke-width="1" filter="url(#shadow)"/>
+  <!-- Redis icon -->
+  <rect x="846" y="226" width="14" height="14" rx="2" fill="none" stroke="#da3633" stroke-width="1"/>
+  <path d="M849 230 L853 233 L857 230 M849 234 L853 237 L857 234" fill="none" stroke="#da3633" stroke-width="0.8"/>
+  <text x="868" y="238" fill="#f85149" font-size="13" font-weight="600">Redis</text>
+  <text x="915" y="255" fill="#8b949e" font-size="9" text-anchor="middle">Cache Layer</text>
+  <text x="915" y="267" fill="#6e7681" font-size="8" text-anchor="middle">Graph snapshots, TTL policies</text>
+
+  <!-- Arrow: Workers -> Redis -->
+  <line x1="540" y1="215" x2="828" y2="240" stroke="#8b949e" stroke-width="0.8" marker-end="url(#arrow-gray)" stroke-dasharray="3 2"/>
+  <text x="680" y="220" fill="#6e7681" font-size="7" text-anchor="middle">cache</text>
+
+  <!-- ==================== MONITORING BAND ==================== -->
+
+  <!-- Monitoring background -->
+  <rect x="830" y="310" width="340" height="80" rx="8" fill="url(#monitorGrad)" stroke="#1f6feb" stroke-width="1" filter="url(#shadow)"/>
+  <text x="1000" y="328" fill="#58a6ff" font-size="10" font-weight="600" text-anchor="middle" letter-spacing="0.5">OBSERVABILITY</text>
+
+  <!-- Prometheus -->
+  <rect x="845" y="338" width="70" height="40" rx="6" fill="#0d1117" stroke="#e8590c" stroke-width="0.8"/>
+  <circle cx="880" cy="352" r="6" fill="none" stroke="#e8590c" stroke-width="1"/>
+  <text x="880" y="355" fill="#f0883e" font-size="6" text-anchor="middle" font-weight="700">P</text>
+  <text x="880" y="370" fill="#f0883e" font-size="8" text-anchor="middle">Prometheus</text>
+
+  <!-- Grafana -->
+  <rect x="925" y="338" width="60" height="40" rx="6" fill="#0d1117" stroke="#f778ba" stroke-width="0.8"/>
+  <text x="955" y="358" fill="#f778ba" font-size="8" text-anchor="middle" font-weight="600">Grafana</text>
+  <text x="955" y="370" fill="#8b949e" font-size="7" text-anchor="middle">Dashboards</text>
+
+  <!-- Loki -->
+  <rect x="995" y="338" width="52" height="40" rx="6" fill="#0d1117" stroke="#e2b55a" stroke-width="0.8"/>
+  <text x="1021" y="358" fill="#e2b55a" font-size="8" text-anchor="middle" font-weight="600">Loki</text>
+  <text x="1021" y="370" fill="#8b949e" font-size="7" text-anchor="middle">Logs</text>
+
+  <!-- AlertManager -->
+  <rect x="1057" y="338" width="100" height="40" rx="6" fill="#0d1117" stroke="#f85149" stroke-width="0.8"/>
+  <text x="1107" y="355" fill="#f85149" font-size="8" text-anchor="middle" font-weight="600">AlertManager</text>
+  <text x="1107" y="367" fill="#8b949e" font-size="7" text-anchor="middle">PagerDuty / Slack</text>
+
+  <!-- Arrows from monitoring to components -->
+  <line x1="915" y1="338" x2="915" y2="282" stroke="#8b949e" stroke-width="0.6" stroke-dasharray="2 2" marker-end="url(#arrow-gray)"/>
+  <line x1="915" y1="338" x2="915" y2="192" stroke="#8b949e" stroke-width="0.6" stroke-dasharray="2 2" marker-end="url(#arrow-gray)"/>
+
+  <!-- ==================== PLATFORM LAYER ==================== -->
+
+  <!-- Platform background -->
+  <rect x="30" y="475" width="1140" height="60" rx="8" fill="url(#platformGrad)" stroke="#30363d" stroke-width="1" filter="url(#shadow)"/>
+  <text x="52" y="494" fill="#8b949e" font-size="10" font-weight="600" letter-spacing="0.5">PLATFORM</text>
+
+  <!-- ArgoCD -->
+  <rect x="52" y="502" width="80" height="24" rx="5" fill="#0d1117" stroke="#e8590c" stroke-width="0.8"/>
+  <text x="92" y="518" fill="#f0883e" font-size="9" text-anchor="middle" font-weight="600">ArgoCD</text>
+
+  <!-- NGINX Ingress -->
+  <rect x="148" y="502" width="110" height="24" rx="5" fill="#0d1117" stroke="#238636" stroke-width="0.8"/>
+  <text x="203" y="518" fill="#3fb950" font-size="9" text-anchor="middle" font-weight="600">NGINX Ingress</text>
+
+  <!-- cert-manager -->
+  <rect x="274" y="502" width="104" height="24" rx="5" fill="#0d1117" stroke="#388bfd" stroke-width="0.8"/>
+  <text x="326" y="518" fill="#79c0ff" font-size="9" text-anchor="middle" font-weight="600">cert-manager</text>
+
+  <!-- Terraform -->
+  <rect x="394" y="502" width="90" height="24" rx="5" fill="#0d1117" stroke="#a371f7" stroke-width="0.8"/>
+  <text x="439" y="518" fill="#d2a8ff" font-size="9" text-anchor="middle" font-weight="600">Terraform</text>
+
+  <!-- GitHub Actions -->
+  <rect x="500" y="502" width="116" height="24" rx="5" fill="#0d1117" stroke="#f0f6fc" stroke-width="0.8"/>
+  <text x="558" y="518" fill="#f0f6fc" font-size="9" text-anchor="middle" font-weight="600">GitHub Actions</text>
+
+  <!-- Horizontal separator dots between platform components -->
+  <circle cx="140" cy="514" r="1.5" fill="#30363d"/>
+  <circle cx="266" cy="514" r="1.5" fill="#30363d"/>
+  <circle cx="386" cy="514" r="1.5" fill="#30363d"/>
+  <circle cx="492" cy="514" r="1.5" fill="#30363d"/>
+
+  <!-- ==================== SEQUENTIAL FLOW INDICATORS ==================== -->
+
+  <!-- Step numbers on the pipeline -->
+  <circle cx="188" cy="68" r="9" fill="#1f6feb" stroke="#58a6ff" stroke-width="0.5"/>
+  <text x="188" y="72" fill="#ffffff" font-size="9" text-anchor="middle" font-weight="700">1</text>
+
+  <circle cx="393" cy="68" r="9" fill="#1f6feb" stroke="#58a6ff" stroke-width="0.5"/>
+  <text x="393" y="72" fill="#ffffff" font-size="9" text-anchor="middle" font-weight="700">2</text>
+
+  <circle cx="370" cy="172" r="9" fill="#1f6feb" stroke="#58a6ff" stroke-width="0.5"/>
+  <text x="370" y="176" fill="#ffffff" font-size="9" text-anchor="middle" font-weight="700">3</text>
+
+  <circle cx="370" cy="272" r="9" fill="#1f6feb" stroke="#58a6ff" stroke-width="0.5"/>
+  <text x="370" y="276" fill="#ffffff" font-size="9" text-anchor="middle" font-weight="700">4</text>
+
+  <circle cx="370" cy="372" r="9" fill="#1f6feb" stroke="#58a6ff" stroke-width="0.5"/>
+  <text x="370" y="376" fill="#ffffff" font-size="9" text-anchor="middle" font-weight="700">5</text>
+
+  <!-- ==================== DATA FLOW SUMMARY ==================== -->
+
+  <rect x="30" y="555" width="1140" height="125" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="600" y="575" fill="#c9d1d9" font-size="11" font-weight="600" text-anchor="middle" letter-spacing="0.5">DATA FLOW SEQUENCE</text>
+
+  <!-- Flow steps -->
+  <text x="52" y="598" fill="#58a6ff" font-size="10" font-weight="600">1</text>
+  <text x="68" y="598" fill="#8b949e" font-size="10">GitHub webhook triggers Spring Boot API</text>
+
+  <text x="52" y="616" fill="#58a6ff" font-size="10" font-weight="600">2</text>
+  <text x="68" y="616" fill="#8b949e" font-size="10">API publishes <tspan fill="#79c0ff">review.requested</tspan> event to Kafka, persists job to MongoDB</text>
+
+  <text x="52" y="634" fill="#58a6ff" font-size="10" font-weight="600">3</text>
+  <text x="68" y="634" fill="#8b949e" font-size="10">Graph Workers build code graph, cache in Redis, produce <tspan fill="#79c0ff">graph.ready</tspan></text>
+
+  <text x="52" y="652" fill="#58a6ff" font-size="10" font-weight="600">4</text>
+  <text x="68" y="652" fill="#8b949e" font-size="10">GNN Workers call Triton (GPU) for anomaly scoring, produce <tspan fill="#79c0ff">scores.ready</tspan></text>
+
+  <text x="52" y="670" fill="#58a6ff" font-size="10" font-weight="600">5</text>
+  <text x="68" y="670" fill="#8b949e" font-size="10">LLM Workers call external LLM for review generation, produce <tspan fill="#79c0ff">review.complete</tspan></text>
+
+  <!-- Title / Legend line -->
+  <rect x="830" y="400" width="340" height="65" rx="8" fill="#0d1117" stroke="#21262d" stroke-width="1"/>
+  <text x="850" y="420" fill="#c9d1d9" font-size="10" font-weight="600">LEGEND</text>
+  <line x1="850" y1="436" x2="880" y2="436" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="890" y="440" fill="#8b949e" font-size="9">Event / data flow</text>
+  <line x1="980" y1="436" x2="1010" y2="436" stroke="#8b949e" stroke-width="0.8" stroke-dasharray="3 2" marker-end="url(#arrow-gray)"/>
+  <text x="1020" y="440" fill="#8b949e" font-size="9">Infra / side-channel</text>
+  <circle cx="862" cy="454" r="7" fill="#1f6feb" stroke="#58a6ff" stroke-width="0.5"/>
+  <text x="862" y="458" fill="#ffffff" font-size="8" text-anchor="middle" font-weight="700">N</text>
+  <text x="878" y="458" fill="#8b949e" font-size="9">Pipeline step</text>
+
+</svg>
+</div>
+</body>
+</html>
