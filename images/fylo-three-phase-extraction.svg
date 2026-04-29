@@ -1,0 +1,160 @@
+<svg viewBox="0 0 700 680" xmlns="http://www.w3.org/2000/svg" font-family="'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <marker id="arrow-flow" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#64748b" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-amber" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-teal" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-rose" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#fb7185" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#3b82f6" flood-opacity="0.15" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#8b5cf6" flood-opacity="0.15" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#f59e0b" flood-opacity="0.12" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-teal" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#14b8a6" flood-opacity="0.12" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.5" fill="rgba(255,255,255,0.06)"/>
+    </pattern>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="700" height="680" rx="16" fill="#0f172a"/>
+  <rect width="700" height="680" rx="16" fill="url(#dots)"/>
+  <circle cx="350" cy="340" r="300" fill="rgba(59,130,246,0.03)"/>
+
+  <!-- TITLE -->
+  <text x="350" y="32" text-anchor="middle" font-size="13" font-weight="700" fill="#e2e8f0" letter-spacing="0.02em">Three-Phase Extraction Pipeline</text>
+  <text x="350" y="48" text-anchor="middle" font-size="9" fill="#64748b" letter-spacing="0.04em">Per-chunk processing with ShEx validation gates</text>
+  <line x1="40" y1="58" x2="660" y2="58" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <!-- ── CHUNK INPUT ── -->
+  <g transform="translate(250, 72)">
+    <rect width="200" height="44" rx="8" fill="rgba(30,41,59,0.85)" stroke="rgba(100,116,139,0.3)" stroke-width="1.2"/>
+    <text x="100" y="18" text-anchor="middle" font-size="11" font-weight="600" fill="#e2e8f0">Document Chunk</text>
+    <text x="100" y="32" text-anchor="middle" font-size="8" fill="#94a3b8">text segment from PDF</text>
+  </g>
+
+  <!-- Arrow down to Phase 1 -->
+  <line x1="350" y1="116" x2="350" y2="136" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-flow)"/>
+
+  <!-- ── PHASE 1: ENTITY EXTRACTION ── -->
+  <g transform="translate(130, 144)">
+    <rect width="440" height="80" rx="10" fill="rgba(30,41,59,0.85)" stroke="rgba(59,130,246,0.25)" stroke-width="1.2" filter="url(#glow-blue)"/>
+    <rect width="100" height="20" rx="5" fill="#3b82f6" opacity="0.9" x="170" y="-10"/>
+    <text x="220" y="5" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" letter-spacing="0.8">PHASE 1</text>
+
+    <text x="220" y="28" text-anchor="middle" font-size="11" font-weight="600" fill="#e2e8f0">Entity Extraction</text>
+    <line x1="16" y1="36" x2="424" y2="36" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="220" y="50" text-anchor="middle" font-size="8" fill="#94a3b8">LLM prompt: extract typed nodes only</text>
+    <text x="220" y="62" text-anchor="middle" font-size="8" fill="#60a5fa">edges explicitly forbidden in prompt</text>
+    <text x="220" y="74" text-anchor="middle" font-size="7" fill="#475569">outputs: Factor, Association, Hypothesis, ResearchQuestion...</text>
+  </g>
+
+  <!-- Arrow down to ShEx check 1 -->
+  <line x1="350" y1="224" x2="350" y2="244" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-flow)"/>
+
+  <!-- ── ShEx VALIDATION 1 (diamond) ── -->
+  <g transform="translate(310, 252)">
+    <polygon points="40,0 80,24 40,48 0,24" fill="rgba(30,41,59,0.85)" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="40" y="22" text-anchor="middle" font-size="8" font-weight="600" fill="#fbbf24">ShEx</text>
+    <text x="40" y="32" text-anchor="middle" font-size="7" fill="#fbbf24">Valid?</text>
+  </g>
+
+  <!-- PASS arrow down -->
+  <line x1="350" y1="300" x2="350" y2="326" stroke="#34d399" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-teal)"/>
+  <text x="362" y="316" font-size="7" fill="#34d399">PASS</text>
+
+  <!-- FAIL arrow right and back up to Phase 1 -->
+  <path d="M390,276 L560,276 Q570,276 570,266 L570,194 Q570,184 560,184 L574,184" fill="none" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-rose)"/>
+  <text x="578" y="238" font-size="7" fill="#fb7185">FAIL</text>
+  <text x="582" y="248" font-size="6" fill="#94a3b8">re-extract with</text>
+  <text x="582" y="258" font-size="6" fill="#94a3b8">error context</text>
+
+  <!-- ── PHASE 2: RELATION EXTRACTION ── -->
+  <g transform="translate(130, 334)">
+    <rect width="440" height="80" rx="10" fill="rgba(30,41,59,0.85)" stroke="rgba(139,92,246,0.25)" stroke-width="1.2" filter="url(#glow-purple)"/>
+    <rect width="100" height="20" rx="5" fill="#7c3aed" opacity="0.9" x="170" y="-10"/>
+    <text x="220" y="5" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" letter-spacing="0.8">PHASE 2</text>
+
+    <text x="220" y="28" text-anchor="middle" font-size="11" font-weight="600" fill="#e2e8f0">Relation Extraction</text>
+    <line x1="16" y1="36" x2="424" y2="36" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="220" y="50" text-anchor="middle" font-size="8" fill="#94a3b8">LLM prompt: extract edges between Phase 1 entities</text>
+    <text x="220" y="62" text-anchor="middle" font-size="8" fill="#a78bfa">new nodes only when edge would otherwise dangle</text>
+    <text x="220" y="74" text-anchor="middle" font-size="7" fill="#475569">Phase 1 entities passed as context</text>
+  </g>
+
+  <!-- Arrow down to ShEx check 2 -->
+  <line x1="350" y1="414" x2="350" y2="434" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-flow)"/>
+
+  <!-- ── ShEx VALIDATION 2 (diamond) ── -->
+  <g transform="translate(310, 442)">
+    <polygon points="40,0 80,24 40,48 0,24" fill="rgba(30,41,59,0.85)" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="40" y="22" text-anchor="middle" font-size="8" font-weight="600" fill="#fbbf24">ShEx</text>
+    <text x="40" y="32" text-anchor="middle" font-size="7" fill="#fbbf24">Valid?</text>
+  </g>
+
+  <!-- PASS arrow down -->
+  <line x1="350" y1="490" x2="350" y2="510" stroke="#34d399" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-teal)"/>
+  <text x="362" y="502" font-size="7" fill="#34d399">PASS</text>
+
+  <!-- FAIL arrow right -->
+  <path d="M390,466 L560,466 Q570,466 570,456 L570,384 Q570,374 560,374 L574,374" fill="none" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-rose)"/>
+  <text x="578" y="428" font-size="7" fill="#fb7185">FAIL</text>
+
+  <!-- ── PHASE 3: STRUCTURAL REPAIR ── -->
+  <g transform="translate(130, 518)">
+    <rect width="440" height="64" rx="10" fill="rgba(30,41,59,0.85)" stroke="rgba(52,211,153,0.25)" stroke-width="1.2" filter="url(#glow-teal)"/>
+    <rect width="100" height="20" rx="5" fill="#0d9488" opacity="0.9" x="170" y="-10"/>
+    <text x="220" y="5" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" letter-spacing="0.8">PHASE 3</text>
+
+    <text x="220" y="26" text-anchor="middle" font-size="11" font-weight="600" fill="#e2e8f0">Structural Repair</text>
+    <line x1="16" y1="34" x2="424" y2="34" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="220" y="48" text-anchor="middle" font-size="8" fill="#94a3b8">fix dangling references, repair orphans, merge duplicates</text>
+    <text x="220" y="60" text-anchor="middle" font-size="7" fill="#475569">LLM shown disconnected nodes with focused context</text>
+  </g>
+
+  <!-- Arrow down to output -->
+  <line x1="350" y1="582" x2="350" y2="604" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-flow)"/>
+
+  <!-- ── OUTPUT ── -->
+  <g transform="translate(230, 612)">
+    <rect width="240" height="44" rx="8" fill="rgba(30,41,59,0.85)" stroke="rgba(244,63,94,0.25)" stroke-width="1.2"/>
+    <text x="120" y="18" text-anchor="middle" font-size="11" font-weight="600" fill="#fb7185">Final Graph Fragment</text>
+    <text x="120" y="32" text-anchor="middle" font-size="8" fill="#94a3b8">validated nodes + edges ready for merge</text>
+  </g>
+
+  <!-- Border -->
+  <rect width="700" height="680" rx="16" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+</svg>

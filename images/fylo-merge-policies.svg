@@ -1,0 +1,168 @@
+<svg viewBox="0 0 700 900" xmlns="http://www.w3.org/2000/svg" font-family="'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <marker id="arrow-flow" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#64748b" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-teal" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#3b82f6" flood-opacity="0.15" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#8b5cf6" flood-opacity="0.15" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-teal" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#14b8a6" flood-opacity="0.12" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.5" fill="rgba(255,255,255,0.06)"/>
+    </pattern>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="700" height="900" rx="16" fill="#0f172a"/>
+  <rect width="700" height="900" rx="16" fill="url(#dots)"/>
+  <circle cx="350" cy="260" r="200" fill="rgba(52,211,153,0.03)"/>
+  <circle cx="350" cy="680" r="200" fill="rgba(139,92,246,0.03)"/>
+
+  <!-- TITLE -->
+  <text x="350" y="32" text-anchor="middle" font-size="13" font-weight="700" fill="#e2e8f0" letter-spacing="0.02em">Cross-Document Merge Policies</text>
+  <text x="350" y="48" text-anchor="middle" font-size="9" fill="#64748b" letter-spacing="0.04em">Role-filtered ANN search with typed merge thresholds</text>
+  <line x1="40" y1="58" x2="660" y2="58" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <!-- ═══ AGGRESSIVE MERGE (TOP) ═══ -->
+  <g transform="translate(40, 72)">
+    <rect width="620" height="28" rx="6" fill="rgba(52,211,153,0.1)" stroke="rgba(52,211,153,0.3)" stroke-width="1"/>
+    <text x="310" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#34d399" letter-spacing="0.5">AGGRESSIVE MERGE</text>
+    <text x="310" y="46" text-anchor="middle" font-size="8" fill="#94a3b8">Used for: Factor, VariableOfInterest, StudyDesign, StatisticalMethod</text>
+
+    <!-- BEFORE -->
+    <text x="310" y="72" text-anchor="middle" font-size="9" font-weight="600" fill="#64748b">BEFORE</text>
+
+    <!-- Source nodes side by side -->
+    <g transform="translate(80, 82)">
+      <rect x="0" y="0" width="180" height="56" rx="8" fill="rgba(30,41,59,0.85)" stroke="rgba(52,211,153,0.3)" stroke-width="1.2" filter="url(#glow-teal)"/>
+      <text x="90" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Factor</text>
+      <text x="90" y="32" text-anchor="middle" font-size="8" fill="#34d399">"Protein X"</text>
+      <text x="90" y="46" text-anchor="middle" font-size="7" fill="#64748b">Paper A, conf: 0.92</text>
+
+      <!-- Similarity -->
+      <rect x="196" y="18" width="50" height="20" rx="4" fill="rgba(52,211,153,0.12)" stroke="rgba(52,211,153,0.3)" stroke-width="0.8"/>
+      <text x="221" y="32" text-anchor="middle" font-size="8" font-weight="700" fill="#34d399">cos&gt;0.96</text>
+
+      <rect x="262" y="0" width="180" height="56" rx="8" fill="rgba(30,41,59,0.85)" stroke="rgba(52,211,153,0.3)" stroke-width="1.2" filter="url(#glow-teal)"/>
+      <text x="352" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Factor</text>
+      <text x="352" y="32" text-anchor="middle" font-size="8" fill="#34d399">"Inflammatory Protein X"</text>
+      <text x="352" y="46" text-anchor="middle" font-size="7" fill="#64748b">Paper B, conf: 0.87</text>
+    </g>
+
+    <!-- Arrow down -->
+    <text x="310" y="158" text-anchor="middle" font-size="14" fill="#475569">&#8595;</text>
+    <text x="310" y="172" text-anchor="middle" font-size="7.5" fill="#94a3b8">merge + rewire edges + union provenance + weight-avg embedding</text>
+
+    <!-- AFTER -->
+    <text x="310" y="190" text-anchor="middle" font-size="9" font-weight="600" fill="#64748b">AFTER</text>
+
+    <g transform="translate(140, 200)">
+      <rect x="0" y="0" width="340" height="56" rx="8" fill="rgba(30,41,59,0.85)" stroke="rgba(52,211,153,0.4)" stroke-width="1.5" filter="url(#glow-teal)"/>
+      <text x="170" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">Factor</text>
+      <text x="170" y="32" text-anchor="middle" font-size="8.5" fill="#34d399">"Protein X"</text>
+      <text x="170" y="46" text-anchor="middle" font-size="7" fill="#94a3b8">Papers A+B, conf: 0.90 (weighted avg), embedding upserted to FAISS</text>
+    </g>
+
+    <g transform="translate(120, 268)">
+      <rect x="0" y="0" width="380" height="20" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="0.6"/>
+      <text x="190" y="13" text-anchor="middle" font-size="7" fill="#94a3b8">Lower-confidence node ID rewritten across all incident edges</text>
+    </g>
+  </g>
+
+  <!-- Divider -->
+  <line x1="100" y1="375" x2="600" y2="375" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- ═══ CANONICAL HUB (BOTTOM) ═══ -->
+  <g transform="translate(40, 390)">
+    <rect width="620" height="28" rx="6" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+    <text x="310" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#a78bfa" letter-spacing="0.5">CANONICAL HUB</text>
+    <text x="310" y="46" text-anchor="middle" font-size="8" fill="#94a3b8">Used for: Association, Hypothesis, ResearchQuestion</text>
+
+    <!-- BEFORE -->
+    <text x="310" y="72" text-anchor="middle" font-size="9" font-weight="600" fill="#64748b">BEFORE</text>
+
+    <g transform="translate(80, 82)">
+      <rect x="0" y="0" width="180" height="56" rx="8" fill="rgba(30,41,59,0.85)" stroke="rgba(139,92,246,0.3)" stroke-width="1.2" filter="url(#glow-purple)"/>
+      <text x="90" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Association</text>
+      <text x="90" y="32" text-anchor="middle" font-size="8" fill="#a78bfa">"X reduces inflammation"</text>
+      <text x="90" y="46" text-anchor="middle" font-size="7" fill="#64748b">Paper A, conf: 0.91</text>
+
+      <rect x="196" y="18" width="50" height="20" rx="4" fill="rgba(139,92,246,0.12)" stroke="rgba(139,92,246,0.3)" stroke-width="0.8"/>
+      <text x="221" y="32" text-anchor="middle" font-size="8" font-weight="700" fill="#a78bfa">0.93</text>
+
+      <rect x="262" y="0" width="180" height="56" rx="8" fill="rgba(30,41,59,0.85)" stroke="rgba(139,92,246,0.3)" stroke-width="1.2" filter="url(#glow-purple)"/>
+      <text x="352" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#e2e8f0">Association</text>
+      <text x="352" y="32" text-anchor="middle" font-size="8" fill="#a78bfa">"X attenuates inflammation"</text>
+      <text x="352" y="46" text-anchor="middle" font-size="7" fill="#64748b">Paper B, conf: 0.85</text>
+    </g>
+
+    <!-- Arrow down -->
+    <text x="310" y="158" text-anchor="middle" font-size="14" fill="#475569">&#8595;</text>
+    <text x="310" y="172" text-anchor="middle" font-size="7.5" fill="#94a3b8">create CANON_ node, originals preserved with all citations</text>
+
+    <!-- AFTER -->
+    <text x="310" y="190" text-anchor="middle" font-size="9" font-weight="600" fill="#64748b">AFTER</text>
+
+    <!-- Originals preserved at top -->
+    <g transform="translate(60, 200)">
+      <rect x="0" y="0" width="210" height="36" rx="6" fill="rgba(30,41,59,0.85)" stroke="rgba(139,92,246,0.2)" stroke-width="1"/>
+      <text x="105" y="14" text-anchor="middle" font-size="8" font-weight="600" fill="#e2e8f0">Association A</text>
+      <text x="105" y="28" text-anchor="middle" font-size="7" fill="#94a3b8">"X reduces infl." conf: 0.91</text>
+
+      <rect x="290" y="0" width="210" height="36" rx="6" fill="rgba(30,41,59,0.85)" stroke="rgba(139,92,246,0.2)" stroke-width="1"/>
+      <text x="395" y="14" text-anchor="middle" font-size="8" font-weight="600" fill="#e2e8f0">Association B</text>
+      <text x="395" y="28" text-anchor="middle" font-size="7" fill="#94a3b8">"X attenuates infl." conf: 0.85</text>
+    </g>
+
+    <!-- Mentions edges down to CANON -->
+    <line x1="165" y1="236" x2="165" y2="262" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#arrow-purple)"/>
+    <text x="178" y="252" font-size="6" fill="#a78bfa">mentions</text>
+    <line x1="535" y1="236" x2="535" y2="262" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#arrow-purple)"/>
+    <text x="548" y="252" font-size="6" fill="#a78bfa">mentions</text>
+
+    <!-- CANON node -->
+    <g transform="translate(110, 270)">
+      <rect x="0" y="0" width="480" height="56" rx="8" fill="rgba(30,41,59,0.7)" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="6,3" filter="url(#glow-purple)"/>
+      <text x="240" y="18" text-anchor="middle" font-size="9" font-weight="700" fill="#c4b5fd">CANON_Association_001</text>
+      <text x="240" y="32" text-anchor="middle" font-size="8" fill="#a78bfa">"Protein X reduces inflammation"</text>
+      <text x="240" y="46" text-anchor="middle" font-size="7" fill="#64748b">Synthetic node, centroid embedding, queryable hub for downstream analytics</text>
+    </g>
+
+    <g transform="translate(60, 340)">
+      <rect x="0" y="0" width="580" height="34" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="0.6"/>
+      <text x="290" y="13" text-anchor="middle" font-size="7" fill="#94a3b8">Originals retain all citations, evidence, and confidence scores</text>
+      <text x="290" y="26" text-anchor="middle" font-size="7" fill="#64748b">New similar nodes either attach via mentions or create new CANON_ when distinct</text>
+    </g>
+  </g>
+
+  <!-- Bottom bar -->
+  <line x1="40" y1="780" x2="660" y2="780" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="350" y="800" text-anchor="middle" font-size="8" fill="#475569">FAISS HNSW index | role-filtered candidates | embedding upsert on merge</text>
+
+  <rect width="700" height="900" rx="16" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+</svg>

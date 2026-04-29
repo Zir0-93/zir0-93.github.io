@@ -39,9 +39,11 @@ The subtler issue is failure coupling. When everything runs in a single synchron
 
 ## What striff.io Does
 
-striff.io takes a GitHub pull request and generates a visual architecture diff. Changed files become seed nodes in a typed dependency graph extracted by striff-lib. A symbolic analysis layer computes deterministic facts: dependency cycles, package boundary crossings, fan-in blast radius, OOP metric deltas. A distilled R-GCN running on ONNX Runtime scores each changed component for structural anomaly. Both signals feed a structured LLM agent payload. The agent produces tiered review notes rendered as sticky notes directly on the SVG class diagram.
+[striff.io](https://striff.io) takes a GitHub pull request and generates a visual architecture diff. Changed files become seed nodes in a typed dependency graph extracted by striff-lib. A symbolic analysis layer computes deterministic facts: dependency cycles, package boundary crossings, fan-in blast radius, OOP metric deltas. A distilled R-GCN running on ONNX Runtime scores each changed component for structural anomaly. Both signals feed a structured LLM agent payload. The agent produces tiered review notes rendered as sticky notes directly on the SVG class diagram.
 
 The whole system runs on DigitalOcean Kubernetes, provisioned with Terraform, deployed via ArgoCD, and monitored with Prometheus and Grafana.
+
+<img src="/images/striff-why-visual.svg" style="margin-left:auto; margin-right:auto; display: block; max-width: 700px;"/>
 
 <img src="/images/striff-architecture-diagram.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
 
@@ -81,7 +83,7 @@ Service boundaries also create contract risk that in-process calls do not have. 
 
 ## Parsing Large Codebases Without Drowning
 
-Parsing is the most expensive operation in the pipeline and the one most teams building code analysis tools get wrong. The naive approach parses the entire repository on every PR event. That does not scale and it is also wrong: a review does not need the full repository graph, it needs the structural neighbourhood of what changed. Parse less, but parse smarter.
+Parsing is the most expensive operation in the pipeline and the one most teams building code analysis tools get wrong. The naive approach parses the entire repository on every PR event. That does not scale and it is also wrong: a review does not need the full repository graph, it needs the structural neighbourhood of what changed. Parse less, but parse smarter. On a 1000-file Java codebase, striff-lib's full pipeline (file I/O, Clarpse parsing, reference classification, relationship extraction, diff computation, model merge) takes roughly four seconds. Most of that time is in relationship extraction, which is why scoping the parse set matters so much.
 
 The pipeline builds this neighbourhood in three steps via ScopedFileSelector, TimeBoxedParser, and NeighborhoodExpander.
 
@@ -115,6 +117,8 @@ For the rollout itself we use Argo Rollouts with a blue/green strategy. Model be
 
 AIReviewService implements a three-tier degradation hierarchy. Every failure mode produces a weaker but still useful output rather than returning an error.
 
+<img src="/images/striff-reviewnote.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 650px;"/>
+
 **Full pipeline.** TimeBoxedParser completes within budget, NeighborhoodExpander produces a valid subgraph, OnnxArchitecturalScorer returns anomaly scores, and GradientAIReviewCoordinator receives symbolic facts plus scored components as structured context. This is the highest-quality path.
 
 **Symbolic-only fallback.** If the scoped parse times out, if NeighborhoodExpander produces an empty result, or if the ONNX scorer throws for any reason, the review continues with deterministic symbolic facts only. SymbolicFactsComputer runs Kosaraju SCC on JGraphT, computes boundary crossings and fan-in blast radius, and assembles the agent payload without anomaly scores. Review notes are less precise about which components to prioritise, but they are grounded in real structural evidence.
@@ -131,8 +135,6 @@ There is a quality gate at the end of all three paths. A review is not considere
 
 ## Where to Go From Here
 
-[striff.io](https://striff.io) is live. You can run it on any public GitHub repository today.
+[striff.io](https://striff.io) is live. You can run it on any public GitHub repository today. There is also a [Chrome extension](https://github.com/hadi-technology/striff-browser-extension) for inline PR review on GitHub.
 
-[striff-lib](https://github.com/hadi-technology/striff-lib) is open source. The parsing and diagram generation core is available if you want to explore the graph extraction layer or build on it.
-
-If you are working on a problem involving production ML systems, event-driven ML pipelines, or graph-based inference infrastructure and are looking for an experienced collaborator, I take on consulting and architecture work through [Upwork placeholder].
+[striff-lib](https://github.com/hadi-technology/striff-lib) is open source (available on Maven as `io.github.hadi-technology:striff-lib`). The parsing and diagram generation core is available if you want to explore the graph extraction layer or build on it.

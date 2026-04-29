@@ -10,11 +10,13 @@ excerpt_separator: <!--more-->
 
 
 
-Code review has a specific information problem that most tooling ignores. When you open a pull request on a large codebase, the diff shows you *lines*. It does not show you that the class you just modified now has fourteen things depending on it when it had three last week. It does not show you that a new import three files away quietly created a dependency cycle between two packages that were previously clean. It does not show you that the abstraction you just extended sits at depth six in an inheritance tree that has been growing for two years.
+Code review has a specific information problem that most tooling ignores. When you open a pull request on a large codebase, the diff shows you *lines*. It does not show you that the class you just modified now has fourteen things depending on it when it had three last week. It does not show you that a new import three files away quietly created a dependency cycle between two packages that were previously clean. It does not show you that the abstraction Claude just extended sits at depth six in an inheritance tree that has been growing for two years.
 
 These are not edge cases. They are the class of change that produces architectural debt, the kind that compounds quietly and becomes expensive to unwind.
 
 That is the problem [striff.io](https://striff.io) was built to address. The product generates visual architecture diffs from GitHub pull requests: instead of a line diff, you get an SVG class diagram showing which components changed, how their relationships shifted, and which of those changes carry structural risk, annotated directly on the diagram.
+
+
 
 The interesting engineering question is not the diagram rendering. It is *how you decide what to flag*. The approach we landed on is a staged neurosymbolic pipeline: extract a structural graph, compute deterministic symbolic facts, run a learned GNN anomaly scorer, and *only then* ask an LLM to annotate. The order is deliberate. The infrastructure that runs this pipeline at scale -- Kafka staging, Triton inference, degradation modes -- is covered in a [companion post]({% post_url 2026-04-28-striff-io-ml-infrastructure %}).
 
@@ -96,6 +98,8 @@ The next nine dimensions are the Chidamber-Kemerer metric suite plus three addit
 
 The Chidamber-Kemerer metrics date back to 1994 and have held up in empirical software quality work (Basili, Briand and Melo 1996; Zhou and Leung 2005). They are not perfect defect predictors individually, but as a multivariate signal they correlate well with maintenance burden and architectural fragility.
 
+<img src="/images/striff-oopmetrics.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 600px;"/>
+
 Z-score normalisation per language is applied to the first six metric dimensions. This is non-negotiable. A Java class with a WMC of 20 is unremarkable. A Python module with WMC of 20 is an outlier. Without per-language normalisation using pre-computed training statistics, the model learns spurious correlations between language choice and anomaly score. Normalisation statistics are stored in metric_normalizer.json and loaded at scorer initialisation.
 
 ### Component Type and Language (dims 393-403)
@@ -134,7 +138,7 @@ We experimented with GAT during development. Score distributions were broader an
 
 ### Distillation for Deployment
 
-The deployed scorer is a distilled version of a larger model. Training used a deeper, wider GCN. The distilled model matches the larger model's output distribution on held-out graphs while being compact enough for synchronous inference during a live review request.
+The deployed scorer is a distilled version of a larger model. Training used an ArchGraphMAE -- a masked autoencoder with a 3-layer Heterogeneous Graph Transformer (HGT) encoder (128 hidden dimensions, 4 attention heads per layer). The encoder learns type-specific key and value transforms per relation type, plus edge-type attention priors, giving it the capacity to model different coupling regimes for different edge types. The decoder uses five independent MLP heads (one per edge type) for masked edge reconstruction. Training masks roughly 50% of outgoing edges from focal nodes and uses hard negative sampling from 2-hop neighbours. The distilled GCN matches the larger model's output distribution on held-out graphs while being compact enough for synchronous inference during a live review request.
 
 The reason to train-then-distill rather than train small directly: the larger model generalises better and produces better-calibrated anomaly scores. Knowledge distillation transfers this into an inference-efficient form. The deployed model runs on ONNX Runtime.
 
@@ -147,7 +151,7 @@ The reason to train-then-distill rather than train small directly: the larger mo
 
 Anomaly in a code graph means a component whose structural neighbourhood deviates from patterns seen in well-structured codebases. High unexpected coupling density, atypical fan-in/out for its component type, metric combinations that fall outside the training distribution, or a neighbourhood that looks nothing like similarly-typed components in healthy code.
 
-Training graphs were built from open-source Java and Python repositories with known quality properties. These form the healthy class. Anomalous examples come from two sources: synthetically generated architectural violations (introduced cycles, deliberate god class construction, boundary crossings) and real historical debt that was later refactored out, extracted from commit history. Class imbalance is addressed with weighted sampling. Architectural anomalies are rare in maintained codebases, and a naive training setup would learn to predict healthy for everything.
+Training graphs were built from 60 open-source repositories across Java, Python, and TypeScript (20 per language), including large enterprise frameworks, middleware, and web applications. These form the healthy class. Anomalous examples come from two sources: synthetically generated architectural violations (introduced cycles, deliberate god class construction, boundary crossings) and real historical debt that was later refactored out, extracted from commit history. Class imbalance is addressed with weighted sampling. Architectural anomalies are rare in maintained codebases, and a naive training setup would learn to predict healthy for everything.
 
 Graph sizes in training data ranged from roughly 15 to 480 nodes with a median around 60. Edge density varied considerably between tightly-coupled Java enterprise codebases and functional Python repositories.
 
@@ -160,6 +164,9 @@ The value of the continuous score is in ranking. A dependency cycle is binary: i
 ## Neurosymbolic Fusion: Combining Symbolic and Learned Signals
 
 With both symbolic facts and GNN scores available, the question is how to combine them. The answer is deliberately simple.
+
+<img src="/images/gnn-pipeline-diagram.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
+
 
 The symbolic layer computes deterministic facts from the expanded subgraph:
 
@@ -178,18 +185,18 @@ This constraint on the LLM does more work than it looks like. An LLM given a raw
 
 The output in [striff.io](https://striff.io) looks like this, rendered as sticky notes directly on the architecture diagram:
 
-*[Diagram 4: TODO, insert screenshot of a striff.io diagram with AI review sticky notes visible inside package blocks. Show at minimum one HIGH-tier and one REVIEW-tier note with example text.]*
+*[Diagram 4: An example striff.io architecture diff with AI review annotations rendered as sticky notes on the diagram.]*
+
+<img src="/images/striff-hero-diagram.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
 
 Examples of review annotations the system produces:
 
-> **HIGH: Coupling boundary crossed**
-> AIReviewService now has a direct dependency on PUMLDiagram, a rendering primitive. This crosses the service/render boundary. Consider routing through the existing StriffProcessor coordinator.
+> **HIGH: Contract drift**
+> `AbstractJavaCodegenTest` changes (EC increased) indicate test expectations have shifted alongside `AbstractJavaCodegen` behavior. When tests that compose with core classes change, it often signals a behavioral contract change rather than a pure  refactor. Consequence: downstream language implementations and template consumers are likely to need updates within the next release window, increasing short-term integration friction. Tradeoff: evolving the core contract can unlock improved behavior but raises immediate upgrade work and client compatibility pressure.
 
-> **REVIEW: Fan-in spike**
-> CompactReviewPayload gained 3 new dependents this PR (total: 9). As shared substrate for symbolic analysis, agent input, and rendering, changes here have wide blast radius.
+> **REVIEW: Fan-in gravity**
+> `ModelUtils` is a very large utility (WMC ~679) referenced by core code (`AbstractJavaCodegen`) and tests. That size makes it a coupling magnet: small changes to `ModelUtils` will ripple across many generators/tests in the short term (next release) and create substantial coordination cost over the medium term (few releases) as callers evolve. Tradeoff: centralizing parsing/validation logic reduces duplication today but increases the risk that future API tweaks become high-impact change events that block parallel work and pressure teams to copy-or-extend portions (copying will accelerate boundary erosion). Evidence: the changeset shows heavy `ModelUtils` surface area and explicit deps from `AbstractJavaCodegen` and tests.
 
-> **HIGH: Package cycle introduced**
-> A dependency cycle now exists between ai.neuro.gnn and ai.neuro.facts through SymbolicFactsComputer and FeatureBuilder.
 
 These are generated from structured signals, not from the diff text.
 
@@ -204,5 +211,3 @@ striff-lib is open source. The parsing and diagram generation core is available 
 The Python GNN training pipeline is available at [github.com/hadi-technology/striff-gnn](https://github.com/hadi-technology/striff-gnn).
 
 The staging pattern described here, symbolic analysis followed by learned scoring followed by grounded LLM annotation, is not specific to code review. Anywhere you have a domain representable as a structured graph where some properties are deterministically computable and others are distributional, this approach applies. Database schema evolution, API contract drift, infrastructure dependency analysis, security vulnerability propagation.
-
-If you are working on a problem involving graph-based ML, neurosymbolic architectures, or production GNN systems and are looking for an experienced collaborator, I take on consulting and architecture engagements through [Upwork placeholder].

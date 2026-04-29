@@ -1,0 +1,266 @@
+<svg viewBox="0 0 700 1100" xmlns="http://www.w3.org/2000/svg" font-family="'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif">
+  <defs>
+    <marker id="arrow-flow" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#64748b" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-amber" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-teal" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-rose" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
+      <path d="M0,0.5 L9,4 L0,7.5" fill="none" stroke="#fb7185" stroke-width="1.5" stroke-linejoin="round"/>
+    </marker>
+
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#3b82f6" flood-opacity="0.15" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#8b5cf6" flood-opacity="0.15" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-teal" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#14b8a6" flood-opacity="0.12" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#f59e0b" flood-opacity="0.12" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.5" fill="rgba(255,255,255,0.06)"/>
+    </pattern>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="700" height="1100" rx="16" fill="#0f172a"/>
+  <rect width="700" height="1100" rx="16" fill="url(#dots)"/>
+  <circle cx="350" cy="400" r="300" fill="rgba(59,130,246,0.03)"/>
+  <circle cx="350" cy="800" r="250" fill="rgba(52,211,153,0.03)"/>
+
+  <!-- TITLE -->
+  <text x="350" y="32" text-anchor="middle" font-size="13" font-weight="700" fill="#e2e8f0" letter-spacing="0.02em">FyloAI Neurosymbolic Ingestion Pipeline</text>
+  <text x="350" y="48" text-anchor="middle" font-size="9" fill="#64748b" letter-spacing="0.04em">Schema-Validated Discourse Graph Construction</text>
+  <line x1="40" y1="58" x2="660" y2="58" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <!-- ═══ STAGE 1: INPUT ═══ -->
+  <g transform="translate(235, 72)">
+    <rect width="230" height="22" rx="5" fill="#3b82f6" opacity="0.9"/>
+    <text x="115" y="15" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" letter-spacing="0.8">1 INPUT</text>
+
+    <rect x="4" y="32" width="222" height="80" rx="10" fill="rgba(30,41,59,0.85)" stroke="rgba(59,130,246,0.25)" stroke-width="1.2" filter="url(#glow-blue)"/>
+    <!-- PDF icon -->
+    <rect x="20" y="44" width="24" height="30" rx="3" fill="none" stroke="#60a5fa" stroke-width="1.2"/>
+    <path d="M36,44 L44,52" fill="none" stroke="#60a5fa" stroke-width="1"/>
+    <path d="M36,44 L36,52 L44,52" fill="none" stroke="#60a5fa" stroke-width="1"/>
+    <text x="52" y="56" font-size="10" font-weight="600" fill="#e2e8f0">Scientific PDF</text>
+    <text x="52" y="68" font-size="8" fill="#94a3b8">claims, evidence, citations</text>
+    <line x1="16" y1="76" x2="214" y2="76" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <rect x="60" y="82" width="110" height="16" rx="4" fill="rgba(59,130,246,0.12)" stroke="rgba(59,130,246,0.3)" stroke-width="0.8"/>
+    <text x="115" y="93" text-anchor="middle" font-size="7.5" font-weight="600" fill="#60a5fa">CHUNK SPLITTER</text>
+  </g>
+
+  <!-- Arrow down -->
+  <line x1="350" y1="184" x2="350" y2="204" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-flow)"/>
+
+  <!-- ═══ STAGE 2: PHASED LLM EXTRACTION ═══ -->
+  <g transform="translate(100, 212)">
+    <rect width="500" height="22" rx="5" fill="#7c3aed" opacity="0.9"/>
+    <text x="250" y="15" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" letter-spacing="0.8">2 PHASED LLM EXTRACTION</text>
+
+    <rect x="4" y="32" width="492" height="100" rx="10" fill="rgba(30,41,59,0.85)" stroke="rgba(139,92,246,0.25)" stroke-width="1.2" filter="url(#glow-purple)"/>
+
+    <text x="250" y="52" text-anchor="middle" font-size="10.5" font-weight="600" fill="#e2e8f0">Three-Phase Extraction</text>
+    <line x1="16" y1="60" x2="484" y2="60" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <!-- Phase boxes -->
+    <g transform="translate(14, 68)">
+      <rect x="0" y="0" width="148" height="42" rx="4" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="0.8"/>
+      <text x="74" y="14" text-anchor="middle" font-size="7.5" font-weight="600" fill="#60a5fa">Phase 1</text>
+      <text x="74" y="26" text-anchor="middle" font-size="6.5" fill="#94a3b8">Entity Extraction</text>
+      <text x="74" y="36" text-anchor="middle" font-size="6" fill="#475569">nodes only, no edges</text>
+
+      <text x="162" y="22" text-anchor="middle" font-size="10" fill="#475569">&#8595;</text>
+
+      <rect x="174" y="0" width="148" height="42" rx="4" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.3)" stroke-width="0.8"/>
+      <text x="248" y="14" text-anchor="middle" font-size="7.5" font-weight="600" fill="#a78bfa">Phase 2</text>
+      <text x="248" y="26" text-anchor="middle" font-size="6.5" fill="#94a3b8">Relation Extraction</text>
+      <text x="248" y="36" text-anchor="middle" font-size="6" fill="#475569">edges between entities</text>
+
+      <text x="336" y="22" text-anchor="middle" font-size="10" fill="#475569">&#8595;</text>
+
+      <rect x="348" y="0" width="124" height="42" rx="4" fill="rgba(52,211,153,0.1)" stroke="rgba(52,211,153,0.3)" stroke-width="0.8"/>
+      <text x="410" y="14" text-anchor="middle" font-size="7.5" font-weight="600" fill="#34d399">Phase 3</text>
+      <text x="410" y="26" text-anchor="middle" font-size="6.5" fill="#94a3b8">Structural Repair</text>
+      <text x="410" y="36" text-anchor="middle" font-size="6" fill="#475569">fix dangling refs</text>
+    </g>
+
+    <text x="250" y="124" text-anchor="middle" font-size="7" fill="#64748b">Schema excerpt injected into LLM system prompt</text>
+  </g>
+
+  <!-- Arrow down -->
+  <line x1="350" y1="344" x2="350" y2="364" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-flow)"/>
+
+  <!-- ═══ STAGE 3: ShEx VALIDATION ═══ -->
+  <g transform="translate(100, 372)">
+    <rect width="500" height="22" rx="5" fill="#f59e0b" opacity="0.9"/>
+    <text x="250" y="15" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" letter-spacing="0.8">3 ShEx VALIDATION</text>
+
+    <rect x="4" y="32" width="492" height="110" rx="10" fill="rgba(30,41,59,0.85)" stroke="rgba(245,158,11,0.25)" stroke-width="1.2" filter="url(#glow-amber)"/>
+
+    <text x="250" y="52" text-anchor="middle" font-size="10.5" font-weight="600" fill="#e2e8f0">pyshex Evaluator</text>
+    <line x1="16" y1="60" x2="484" y2="60" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <g transform="translate(14, 68)">
+      <rect x="0" y="0" width="230" height="14" rx="3" fill="rgba(245,158,11,0.06)"/>
+      <text x="4" y="10" font-size="7.5" fill="#fcd34d" font-weight="500">Cardinality check</text>
+      <text x="120" y="10" font-size="7" fill="#94a3b8">&#8594; required edges present</text>
+
+      <rect x="248" y="0" width="230" height="14" rx="3" fill="rgba(245,158,11,0.06)"/>
+      <text x="252" y="10" font-size="7.5" fill="#fcd34d" font-weight="500">IRI resolution</text>
+      <text x="368" y="10" font-size="7" fill="#94a3b8">&#8594; ref integrity</text>
+
+      <rect x="0" y="20" width="230" height="14" rx="3" fill="rgba(245,158,11,0.06)"/>
+      <text x="4" y="30" font-size="7.5" fill="#fcd34d" font-weight="500">Shape conformance</text>
+      <text x="120" y="30" font-size="7" fill="#94a3b8">&#8594; node types valid</text>
+
+      <rect x="248" y="20" width="230" height="14" rx="3" fill="rgba(245,158,11,0.06)"/>
+      <text x="252" y="30" font-size="7.5" fill="#fcd34d" font-weight="500">Confidence clamp</text>
+      <text x="368" y="30" font-size="7" fill="#94a3b8">&#8594; [0, 1] bounds</text>
+    </g>
+
+    <rect x="170" y="120" width="160" height="16" rx="4" fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.3)" stroke-width="0.8"/>
+    <text x="250" y="131" text-anchor="middle" font-size="7.5" font-weight="600" fill="#fbbf24">fylo_graph.shex</text>
+  </g>
+
+  <!-- VALIDATOR-LLM FEEDBACK LOOP -->
+  <path d="M350,484 L350,504 Q350,514 340,514 L160,514 Q150,514 150,504 L150,344 Q150,334 160,334 L160,322" fill="none" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-rose)"/>
+  <rect x="192" y="506" width="130" height="16" rx="4" fill="rgba(251,113,133,0.12)" stroke="rgba(251,113,133,0.3)" stroke-width="0.8"/>
+  <text x="257" y="517" text-anchor="middle" font-size="7" font-weight="600" fill="#fb7185">FAIL &#8593; repair prompt</text>
+
+  <!-- PASS arrow down -->
+  <text x="362" y="498" font-size="7" fill="#34d399">PASS</text>
+  <line x1="350" y1="504" x2="350" y2="530" stroke="#34d399" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-teal)"/>
+
+  <!-- ═══ STAGE 4: THREE-TIER MERGE ═══ -->
+  <g transform="translate(100, 538)">
+    <rect width="500" height="22" rx="5" fill="#0d9488" opacity="0.9"/>
+    <text x="250" y="15" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" letter-spacing="0.8">4 THREE-TIER MERGE</text>
+
+    <rect x="4" y="32" width="492" height="100" rx="10" fill="rgba(30,41,59,0.85)" stroke="rgba(13,148,136,0.25)" stroke-width="1.2" filter="url(#glow-teal)"/>
+
+    <text x="250" y="52" text-anchor="middle" font-size="10.5" font-weight="600" fill="#e2e8f0">Cross-Document Merge</text>
+    <line x1="16" y1="60" x2="484" y2="60" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+    <g transform="translate(14, 68)">
+      <rect x="0" y="0" width="152" height="28" rx="4" fill="rgba(52,211,153,0.08)" stroke="rgba(52,211,153,0.2)" stroke-width="0.6"/>
+      <text x="6" y="12" font-size="7.5" font-weight="600" fill="#34d399">Aggressive</text>
+      <text x="6" y="22" font-size="6.5" fill="#94a3b8">Factors, Variables</text>
+
+      <rect x="164" y="0" width="152" height="28" rx="4" fill="rgba(139,92,246,0.08)" stroke="rgba(139,92,246,0.2)" stroke-width="0.6"/>
+      <text x="170" y="12" font-size="7.5" font-weight="600" fill="#a78bfa">Cautious</text>
+      <text x="170" y="22" font-size="6.5" fill="#94a3b8">Associations, Hypotheses</text>
+
+      <rect x="328" y="0" width="144" height="28" rx="4" fill="rgba(100,116,139,0.08)" stroke="rgba(100,116,139,0.2)" stroke-width="0.6"/>
+      <text x="334" y="12" font-size="7.5" font-weight="600" fill="#94a3b8">Never</text>
+      <text x="334" y="22" font-size="6.5" fill="#64748b">Structural, Provenance</text>
+    </g>
+
+    <rect x="145" y="110" width="210" height="16" rx="4" fill="rgba(13,148,136,0.12)" stroke="rgba(13,148,136,0.3)" stroke-width="0.8"/>
+    <text x="250" y="121" text-anchor="middle" font-size="7.5" font-weight="600" fill="#34d399">FAISS HNSW + EMBEDDING UPSERT</text>
+  </g>
+
+  <!-- Arrow down -->
+  <line x1="350" y1="670" x2="350" y2="690" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-flow)"/>
+
+  <!-- ═══ STAGE 5: GRAPH STATE ═══ -->
+  <g transform="translate(200, 698)">
+    <rect width="300" height="22" rx="5" fill="#f43f5e" opacity="0.85"/>
+    <text x="150" y="15" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" letter-spacing="0.8">5 DISCOURSE GRAPH STATE</text>
+
+    <rect x="4" y="32" width="292" height="80" rx="10" fill="rgba(30,41,59,0.85)" stroke="rgba(244,63,94,0.25)" stroke-width="1.2"/>
+
+    <!-- Cylinder -->
+    <path d="M60,50 L60,88 Q60,102 150,102 Q240,102 240,88 L240,50" fill="rgba(30,41,59,0.6)" stroke="#fb7185" stroke-width="1"/>
+    <ellipse cx="150" cy="50" rx="90" ry="12" fill="rgba(244,63,94,0.1)" stroke="#fb7185" stroke-width="1"/>
+    <text x="150" y="54" text-anchor="middle" font-size="8" font-weight="600" fill="#fda4af">Discourse Graph</text>
+
+    <text x="150" y="70" text-anchor="middle" font-size="8" fill="#94a3b8">34 node types, 74 edge types</text>
+    <text x="150" y="82" text-anchor="middle" font-size="8" fill="#94a3b8">provenance + confidence scores</text>
+    <text x="150" y="94" text-anchor="middle" font-size="8" fill="#64748b">converges as more papers added</text>
+  </g>
+
+  <!-- ═══ VISUALIZATION LAYER ═══ -->
+  <line x1="350" y1="810" x2="350" y2="830" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-flow)"/>
+
+  <g transform="translate(60, 838)">
+    <rect width="580" height="100" rx="10" fill="rgba(30,41,59,0.5)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <text x="290" y="22" text-anchor="middle" font-size="9" font-weight="600" fill="#64748b" letter-spacing="0.5">VISUALIZATION LAYER</text>
+
+    <rect x="20" y="34" width="120" height="48" rx="6" fill="rgba(244,63,94,0.08)" stroke="rgba(244,63,94,0.2)" stroke-width="0.8"/>
+    <text x="80" y="52" text-anchor="middle" font-size="8" font-weight="600" fill="#fb7185">FyloVisualizer</text>
+    <text x="80" y="64" text-anchor="middle" font-size="6.5" fill="#94a3b8">D3.js Force Graph</text>
+    <text x="80" y="74" text-anchor="middle" font-size="6.5" fill="#94a3b8">node colors by type</text>
+
+    <rect x="160" y="34" width="120" height="48" rx="6" fill="rgba(59,130,246,0.08)" stroke="rgba(59,130,246,0.2)" stroke-width="0.8"/>
+    <text x="220" y="52" text-anchor="middle" font-size="8" font-weight="600" fill="#60a5fa">Edge Weights</text>
+    <text x="220" y="64" text-anchor="middle" font-size="6.5" fill="#94a3b8">by confidence score</text>
+    <text x="220" y="74" text-anchor="middle" font-size="6.5" fill="#94a3b8">hover for metadata</text>
+
+    <rect x="300" y="34" width="120" height="48" rx="6" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.2)" stroke-width="0.8"/>
+    <text x="360" y="52" text-anchor="middle" font-size="8" font-weight="600" fill="#fbbf24">Before/After</text>
+    <text x="360" y="64" text-anchor="middle" font-size="6.5" fill="#94a3b8">pipeline change diffs</text>
+    <text x="360" y="74" text-anchor="middle" font-size="6.5" fill="#94a3b8">side-by-side compare</text>
+
+    <rect x="440" y="34" width="120" height="48" rx="6" fill="rgba(52,211,153,0.08)" stroke="rgba(52,211,153,0.2)" stroke-width="0.8"/>
+    <text x="500" y="52" text-anchor="middle" font-size="8" font-weight="600" fill="#34d399">Filtering</text>
+    <text x="500" y="64" text-anchor="middle" font-size="6.5" fill="#94a3b8">by node/edge type</text>
+    <text x="500" y="74" text-anchor="middle" font-size="6.5" fill="#94a3b8">semantic role isolation</text>
+  </g>
+
+  <!-- Bottom bar -->
+  <line x1="40" y1="960" x2="660" y2="960" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <g transform="translate(40, 972)">
+    <rect x="0" y="0" width="88" height="18" rx="4" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.2)" stroke-width="0.6"/>
+    <text x="44" y="12.5" text-anchor="middle" font-size="7" font-weight="600" fill="#fbbf24">ShEx Schema</text>
+    <rect x="96" y="0" width="74" height="18" rx="4" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.2)" stroke-width="0.6"/>
+    <text x="133" y="12.5" text-anchor="middle" font-size="7" font-weight="600" fill="#a78bfa">pyshex</text>
+    <rect x="178" y="0" width="74" height="18" rx="4" fill="rgba(52,211,153,0.1)" stroke="rgba(52,211,153,0.2)" stroke-width="0.6"/>
+    <text x="215" y="12.5" text-anchor="middle" font-size="7" font-weight="600" fill="#34d399">FAISS</text>
+  </g>
+
+  <text x="660" y="984" text-anchor="end" font-size="7.5" fill="#475569" letter-spacing="0.3">FyloAI | neurosymbolic discourse graphs</text>
+
+  <!-- Legend -->
+  <g transform="translate(300, 972)">
+    <circle cx="0" cy="9" r="4" fill="#3b82f6"/>
+    <text x="8" y="12" font-size="6.5" fill="#94a3b8">Input</text>
+    <circle cx="42" cy="9" r="4" fill="#7c3aed"/>
+    <text x="50" y="12" font-size="6.5" fill="#94a3b8">LLM</text>
+    <circle cx="82" cy="9" r="4" fill="#f59e0b"/>
+    <text x="90" y="12" font-size="6.5" fill="#94a3b8">Validate</text>
+    <circle cx="138" cy="9" r="4" fill="#0d9488"/>
+    <text x="146" y="12" font-size="6.5" fill="#94a3b8">Merge</text>
+    <circle cx="186" cy="9" r="4" fill="#f43f5e"/>
+    <text x="194" y="12" font-size="6.5" fill="#94a3b8">State</text>
+  </g>
+
+  <rect width="700" height="1100" rx="16" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+</svg>
