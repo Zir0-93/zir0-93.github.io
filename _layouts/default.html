@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   {% include head.html %}
-  <body class="site-shell page-{{ page.layout }}">
+  <body class="site-shell">
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="site-frame">
       {% include header.html %}
@@ -75,11 +75,58 @@
         });
       });
 
-      // Lazy load post images
+      // Lazy load post images and add expand buttons
       document.querySelectorAll(".post img").forEach(function(img, i) {
         if (i > 0) {
           img.setAttribute("loading", "lazy");
         }
+        // Make parent position relative for the button
+        var parent = img.parentNode;
+        if (getComputedStyle(parent).position === "static") {
+          parent.style.position = "relative";
+        }
+        parent.style.display = parent.style.display || "block";
+        var btn = document.createElement("button");
+        btn.className = "img-expand-btn";
+        btn.innerHTML = "&#x26F6;";
+        btn.setAttribute("aria-label", "View image fullscreen");
+        btn.addEventListener("click", function(e) {
+          e.stopPropagation();
+          openLightbox(img.src);
+        });
+        parent.appendChild(btn);
+      });
+
+      // Lightbox
+      var lightbox = null;
+      function openLightbox(src) {
+        if (!lightbox) {
+          lightbox = document.createElement("div");
+          lightbox.className = "img-lightbox";
+          var closeBtn = document.createElement("button");
+          closeBtn.className = "img-lightbox__close";
+          closeBtn.innerHTML = "&times;";
+          closeBtn.addEventListener("click", function(e) { e.stopPropagation(); closeLightbox(); });
+          lightbox.appendChild(closeBtn);
+          var lbImg = document.createElement("img");
+          lbImg.src = src;
+          lightbox.appendChild(lbImg);
+          lightbox.addEventListener("click", closeLightbox);
+          document.body.appendChild(lightbox);
+        } else {
+          lightbox.querySelector("img").src = src;
+        }
+        lightbox.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeLightbox() {
+        if (lightbox) {
+          lightbox.classList.remove("is-open");
+          document.body.style.overflow = "";
+        }
+      }
+      document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") closeLightbox();
       });
     </script>
   </body>
