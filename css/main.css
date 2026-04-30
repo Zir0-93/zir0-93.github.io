@@ -227,10 +227,27 @@ hr {
 
 .site-header__bio-text {
   margin: 0;
-  font-family: "IBM Plex Sans", sans-serif;
-  font-size: 0.92rem;
-  line-height: 1.7;
-  color: #314256;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: #526072;
+}
+
+.site-header__cta {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 18px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fff;
+  background: #2563eb;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.site-header__cta:hover {
+  background: #1d4ed8;
 }
 
 .site-nav {
@@ -1400,6 +1417,13 @@ figcaption {
 
 [data-theme="dark"] .site-header__bio-text {
   color: #94a3b8;
+}
+
+[data-theme="dark"] .site-header__cta {
+  background: #3b82f6;
+}
+[data-theme="dark"] .site-header__cta:hover {
+  background: #60a5fa;
 }
 
 [data-theme="dark"] .site-nav__link,
