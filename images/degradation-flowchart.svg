@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 700" font-family="'Inter',system-ui,sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#94a3b8"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#22c55e"/></marker>
+    <marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f59e0b"/></marker>
+    <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8b5cf6"/></marker>
+    <filter id="gl"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="780" height="700" fill="#0f172a" rx="12"/>
+  <text x="390" y="36" text-anchor="middle" fill="#e2e8f0" font-size="17" font-weight="700">Degradation Tier Flowchart</text>
+
+  <!-- Top: review request received -->
+  <ellipse cx="390" cy="80" rx="110" ry="26" fill="#fbbf24" fill-opacity=".15" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="390" y="84" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="600">Review Request Received</text>
+
+  <!-- Arrow down to decision diamond -->
+  <line x1="390" y1="108" x2="390" y2="138" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <!-- Decision diamond: Parse + Score OK? -->
+  <polygon points="390,140 490,180 390,220 290,180" fill="#fef3c7" fill-opacity=".1" stroke="#b45309" stroke-width="1.2"/>
+  <text x="390" y="176" text-anchor="middle" fill="#fbbf24" font-size="10">Parse OK +</text>
+  <text x="390" y="190" text-anchor="middle" fill="#fbbf24" font-size="10">Score OK?</text>
+
+  <!-- YES arrow left to Full Pipeline -->
+  <line x1="290" y1="180" x2="130" y2="180" stroke="#22c55e" stroke-width="1.5" marker-end="url(#ag)"/>
+  <text x="210" y="172" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="600">yes</text>
+
+  <!-- Full Pipeline box -->
+  <rect x="30" y="150" width="96" height="60" rx="8" fill="#22c55e" fill-opacity=".15" stroke="#22c55e" stroke-width="1.5" filter="url(#gl)"/>
+  <text x="78" y="174" text-anchor="middle" fill="#86efac" font-size="10" font-weight="700">Full Pipeline</text>
+  <text x="78" y="190" text-anchor="middle" fill="#94a3b8" font-size="8">parse + GNN + LLM</text>
+
+  <!-- NO arrow down to second decision -->
+  <line x1="390" y1="222" x2="390" y2="260" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="400" y="246" fill="#ef4444" font-size="10" font-weight="600">no</text>
+
+  <!-- Decision: Live parse available? -->
+  <polygon points="390,262 500,302 390,342 280,302" fill="#fef3c7" fill-opacity=".1" stroke="#b45309" stroke-width="1.2"/>
+  <text x="390" y="298" text-anchor="middle" fill="#fbbf24" font-size="10">Live parse</text>
+  <text x="390" y="312" text-anchor="middle" fill="#fbbf24" font-size="10">available?</text>
+
+  <!-- YES arrow left to Symbolic-only -->
+  <line x1="280" y1="302" x2="130" y2="302" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#aa)"/>
+  <text x="205" y="294" text-anchor="middle" fill="#f59e0b" font-size="10" font-weight="600">yes</text>
+
+  <!-- Symbolic-only box -->
+  <rect x="30" y="272" width="96" height="60" rx="8" fill="#f59e0b" fill-opacity=".15" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="78" y="296" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">Symbolic-Only</text>
+  <text x="78" y="312" text-anchor="middle" fill="#94a3b8" font-size="8">Kosaraju SCC</text>
+  <text x="78" y="324" text-anchor="middle" fill="#94a3b8" font-size="8">no anomaly scores</text>
+
+  <!-- NO arrow right to Retroactive -->
+  <line x1="500" y1="302" x2="630" y2="302" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#ap)"/>
+  <text x="565" y="294" text-anchor="middle" fill="#8b5cf6" font-size="10" font-weight="600">no</text>
+
+  <!-- Retroactive box -->
+  <rect x="634" y="272" width="120" height="60" rx="8" fill="#8b5cf6" fill-opacity=".15" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="694" y="296" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="700">Retroactive</text>
+  <text x="694" y="312" text-anchor="middle" fill="#94a3b8" font-size="8">MongoDB reload</text>
+  <text x="694" y="324" text-anchor="middle" fill="#94a3b8" font-size="8">historical artifacts</text>
+
+  <!-- All three converge -->
+  <line x1="78" y1="212" x2="78" y2="420" stroke="#22c55e" stroke-width="1.2"/>
+  <line x1="78" y1="420" x2="388" y2="420" stroke="#22c55e" stroke-width="1.2" marker-end="url(#ag)"/>
+
+  <line x1="78" y1="334" x2="78" y2="440" stroke="#f59e0b" stroke-width="1.2"/>
+  <line x1="78" y1="440" x2="388" y2="440" stroke="#f59e0b" stroke-width="1.2" marker-end="url(#aa)"/>
+
+  <line x1="694" y1="334" x2="694" y2="460" stroke="#8b5cf6" stroke-width="1.2"/>
+  <line x1="694" y1="460" x2="392" y2="460" stroke="#8b5cf6" stroke-width="1.2" marker-end="url(#ap)"/>
+
+  <!-- Quality Gate diamond -->
+  <polygon points="390,410 490,460 390,510 290,460" fill="#fef3c7" fill-opacity=".1" stroke="#b45309" stroke-width="1.2"/>
+  <text x="390" y="455" text-anchor="middle" fill="#fbbf24" font-size="10">SVG visibly</text>
+  <text x="390" y="469" text-anchor="middle" fill="#fbbf24" font-size="10">changed?</text>
+
+  <!-- YES arrow down to Complete -->
+  <line x1="390" y1="512" x2="390" y2="550" stroke="#22c55e" stroke-width="1.5" marker-end="url(#ag)"/>
+  <text x="405" y="536" fill="#22c55e" font-size="10" font-weight="600">yes</text>
+
+  <!-- Complete -->
+  <ellipse cx="390" cy="575" rx="90" ry="24" fill="#22c55e" fill-opacity=".15" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="390" y="579" text-anchor="middle" fill="#86efac" font-size="12" font-weight="600">Persist &amp; Complete</text>
+
+  <!-- NO arrow right to Failed -->
+  <line x1="492" y1="460" x2="600" y2="460" stroke="#ef4444" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="546" y="452" fill="#ef4444" font-size="10" font-weight="600">no</text>
+
+  <!-- Failed -->
+  <ellipse cx="670" cy="460" rx="66" ry="24" fill="#ef4444" fill-opacity=".15" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="670" y="464" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="600">Mark Failed</text>
+
+  <!-- Quality tier legend -->
+  <rect x="30" y="620" width="720" height="60" rx="8" fill="#1e293b" fill-opacity=".5"/>
+  <text x="390" y="640" text-anchor="middle" fill="#64748b" font-size="10" font-weight="600">QUALITY TIERS</text>
+  <circle cx="80" cy="660" r="6" fill="#22c55e" fill-opacity=".3" stroke="#22c55e" stroke-width="1"/>
+  <text x="96" y="664" fill="#94a3b8" font-size="10">Full (parse + GNN + LLM)</text>
+  <circle cx="300" cy="660" r="6" fill="#f59e0b" fill-opacity=".3" stroke="#f59e0b" stroke-width="1"/>
+  <text x="316" y="664" fill="#94a3b8" font-size="10">Symbolic (structural facts only)</text>
+  <circle cx="540" cy="660" r="6" fill="#8b5cf6" fill-opacity=".3" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="556" y="664" fill="#94a3b8" font-size="10">Retroactive (reloaded artifacts)</text>
+</svg>

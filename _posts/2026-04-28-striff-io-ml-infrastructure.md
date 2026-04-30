@@ -67,7 +67,7 @@ We alert on `striff_ai_review_executor_queued > 25` for 10 minutes. When that fi
 
 The review status endpoint is a MongoDB read. Clients poll or receive a webhook callback when the job reaches `review.complete`.
 
-*[Diagram 2: Kafka topic topology. Three horizontal rows, each showing a topic (review.requested, graph.ready, scores.ready, review.complete) with consumer group labels and replica count annotations on each worker tier. Arrows showing left-to-right flow between stages. Show Kafka partition count on each topic.]*
+![Kafka topic topology](/images/kafka-topology-diagram.svg){: .light-border }
 
 ---
 
@@ -97,7 +97,7 @@ The pipeline builds this neighbourhood in three steps via ScopedFileSelector, Ti
 
 For most PRs on most repositories this produces a subgraph of a few dozen nodes. For large cross-cutting refactors it might reach the cap.
 
-*[Diagram 3: BFS neighbourhood expansion diagram. Centre nodes labelled "changed files (seeds)". Concentric rings showing hop-0 (seeds), hop-1 neighbours, hop-2 neighbours, hop-3 neighbours. Typed edges (INHERITANCE, DEPENDENCY, ASSOCIATION) shown between nodes. Node count cap annotation at the outer ring. Dropped nodes shown greyed out beyond the cap.]*
+![BFS neighbourhood expansion](/images/bfs-neighbourhood-diagram.svg){: .light-border }
 
 The memory side matters here. A 404-dimensional feature matrix for a 500-node subgraph is about 800KB. Under concurrent reviews, multiple feature matrices live in the JVM heap simultaneously alongside cached MongoDB documents and the ONNX model weights. The deployment runs with `-XX:MaxRAMPercentage=75` to leave headroom for the OS and ONNX Runtime's native memory. `-XX:+ExitOnOutOfMemoryError` is set deliberately: if the JVM runs out of heap, the pod crashes and Kubernetes restarts it clean rather than leaving a live pod where inference might silently produce garbage. We alert on JVM heap above 90% sustained for ten minutes before that happens.
 
@@ -131,7 +131,7 @@ Each degradation mode is logged explicitly and surfaces in metrics. Monitoring w
 
 There is a quality gate at the end of all three paths. A review is not considered complete until it produces at least one visible sticky note in the final enriched SVG. A nominally successful review that produces no visible output is treated as a failure rather than silently persisted. Silent successes that users cannot perceive are harder to detect than explicit errors because they do not raise error rates and they do not fire alerts. The alert `StriffAPIAIReviewFailuresHigh` fires when more than ten reviews fail in fifteen minutes, and `StriffAPIAIReviewQueueBacklog` fires when executor queue depth exceeds 25 for ten minutes. The queue depth alert catches the failure mode that pure error-rate monitoring misses: the system falling behind on review generation without any individual request returning an error.
 
-*[Diagram 4: Degradation tier flowchart. Top: "review request received". Three branches: left (full pipeline -- parse succeeds + scorer succeeds), centre (symbolic-only -- parse timeout or scorer failure), right (retroactive symbolic-only -- no live parse result). All three converge at bottom: "quality gate -- SVG visibly changed?" -> yes: persist and complete / no: mark failed. Colour-code branches by quality tier.]*
+![Degradation tier flowchart](/images/degradation-flowchart.svg){: .light-border }
 
 ---
 

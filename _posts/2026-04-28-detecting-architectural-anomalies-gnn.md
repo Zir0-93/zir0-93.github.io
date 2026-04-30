@@ -120,7 +120,7 @@ $$
 
 Where $\tilde{A} = A + I$ (adjacency with self-loops added), $\tilde{D}$ is the corresponding degree matrix, $H^{(l)}$ is the node representation matrix at layer $l$, and $W^{(l)}$ is a learnable weight matrix.
 
-*[Diagram 3: TODO, insert a small subgraph (5-6 nodes) showing one message passing step. Show node i receiving weighted messages from neighbours j, k, l. Annotate the normalisation factor on each edge. Show the self-loop explicitly.]*
+![GCN message passing](/images/gcn-message-passing.svg){: .light-border }
 
 ### Why Symmetric Normalisation Matters
 
@@ -185,9 +185,7 @@ This constraint on the LLM does more work than it looks like. An LLM given a raw
 
 The output in [striff.io](https://striff.io) looks like this, rendered as sticky notes directly on the architecture diagram:
 
-*[Diagram 4: An example striff.io architecture diff with AI review annotations rendered as sticky notes on the diagram.]*
-
-<img src="/images/striff-hero-diagram.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
+<img src="/images/striff-hero-diagram-zoomed.svg" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; border-radius: 8px;"/>
 
 Examples of review annotations the system produces:
 
