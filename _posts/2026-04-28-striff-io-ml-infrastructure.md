@@ -1,7 +1,7 @@
 ---
 title: "The ML and Infrastructure Architecture Behind striff.io"
 date: 2026-04-28 14:00:00
-og_image: /images/striff-architecture-diagram.svg
+og_image: /images/striff-io-screenshot.png
 tags: [mlops, kubernetes, kafka, graph neural networks, ml engineering, system design]
 toc: true
 description: "A walkthrough of the async Kafka-staged pipeline, Triton-based inference serving, and degradation hierarchy that powers [striff.io](https://striff.io)'s architectural review system. Covers why the pipeline moved from synchronous to event-driven, how three independent Kafka worker tiers decouple graph construction, GNN scoring, and LLM annotation, the distributed systems problems that Triton separation introduces, and the three-tier degradation strategy that ensures every failure mode still produces a useful review."
@@ -9,6 +9,8 @@ excerpt_separator: <!--more-->
 ---
 
 [striff.io](https://striff.io) runs a neurosymbolic ML pipeline that parses GitHub pull requests into typed dependency graphs, scores changed components with a graph neural network, and renders AI-generated architectural review notes directly onto the diagram. This post is a walkthrough of how the system is built, the specific problems that forced each design decision, and the tradeoffs we are living with. The infrastructure patterns here build directly on the MLOps blueprint described in an [earlier post]({% post_url 2024-01-09-mlops-blueprint %}) -- single-build artifacts, Vault, Argo CD, blue/green rollouts -- extended with Kafka staging and Triton inference. The GNN model itself is covered in a [companion post]({% post_url 2026-04-28-detecting-architectural-anomalies-gnn %}).
+
+![striff.io screenshot](/images/striff-io-screenshot.png){: .light-border }
 
 <div style="border:1px solid rgba(15,23,42,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;background:rgba(255,255,255,0.6);">
 <p style="margin:0 0 8px 0;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b7280;">Relevant Repos</p>
