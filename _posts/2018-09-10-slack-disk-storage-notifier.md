@@ -3,7 +3,7 @@ title:  "Monitor Disk Usage Levels on Slack"
 icon: /images/icon-ai-data-analytics.png
 date:  2018-09-10 15:04:23
 tags: [python, bash, slack, monitoring, devops]
-description: "Disk space exhaustion is a quiet failure mode — systems degrade gradually until they stop working entirely, often at the worst possible moment. This post shares a bash script that monitors local disk storage levels and reports them to a Slack channel at a configurable interval, color-coded by usage severity. The script uses standard Unix tooling with no additional dependencies and can be dropped onto any instance in minutes. It is designed to be deployed across multiple machines simultaneously and supports configurable alert thresholds so teams can act before things become critical."
+description: "A bash script that monitors local disk storage and reports usage to a Slack channel, color-coded by severity. Zero dependencies, configurable thresholds, deployable across multiple instances in minutes."
 excerpt_separator: <!--more-->
 ---
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)

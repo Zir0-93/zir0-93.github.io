@@ -21,9 +21,12 @@ layout: default
           </div>
           <h2 class="post-list__post-title"><a href="{{ post.url | relative_url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
           <p class="excerpt">{{ home_excerpt }}</p>
-          {% assign badge_container = post.content | split: 'Relevant Repos' | last | split: '</div>' | first %}
-          {% if badge_container contains 'img.shields.io' %}
+          {% assign parts = post.content | split: 'Relevant Repos' %}
+          {% if parts.size > 1 %}
+            {% assign badge_container = parts | last | split: '</div>' | first %}
+            {% if badge_container contains 'img.shields.io' %}
           <div class="post-card__repos">{{ badge_container | append: '</div>' }}</div>
+            {% endif %}
           {% endif %}
           <div class="post-list__meta"><span class="post-meta__tags">{% for tag in post.tags %}<a class="post_tags" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a> {% endfor %}</span></div>
           <a class="post-card__cta" href="{{ post.url | relative_url }}">Read article &#8599;</a>
