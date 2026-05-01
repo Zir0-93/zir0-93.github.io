@@ -4,7 +4,7 @@ date: 2026-04-28 14:00:00
 og_image: /images/striff-io-screenshot.png
 tags: [mlops, kubernetes, kafka, graph neural networks, ml engineering, system design]
 toc: true
-description: "A walkthrough of the async Kafka-staged pipeline, Triton-based inference serving, and degradation hierarchy that powers [striff.io](https://striff.io)'s architectural review system. Covers why the pipeline moved from synchronous to event-driven, how three independent Kafka worker tiers decouple graph construction, GNN scoring, and LLM annotation, the distributed systems problems that Triton separation introduces, and the three-tier degradation strategy that ensures every failure mode still produces a useful review."
+description: "[striff.io](https://striff.io) turns GitHub pull requests into architecture diagrams scored by a graph neural network. This post breaks down the production pipeline behind it: a three-tier Kafka topology that decouples graph construction, GNN inference on Triton, and LLM annotation, plus a degradation hierarchy that guarantees every review request produces a useful result even when services fail."
 excerpt_separator: <!--more-->
 ---
 

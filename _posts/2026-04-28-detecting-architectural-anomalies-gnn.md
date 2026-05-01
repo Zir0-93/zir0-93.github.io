@@ -185,7 +185,7 @@ This constraint on the LLM does more work than it looks like. An LLM given a raw
 
 The output in [striff.io](https://striff.io) looks like this, rendered as sticky notes directly on the architecture diagram:
 
-<img src="/images/striff-hero-diagram-zoomed.svg" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; border-radius: 8px;"/>
+<img src="/images/striff-hero-diagram.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; height: auto; border-radius: 8px;"/>
 
 Examples of review annotations the system produces:
 

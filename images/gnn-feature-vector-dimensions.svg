@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" font-family="'Inter',system-ui,-apple-system,sans-serif">
   <defs>
     <style>
       .title { font-size: 15px; font-weight: 600; fill: #1a1a2e; }
       .subtitle { font-size: 11px; fill: #6b7280; }
       .dim-label { font-size: 10.5px; fill: #374151; font-weight: 500; }
-      .dim-range { font-size: 9.5px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
+      .dim-range { font-size: 9px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
       .legend-label { font-size: 10px; fill: #374151; }
       .legend-dims { font-size: 9px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; }
       .total-label { font-size: 10px; fill: #6b7280; font-weight: 500; }
@@ -12,7 +12,7 @@
   </defs>
 
   <!-- Background -->
-  <rect width="800" height="320" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <rect width="800" height="340" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
 
   <!-- Title -->
   <text x="400" y="32" text-anchor="middle" class="title">404-Dimensional Node Feature Vector</text>
@@ -48,32 +48,34 @@
     <rect x="695" y="0" width="5" height="50" rx="4" fill="none" stroke="#7c3aed" stroke-width="0.5"/>
     <rect x="698" y="0" width="2" height="50" fill="#ef4444" opacity="0.9"/>
 
-    <!-- Bracket lines for small segments -->
+    <!-- Bracket lines for small segments - with more spacing -->
     <!-- OOP Metrics bracket -->
     <line x1="665" y1="58" x2="681" y2="58" stroke="#d97706" stroke-width="1.5"/>
     <line x1="665" y1="54" x2="665" y2="58" stroke="#d97706" stroke-width="1.5"/>
     <line x1="681" y1="54" x2="681" y2="58" stroke="#d97706" stroke-width="1.5"/>
-    <text x="673" y="70" text-anchor="middle" class="dim-label" fill="#b45309" font-size="9">OOP Metrics</text>
-    <text x="673" y="80" text-anchor="middle" class="dim-range" font-size="8">[384-392]</text>
+    <text x="673" y="70" text-anchor="middle" class="dim-label" fill="#b45309" font-size="9">OOP</text>
+    <text x="673" y="80" text-anchor="middle" class="dim-range" font-size="7">[384-392]</text>
 
     <!-- Type bracket -->
     <line x1="681" y1="88" x2="693" y2="88" stroke="#059669" stroke-width="1.5"/>
     <line x1="681" y1="84" x2="681" y2="88" stroke="#059669" stroke-width="1.5"/>
     <line x1="693" y1="84" x2="693" y2="88" stroke="#059669" stroke-width="1.5"/>
-    <text x="687" y="100" text-anchor="middle" class="dim-label" fill="#047857" font-size="9">Type</text>
-    <text x="687" y="110" text-anchor="middle" class="dim-range" font-size="8">[393-399]</text>
+    <text x="687" y="100" text-anchor="middle" class="dim-label" fill="#047857" font-size="8">Type</text>
+    <text x="687" y="110" text-anchor="middle" class="dim-range" font-size="7">[393-399]</text>
 
     <!-- Language bracket -->
     <line x1="693" y1="118" x2="700" y2="118" stroke="#7c3aed" stroke-width="1.5"/>
     <line x1="693" y1="114" x2="693" y2="118" stroke="#7c3aed" stroke-width="1.5"/>
     <line x1="700" y1="114" x2="700" y2="118" stroke="#7c3aed" stroke-width="1.5"/>
-    <text x="696" y="130" text-anchor="middle" class="dim-label" fill="#6d28d9" font-size="9">Lang</text>
-    <text x="696" y="140" text-anchor="middle" class="dim-range" font-size="8">[400-402]</text>
+    <text x="696" y="130" text-anchor="middle" class="dim-label" fill="#6d28d9" font-size="8">Lang</text>
+    <text x="696" y="140" text-anchor="middle" class="dim-range" font-size="7">[400-402]</text>
 
     <!-- Synthetic bracket -->
-    <line x1="700" y1="148" x2="700" y2="148" stroke="#dc2626" stroke-width="1.5"/>
-    <text x="696" y="160" text-anchor="middle" class="dim-label" fill="#b91c1c" font-size="9">Syn</text>
-    <text x="696" y="170" text-anchor="middle" class="dim-range" font-size="8">[403]</text>
+    <line x1="700" y1="148" x2="702" y2="148" stroke="#dc2626" stroke-width="1.5"/>
+    <line x1="700" y1="144" x2="700" y2="148" stroke="#dc2626" stroke-width="1.5"/>
+    <line x1="702" y1="144" x2="702" y2="148" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="696" y="160" text-anchor="middle" class="dim-label" fill="#b91c1c" font-size="8">Syn</text>
+    <text x="696" y="170" text-anchor="middle" class="dim-range" font-size="7">[403]</text>
 
   </g>
 

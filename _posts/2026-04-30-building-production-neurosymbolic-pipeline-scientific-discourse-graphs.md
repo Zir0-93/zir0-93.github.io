@@ -218,11 +218,3 @@ Object.entries(colors).forEach(function(kv){legend.append("span").style("display
 This is a cropped neighbourhood from FyloVisualizer, a D3.js force-directed graph viewer I built to close that loop. The full viewer renders the complete discourse graph with 167 nodes across 4 types, edges weighted by confidence, hover for metadata and ontology tags, and filtering by semantic role. It loads graph JSON directly from the extraction pipeline output, no manual curation.
 
 This pattern recurs across my work. The enriched SVG diagrams [striff.io](https://striff.io) renders for code architecture diffs serve the same purpose: they translate backend ML quality changes into something a non-technical user can immediately judge. In a neurosymbolic system where most of the engineering is invisible, the visualization layer is part of the production debugging surface.
-
----
-
-## What I Would Change and What I Would Keep
-
-A schema is not documentation; it is an executable contract that participates in both prompting and validation. LLMs converge toward valid output when you close the feedback loop with phase-specific prompts that match the structure of the schema, not when you re-prompt with the same instructions.
-
-The neurosymbolic staging pattern generalizes to any domain where structured output requirements meet a model that cannot quite hit them alone. Code analysis, scientific discourse graphs, legal document analysis, regulatory compliance.
