@@ -10,7 +10,7 @@ excerpt_separator: <!--more-->
 
 LLMs are competent at reading scientific papers. They are not yet competent at producing knowledge graphs that downstream systems can trust. The output is plausible, well-formatted, and frequently wrong in ways that only become visible after the graph is queried, joined to other data, or used to train another model.
 
-Through HADI Technology, I worked with [Fylo](https://fylo.io/) on the ingestion pipeline that turns scientific papers into a typed discourse graph of claims, evidence, hypotheses, and research questions. The interesting engineering was not the LLM extraction. It was the symbolic scaffolding around it that turned a noisy generative process into a graph reliable enough to ship.
+I built [Fylo](https://fylo.io/)'s ingestion pipeline, the part that turns scientific papers into a typed discourse graph of claims, evidence, hypotheses, and research questions. The interesting engineering was never the LLM extraction. It was the symbolic scaffolding around it that turned a noisy generative process into a graph reliable enough that downstream systems could join against it without re-checking every node.
 
 <div id="fylo-graph-intro" style="margin:24px auto;max-width:700px;border:1px solid rgba(15,23,42,0.12);border-radius:12px;overflow:hidden;background:#0f172a;"></div>
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -118,9 +118,9 @@ This decomposition matters more than the prompts themselves. Phase 1 outputs are
 
 <img src="/images/fylo-pipeline-overview.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
 
-The regex-based LLM output parser had to go. Regex cannot reliably handle nested parentheses inside string literals, and the old parser silently dropped well-formed extractions whenever a string contained an unescaped quote. The replacement uses `ast.literal_eval` rather than `eval` for safety, and ships with full test coverage.
+The regex-based LLM output parser had to go. Regex cannot reliably handle nested parentheses inside string literals, and the old parser silently dropped well-formed extractions whenever a string contained an unescaped quote. The first sign was an output graph that was consistently shallower and narrower than the expected structure: associations missing their factor edges, evidence lines that never connected to the claims they supported. The replacement uses `ast.literal_eval` rather than `eval` for safety, and ships with full test coverage.
 
-The other change that mattered was tightening the schema prompt with explicit cardinality language. The Phase 1 prompt for Association nodes makes it unambiguous: every Association must include both an `arg0` and an `arg1` factor edge, or it will fail validation. This is the prompt-engineering equivalent of writing good error messages -- tell the model exactly what will go wrong, before it goes wrong.
+The other change that mattered was tightening the schema prompt with explicit cardinality language. The Phase 1 prompt for Association nodes makes it unambiguous: every Association must include both an `arg0` and an `arg1` factor edge, or it will fail validation. This is the prompt-engineering equivalent of writing good error messages: tell the model exactly what will go wrong, before it goes wrong.
 
 ---
 
@@ -218,3 +218,7 @@ Object.entries(colors).forEach(function(kv){legend.append("span").style("display
 This is a cropped neighbourhood from FyloVisualizer, a D3.js force-directed graph viewer I built to close that loop. The full viewer renders the complete discourse graph with 167 nodes across 4 types, edges weighted by confidence, hover for metadata and ontology tags, and filtering by semantic role. It loads graph JSON directly from the extraction pipeline output, no manual curation.
 
 This pattern recurs across my work. The enriched SVG diagrams [striff.io](https://striff.io) renders for code architecture diffs serve the same purpose: they translate backend ML quality changes into something a non-technical user can immediately judge. In a neurosymbolic system where most of the engineering is invisible, the visualization layer is part of the production debugging surface.
+
+---
+
+*Mohamed Fadhel builds production AI and ML infrastructure. He is the founder of HADI Technology. [Technical Profile](/downloads/MFadhel_Engagement_Brief.pdf) · [Get in Touch](/contact/)*

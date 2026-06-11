@@ -10,23 +10,14 @@ excerpt_separator: <!--more-->
 
 
 
-Code review has a specific information problem that most tooling ignores. When you open a pull request on a large codebase, the diff shows you *lines*. It does not show you that the class you just modified now has fourteen things depending on it when it had three last week. It does not show you that a new import three files away quietly created a dependency cycle between two packages that were previously clean. It does not show you that the abstraction Claude just extended sits at depth six in an inheritance tree that has been growing for two years.
+Code review has a specific information problem that most tooling ignores. When you open a pull request on a large codebase, the diff shows you *lines*. It does not show you that the class you just modified now has fourteen things depending on it when it had three last week. It does not show you that a new import three files away quietly created a dependency cycle between two packages that were previously clean. It does not show you that the abstraction an LLM just extended sits at depth six in an inheritance tree that has been growing for two years.
 
 These are not edge cases. They are the class of change that produces architectural debt, the kind that compounds quietly and becomes expensive to unwind.
 
 That is the problem [striff.io](https://striff.io) was built to address. The product generates visual architecture diffs from GitHub pull requests: instead of a line diff, you get an SVG class diagram showing which components changed, how their relationships shifted, and which of those changes carry structural risk, annotated directly on the diagram.
 
-The interesting engineering question is not the diagram rendering. It is *how you decide what to flag*. The approach we landed on is a staged neurosymbolic pipeline: extract a structural graph, compute deterministic symbolic facts, run a learned GNN anomaly scorer, and *only then* ask an LLM to annotate. The order is deliberate. The infrastructure that runs this pipeline at scale -- Kafka staging, Triton inference, degradation modes -- is covered in a [companion post]({% post_url 2026-04-28-striff-io-ml-infrastructure %}).
+The interesting engineering question is not the diagram rendering. It is *how you decide what to flag*. The approach we landed on is a staged neurosymbolic pipeline: extract a structural graph, compute deterministic symbolic facts, run a learned GNN anomaly scorer, and *only then* ask an LLM to annotate. The order is deliberate. The infrastructure that runs this pipeline at scale (Kafka staging, Triton inference, degradation modes) is covered in a [companion post]({% post_url 2026-04-28-striff-io-ml-infrastructure %}).
 
-<div style="border:1px solid rgba(15,23,42,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;background:rgba(255,255,255,0.6);">
-<p style="margin:0 0 8px 0;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b7280;">Relevant Repos</p>
-<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
-<a href="https://github.com/hadi-technology/striff-gnn"><img src="https://img.shields.io/badge/GNN%20Training-striff--gnn-blue?logo=github" alt="striff-gnn"></a>
-<a href="https://github.com/hadi-technology/striff-lib"><img src="https://img.shields.io/badge/Graph%20Parsing-striff--lib-blueviolet?logo=github" alt="striff-lib"></a>
-<a href="https://github.com/hadi-technology/clarpse"><img src="https://img.shields.io/badge/Static%20Analysis-clarpse-6a0dad?logo=github" alt="clarpse"></a>
-<a href="https://github.com/hadi-technology/mlops-blueprint"><img src="https://img.shields.io/badge/MLOps%20Pipeline-mlops--blueprint-teal?logo=github" alt="mlops-blueprint"></a>
-</div>
-</div>
 <!--more-->
 
 ---
@@ -67,27 +58,27 @@ These are generated from structured signals, not from the diff text. The rest of
 
 The system has three stages that run in order. Each one catches something the others cannot:
 
-1. **Deterministic detectors** scan for hard rule violations -- dependency cycles, boundary crossings, hub formation. These are always wrong regardless of context.
-2. **An edge-prediction GNN** scores every dependency in the diff for structural surprise -- "given patterns across thousands of codebases, should this edge exist?" This catches soft distributional patterns that no named rule covers.
+1. **Deterministic detectors** scan for hard rule violations: dependency cycles, boundary crossings, hub formation. These are always wrong regardless of context.
+2. **An edge-prediction GNN** scores every dependency in the diff for structural surprise: "given patterns across thousands of codebases, should this edge exist?" This catches soft distributional patterns that no named rule covers.
 3. **A grounded LLM** takes the findings from both stages alongside metric deltas and produces the review annotations you see above. It does not reason freely over a raw diff; it annotates a pre-structured set of signals.
 
-The order matters. Deterministic detectors run first because they are cheap and binary. The GNN runs second because it is more expensive but catches what rules miss. The LLM runs last because its job is annotation, not detection -- and it needs structured evidence to produce grounded output rather than confident-sounding speculation.
+The order matters. Deterministic detectors run first because they are cheap and binary. The GNN runs second because it is more expensive but catches what rules miss. The LLM runs last because its job is annotation, not detection, and it needs structured evidence to produce grounded output rather than confident-sounding speculation.
 
 ---
 
 ## Code as a Graph
 
-Source code has a natural graph structure. Components (classes, interfaces, enums, abstract classes) are nodes. The relationships between them are typed directed edges: inheritance (`extends`), realization (`implements`), association (holds a reference), and dependency (uses as a parameter). These edge types are not interchangeable -- inheriting from a class implies a tighter coupling contract than depending on one, and the model needs to know the difference.
+Source code has a natural graph structure. Components (classes, interfaces, enums, abstract classes) are nodes. The relationships between them are typed directed edges: inheritance (`extends`), realization (`implements`), association (holds a reference), and dependency (uses as a parameter). These edge types are not interchangeable: inheriting from a class implies a tighter coupling contract than depending on one, and the model needs to know the difference.
 
 <img src="/images/gnn-pipeline-diagram.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
 
-This representation is not new. Dependency graphs and call graphs appear throughout the software engineering literature. What has not gotten much attention is using GNNs for anomaly detection over these graphs -- detecting components whose structural neighbourhood deviates from what well-structured code looks like, rather than checking for named rule violations.
+This representation is not new. Dependency graphs and call graphs appear throughout the software engineering literature. What has not gotten much attention is using GNNs for anomaly detection over these graphs, detecting components whose structural neighbourhood deviates from what well-structured code looks like, rather than checking for named rule violations.
 
 striff-lib is the open-source parsing and diagram core that striff.io is built on. It wraps Clarpse, a multi-language static analysis library, to extract this component and relation model from Java, Python, TypeScript, and C# source trees. Every node and typed edge in the GNN's input graph comes out of striff-lib.
 
 ### Extracting the Right Subgraph
 
-Given a pull request, the first question is which subgraph to analyse. You cannot run GNN inference over the full repository on every PR. Changed files are parsed to extract the modified components (seed nodes), then the subgraph is expanded using bidirectional BFS for 3 hops over the full repo's relation graph. The result captures not just what changed, but what depends on it and what it depends on -- the structural blast radius of the PR.
+Given a pull request, the first question is which subgraph to analyse. You cannot run GNN inference over the full repository on every PR. Changed files are parsed to extract the modified components (seed nodes), then the subgraph is expanded using bidirectional BFS for 3 hops over the full repo's relation graph. The result captures not just what changed, but what depends on it and what it depends on: the structural blast radius of the PR.
 
 Node capping is enforced at 500 nodes. Beyond that, inference latency grows faster than signal quality. The cap felt arbitrary when we picked it. It still does. We chose it because larger subgraphs blew the inference budget, not because of any principled analysis.
 
@@ -97,7 +88,7 @@ The graph maintains separate typed edges per relation type (following the R-GCN 
 
 ## Stage 1: Deterministic Detectors
 
-Six detectors scan the PR diff for specific architectural violations before any ML runs. These encode hard rules -- patterns that are *always* problematic regardless of context:
+Six detectors scan the PR diff for specific architectural violations before any ML runs. These encode hard rules, patterns that are *always* problematic regardless of context:
 
 | Detector | What It Catches |
 |----------|----------------|
@@ -140,7 +131,7 @@ At inference time on a PR, we flip this around. For every dependency edge in the
 
 1. Feed the graph to the model **without** that edge
 2. Ask: "given what you know about typical code structure, should this edge exist?"
-3. If the model says "no" (low probability) -- that is an **anomalous dependency**
+3. If the model says "no" (low probability), that is an **anomalous dependency**
 
 This is a fundamentally different question from "is this node unusual?" It asks "is this *specific dependency* structurally surprising given patterns across thousands of codebases?"
 
@@ -151,7 +142,7 @@ This is a fundamentally different question from "is this node unusual?" It asks 
 - **God-class signals**: a class accumulating dependencies that no similar class has
 - **Missing abstractions**: a concrete class directly depending on another concrete class when the pattern usually goes through an interface
 
-It does *not* catch project-specific conventions (your project might intentionally do something unusual), semantic issues (the dependency is technically fine but the reason is wrong), or rare-but-valid patterns (structurally unusual but architecturally correct). This is why the deterministic detectors remain essential -- they catch hard rules, the GNN catches soft distributional patterns, and together they are complementary.
+It does *not* catch project-specific conventions (your project might intentionally do something unusual), semantic issues (the dependency is technically fine but the reason is wrong), or rare-but-valid patterns (structurally unusual but architecturally correct). This is why the deterministic detectors remain essential: they catch hard rules, the GNN catches soft distributional patterns, and together they are complementary.
 
 ### Calibration
 
@@ -186,9 +177,7 @@ The OOP metrics are z-score normalised per language. A Java class with WMC of 20
 
 ### GCN Architecture and Distillation
 
-The deployed scorer is a Graph Convolutional Network with an edge-prediction head, distilled from a larger teacher model. The teacher is an ArchGraphMAE -- a masked autoencoder with a 3-layer Heterogeneous Graph Transformer (HGT) encoder that learns type-specific transforms per relation type. The distilled GCN matches the teacher's edge probability distribution (gated on Pearson correlation >= 0.85 on held-out data) while being compact enough for synchronous inference during a live review request.
-
-We chose spectral GCN over Graph Attention Networks after experimentation. GAT's learned per-edge attention weights produce score variance across structurally similar components in different PRs. We spent a good two weeks convinced the variance was a training bug before accepting it was structural. GCN's spectral normalisation gives up per-neighbour interpretability in exchange for stable, consistent score distributions -- a worthwhile tradeoff for a product where users see scores directly on their diagram.
+The deployed scorer is a Graph Convolutional Network with an edge-prediction head, distilled from a larger teacher model. The teacher is an ArchGraphMAE -- a masked autoencoder with a 3-layer Heterogeneous Graph Transformer (HGT) encoder that learns type-specific transforms per relation type. The distilled GCN matches the teacher's edge probability distribution (gated on Pearson correlation >= 0.85 on held-out data) while being compact enough for synchronous inference during a live review request. We chose spectral GCN over Graph Attention Networks after experimentation. GAT's learned per-edge attention weights produce score variance across structurally similar components in different PRs. We spent a good two weeks convinced the variance was a training bug before accepting it was structural. GCN's spectral normalisation gives up per-neighbour interpretability in exchange for stable, consistent score distributions, a worthwhile tradeoff for a product where users see scores directly on their diagram.
 
 The model runs on ONNX Runtime with three inputs: node features (N x 405), adjacency matrix (N x N), and edge queries (M x 2). It outputs per-edge probabilities in a single forward pass. Training graphs were built from 105 open-source repositories across Java, Python, TypeScript, and C#, totalling 4.9 million structural nodes. The corpus includes enterprise frameworks (Quarkus, Kafka, Spring), middleware (Netty, Flink), web applications (Django, FastAPI, NestJS), and smaller focused libraries.
 
@@ -205,7 +194,20 @@ All three signal types are serialised into a structured JSON payload alongside t
 
 This constraint does more work than it looks like. An LLM given a raw diff and asked "what are the architectural risks?" produces confident-sounding but structurally ungrounded output. An LLM told "*there is a new dependency cycle between these two packages, the edge from UserService to PaymentController has an anomaly score of 0.88 (the model does not expect service classes to depend on controller classes), its EC increased from 3 to 9 this PR, and it now has 4 incoming dependents it did not have before*" produces output grounded in actual structural evidence.
 
-The symbolic layer also computes deterministic facts from the expanded subgraph: dependency cycles via Kosaraju SCC (at both class and package level), package boundary crossings, fan-in blast radius, and OOP metric deltas. These facts are binary and explainable -- a cycle either exists or it does not.
+The symbolic layer also computes deterministic facts from the expanded subgraph: dependency cycles via Kosaraju SCC (at both class and package level), package boundary crossings, fan-in blast radius, and OOP metric deltas. These facts are binary and explainable: a cycle either exists or it does not.
+
+---
+
+## Code Referenced in This Post
+
+<div style="border:1px solid rgba(15,23,42,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;background:rgba(255,255,255,0.6);">
+<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+<a href="https://github.com/hadi-technology/striff-gnn"><img src="https://img.shields.io/badge/GNN%20Training-striff--gnn-blue?logo=github" alt="striff-gnn"></a>
+<a href="https://github.com/hadi-technology/striff-lib"><img src="https://img.shields.io/badge/Graph%20Parsing-striff--lib-blueviolet?logo=github" alt="striff-lib"></a>
+<a href="https://github.com/hadi-technology/clarpse"><img src="https://img.shields.io/badge/Static%20Analysis-clarpse-6a0dad?logo=github" alt="clarpse"></a>
+<a href="https://github.com/hadi-technology/mlops-blueprint"><img src="https://img.shields.io/badge/MLOps%20Pipeline-mlops--blueprint-teal?logo=github" alt="mlops-blueprint"></a>
+</div>
+</div>
 
 ---
 
@@ -217,4 +219,8 @@ striff-lib is open source. The parsing and diagram generation core is available 
 
 The Python GNN training pipeline is available at [github.com/hadi-technology/striff-gnn](https://github.com/hadi-technology/striff-gnn). The corpus spans 105 open-source repositories across Java, Python, TypeScript, and C#, totalling 4.9 million structural nodes.
 
-The staging pattern described here -- deterministic detectors followed by edge-prediction anomaly scoring followed by grounded LLM annotation -- is not specific to code review. Anywhere you have a domain representable as a structured graph where some properties are deterministically computable and others are distributional, this approach applies. Database schema evolution, API contract drift, infrastructure dependency analysis, security vulnerability propagation.
+The staging pattern described here (deterministic detectors followed by edge-prediction anomaly scoring followed by grounded LLM annotation) is not specific to code review. Anywhere you have a domain representable as a structured graph where some properties are deterministically computable and others are distributional, this approach applies. Database schema evolution, API contract drift, infrastructure dependency analysis, security vulnerability propagation.
+
+---
+
+*Mohamed Fadhel builds production AI and ML infrastructure. He is the founder of HADI Technology. [Technical Profile](/downloads/MFadhel_Engagement_Brief.pdf) · [Get in Touch](/contact/)*

@@ -8,19 +8,10 @@ description: "[striff.io](https://striff.io) turns GitHub pull requests into arc
 excerpt_separator: <!--more-->
 ---
 
-[striff.io](https://striff.io) runs a neurosymbolic ML pipeline that parses GitHub pull requests into typed dependency graphs, scores changed components with a graph neural network, and renders AI-generated architectural review notes directly onto the diagram. This post is a walkthrough of how the system is built, the specific problems that forced each design decision, and the tradeoffs we are living with. The infrastructure patterns here build directly on the MLOps blueprint described in an [earlier post]({% post_url 2024-01-09-mlops-blueprint %}) -- single-build artifacts, Vault, Argo CD, blue/green rollouts -- extended with Kafka staging and Triton inference. The GNN model itself is covered in a [companion post]({% post_url 2026-04-28-detecting-architectural-anomalies-gnn %}).
+[striff.io](https://striff.io) runs a neurosymbolic ML pipeline that parses GitHub pull requests into typed dependency graphs, scores changed components with a graph neural network, and renders AI-generated architectural review notes directly onto the diagram. This post is a walkthrough of how the system is built, the specific problems that forced each design decision, and the tradeoffs we are living with. The infrastructure patterns here build directly on the MLOps blueprint described in an [earlier post]({% post_url 2024-01-09-mlops-blueprint %}) (single-build artifacts, Vault, Argo CD, blue/green rollouts), extended with Kafka staging and Triton inference. The GNN model itself is covered in a [companion post]({% post_url 2026-04-28-detecting-architectural-anomalies-gnn %}).
 
 ![striff.io screenshot](/images/striff-io-screenshot.png){: .light-border }
 
-<div style="border:1px solid rgba(15,23,42,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;background:rgba(255,255,255,0.6);">
-<p style="margin:0 0 8px 0;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b7280;">Relevant Repos</p>
-<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
-<a href="https://github.com/hadi-technology/striff-gnn"><img src="https://img.shields.io/badge/GNN%20Training-striff--gnn-blue?logo=github" alt="striff-gnn"></a>
-<a href="https://github.com/hadi-technology/striff-lib"><img src="https://img.shields.io/badge/Graph%20Parsing-striff--lib-blueviolet?logo=github" alt="striff-lib"></a>
-<a href="https://github.com/hadi-technology/clarpse"><img src="https://img.shields.io/badge/Static%20Analysis-clarpse-6a0dad?logo=github" alt="clarpse"></a>
-<a href="https://github.com/hadi-technology/mlops-blueprint"><img src="https://img.shields.io/badge/MLOps%20Pipeline-mlops--blueprint-teal?logo=github" alt="mlops-blueprint"></a>
-</div>
-</div>
 <!--more-->
 
 ---
@@ -35,7 +26,7 @@ Repository parsing has wide tail latency. A small TypeScript service parses in m
 
 LLM annotation adds five to thirty seconds depending on provider load. That is not a tail latency concern, it is the median case. Holding a request thread open while waiting on an external API does not hold up at scale.
 
-The subtler issue is failure coupling. When everything runs in a single synchronous request, every component fails together. A timeout in the LLM call returns an error to the user even when the graph was built and the symbolic facts were computed correctly. The most reliable parts of the pipeline become invisible behind the least reliable one. I spent a week debugging what looked like a parsing failure before realizing the LLM timeout was swallowing everything upstream.
+The subtler issue is failure coupling. When everything runs in a single synchronous request, every component fails together. A timeout in the LLM call returns an error to the user even when the graph was built and the symbolic facts were computed correctly. The most reliable parts of the pipeline become invisible behind the least reliable one. Early on, I spent a week chasing what looked like a parsing failure before realizing the synchronous LLM timeout was swallowing every upstream error with it.
 
 ---
 
@@ -79,7 +70,7 @@ When Triton is unavailable, GNN workers must decide what to do. The answer conne
 
 Kafka's at-least-once delivery guarantee introduces idempotency requirements that in-process queues do not. A worker that crashes after processing a message but before committing its offset will re-process that message on restart. AIReviewService handles this by claiming operations before work starts and checking claim state before publishing downstream. A message that arrives for an already-claimed operation is discarded. The cost of re-processing a message is a no-op rather than a duplicate review appearing for the same PR.
 
-Service boundaries also create contract risk that in-process calls do not have. The OnnxArchitecturalScorer input contract -- the 404-dimensional feature vector layout and typed edge index format -- is only valid for the model currently registered with Triton. Deploying a retrained model with a different input shape without updating FeatureBuilder on the worker side produces wrong anomaly scores without throwing an exception. This is a silent failure that does not appear in error rates. We caught this once in staging when a training run exported the feature vector with the OOP metrics in a different order. The scores looked plausible. They were wrong. The fix is contract tests between FeatureBuilder output and the ONNX model's expected input, run as part of CI on every change to either.
+Service boundaries also create contract risk that in-process calls do not have. The OnnxArchitecturalScorer input contract (the 404-dimensional feature vector layout and typed edge index format) is only valid for the model currently registered with Triton. Deploying a retrained model with a different input shape without updating FeatureBuilder on the worker side produces wrong anomaly scores without throwing an exception. This is a silent failure that does not appear in error rates. We caught this once in staging when a training run exported the feature vector with the OOP metrics in a different order. The scores looked plausible. They were wrong. The fix is contract tests between FeatureBuilder output and the ONNX model's expected input, run as part of CI on every change to either.
 
 ---
 
@@ -93,7 +84,7 @@ The pipeline builds this neighbourhood in three steps via ScopedFileSelector, Ti
 
 **Time-boxed parsing.** The candidate file set is parsed under a hard deadline enforced by TimeBoxedParser. If parsing does not finish in time, it returns whatever it has completed. This is a deliberate design choice: a partial graph is better than a timeout. The review that follows will be weaker but the user gets something rather than an error.
 
-**Neighbourhood expansion.** NeighborhoodExpander runs a bidirectional BFS from the seed nodes (the changed components), following edges in both directions for three hops. This captures both what the changed components depend on and what depends on them -- the structural blast radius of the PR. Node count is capped at 500, with non-seed nodes dropped in hop-distance order when the cap is hit. The subgraph is deterministic and reproducible across runs.
+**Neighbourhood expansion.** NeighborhoodExpander runs a bidirectional BFS from the seed nodes (the changed components), following edges in both directions for three hops. This captures both what the changed components depend on and what depends on them: the structural blast radius of the PR. Node count is capped at 500, with non-seed nodes dropped in hop-distance order when the cap is hit. The subgraph is deterministic and reproducible across runs.
 
 For most PRs on most repositories this produces a subgraph of a few dozen nodes. For large cross-cutting refactors it might reach the cap.
 
@@ -125,7 +116,7 @@ AIReviewService implements a three-tier degradation hierarchy. Every failure mod
 
 **Symbolic-only fallback.** If the scoped parse times out, if NeighborhoodExpander produces an empty result, or if the ONNX scorer throws for any reason, the review continues with deterministic symbolic facts only. SymbolicFactsComputer runs Kosaraju SCC on JGraphT, computes boundary crossings and fan-in blast radius, and assembles the agent payload without anomaly scores. Review notes are less precise about which components to prioritise, but they are grounded in real structural evidence.
 
-**Retroactive symbolic-only.** When there is no live parse result at all -- because the review is being regenerated for a historical operation or because the service restarted mid-review -- persisted striff-lib artifacts are reloaded from MongoDB and a compact payload is rebuilt from them. `NeuroSymbolicService.annotateRetroactive()` handles this path. No fresh parse, no GNN scoring. This path exists so that historical operations remain reviewable without requiring the original repository parse state to be present. It is the thinnest path, but it means a service restart does not orphan old reviews.
+**Retroactive symbolic-only.** When there is no live parse result at all (because the review is being regenerated for a historical operation or because the service restarted mid-review), persisted striff-lib artifacts are reloaded from MongoDB and a compact payload is rebuilt from them. `NeuroSymbolicService.annotateRetroactive()` handles this path. No fresh parse, no GNN scoring. This path exists so that historical operations remain reviewable without requiring the original repository parse state to be present. It is the thinnest path, but it means a service restart does not orphan old reviews.
 
 Each degradation mode is logged explicitly and surfaces in metrics. Monitoring which path was taken is not optional: consistent fallback to symbolic-only is a signal worth alerting on, because it means graph construction is systematically failing and the quality of every review is degraded without any individual request producing an error. If every review on the dashboard shows "symbolic-only," something is broken even though no error fired.
 
@@ -135,8 +126,25 @@ There is a quality gate at the end of all three paths. A review is not considere
 
 ---
 
+## Code Referenced in This Post
+
+<div style="border:1px solid rgba(15,23,42,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;background:rgba(255,255,255,0.6);">
+<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+<a href="https://github.com/hadi-technology/striff-gnn"><img src="https://img.shields.io/badge/GNN%20Training-striff--gnn-blue?logo=github" alt="striff-gnn"></a>
+<a href="https://github.com/hadi-technology/striff-lib"><img src="https://img.shields.io/badge/Graph%20Parsing-striff--lib-blueviolet?logo=github" alt="striff-lib"></a>
+<a href="https://github.com/hadi-technology/clarpse"><img src="https://img.shields.io/badge/Static%20Analysis-clarpse-6a0dad?logo=github" alt="clarpse"></a>
+<a href="https://github.com/hadi-technology/mlops-blueprint"><img src="https://img.shields.io/badge/MLOps%20Pipeline-mlops--blueprint-teal?logo=github" alt="mlops-blueprint"></a>
+</div>
+</div>
+
+---
+
 ## Where to Go From Here
 
 [striff.io](https://striff.io) is live. You can run it on any public GitHub repository today. There is also a [Chrome extension](https://github.com/hadi-technology/striff-browser-extension) for inline PR review on GitHub.
 
 [striff-lib](https://github.com/hadi-technology/striff-lib) is open source (available on Maven as `io.github.hadi-technology:striff-lib`). The parsing and diagram generation core is available if you want to explore the graph extraction layer or build on it.
+
+---
+
+*Mohamed Fadhel builds production AI and ML infrastructure. He is the founder of HADI Technology. [Technical Profile](/downloads/MFadhel_Engagement_Brief.pdf) · [Get in Touch](/contact/)*

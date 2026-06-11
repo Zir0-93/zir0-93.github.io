@@ -4,7 +4,7 @@ date: 2025-01-09 15:04:23
 og_image: /images/vllm-kubeai-diagram.svg
 tags: [llmops, mlops, kubernetes, vllm, model serving]
 toc: true
-description: "Deploying a large language model is not the hard part — deploying one that is safe to operate, cost-effective to scale, and straightforward to reason about under load is where most teams run into trouble. This post walks through an architecture developed at HADI Technology for running self-hosted LLM inference in production, using vLLM as the inference engine and KubeAI for model lifecycle management. Rather than a step-by-step tutorial, it explains the tradeoffs that led to this architecture and where it fits compared to alternatives like managed API endpoints or simpler single-instance deployments. The reference implementation is open-source and available on GitHub."
+description: "Deploying a large language model is not the hard part. Deploying one that is safe to operate, cost-effective to scale, and straightforward to reason about under load is where most teams run into trouble. This post walks through an architecture developed at HADI Technology for running self-hosted LLM inference in production, using vLLM as the inference engine and KubeAI for model lifecycle management. Rather than a step-by-step tutorial, it explains the tradeoffs that led to this architecture and where it fits compared to alternatives like managed API endpoints or simpler single-instance deployments. The reference implementation is open-source and available on GitHub."
 excerpt_separator: <!--more-->
 ---
 
@@ -13,14 +13,8 @@ excerpt_separator: <!--more-->
 
 Deploying a large language model is not the hard part. Deploying one in a way that is safe to operate, cost-effective to scale, and straightforward to reason about under load is where most teams run into trouble.
 
-This post walks through an architecture developed at HADI Technology for clients including [Joinable](https://www.joinable.ai) and others running self-hosted LLM inference in production. It uses vLLM as the inference engine and KubeAI to handle model lifecycle and operational concerns. The reference implementation is available at [github.com/hadi-technology/vllm-mlops](https://github.com/hadi-technology/vllm-mlops).
+This walks through an architecture for running self-hosted LLM inference in production, using vLLM as the inference engine and KubeAI for model lifecycle and operational concerns. I have built variants of this stack for teams that could not use a managed API, and the version here is the one I would reach for again.
 
-<div style="border:1px solid rgba(15,23,42,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;background:rgba(255,255,255,0.6);">
-<p style="margin:0 0 8px 0;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#6b7280;">Relevant Repos</p>
-<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
-<a href="https://github.com/hadi-technology/vllm-mlops"><img src="https://img.shields.io/badge/vLLM%20MLOps-vllm--mlops-blue?logo=github" alt="vllm-mlops"></a>
-</div>
-</div>
 <!--more-->
 Rather than a step-by-step tutorial, the intent here is to explain the tradeoffs that led to this architecture and where it fits, and where it does not fit, compared to alternatives.
 
@@ -40,6 +34,8 @@ Running vLLM directly on Kubernetes is not complicated. You deploy a pod with GP
 Deploying vLLM pods directly answers none of these questions. You end up building an operations layer on top of raw Kubernetes primitives, and that layer tends to grow in complexity over time as each operational problem gets patched individually.
 
 KubeAI sits one layer above vLLM and handles these concerns natively. The tradeoff is a dependency on an additional platform component. Whether that tradeoff is worth it depends on the operational context, which we will get to.
+
+The first time I ran a scale-from-zero DeepSeek deployment without request buffering, the opening burst of traffic hit a cold pod, the requests neither queued nor failed cleanly, and the retry storm that followed kept every subsequent pod too saturated to finish initializing. The fix was not more replicas. It was buffering at the proxy so the cold-start window stopped being a failure window.
 
 ---
 
@@ -107,7 +103,7 @@ It is not the right fit when:
 - You are prototyping or running experiments where operational overhead is more costly than GPU spend
 - You are serving a model that fits comfortably in CPU memory or on a single GPU with no scaling requirements, in which case deploying KubeAI adds unnecessary overhead
 
-In client work through HADI Technology, the decision to go self-hosted rather than managed typically comes down to one of three things: a hard data residency requirement, a model that is not available through managed APIs, or a cost calculation at high enough inference volume that managed API pricing becomes prohibitive.
+In client work, the decision to go self-hosted rather than managed typically comes down to one of three things: a hard data residency requirement, a model that is not available through managed APIs, or a cost calculation at high enough inference volume that managed API pricing becomes prohibitive. My default for teams under roughly ten engineers is to stay on a managed API until one of those reasons forces the move, because the operational surface here is larger than it looks on the diagram.
 
 ---
 
@@ -134,7 +130,7 @@ spec:
                   number: 80
 ```
 
-In multi-tenant deployments, which is the typical case for clients like Joinable where the inference infrastructure serves multiple downstream applications, this is where authentication and per-tenant rate limiting need to be layered in. KubeAI does not provide tenant isolation natively. That sits in the API gateway layer in front of it. The clean separation of concerns here is an advantage: the inference infrastructure does not need to carry application-level concerns about who is calling it.
+In multi-tenant deployments, which is the typical case for teams like [Joinable](https://www.joinable.ai) where the inference infrastructure serves multiple downstream applications, this is where authentication and per-tenant rate limiting need to be layered in. KubeAI does not provide tenant isolation natively. That sits in the API gateway layer in front of it. The clean separation of concerns here is an advantage: the inference infrastructure does not need to carry application-level concerns about who is calling it.
 
 ---
 
@@ -168,6 +164,8 @@ The precision decision is also a cost decision. A model that can run at INT4 rat
 
 The combination of vLLM and KubeAI is not the simplest possible way to self-host an LLM. It is the simplest way to self-host an LLM that is safe to operate at production scale, where cold starts, traffic spikes, model updates, and cost management are daily concerns rather than edge cases.
 
-The architecture buys you a clean separation between inference performance (vLLM's domain) and operational concerns including lifecycle management, scaling, API stability, and request buffering, which KubeAI handles. That separation is worth the extra component. Each layer is easier to reason about, debug, and evolve independently.
+Code: [github.com/hadi-technology/vllm-mlops](https://github.com/hadi-technology/vllm-mlops)
 
-The reference implementation is at [github.com/hadi-technology/vllm-mlops](https://github.com/hadi-technology/vllm-mlops).
+---
+
+*Mohamed Fadhel builds production AI and ML infrastructure. He is the founder of HADI Technology. [Technical Profile](/downloads/MFadhel_Engagement_Brief.pdf) · [Get in Touch](/contact/)*
