@@ -4,7 +4,7 @@ date: 2026-04-28 10:00:00
 og_image: /images/gnn-pipeline-diagram.svg
 tags: [gnn, code review, graph neural networks, software architecture, ml engineering]
 toc: true
-description: "How [striff.io](https://striff.io) uses a neurosymbolic pipeline with typed dependency graphs, Chidamber-Kemerer features, and an edge-prediction GNN to flag the dependencies in a pull request that carry architectural risk. The post covers the graph construction pipeline, the 405-dimensional feature vector spanning four languages, why we switched from node-level anomaly scoring to edge-prediction, six deterministic architectural detectors, and how symbolic facts are fused with learned anomaly scores to produce grounded LLM review annotations rendered directly on architecture diagrams."
+description: "How [striff.io](https://striff.io) uses a neurosymbolic pipeline with typed dependency graphs, Chidamber-Kemerer features, and an edge-prediction GNN to flag the dependencies in a pull request that carry architectural risk. Covers the graph construction pipeline, the 403-dimensional feature vector, why we switched from node-level anomaly scoring to edge-prediction, twelve deterministic detectors of which only five are allowed to speak to users, and why the GNN's scores and the LLM's prose are both barred from originating a finding."
 excerpt_separator: <!--more-->
 ---
 
@@ -14,9 +14,9 @@ Code review has a specific information problem that most tooling ignores. When y
 
 These are not edge cases. They are the class of change that produces architectural debt, the kind that compounds quietly and becomes expensive to unwind.
 
-That is the problem [striff.io](https://striff.io) was built to address. The product generates visual architecture diffs from GitHub pull requests: instead of a line diff, you get an SVG class diagram showing which components changed, how their relationships shifted, and which of those changes carry structural risk, annotated directly on the diagram.
+That is the problem [striff.io](https://striff.io) was built to address. It reviews the architecture of a pull request: which components changed, how their relationships shifted, and which of those shifts carry structural risk, posted as a GitHub check and drawn on a class diagram.
 
-The interesting engineering question is not the diagram rendering. It is *how you decide what to flag*. The approach we landed on is a staged neurosymbolic pipeline: extract a structural graph, compute deterministic symbolic facts, run a learned GNN anomaly scorer, and *only then* ask an LLM to annotate. The order is deliberate. The infrastructure that runs this pipeline at scale (Kafka staging, Triton inference, degradation modes) is covered in a [companion post]({% post_url 2026-04-28-striff-io-ml-infrastructure %}).
+The interesting engineering question is not the diagram rendering. It is *what earns the right to be said out loud*. This post is largely about the constraints we put on our own machine learning: a GNN whose scores users never see, and an LLM that is structurally forbidden from telling you something a deterministic detector did not already find. Those sound like limitations. They are the reason the output is trustworthy, and getting there took removing capability, not adding it. The infrastructure that runs the pipeline (queueing, in-process inference, degradation modes) is covered in a [companion post]({% post_url 2026-04-28-striff-io-ml-infrastructure %}).
 
 <!--more-->
 
@@ -42,27 +42,35 @@ Before explaining how the system works, here is what it produces. When you open 
 })();
 </script>
 
-The annotations look like this:
+The findings look like this:
 
-> **HIGH: Contract drift**
-> `AbstractJavaCodegenTest` changes (EC increased) indicate test expectations have shifted alongside `AbstractJavaCodegen` behavior. When tests that compose with core classes change, it often signals a behavioral contract change rather than a pure refactor. Consequence: downstream language implementations and template consumers are likely to need updates within the next release window, increasing short-term integration friction. Tradeoff: evolving the core contract can unlock improved behavior but raises immediate upgrade work and client compatibility pressure.
+> **Structural Regression: Package cycle detected**
+> This PR completes a dependency cycle among 3 packages (7 edges) by adding `manager.persistence -> manager.models`.
 
-> **REVIEW: Fan-in gravity**
-> `ModelUtils` is a very large utility (WMC ~679) referenced by core code (`AbstractJavaCodegen`) and tests. That size makes it a coupling magnet: small changes to `ModelUtils` will ripple across many generators/tests in the short term (next release) and create substantial coordination cost over the medium term (few releases) as callers evolve. Tradeoff: centralizing parsing/validation logic reduces duplication today but increases the risk that future API tweaks become high-impact change events that block parallel work and pressure teams to copy-or-extend portions (copying will accelerate boundary erosion).
+> **Structural Regression: Package structure violation**
+> `DefaultCommandHandlerManager` was added to `core.engine`, but `ARCHITECTURE.md` requires command handlers to live in `core.handlers`.
 
-These are generated from structured signals, not from the diff text. The rest of this post explains how those signals are produced.
+Two properties of those findings matter more than their wording. Each one **cites something you can go and check**: a named edge that exists in the diff, or a verbatim line from a document in the repository. And each one is **reproducible** — run the same PR through twice and you get the same finding, because a detector computed it rather than a model deciding it was worth mentioning.
+
+An earlier version of the product wrote in a different register. Here is a real annotation it produced:
+
+> *`ModelUtils` is a very large utility (WMC ~679) referenced by core code and tests. That size makes it a coupling magnet: small changes will ripple across many generators/tests in the short term and create substantial coordination cost over the medium term as callers evolve. Tradeoff: centralizing parsing/validation logic reduces duplication today but increases the risk that future API tweaks become high-impact change events...*
+
+It is fluent, it is plausible, and most of it is unfalsifiable. "Substantial coordination cost over the medium term" cannot be checked, cannot be wrong, and cannot be acted on. Worse, the same PR could produce a differently-worded version of it on the next run. The rest of this post is largely the story of how the pipeline was rebuilt so that output like that can no longer reach a user.
 
 ---
 
 ## The Pipeline in Brief
 
-The system has three stages that run in order. Each one catches something the others cannot:
+The system has three stages that run in order, and — this is the part that took us longest to get right — only the first one is allowed to originate a finding:
 
-1. **Deterministic detectors** scan for hard rule violations: dependency cycles, boundary crossings, hub formation. These are always wrong regardless of context.
-2. **An edge-prediction GNN** scores every dependency in the diff for structural surprise: "given patterns across thousands of codebases, should this edge exist?" This catches soft distributional patterns that no named rule covers.
-3. **A grounded LLM** takes the findings from both stages alongside metric deltas and produces the review annotations you see above. It does not reason freely over a raw diff; it annotates a pre-structured set of signals.
+1. **Deterministic detectors** scan for structural violations: dependency cycles, directional boundary crossings, complexity growth, documented-rule violations. These are computed, not inferred.
+2. **An edge-prediction GNN** scores dependencies for structural surprise: "given patterns across thousands of codebases, should this edge exist?" This catches soft distributional patterns no named rule covers. Its scores are **evidence attached to findings, never a finding by themselves.**
+3. **An LLM** may rewrite the prose of a finding that already exists. It cannot add one. An annotation that does not match a fact is discarded.
 
-The order matters. Deterministic detectors run first because they are cheap and binary. The GNN runs second because it is more expensive but catches what rules miss. The LLM runs last because its job is annotation, not detection, and it needs structured evidence to produce grounded output rather than confident-sounding speculation.
+The order matters, but the *permissions* matter more. Each stage downward is less deterministic and therefore trusted with less authority: the detectors decide what is true, the GNN decides what is interesting among things already known to be true, and the LLM decides only how it reads. A pipeline where every stage can add its own findings is a pipeline whose output quality is bounded by its least reliable component.
+
+{% include striff-permission-demo.html %}
 
 ---
 
@@ -70,7 +78,7 @@ The order matters. Deterministic detectors run first because they are cheap and 
 
 Source code has a natural graph structure. Components (classes, interfaces, enums, abstract classes) are nodes. The relationships between them are typed directed edges: inheritance (`extends`), realization (`implements`), association (holds a reference), and dependency (uses as a parameter). These edge types are not interchangeable: inheriting from a class implies a tighter coupling contract than depending on one, and the model needs to know the difference.
 
-<img src="/images/gnn-pipeline-diagram.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
+<a class="post-figure__link" href="/images/gnn-pipeline-diagram.svg" target="_blank" rel="noopener"><img src="/images/gnn-pipeline-diagram.svg" class="post-figure"/></a>
 
 This representation is not new. Dependency graphs and call graphs appear throughout the software engineering literature. What has not gotten much attention is using GNNs for anomaly detection over these graphs, detecting components whose structural neighbourhood deviates from what well-structured code looks like, rather than checking for named rule violations.
 
@@ -82,24 +90,30 @@ Given a pull request, the first question is which subgraph to analyse. You canno
 
 Node capping is enforced at 500 nodes. Beyond that, inference latency grows faster than signal quality. The cap felt arbitrary when we picked it. It still does. We chose it because larger subgraphs blew the inference budget, not because of any principled analysis.
 
-The graph maintains separate typed edges per relation type (following the R-GCN approach), rather than collapsing everything into a single adjacency matrix. INHERITANCE edges are aggregated differently from DEPENDENCY edges, which matters because the coupling regimes are different.
+The extracted graph keeps relation types distinct — INHERITANCE is not the same edge as DEPENDENCY, because the coupling regimes differ — and the HGT teacher learns type-specific transforms over them. The distilled student that actually runs in production collapses those into a single adjacency matrix. That is a real loss of fidelity, and it is the price of a model small enough to score synchronously inside a review request; the teacher's type-awareness survives only as far as it shaped the student's weights during distillation.
 
 ---
 
 ## Stage 1: Deterministic Detectors
 
-Six detectors scan the PR diff for specific architectural violations before any ML runs. These encode hard rules, patterns that are *always* problematic regardless of context:
+Twelve detectors scan the PR diff for specific structural violations before any ML runs. Each is a pure function over the before/after graph, they run in parallel via a `DetectorRegistry` so one failure does not block the others, and each emits `Finding` records with severity, affected components, and evidence.
 
 | Detector | What It Catches |
 |----------|----------------|
-| **New Package Cycle** | New circular dependencies between packages (Tarjan SCC diffed against baseline) |
-| **Boundary Crossing** | New cross-package edges not in baseline |
-| **Stable Contract Change** | Modified component with high afferent coupling + signature change (AC >= 10) |
-| **Hub Formation** | Fan-in growing from <5 to >=10 in a single PR |
-| **Layer Skip** | New edge skipping >=2 architectural layers |
-| **Cyclic Seed** | New edge A->B where path B->A already exists |
+| **New Package Cycle** | A cycle among packages that the baseline did not have (Kosaraju SCC, diffed against base) |
+| **New Directional Boundary Crossing** | A new cross-package edge; severity is HIGH only when it *inverts* an existing dependency |
+| **Stable Contract Change** | Signature change on a component many others depend on (fires at AC >= 5, HIGH at >= 10) |
+| **WMC Growth** | Weighted-methods-per-class rising sharply on an existing class |
+| **Hub Formation** | Fan-in crossing from <=2 to >=4 dependents in a single PR |
+| **Layer Skip** | A new edge skipping >= 2 architectural layers |
+| **Cyclic Dependency Seed** | New edge A->B where a path B->A of length 2-4 already exists |
+| **Instability Spike** | A component's efferent/afferent balance shifting sharply toward instability |
+| **Encapsulation Drop** | Internals becoming more exposed than they were |
+| **Production Depends On Test** | Production code acquiring a dependency on test code |
+| **Interface To Concrete Downgrade** | A dependency moving from an interface to a concrete implementation |
+| **Module Boundary Violation** | A cross-module edge that the monorepo's own package boundaries forbid |
 
-Each detector is a pure function. They run in parallel via a `DetectorRegistry`, and one detector failure does not block others. The output is a list of `Finding` records with severity, affected components, and a human-readable explanation.
+Two more findings come from documentation rather than graph shape: a **Doc Dependency Rule** violation (a dependency contradicting a rule written in the repo's own architecture docs) and a **Doc Architecture Advisory** (a documented intention the change may erode). Both must cite a verbatim line from a real file in the repository, which is the only reason they are allowed to exist alongside the graph-derived detectors.
 
 These catch what is *always* wrong. A dependency cycle is a cycle regardless of what the training distribution says. But they miss something important.
 
@@ -125,7 +139,7 @@ The redesign uses what the model was actually trained to do: **edge prediction**
 
 ### How It Works
 
-The model is trained with a masked edge reconstruction objective. During training, roughly 50% of outgoing edges from focal nodes are masked, and the model must predict whether each masked edge should exist. It learns structural patterns like "service classes rarely depend on controller classes" and "interfaces are typically implemented by classes in the same package."
+The model is trained with a masked edge reconstruction objective. During training, half the focal nodes are sampled and *all* of their outgoing edges are masked, and the model must predict whether each masked edge should exist, with hard negatives drawn from 2-hop neighbours. It learns structural patterns like "service classes rarely depend on controller classes" and "interfaces are typically implemented by classes in the same package."
 
 At inference time on a PR, we flip this around. For every dependency edge in the PR subgraph:
 
@@ -146,18 +160,11 @@ It does *not* catch project-specific conventions (your project might intentional
 
 ### Calibration
 
-Raw edge probabilities are relative, not absolute. We calibrate them using percentile thresholds computed on held-out positive edges from the training corpus:
+Raw edge probabilities are relative, not absolute. A score of 0.4 means nothing on its own; it only means something against the distribution of scores the model assigns to edges it has seen. So thresholds are computed as percentiles over held-out positive edges from the training corpus and shipped in `calibration.json` alongside the ONNX model, which keeps a given score meaning the same thing across retraining runs. On the current corpus the 5th percentile sits at 0.31 and the median at 0.73; lower means more surprising.
 
-| Level | Edge probability | Meaning |
-|-------|-----------------|---------|
-| Normal | Above 50th percentile | This dependency looks typical |
-| Possibly unusual | 25th-50th percentile | Somewhat uncommon |
-| Likely unusual | 10th-25th percentile | Structural pattern is unexpected |
-| Very unusual | Below 5th percentile | Strongly anomalous |
+Three bands come out of that file — anomalous, advisory, and normal — and the product layer is deliberately more conservative still, applying flat cutoffs at 0.30 and 0.60 rather than tracking the corpus percentiles. That gap between "what the calibration file supports" and "what we actually act on" is intentional: percentile bands move when the corpus changes, and we would rather the user-facing behaviour not shift under a retrain.
 
-Thresholds ship in `calibration.json` alongside the ONNX model, ensuring scores mean the same thing across model retraining runs.
-
-Only edges introduced by the PR are scored and surfaced to users. Background edges from the surrounding code provide context for the model's encoder, but a reviewer cannot act on a pre-existing dependency they did not introduce.
+An edge is scored when **either endpoint is a component the PR changed**, not only when the edge itself is new. Pre-existing dependencies touching changed code are part of the blast radius and the model needs them. Downstream, only edges the diff actually added are reported, since a reviewer cannot act on a dependency they did not introduce.
 
 ---
 
@@ -165,36 +172,50 @@ Only edges introduced by the PR are scored and surfaced to users. Background edg
 
 ### Feature Vector
 
-Every node is represented by a 405-dimensional feature vector spanning four groups: text embeddings of the component name and docstring (384 dims, via all-MiniLM-L6-v2), OOP structural metrics from the Chidamber-Kemerer suite (9 dims including WMC, DIT, NOC, afferent and efferent coupling), component type encoding (7 dims for class/interface/enum/method/field/annotation/other), and language plus synthetic node flags (5 dims).
+Every node is represented by a 403-dimensional feature vector in a fixed layout: text embeddings of the component name and docstring (384 dims, via all-MiniLM-L6-v2), OOP structural metrics from the Chidamber-Kemerer suite (9 dims including WMC, DIT, NOC, afferent and efferent coupling), component type one-hot (5 dims: class, interface, enum, struct, other), language one-hot (4 dims), and a synthetic-node flag (1 dim).
+
+The layout is worth stating precisely because it is load-bearing. The scorer pins the expected dimension in `ModelMetadata` and refuses to start if the loaded model disagrees — a retrained model that shuffled the metric block would otherwise produce plausible, wrong scores and throw nothing.
 
 The text embeddings matter because components with similar architectural roles (UserRepository, OrderRepository, ProductRepository) should be close in embedding space, letting the model learn that repository-like components have a characteristic structural neighbourhood.
 
-<img src="/images/gnn-feature-vector-dimensions.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
+<a class="post-figure__link" href="/images/gnn-feature-vector-dimensions.svg" target="_blank" rel="noopener"><img src="/images/gnn-feature-vector-dimensions.svg" class="post-figure"/></a>
 
-<img src="/images/striff-oopmetrics.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 600px;"/>
+<a class="post-figure__link" href="/images/striff-oopmetrics.png" target="_blank" rel="noopener"><img src="/images/striff-oopmetrics.png" class="post-figure"/></a>
 
 The OOP metrics are z-score normalised per language. A Java class with WMC of 20 is unremarkable; a Python module with WMC of 20 is an outlier. Without per-language normalisation, the model learns spurious correlations between language choice and anomaly score.
 
 ### GCN Architecture and Distillation
 
-The deployed scorer is a Graph Convolutional Network with an edge-prediction head, distilled from a larger teacher model. The teacher is an ArchGraphMAE -- a masked autoencoder with a 3-layer Heterogeneous Graph Transformer (HGT) encoder that learns type-specific transforms per relation type. The distilled GCN matches the teacher's edge probability distribution (gated on Pearson correlation >= 0.85 on held-out data) while being compact enough for synchronous inference during a live review request. We chose spectral GCN over Graph Attention Networks after experimentation. GAT's learned per-edge attention weights produce score variance across structurally similar components in different PRs. We spent a good two weeks convinced the variance was a training bug before accepting it was structural. GCN's spectral normalisation gives up per-neighbour interpretability in exchange for stable, consistent score distributions, a worthwhile tradeoff for a product where users see scores directly on their diagram.
+The deployed scorer is a Graph Convolutional Network with an edge-prediction head, distilled from a larger teacher. The teacher is an ArchGraphMAE — a masked autoencoder with a 3-layer Heterogeneous Graph Transformer (HGT) encoder, 4 heads, hidden dimension 128, learning type-specific transforms per relation type. The student is a homogeneous GCN over a collapsed adjacency, trained to match the teacher and compact enough for synchronous inference inside a live review request.
 
-The model runs on ONNX Runtime with three inputs: node features (N x 405), adjacency matrix (N x N), and edge queries (M x 2). It outputs per-edge probabilities in a single forward pass. Training graphs were built from 105 open-source repositories across Java, Python, TypeScript, and C#, totalling 4.9 million structural nodes. The corpus includes enterprise frameworks (Quarkus, Kafka, Spring), middleware (Netty, Flink), web applications (Django, FastAPI, NestJS), and smaller focused libraries.
+We chose spectral GCN over Graph Attention Networks after experimentation. GAT's learned per-edge attention weights produce score variance across structurally similar components in different PRs. We spent a good two weeks convinced the variance was a training bug before accepting it was structural. GCN's spectral normalisation gives up per-neighbour interpretability in exchange for stable, consistent score distributions.
+
+Worth flagging honestly: the export path validates the HGT against a tight numerical tolerance, but **the distilled student ships without an automated agreement gate against its teacher.** Distillation quality is currently eyeballed from the training run rather than enforced at export time, which is a real gap — a student that silently drifted from the teacher would not be caught by CI. It is on the list precisely because the equivalent check already exists one layer up.
+
+The model runs on ONNX Runtime with three inputs — node features (N x 403), adjacency matrix (N x N), and edge queries (M x 2) — emitting per-edge scores in a single forward pass. Training graphs were built from 60 open-source repositories, 20 each across Java, Python and TypeScript, totalling roughly 4.2 million structural nodes. The corpus includes enterprise frameworks (Quarkus, Spring), middleware, web applications (Django, FastAPI, NestJS), and smaller focused libraries. C# is parsed and scored in production but is not represented in the training corpus, so its scores lean on patterns learned from the other three languages — a known weakness rather than a designed behaviour.
 
 > **The training pipeline is open-sourced.**
 > The Python GNN training code, covering dataset preparation, model architecture, distillation, and ONNX export, is available at [github.com/hadi-technology/striff-gnn](https://github.com/hadi-technology/striff-gnn).
 
 ---
 
-## Stage 3: Putting It Together
+## Stage 3: Who Is Allowed to Say Something
 
-With deterministic findings, edge anomaly scores, and structural metric deltas all available, the question is how to combine them. The answer is deliberately simple.
+With deterministic findings, edge anomaly scores, and structural metric deltas all available, the obvious move is to hand all of it to an LLM and let it write the review. That is what the first version did, and it is the part we had to undo.
 
-All three signal types are serialised into a structured JSON payload alongside the compact diff and fed to the LLM agent. The agent annotates a pre-structured set of signals with architectural judgment and natural language. It does not reason freely over a raw diff.
+The failure was not hallucination in the usual sense. The model rarely invented a class that did not exist. What it did was assign *significance* — deciding that a real edge was concerning, in fluent prose, with no way for anyone to check whether it was. Two runs over the same PR would surface different concerns. There was no way to measure precision, because there was no stable set of claims to measure.
 
-This constraint does more work than it looks like. An LLM given a raw diff and asked "what are the architectural risks?" produces confident-sounding but structurally ungrounded output. An LLM told "*there is a new dependency cycle between these two packages, the edge from UserService to PaymentController has an anomaly score of 0.88 (the model does not expect service classes to depend on controller classes), its EC increased from 3 to 9 this PR, and it now has 4 incoming dependents it did not have before*" produces output grounded in actual structural evidence.
+So the pipeline was rebuilt around a single rule: **a deterministic fact is the only thing that can originate a user-visible finding.**
 
-The symbolic layer also computes deterministic facts from the expanded subgraph: dependency cycles via Kosaraju SCC (at both class and package level), package boundary crossings, fan-in blast radius, and OOP metric deltas. These facts are binary and explainable: a cycle either exists or it does not.
+Concretely, the surfacing stage builds items from detector findings first. LLM annotations are then matched against those items by target — a component or an edge naming one of its endpoints. If an annotation matches, its prose *replaces the wording* of that finding while the finding's identity, priority, targets and evidence stay untouched. If an annotation matches nothing, it is dropped and counted. There is no tier at which an unmatched claim is surfaced with a lower confidence label, because a confidence label on an unverifiable claim is just a hedge.
+
+The GNN sits under the same rule. Its scores enrich findings as evidence, and its anomalous-edge count appears as an aggregate in the check run, but **no anomalous edge becomes a finding on its own.** The reason is precision measurement, not distrust of the model: we have never had a clean way to tell a "structurally surprising" edge from a "structurally surprising and actually worth your time" edge, and until that number exists, promoting scores to findings would be raising volume, not value.
+
+The same conservatism applies within the detectors themselves. Twelve detectors run; **five reach users.** New package cycles always surface. Directional boundary crossings, stable contract changes, WMC growth and documented-rule violations surface only at HIGH severity. The remaining detectors — hub formation, layer skip, instability spikes, production-depends-on-test, interface downgrades, module boundary violations, cyclic seeds, encapsulation drops — run on every PR and stay evidence-only, feeding the payload without ever speaking. Each stays quiet until its precision has been measured on real repositories, because a detector promoted on the strength of "this seems obviously bad" is how a review tool starts costing more attention than it saves.
+
+That is the tradeoff worth being explicit about: this design is biased hard toward silence. It will miss real problems that an evidence-only detector spotted. We would rather have that than a reviewer who learns to scroll past us.
+
+The symbolic layer underneath computes the facts these decisions rest on: dependency cycles via Kosaraju SCC at both class and package level, package boundary crossings, fan-in blast radius, and OOP metric deltas. These are binary and explainable. A cycle either exists or it does not, and if we say it does, you can go and find it.
 
 ---
 
@@ -217,9 +238,11 @@ The symbolic layer also computes deterministic facts from the expanded subgraph:
 
 striff-lib is open source. The parsing and diagram generation core is available if you want to explore the graph extraction layer or build on top of it.
 
-The Python GNN training pipeline is available at [github.com/hadi-technology/striff-gnn](https://github.com/hadi-technology/striff-gnn). The corpus spans 105 open-source repositories across Java, Python, TypeScript, and C#, totalling 4.9 million structural nodes.
+The Python GNN training pipeline is available at [github.com/hadi-technology/striff-gnn](https://github.com/hadi-technology/striff-gnn). The corpus spans 60 open-source repositories across Java, Python and TypeScript, totalling roughly 4.2 million structural nodes.
 
-The staging pattern described here (deterministic detectors followed by edge-prediction anomaly scoring followed by grounded LLM annotation) is not specific to code review. Anywhere you have a domain representable as a structured graph where some properties are deterministically computable and others are distributional, this approach applies. Database schema evolution, API contract drift, infrastructure dependency analysis, security vulnerability propagation.
+The pattern described here is not specific to code review: deterministic computation decides what is true, a learned model ranks what is interesting among things already known to be true, and a language model is allowed to phrase it and nothing else. Anywhere you have a domain representable as a structured graph where some properties are deterministically computable and others are distributional, the same permission ordering applies — database schema evolution, API contract drift, infrastructure dependency analysis, security vulnerability propagation.
+
+The generalisable lesson is narrower than "use a neurosymbolic pipeline." It is this: **the hard part of shipping ML in a review product is not detection, it is deciding what earns the right to interrupt someone.** Every stage we constrained — the GNN that scores but cannot speak, the seven detectors that run but stay silent, the LLM that can only reword — made the product quieter and more trusted at the same time. That was not the intuition we started with.
 
 ---
 

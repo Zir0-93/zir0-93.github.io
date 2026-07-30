@@ -2,13 +2,15 @@
 title: "The ML and Infrastructure Architecture Behind striff.io"
 date: 2026-04-28 14:00:00
 og_image: /images/striff-io-screenshot.png
-tags: [mlops, kubernetes, kafka, graph neural networks, ml engineering, system design]
+tags: [mlops, kubernetes, redis, graph neural networks, ml engineering, system design]
 toc: true
-description: "[striff.io](https://striff.io) turns GitHub pull requests into architecture diagrams scored by a graph neural network. This post breaks down the production pipeline behind it: a three-tier Kafka topology that decouples graph construction, GNN inference on Triton, and LLM annotation, plus a degradation hierarchy that guarantees every review request produces a useful result even when services fail."
+description: "[striff.io](https://striff.io) reviews the architecture of every pull request: it parses the repository into a typed dependency graph, scores the changed edges with a graph neural network, and posts deterministic structural findings as a GitHub check. This post breaks down the production pipeline behind it, and the three places we deliberately chose the boring option: a Redis list queue instead of Kafka, in-process ONNX instead of a model server, and a degradation hierarchy that lets a review complete with less rather than fail."
 excerpt_separator: <!--more-->
 ---
 
-[striff.io](https://striff.io) runs a neurosymbolic ML pipeline that parses GitHub pull requests into typed dependency graphs, scores changed components with a graph neural network, and renders AI-generated architectural review notes directly onto the diagram. This post is a walkthrough of how the system is built, the specific problems that forced each design decision, and the tradeoffs we are living with. The infrastructure patterns here build directly on the MLOps blueprint described in an [earlier post]({% post_url 2024-01-09-mlops-blueprint %}) (single-build artifacts, Vault, Argo CD, blue/green rollouts), extended with Kafka staging and Triton inference. The GNN model itself is covered in a [companion post]({% post_url 2026-04-28-detecting-architectural-anomalies-gnn %}).
+[striff.io](https://striff.io) runs a neurosymbolic pipeline that parses GitHub pull requests into typed dependency graphs, scores the changed dependencies with a graph neural network, and posts the structural findings as a GitHub check next to your CI. This post is a walkthrough of how the system is built, the specific problems that forced each design decision, and the tradeoffs we are living with. The infrastructure patterns here build directly on the MLOps blueprint described in an [earlier post]({% post_url 2024-01-09-mlops-blueprint %}) (single-build artifacts, Vault, Argo CD, blue/green rollouts). The GNN model itself is covered in a [companion post]({% post_url 2026-04-28-detecting-architectural-anomalies-gnn %}).
+
+One thing to set expectations: striff has no message bus and no model server. A fair amount of this post is about why not.
 
 ![striff.io screenshot](/images/striff-io-screenshot.png){: .light-border }
 
@@ -32,45 +34,47 @@ The subtler issue is failure coupling. When everything runs in a single synchron
 
 ## What striff.io Does
 
-[striff.io](https://striff.io) takes a GitHub pull request and generates a visual architecture diff. Changed files become seed nodes in a typed dependency graph extracted by striff-lib. A symbolic analysis layer computes deterministic facts: dependency cycles, package boundary crossings, fan-in blast radius, OOP metric deltas. A distilled R-GCN running on ONNX Runtime scores each changed component for structural anomaly. Both signals feed a structured LLM agent payload. The agent produces tiered review notes rendered as sticky notes directly on the SVG class diagram.
+[striff.io](https://striff.io) takes a GitHub pull request and reviews what it does to the codebase's structure. Changed files become seed nodes in a typed dependency graph extracted by striff-lib. A symbolic analysis layer computes deterministic facts: dependency cycles, package boundary crossings, fan-in blast radius, OOP metric deltas. A distilled GCN with an edge-prediction head, running on ONNX Runtime, scores the dependency edges touching changed components for structural surprise. Findings are posted as a GitHub check and rendered as notes on an SVG class diagram.
+
+One rule shapes the rest of the pipeline: the deterministic layer decides what gets said, and the LLM only decides how it reads. A finding exists because a detector computed it, not because a model found it plausible. That keeps the output reproducible, and it means a clean PR gets no findings at all.
 
 The whole system runs on DigitalOcean Kubernetes, provisioned with Terraform, deployed via ArgoCD, and monitored with Prometheus and Grafana.
 
-<img src="/images/striff-why-visual.svg" style="margin-left:auto; margin-right:auto; display: block; max-width: 700px;"/>
+<a class="post-figure__link" href="/images/striff-why-visual.svg" target="_blank" rel="noopener"><img src="/images/striff-why-visual.svg" class="post-figure"/></a>
 
-<img src="/images/striff-architecture-diagram.svg" style="margin-left:auto; margin-right:auto; display: block;"/>
-
----
-
-## An Async, Kafka-Staged Pipeline
-
-The API does not do ML work. When a GitHub webhook arrives, AIReviewService validates the event, writes a job record to MongoDB with status PENDING, publishes a `review.requested` event to Kafka, and returns 202 Accepted. Everything downstream is asynchronous.
-
-The pipeline has three independent worker tiers, each with its own Kafka topic and consumer group:
-
-- **Graph workers** consume `review.requested`, run ScopedFileSelector and TimeBoxedParser to build the subgraph, publish the result to `graph.ready`
-- **GNN workers** consume `graph.ready`, call the Triton Inference Server, publish anomaly scores to `scores.ready`
-- **LLM workers** consume `scores.ready`, assemble the structured payload via OptimizedReviewPayloadMapper, call GradientAIReviewCoordinator, publish the enriched review to `review.complete`
-
-Each tier scales independently. Graph construction is CPU and I/O bound. Inference is compute-bound and benefits from GPU batching. LLM annotation is latency-bound on an external API and needs more replicas, not faster hardware. Kafka provides natural backpressure between them: if LLM calls are slow, the `scores.ready` topic grows and annotation workers slow down without any effect on how fast webhooks are ingested upstream.
-
-We alert on `striff_ai_review_executor_queued > 25` for 10 minutes. When that fires, it means the annotation tier is falling behind the inference tier. That is almost always an LLM API rate limit or timeout issue, and it is a completely different operational response than a graph construction backlog. Having the tiers observable separately is what makes that distinction fast.
-
-The review status endpoint is a MongoDB read. Clients poll or receive a webhook callback when the job reaches `review.complete`.
-
-![Kafka topic topology](/images/kafka-topology-diagram.svg){: .light-border }
+<a class="post-figure__link" href="/images/striff-architecture-diagram.svg" target="_blank" rel="noopener"><img src="/images/striff-architecture-diagram.svg" class="post-figure"/></a>
 
 ---
 
-## Inference as a Separate Service
+## Async Without a Message Bus
 
-Separating Triton Inference Server from the application tier is not just a scaling decision. It introduces distributed systems problems that did not exist when everything ran in one process.
+The API does not do ML work on the request thread. A GitHub webhook arrives at `GitHubAppController`, which verifies the HMAC signature, drops duplicates through `GitHubWebhookDedupService`, pushes a job onto a **Redis list**, and returns 202 Accepted. Everything downstream is asynchronous.
 
-When Triton is unavailable, GNN workers must decide what to do. The answer connects directly to the degradation hierarchy: a worker that cannot reach Triton publishes a signal downstream indicating scoring failed, and the LLM annotation tier falls back to symbolic-only facts. The review completes with reduced quality rather than not completing at all. This is the right behaviour, but it requires that every service boundary in the pipeline has an explicit failure contract, not just an implicit assumption that the downstream service is always reachable.
+Durability is the reason for Redis rather than an in-process queue, and it is worth being precise about the failure it prevents. The first version used a `ThreadPoolTaskExecutor` directly: 8 core threads, 64 queue slots, jobs living purely in JVM memory. Two things break at that design. Jobs are lost on pod restart, and GitHub only retries a webhook about three times over roughly twenty seconds, so a deploy during a busy minute silently drops reviews that nobody will ever ask for again. And each pod has its own queue, so one pod can saturate while another sits idle, with no way to shed work between them.
 
-Kafka's at-least-once delivery guarantee introduces idempotency requirements that in-process queues do not. A worker that crashes after processing a message but before committing its offset will re-process that message on restart. AIReviewService handles this by claiming operations before work starts and checking claim state before publishing downstream. A message that arrives for an already-claimed operation is discarded. The cost of re-processing a message is a no-op rather than a duplicate review appearing for the same PR.
+A Redis list fixes both without introducing a broker. Workers `BRPOP` from a shared key, so any pod can pick up any job and load balances itself. Redis was already in the cluster for striff caching and prefetch storage, and was already configured for this to be safe: AOF persistence with `appendfsync everysec`, and `volatile-lru` eviction so that only keys with a TTL are evictable and queue entries cannot be dropped under memory pressure. Each pod runs a small pool of long-lived worker threads (`GitHubEventWorker`, a `SmartLifecycle` that drains in-flight jobs on shutdown).
 
-Service boundaries also create contract risk that in-process calls do not have. The OnnxArchitecturalScorer input contract (the 404-dimensional feature vector layout and typed edge index format) is only valid for the model currently registered with Triton. Deploying a retrained model with a different input shape without updating FeatureBuilder on the worker side produces wrong anomaly scores without throwing an exception. This is a silent failure that does not appear in error rates. We caught this once in staging when a training run exported the feature vector with the OOP metrics in a different order. The scores looked plausible. They were wrong. The fix is contract tests between FeatureBuilder output and the ONNX model's expected input, run as part of CI on every change to either.
+**Why not Kafka.** Kafka gives you ordering, consumer groups, and replay. We don't need any of the three: reviews are independent per PR, and a webhook event is worthless once it's a few minutes stale. What we would get for certain is a broker to run and a third stateful system in the cluster. A list and `BRPOP` covers the requirement.
+
+The AI review runs one hop further in, on a small bounded executor: core 2, max 4, queue 50 (`AsyncConfig`). The bound matters more than the numbers. Each review holds a parsed graph, a feature matrix and an ONNX session in heap, so unbounded concurrency here doesn't degrade latency gracefully, it runs out of memory. When the queue fills, the rejection handler marks the operation `FAILED` with error code `QUEUE_FULL` rather than dropping it silently — a state the client can see and retry against.
+
+We alert on `striff_ai_review_executor_queued > 25` for 10 minutes. That fires when reviews are arriving faster than they complete, which in practice is either an LLM provider slowdown or a run of large repositories, and the queue-depth signal catches it well before any request errors.
+
+The review status endpoint is a MongoDB read; the browser extension polls it, and the GitHub App posts a check run when the review completes.
+
+{% include striff-flow-demo.html %}
+
+---
+
+## Inference Stays In-Process
+
+The GNN runs inside the application JVM on ONNX Runtime. `OnnxArchitecturalScorer` loads the model from the packaged resources at startup, holds the session for the pod's lifetime, and scores synchronously inside the review task. There is no inference service, no gRPC hop, no GPU.
+
+This is the decision most likely to look wrong on a diagram and be right in production. Per-review inference is a single forward pass over a subgraph capped at 500 nodes, which is milliseconds of CPU. Standing up a model server would add a network hop and a second deployment to that, plus a new failure mode for a call that currently cannot fail independently of the process making it. The scaling argument for a model server (batching many small requests into one GPU pass) requires request arrival rates we do not have: reviews arrive at human-PR frequency, so the effective batch size would be one almost always, and batching one request is just latency with extra steps.
+
+There is a real cost to in-process inference and it is memory, not latency. At six replicas under the HPA maximum, six copies of the model weights sit in six JVMs doing nothing most of the time. That is the price of the simplicity, it is currently a few hundred megabytes, and it is the number to watch: **the day model weights grow enough that per-replica duplication dominates the memory budget, or inference latency starts landing in the request path, is the day a model server earns its place.** Neither is true yet.
+
+The contract risk that a service boundary would have introduced still exists, just in a different form. The scorer's input contract is a 403-dimensional feature vector with a specific layout (text embedding, then metrics, then type one-hot, then language one-hot, then the synthetic flag) plus an `edge_queries` tensor. A retrained model exported with the OOP metrics in a different order produces plausible, wrong scores and throws nothing. Silent numerical wrongness does not appear in error rates. Two things guard it: `ModelMetadata` pins the expected dimension and `OnnxArchitecturalScorer` hard-fails at startup if the loaded model disagrees or if the `edge_queries` input is missing, so a mismatched model kills the pod rather than quietly scoring garbage. Crashing on a contract violation is the correct behaviour for a model whose output nobody can eyeball.
 
 ---
 
@@ -78,11 +82,11 @@ Service boundaries also create contract risk that in-process calls do not have. 
 
 Parsing is the most expensive operation in the pipeline and the one most teams building code analysis tools get wrong. The naive approach parses the entire repository on every PR event. That does not scale and it is also wrong: a review does not need the full repository graph, it needs the structural neighbourhood of what changed. Parse less, but parse smarter. On a 1000-file Java codebase, striff-lib's full pipeline (file I/O, Clarpse parsing, reference classification, relationship extraction, diff computation, model merge) takes roughly four seconds. Most of that time is in relationship extraction, which is why scoping the parse set matters so much.
 
-The pipeline builds this neighbourhood in three steps via ScopedFileSelector, TimeBoxedParser, and NeighborhoodExpander.
+The pipeline builds this neighbourhood in three steps via ScopedFileSelector, ScopedParseService, and NeighborhoodExpander.
 
 **Scoped file selection.** Changed files are parsed first to extract the set of component names they declare. A fast text scan then runs across the full repository to find every file containing any of those names. This is a string search, not a parse. A tier-based budget trims the resulting candidate set: PR files first, same-directory files second, text-match files last. Lower-priority files are dropped when the budget is exhausted.
 
-**Time-boxed parsing.** The candidate file set is parsed under a hard deadline enforced by TimeBoxedParser. If parsing does not finish in time, it returns whatever it has completed. This is a deliberate design choice: a partial graph is better than a timeout. The review that follows will be weaker but the user gets something rather than an error.
+**Time-boxed parsing.** ScopedParseService parses the candidate set under a hard per-language deadline. If parsing does not finish in time, it returns whatever it has completed. This is a deliberate design choice: a partial graph is better than a timeout. The review that follows will be weaker but the user gets something rather than an error.
 
 **Neighbourhood expansion.** NeighborhoodExpander runs a bidirectional BFS from the seed nodes (the changed components), following edges in both directions for three hops. This captures both what the changed components depend on and what depends on them: the structural blast radius of the PR. Node count is capped at 500, with non-seed nodes dropped in hop-distance order when the cap is hit. The subgraph is deterministic and reproducible across runs.
 
@@ -90,37 +94,45 @@ For most PRs on most repositories this produces a subgraph of a few dozen nodes.
 
 ![BFS neighbourhood expansion](/images/bfs-neighbourhood-diagram.svg){: .light-border }
 
-The memory side matters here. A 404-dimensional feature matrix for a 500-node subgraph is about 800KB. Under concurrent reviews, multiple feature matrices live in the JVM heap simultaneously alongside cached MongoDB documents and the ONNX model weights. The deployment runs with `-XX:MaxRAMPercentage=75` to leave headroom for the OS and ONNX Runtime's native memory. `-XX:+ExitOnOutOfMemoryError` is set deliberately: if the JVM runs out of heap, the pod crashes and Kubernetes restarts it clean rather than leaving a live pod where inference might silently produce garbage. We alert on JVM heap above 90% sustained for ten minutes before that happens.
+The memory side matters here. A 403-dimensional float feature matrix for a 500-node subgraph is about 800KB. Under concurrent reviews, several of those live in the JVM heap at once alongside cached MongoDB documents and the ONNX model weights, which is the real reason the review executor is bounded at four threads.
+
+The heap is sized explicitly, `-Xms1g -Xmx4g`, rather than with `-XX:MaxRAMPercentage`. That choice gets made the other way in most Kubernetes deployments, so it is worth the sentence: a percentage of the container limit silently re-sizes the heap whenever someone edits the pod's memory request, and this workload has significant *native* memory outside the heap (ONNX Runtime's arenas and the parser's buffers) that the percentage does not know about. A heap that grows to consume the headroom native allocation needs produces an OOM kill that looks like a memory leak and is not. Pinning the heap makes the native budget explicit and the failure reproducible. `-XX:+ExitOnOutOfMemoryError` is set alongside it: if the JVM does exhaust heap, the pod dies and Kubernetes replaces it, rather than limping along in a state where inference might silently produce garbage.
 
 ---
 
-## Model Serving: Why Triton
+## Shipping a New Model
 
-ONNX Runtime running in-process is the right starting point. It stops being the right answer once you scale. At six replicas under the HPA maximum, each replica carries the full model weights in its own JVM heap. Six copies of the same ONNX model doing nothing most of the time. Inference also has no batching: each review request runs a separate forward pass.
+Model weights ship inside the application image. A new model is a new build, a new image tag, and a normal deployment, which sounds unsophisticated until you consider what it buys: the model version and the code version can never disagree. The feature-vector layout in `FeatureBuilder` and the tensor the model expects are the single most coupled pair of things in this system, and packaging them together makes a mismatched pair impossible to deploy rather than merely unlikely.
 
-Triton Inference Server solves both. The R-GCN ONNX model is registered with Triton without changes to the model itself. GNN workers become thin gRPC clients: serialise the feature matrix and typed edge index, call Triton, receive anomaly scores. Triton accumulates requests within a configurable time window and batches them into a single forward pass on GPU. At low traffic the effective batch size is one and latency matches in-process inference. At high traffic the amortised cost per review drops substantially.
+The tradeoff is real and worth naming. Retraining requires an application deploy, so the model cannot be updated independently or rolled back on its own, and image size grows with the weights. For a model that changes a few times a quarter, that is a good trade. For one retrained nightly, it would not be, and that is the second condition (alongside memory pressure) that would push inference out into its own service.
 
-Model versioning also becomes a first-class operational concern once inference is separated from the application. Triton's version routing runs a new model version alongside the current one, routing a configurable traffic fraction to the candidate before cutover. Deploying a new model without a clear comparison to the current production model on held-out data is how you introduce silent quality regressions. Paired with MLflow for experiment tracking (covered in the MLOps blueprint post), every model version in production has a traceable lineage back to a training run with logged metrics.
-
-For the rollout itself we use Argo Rollouts with a blue/green strategy. Model behaviour changes discretely between versions. A rolling update that mixes old and new scoring in the same traffic window produces review notes that are inconsistent in ways users cannot explain. A clean cutover with an instant rollback path is worth the cost of briefly running two serving stacks.
+Model behaviour changes discretely between versions, which is the argument against a rolling update here: mixing old and new scoring inside one traffic window produces reviews that differ for reasons no user can see. A blue/green cutover with an instant rollback path is worth briefly running two stacks. Experiment tracking (MLflow, covered in the MLOps blueprint post) keeps each shipped model traceable to the training run that produced it, which matters because "the scores changed and we do not know why" is otherwise unanswerable months later.
 
 ---
 
 ## Degradation Modes
 
-AIReviewService implements a three-tier degradation hierarchy. Every failure mode produces a weaker but still useful output rather than returning an error.
+AIReviewService degrades rather than failing. Every failure mode below the top tier produces a weaker but still honest output.
 
-<img src="/images/striff-reviewnote.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 650px;"/>
+<a class="post-figure__link" href="/images/striff-reviewnote.png" target="_blank" rel="noopener"><img src="/images/striff-reviewnote.png" class="post-figure"/></a>
 
-**Full pipeline.** TimeBoxedParser completes within budget, NeighborhoodExpander produces a valid subgraph, OnnxArchitecturalScorer returns anomaly scores, and GradientAIReviewCoordinator receives symbolic facts plus scored components as structured context. This is the highest-quality path.
+**Full pipeline.** The scoped parse completes within budget, NeighborhoodExpander produces a valid subgraph, OnnxArchitecturalScorer returns edge scores, and `LlmReviewCoordinator` receives symbolic facts plus scored edges as structured context. This is the highest-quality path.
 
-**Symbolic-only fallback.** If the scoped parse times out, if NeighborhoodExpander produces an empty result, or if the ONNX scorer throws for any reason, the review continues with deterministic symbolic facts only. SymbolicFactsComputer runs Kosaraju SCC on JGraphT, computes boundary crossings and fan-in blast radius, and assembles the agent payload without anomaly scores. Review notes are less precise about which components to prioritise, but they are grounded in real structural evidence.
+**Symbolic-only fallback.** If the scoped parse times out, if NeighborhoodExpander produces an empty result, or if the ONNX scorer throws for any reason, the review continues with deterministic symbolic facts only. SymbolicFactsComputer runs Kosaraju SCC on JGraphT, computes boundary crossings and fan-in blast radius, and assembles the payload without anomaly scores. Because the GNN's scores are evidence rather than an origin of findings (the [companion post]({% post_url 2026-04-28-detecting-architectural-anomalies-gnn %}) explains why), losing them costs prioritisation detail, not correctness. The findings that survive are the deterministic ones, which were the only ones users ever saw.
 
-**Retroactive symbolic-only.** When there is no live parse result at all (because the review is being regenerated for a historical operation or because the service restarted mid-review), persisted striff-lib artifacts are reloaded from MongoDB and a compact payload is rebuilt from them. `NeuroSymbolicService.annotateRetroactive()` handles this path. No fresh parse, no GNN scoring. This path exists so that historical operations remain reviewable without requiring the original repository parse state to be present. It is the thinnest path, but it means a service restart does not orphan old reviews.
+Each degradation mode is logged explicitly and surfaces in metrics. Monitoring which path was taken is not optional: consistent fallback to symbolic-only is a signal worth alerting on, because it means graph construction is systematically failing and every review is quietly thinner without any individual request producing an error.
 
-Each degradation mode is logged explicitly and surfaces in metrics. Monitoring which path was taken is not optional: consistent fallback to symbolic-only is a signal worth alerting on, because it means graph construction is systematically failing and the quality of every review is degraded without any individual request producing an error. If every review on the dashboard shows "symbolic-only," something is broken even though no error fired.
+### The failure that is not a failure, and the one that is
 
-There is a quality gate at the end of all three paths. A review is not considered complete until it produces at least one visible sticky note in the final enriched SVG. A nominally successful review that produces no visible output is treated as a failure rather than silently persisted. Silent successes that users cannot perceive are harder to detect than explicit errors because they do not raise error rates and they do not fire alerts. The alert `StriffAPIAIReviewFailuresHigh` fires when more than ten reviews fail in fifteen minutes, and `StriffAPIAIReviewQueueBacklog` fires when executor queue depth exceeds 25 for ten minutes. The queue depth alert catches the failure mode that pure error-rate monitoring misses: the system falling behind on review generation without any individual request returning an error.
+An empty review is a legitimate outcome. Most pull requests do not damage the architecture, and the correct output for those is silence: no findings, no invented "considerations", no note manufactured so the tool looks busy. Striff staying quiet on a clean PR is the product working.
+
+This creates a subtle hazard that took a redesign to close properly. A review that found nothing and a review that *could not analyse anything* produce byte-identical empty artifacts, and they mean opposite things. "Analysed, clean" is a result. "Never analysed" is an outage wearing a result's clothing, and the moment it is persisted as READY it is indistinguishable from good news forever after.
+
+The early fix was a quality gate: reject any review that produced no visible note. That was the wrong lever, because it treats the legitimate case (clean PR) as broken in order to catch the illegitimate one. The current design makes the bad state unrepresentable instead: a review can only be produced by a live analysis that actually ran, so there is no code path that reaches the surfacing stage without a real diff behind it. A review scheduled without an analysis result throws rather than publishing an empty artifact. Nothing needs to be checked at the end, because nothing can get there wrongly.
+
+That is the general shape worth stealing from this section: when two states are externally identical but semantically opposite, adding a validation is weaker than removing the path that produces the ambiguous one.
+
+Two alerts cover the rest. `StriffAPIAIReviewFailuresHigh` fires when more than ten reviews fail in fifteen minutes, and `StriffAPIAIReviewQueueBacklog` fires when the executor queue depth exceeds 25 for ten minutes. The queue-depth alert catches the failure mode that pure error-rate monitoring misses: the system falling behind on review generation without any individual request returning an error.
 
 ![Degradation tier flowchart](/images/degradation-flowchart.svg){: .light-border }
 

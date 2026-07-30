@@ -1,0 +1,312 @@
+<!-- Animated walkthrough: what is allowed to become a user-visible finding.
+     Self-contained (no deps), autoplays once in view, replayable, reduced-motion aware. -->
+<div class="spd" data-spd>
+  <div class="spd__bar">
+    <span class="spd__dot"></span>
+    <span class="spd__title">striff / architectural-review</span>
+    <span class="spd__step" data-spd-step>Ready</span>
+    <button class="spd__replay" type="button" data-spd-replay aria-label="Replay animation">Replay</button>
+  </div>
+
+  <div class="spd__grid">
+    <!-- lane 1 -->
+    <section class="spd__lane" data-lane="1">
+      <header>
+        <span class="spd__cap spd__cap--green">May originate</span>
+        <h4>Deterministic detectors</h4>
+      </header>
+      <div class="spd__chips" data-spd-chips></div>
+      <p class="spd__note" data-spd-n1>12 detectors run on every PR.</p>
+    </section>
+
+    <!-- lane 2 -->
+    <section class="spd__lane" data-lane="2">
+      <header>
+        <span class="spd__cap spd__cap--amber">May rank only</span>
+        <h4>Edge-prediction GNN</h4>
+      </header>
+      <div class="spd__edges" data-spd-edges></div>
+      <p class="spd__note" data-spd-n2>Scores attach as evidence.</p>
+    </section>
+
+    <!-- lane 3 -->
+    <section class="spd__lane" data-lane="3">
+      <header>
+        <span class="spd__cap spd__cap--blue">May reword only</span>
+        <h4>LLM annotation</h4>
+      </header>
+      <div class="spd__claims" data-spd-claims></div>
+      <p class="spd__note" data-spd-n3>Matched to a fact, or dropped.</p>
+    </section>
+  </div>
+
+  <div class="spd__out">
+    <div class="spd__check" data-spd-check>
+      <div class="spd__checkhead">
+        <span class="spd__tick">✓</span> Striff — architectural review
+        <span class="spd__checkmeta" data-spd-checkmeta>waiting</span>
+      </div>
+      <ul class="spd__findings" data-spd-findings></ul>
+    </div>
+    <div class="spd__bin" data-spd-bin>
+      <span class="spd__bincap">Discarded</span>
+      <div class="spd__binlist" data-spd-binlist></div>
+    </div>
+  </div>
+</div>
+
+<style>
+.spd{--ink:#24292E;--mut:#5b6470;--fai:#7b8492;--line:#d7dde5;--bg:#f7f9fc;
+  --acc:#2e6bff;--grn:#16a34a;--amb:#f59e0b;--red:#dc2626;
+  --mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+  --ui:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;
+  font-family:var(--ui);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  background:#fff;margin:34px 0;color:var(--ink);box-shadow:0 10px 34px rgba(15,23,42,.07)}
+.spd__bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg);
+  border-bottom:1px solid var(--line);font-size:12.5px}
+.spd__dot{width:9px;height:9px;border-radius:50%;background:var(--grn);flex:none}
+.spd__title{font-family:var(--mono);color:var(--mut)}
+.spd__step{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--acc);
+  background:rgba(46,107,255,.09);padding:3px 9px;border-radius:20px;min-width:190px;text-align:center}
+.spd__replay{border:1px solid var(--line);background:#fff;border-radius:6px;font-size:11.5px;
+  padding:3px 10px;cursor:pointer;color:var(--mut);font-family:var(--ui)}
+.spd__replay:hover{border-color:var(--acc);color:var(--acc)}
+.spd__grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.spd__lane{padding:16px 16px 14px;border-right:1px solid var(--line);min-height:190px}
+.spd__lane:last-child{border-right:0}
+.spd__lane header{margin-bottom:12px}
+.spd__lane h4{font-size:13.5px;font-weight:700;margin:6px 0 0}
+.spd__cap{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 7px;border-radius:4px}
+.spd__cap--green{color:var(--grn);background:rgba(22,163,74,.1)}
+.spd__cap--amber{color:#b45309;background:rgba(245,158,11,.12)}
+.spd__cap--blue{color:var(--acc);background:rgba(46,107,255,.1)}
+.spd__note{font-size:11px;color:var(--fai);margin:12px 0 0;font-family:var(--mono);min-height:15px}
+.spd__chips{display:flex;flex-wrap:wrap;gap:5px}
+.spd__chip{font-family:var(--mono);font-size:9.5px;padding:3px 6px;border-radius:4px;
+  border:1px solid var(--line);color:var(--fai);background:#fff;
+  transition:all .32s cubic-bezier(.22,1,.36,1)}
+.spd__chip.is-fired{border-color:var(--amb);color:#b45309;background:rgba(245,158,11,.09)}
+.spd__chip.is-passed{border-color:var(--grn);color:var(--grn);background:rgba(22,163,74,.1);
+  font-weight:700;transform:translateY(-1px)}
+.spd__chip.is-muted{opacity:.32}
+.spd__edges,.spd__claims{display:flex;flex-direction:column;gap:6px}
+.spd__edge,.spd__claim{font-family:var(--mono);font-size:10.5px;padding:6px 8px;border-radius:6px;
+  border:1px solid var(--line);background:#fff;opacity:0;transform:translateY(6px);
+  transition:all .4s cubic-bezier(.22,1,.36,1)}
+.spd__edge.is-in,.spd__claim.is-in{opacity:1;transform:none}
+.spd__edge.is-hot{border-color:var(--amb);background:rgba(245,158,11,.07)}
+.spd__claim.is-match{border-color:var(--acc);background:rgba(46,107,255,.06)}
+.spd__claim.is-drop{border-color:var(--red);background:rgba(220,38,38,.06);
+  opacity:.25;transform:translateX(26px)}
+.spd__out{display:grid;grid-template-columns:1fr 200px;gap:0;border-top:1px solid var(--line)}
+.spd__check{padding:14px 16px;border-right:1px solid var(--line)}
+.spd__checkhead{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:7px}
+.spd__tick{color:var(--grn);font-weight:700}
+.spd__checkmeta{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--fai);font-weight:400}
+.spd__findings{list-style:none;margin:10px 0 0;padding:0}
+.spd__findings li{margin:0 0 7px;padding:8px 10px;border-radius:6px;background:var(--bg);
+  border-left:3px solid var(--grn);font-size:11.5px;line-height:1.45;color:var(--mut);
+  opacity:0;transform:translateY(5px);transition:all .4s cubic-bezier(.22,1,.36,1)}
+.spd__findings li.is-in{opacity:1;transform:none}
+.spd__findings b{color:var(--ink);font-weight:650}
+.spd__findings code{font-family:var(--mono);font-size:10.5px;background:rgba(15,23,42,.05);
+  padding:1px 4px;border-radius:3px}
+.spd__bin{padding:14px 16px;background:repeating-linear-gradient(45deg,#fff,#fff 7px,#fdf5f5 7px,#fdf5f5 14px)}
+.spd__bincap{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+.spd__binlist{margin-top:9px;display:flex;flex-direction:column;gap:5px}
+.spd__binitem{font-family:var(--mono);font-size:9.5px;color:var(--red);opacity:.75;
+  border:1px dashed rgba(220,38,38,.4);border-radius:4px;padding:4px 6px;line-height:1.35}
+@media (max-width:820px){.spd__grid{grid-template-columns:1fr}
+  .spd__lane{border-right:0;border-bottom:1px solid var(--line);min-height:0}
+  .spd__out{grid-template-columns:1fr}.spd__check{border-right:0;border-bottom:1px solid var(--line)}
+  .spd__step{min-width:0}}
+@media (prefers-reduced-motion:reduce){.spd *{transition:none!important}}
+</style>
+
+<script>
+(function(){
+  var root = document.querySelector('[data-spd]');
+  if (!root) return;
+
+  var DETECTORS = [
+    ['NEW_PACKAGE_CYCLE', 1], ['NEW_DIRECTIONAL_BOUNDARY_CROSSING', 1],
+    ['STABLE_CONTRACT_CHANGE', 1], ['WMC_GROWTH', 1], ['DOC_DEPENDENCY_RULE', 1],
+    ['HUB_FORMATION', 0], ['LAYER_SKIP', 0], ['INSTABILITY_SPIKE', 0],
+    ['PRODUCTION_DEPENDS_ON_TEST', 0], ['INTERFACE_TO_CONCRETE_DOWNGRADE', 0],
+    ['MODULE_BOUNDARY_VIOLATION', 0], ['CYCLIC_DEPENDENCY_SEED', 0]
+  ];
+  var FIRED = [0, 1, 3, 5, 6, 11];
+  var PASSED = [0, 1, 3];
+
+  var EDGES = [
+    ['persistence → models', '0.21', 1],
+    ['engine → handlers', '0.34', 1],
+    ['utils → status', '0.78', 0]
+  ];
+  var CLAIMS = [
+    ['"completes a cycle through persistence"', 'match'],
+    ['"handler placement contradicts the doc"', 'match'],
+    ['"this may increase coordination cost"', 'drop']
+  ];
+  var FINDINGS = [
+    '<b>Package cycle detected</b><br>Completes a cycle among 3 packages by adding <code>manager.persistence → manager.models</code>.',
+    '<b>Package structure violation</b><br><code>DefaultCommandHandlerManager</code> added to <code>core.engine</code>; <code>ARCHITECTURE.md</code> requires <code>core.handlers</code>.'
+  ];
+
+  var el = {
+    step: root.querySelector('[data-spd-step]'),
+    chips: root.querySelector('[data-spd-chips]'),
+    edges: root.querySelector('[data-spd-edges]'),
+    claims: root.querySelector('[data-spd-claims]'),
+    findings: root.querySelector('[data-spd-findings]'),
+    binlist: root.querySelector('[data-spd-binlist]'),
+    meta: root.querySelector('[data-spd-checkmeta]'),
+    n1: root.querySelector('[data-spd-n1]'),
+    n2: root.querySelector('[data-spd-n2]'),
+    n3: root.querySelector('[data-spd-n3]'),
+    replay: root.querySelector('[data-spd-replay]')
+  };
+
+  var timers = [];
+  function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
+  function clearAll(){ timers.forEach(clearTimeout); timers = []; }
+
+  function build(){
+    el.chips.innerHTML = '';
+    DETECTORS.forEach(function(d, i){
+      var s = document.createElement('span');
+      s.className = 'spd__chip';
+      s.textContent = d[0].toLowerCase().replace(/_/g, ' ');
+      s.setAttribute('data-i', i);
+      el.chips.appendChild(s);
+    });
+    el.edges.innerHTML = '';
+    EDGES.forEach(function(e){
+      var d = document.createElement('div');
+      d.className = 'spd__edge';
+      d.innerHTML = e[0] + '  <span style="color:#7b8492">p=' + e[1] + '</span>';
+      el.edges.appendChild(d);
+    });
+    el.claims.innerHTML = '';
+    CLAIMS.forEach(function(c){
+      var d = document.createElement('div');
+      d.className = 'spd__claim';
+      d.textContent = c[0];
+      el.claims.appendChild(d);
+    });
+    el.findings.innerHTML = '';
+    el.binlist.innerHTML = '';
+    el.meta.textContent = 'waiting';
+    el.n1.textContent = '12 detectors run on every PR.';
+    el.n2.textContent = 'Scores attach as evidence.';
+    el.n3.textContent = 'Matched to a fact, or dropped.';
+    el.step.textContent = 'Ready';
+  }
+
+  function run(){
+    clearAll();
+    build();
+    var chips = el.chips.querySelectorAll('.spd__chip');
+    var edges = el.edges.querySelectorAll('.spd__edge');
+    var claims = el.claims.querySelectorAll('.spd__claim');
+
+    at(300,  function(){ el.step.textContent = 'Parsing pull request…'; });
+
+    // detectors fire
+    at(900,  function(){ el.step.textContent = 'Running 12 detectors'; });
+    FIRED.forEach(function(i, n){
+      at(1000 + n * 130, function(){ chips[i].classList.add('is-fired'); });
+    });
+    at(1900, function(){ el.n1.textContent = '6 fired on this diff.'; });
+
+    // grandfathering gate
+    at(2350, function(){
+      el.step.textContent = 'Surfacing tier gate';
+      chips.forEach(function(c, i){
+        if (PASSED.indexOf(i) === -1) c.classList.add('is-muted');
+      });
+      PASSED.forEach(function(i){
+        chips[i].classList.remove('is-fired');
+        chips[i].classList.add('is-passed');
+      });
+      el.n1.textContent = '3 cleared the tier. The rest stay evidence-only.';
+    });
+
+    // gnn
+    at(3300, function(){ el.step.textContent = 'GNN scores changed edges'; });
+    EDGES.forEach(function(e, i){
+      at(3400 + i * 220, function(){
+        edges[i].classList.add('is-in');
+        if (e[2]) edges[i].classList.add('is-hot');
+      });
+    });
+    at(4200, function(){ el.n2.textContent = '2 surprising — evidence, not findings.'; });
+
+    // llm
+    at(4700, function(){ el.step.textContent = 'LLM writes annotations'; });
+    CLAIMS.forEach(function(c, i){
+      at(4800 + i * 260, function(){ claims[i].classList.add('is-in'); });
+    });
+
+    at(5900, function(){
+      el.step.textContent = 'Matching prose to facts';
+      claims[0].classList.add('is-match');
+      claims[1].classList.add('is-match');
+    });
+    at(6500, function(){
+      claims[2].classList.add('is-drop');
+      var b = document.createElement('div');
+      b.className = 'spd__binitem';
+      b.textContent = 'no matching fact → dropped';
+      el.binlist.appendChild(b);
+      el.n3.textContent = '1 matched nothing.';
+    });
+
+    // output
+    at(7200, function(){ el.step.textContent = 'Posting check run'; });
+    FINDINGS.forEach(function(f, i){
+      at(7300 + i * 320, function(){
+        var li = document.createElement('li');
+        li.innerHTML = f;
+        el.findings.appendChild(li);
+        requestAnimationFrame(function(){ li.classList.add('is-in'); });
+      });
+    });
+    at(8200, function(){
+      el.meta.textContent = '2 findings';
+      el.step.textContent = 'Done — every finding cites a fact';
+    });
+  }
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  build();
+
+  if (reduced) {
+    // Render the end state without motion.
+    var chips = el.chips.querySelectorAll('.spd__chip');
+    FIRED.forEach(function(i){ chips[i].classList.add('is-fired'); });
+    PASSED.forEach(function(i){ chips[i].classList.remove('is-fired'); chips[i].classList.add('is-passed'); });
+    el.edges.querySelectorAll('.spd__edge').forEach(function(e){ e.classList.add('is-in'); });
+    el.claims.querySelectorAll('.spd__claim').forEach(function(c, i){
+      c.classList.add('is-in', i === 2 ? 'is-drop' : 'is-match');
+    });
+    FINDINGS.forEach(function(f){
+      var li = document.createElement('li'); li.innerHTML = f; li.classList.add('is-in');
+      el.findings.appendChild(li);
+    });
+    el.meta.textContent = '2 findings';
+    el.step.textContent = 'Every finding cites a fact';
+  } else {
+    var played = false;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting && !played) { played = true; run(); }
+      });
+    }, { threshold: 0.35 });
+    io.observe(root);
+  }
+
+  el.replay.addEventListener('click', run);
+})();
+</script>

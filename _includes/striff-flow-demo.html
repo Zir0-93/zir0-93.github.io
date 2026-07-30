@@ -1,0 +1,223 @@
+<!-- Animated request flow: webhook → Redis list → workers → bounded executor → check run.
+     Shows backpressure and the QUEUE_FULL rejection. Self-contained, replayable. -->
+<div class="sfd" data-sfd>
+  <div class="sfd__bar">
+    <span class="sfd__dot"></span>
+    <span class="sfd__title">striff-api · request flow</span>
+    <span class="sfd__step" data-sfd-step>Ready</span>
+    <button class="sfd__replay" type="button" data-sfd-replay>Replay</button>
+  </div>
+
+  <div class="sfd__stage">
+    <!-- 1 webhook -->
+    <div class="sfd__col">
+      <div class="sfd__node" data-sfd-hook>
+        <span class="sfd__k">GitHub webhook</span>
+        <span class="sfd__v">HMAC verify · dedupe</span>
+        <span class="sfd__pill sfd__pill--blue" data-sfd-202>202 Accepted</span>
+      </div>
+    </div>
+
+    <!-- 2 redis -->
+    <div class="sfd__col">
+      <div class="sfd__node sfd__node--redis">
+        <span class="sfd__k">Redis list</span>
+        <span class="sfd__v">shared across pods</span>
+        <div class="sfd__queue" data-sfd-queue></div>
+        <span class="sfd__meta"><span data-sfd-qdepth>0</span> queued · BRPOP</span>
+      </div>
+    </div>
+
+    <!-- 3 executor -->
+    <div class="sfd__col">
+      <div class="sfd__node sfd__node--exec">
+        <span class="sfd__k">Review executor</span>
+        <span class="sfd__v">core 2 · max 4 · queue 50</span>
+        <div class="sfd__slots" data-sfd-slots></div>
+        <span class="sfd__meta" data-sfd-execmeta>idle</span>
+      </div>
+    </div>
+
+    <!-- 4 out -->
+    <div class="sfd__col">
+      <div class="sfd__node sfd__node--out">
+        <span class="sfd__k">GitHub check</span>
+        <span class="sfd__v" data-sfd-outmeta>waiting</span>
+        <div class="sfd__results" data-sfd-results></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sfd__cap" data-sfd-cap>Reviews arrive faster than four can run at once. Watch what the queue does.</p>
+</div>
+
+<style>
+.sfd{--ink:#24292E;--mut:#5b6470;--fai:#7b8492;--line:#d7dde5;--bg:#f7f9fc;
+ --acc:#2e6bff;--grn:#16a34a;--amb:#f59e0b;--red:#dc2626;
+ --mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+ --ui:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;
+ font-family:var(--ui);border:1px solid var(--line);border-radius:12px;background:#fff;
+ overflow:hidden;margin:34px 0;color:var(--ink);box-shadow:0 10px 34px rgba(15,23,42,.07)}
+.sfd__bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg);
+ border-bottom:1px solid var(--line);font-size:12.5px}
+.sfd__dot{width:9px;height:9px;border-radius:50%;background:var(--grn)}
+.sfd__title{font-family:var(--mono);color:var(--mut)}
+.sfd__step{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--acc);
+ background:rgba(46,107,255,.09);padding:3px 9px;border-radius:20px;min-width:210px;text-align:center}
+.sfd__replay{border:1px solid var(--line);background:#fff;border-radius:6px;font-size:11.5px;
+ padding:3px 10px;cursor:pointer;color:var(--mut)}
+.sfd__replay:hover{border-color:var(--acc);color:var(--acc)}
+.sfd__stage{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.sfd__col{padding:16px 14px;border-right:1px solid var(--line)}
+.sfd__col:last-child{border-right:0}
+.sfd__node{display:flex;flex-direction:column;gap:3px;min-height:150px}
+.sfd__k{font-size:13px;font-weight:700}
+.sfd__v{font-size:11px;color:var(--mut)}
+.sfd__meta{font-family:var(--mono);font-size:10px;color:var(--fai);margin-top:auto}
+.sfd__pill{align-self:flex-start;margin-top:8px;font-family:var(--mono);font-size:10px;
+ padding:2px 8px;border-radius:20px;opacity:0;transition:opacity .3s}
+.sfd__pill.is-on{opacity:1}
+.sfd__pill--blue{color:var(--acc);background:rgba(46,107,255,.1)}
+.sfd__queue{display:flex;flex-wrap:wrap;gap:3px;margin:10px 0 8px;min-height:46px;align-content:flex-start}
+.sfd__job{width:11px;height:11px;border-radius:3px;background:rgba(46,107,255,.22);
+ border:1px solid rgba(46,107,255,.45);transform:scale(0);transition:transform .25s cubic-bezier(.34,1.56,.64,1),background .3s}
+.sfd__job.is-in{transform:scale(1)}
+.sfd__job.is-hot{background:rgba(245,158,11,.3);border-color:rgba(245,158,11,.6)}
+.sfd__slots{display:flex;gap:5px;margin:10px 0 8px}
+.sfd__slot{flex:1;height:40px;border-radius:5px;border:1px dashed var(--line);background:#fff;
+ display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:8.5px;
+ color:var(--fai);transition:all .3s}
+.sfd__slot.is-busy{border-style:solid;border-color:var(--acc);background:rgba(46,107,255,.07);color:var(--acc)}
+.sfd__slot.is-done{border-style:solid;border-color:var(--grn);background:rgba(22,163,74,.09);color:var(--grn)}
+.sfd__results{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+.sfd__res{font-family:var(--mono);font-size:10px;padding:5px 7px;border-radius:5px;
+ border-left:3px solid var(--grn);background:var(--bg);color:var(--mut);
+ opacity:0;transform:translateY(4px);transition:all .35s cubic-bezier(.22,1,.36,1)}
+.sfd__res.is-in{opacity:1;transform:none}
+.sfd__res.is-quiet{border-left-color:var(--fai)}
+.sfd__res.is-rej{border-left-color:var(--red);color:var(--red)}
+.sfd__cap{margin:0;padding:11px 14px;border-top:1px solid var(--line);background:var(--bg);
+ font-family:var(--mono);font-size:11px;color:var(--fai);min-height:16px}
+.sfd__node--redis .sfd__k{color:var(--red)}
+@media (max-width:820px){.sfd__stage{grid-template-columns:1fr 1fr}
+ .sfd__col{border-bottom:1px solid var(--line)}.sfd__step{min-width:0}}
+@media (prefers-reduced-motion:reduce){.sfd *{transition:none!important}}
+</style>
+
+<script>
+(function(){
+  var root=document.querySelector('[data-sfd]'); if(!root) return;
+  var el={
+    step:root.querySelector('[data-sfd-step]'), q:root.querySelector('[data-sfd-queue]'),
+    qd:root.querySelector('[data-sfd-qdepth]'), slots:root.querySelector('[data-sfd-slots]'),
+    exec:root.querySelector('[data-sfd-execmeta]'), res:root.querySelector('[data-sfd-results]'),
+    out:root.querySelector('[data-sfd-outmeta]'), cap:root.querySelector('[data-sfd-cap]'),
+    p202:root.querySelector('[data-sfd-202]'), replay:root.querySelector('[data-sfd-replay]')
+  };
+  var T=[]; function at(ms,fn){T.push(setTimeout(fn,ms));} function stop(){T.forEach(clearTimeout);T=[];}
+
+  var OUTCOMES=[
+    ['2 findings','ok'],['no findings — clean PR','quiet'],['1 finding','ok'],
+    ['no findings — clean PR','quiet'],['2 findings','ok']
+  ];
+
+  function reset(){
+    el.q.innerHTML=''; el.slots.innerHTML=''; el.res.innerHTML='';
+    for(var i=0;i<4;i++){
+      var s=document.createElement('div'); s.className='sfd__slot'; s.textContent='free';
+      el.slots.appendChild(s);
+    }
+    el.qd.textContent='0'; el.exec.textContent='idle'; el.out.textContent='waiting';
+    el.p202.classList.remove('is-on'); el.step.textContent='Ready';
+    el.cap.textContent='Reviews arrive faster than four can run at once. Watch what the queue does.';
+  }
+
+  function addJob(hot){
+    var j=document.createElement('div'); j.className='sfd__job'+(hot?' is-hot':'');
+    el.q.appendChild(j); requestAnimationFrame(function(){ j.classList.add('is-in'); });
+    el.qd.textContent=el.q.children.length;
+  }
+  function takeJob(){
+    if(el.q.firstChild){ el.q.removeChild(el.q.firstChild); el.qd.textContent=el.q.children.length; }
+  }
+
+  function run(){
+    stop(); reset();
+    var slots=el.slots.querySelectorAll('.sfd__slot');
+
+    at(200,function(){ el.step.textContent='Webhooks arriving'; el.p202.classList.add('is-on'); });
+
+    // burst of 9 webhooks
+    for(var i=0;i<9;i++){
+      (function(n){ at(400+n*170,function(){ addJob(n>5); }); })(i);
+    }
+    at(900,function(){ el.cap.textContent='The API accepts every webhook immediately — 202, then the job is Redis’ problem.'; });
+
+    // workers pull, 4 concurrent
+    at(2100,function(){ el.step.textContent='Workers BRPOP · 4 concurrent'; });
+    [0,1,2,3].forEach(function(s,i){
+      at(2200+i*180,function(){
+        takeJob(); slots[s].classList.add('is-busy'); slots[s].textContent='review';
+        el.exec.textContent=(i+1)+' of 4 running';
+      });
+    });
+    at(3100,function(){ el.cap.textContent='Four run at a time. The rest wait in Redis rather than being dropped or timing out.'; });
+
+    // completions + refills
+    var done=0;
+    [0,1,2,3].forEach(function(s,i){
+      at(4000+i*520,function(){
+        slots[s].classList.remove('is-busy'); slots[s].classList.add('is-done'); slots[s].textContent='done';
+        var o=OUTCOMES[done++]; var d=document.createElement('div');
+        d.className='sfd__res'+(o[1]==='quiet'?' is-quiet':'');
+        d.textContent=o[0]; el.res.appendChild(d);
+        requestAnimationFrame(function(){ d.classList.add('is-in'); });
+        el.out.textContent=done+' completed';
+      });
+      at(4300+i*520,function(){
+        if(el.q.children.length){
+          takeJob(); slots[s].classList.remove('is-done'); slots[s].classList.add('is-busy');
+          slots[s].textContent='review';
+        } else { slots[s].classList.remove('is-done'); slots[s].textContent='free'; }
+      });
+    });
+
+    at(6300,function(){
+      el.step.textContent='Backpressure, not failure';
+      el.cap.textContent='A clean PR completes with no findings. That is a result, not an error — striff stays quiet.';
+    });
+
+    at(7400,function(){
+      el.step.textContent='If the queue ever fills';
+      var d=document.createElement('div'); d.className='sfd__res is-rej';
+      d.textContent='FAILED · QUEUE_FULL'; el.res.appendChild(d);
+      requestAnimationFrame(function(){ d.classList.add('is-in'); });
+      el.cap.textContent='Past 50 queued, work is rejected as FAILED/QUEUE_FULL — a state the client can see and retry, never a silent drop.';
+    });
+
+    at(8600,function(){ el.step.textContent='Done'; });
+  }
+
+  reset();
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){
+    for(var i=0;i<5;i++) addJob(i>3);
+    var s=el.slots.querySelectorAll('.sfd__slot');
+    s.forEach(function(x){ x.classList.add('is-busy'); x.textContent='review'; });
+    el.exec.textContent='4 of 4 running';
+    OUTCOMES.slice(0,3).forEach(function(o){
+      var d=document.createElement('div');
+      d.className='sfd__res is-in'+(o[1]==='quiet'?' is-quiet':''); d.textContent=o[0];
+      el.res.appendChild(d);
+    });
+    el.out.textContent='3 completed'; el.p202.classList.add('is-on');
+    el.step.textContent='Bounded by design';
+  } else {
+    var played=false;
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting&&!played){ played=true; run(); } });
+    },{threshold:.35}).observe(root);
+  }
+  el.replay.addEventListener('click',run);
+})();
+</script>

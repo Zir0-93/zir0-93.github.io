@@ -102,7 +102,7 @@ hr {
 }
 
 .site-frame {
-  width: min(100% - 48px, 1240px);
+  width: min(100% - 48px, 1460px);
   margin: 40px auto 56px;
   position: relative;
   z-index: 1;
@@ -344,7 +344,7 @@ hr {
 }
 
 .content-wrapper__inner {
-  width: min(100%, 900px);
+  width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -704,7 +704,74 @@ hr {
 }
 
 .post--single {
-  max-width: 760px;
+  max-width: none;
+}
+
+/* Wide article layout. Everything uses the full content column. */
+.post--single > p,
+.post--single > ul,
+.post--single > ol,
+.post--single > blockquote,
+.post--single > h2,
+.post--single > h3,
+.post--single > h4,
+.post--single > h5,
+.post--single > h6,
+.post--single > figure,
+.post--single > table,
+.post--single > .highlight,
+.post--single > pre {
+  max-width: none;
+}
+
+.post--single > .highlight,
+.post--single > pre,
+.post--single > table {
+  overflow-x: auto;
+}
+
+/* A markdown image lands inside a <p>; that wrapper must not constrain it. */
+.post--single > p:has(> .post-figure__link),
+.post--single > p:has(> .post-figure),
+.post--single > p:has(> img) {
+  max-width: none;
+  width: 100%;
+}
+
+/* Diagrams: full column width, and clickable through to the source file. */
+.post-figure,
+.post--single img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  margin: 32px auto;
+}
+
+.post-figure__link {
+  display: block;
+  position: relative;
+}
+
+.post-figure__link::after {
+  content: "Open full size ↗";
+  position: absolute;
+  right: 10px;
+  bottom: 22px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: #5b6470;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #d7dde5;
+  border-radius: 6px;
+  padding: 3px 8px;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+}
+
+.post-figure__link:hover::after {
+  opacity: 1;
 }
 
 .post-toc {
