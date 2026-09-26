@@ -2,30 +2,30 @@
   <title id="t">How Striff turns documents into checked rules</title>
   <desc id="d">Documents are catalogued, screened for relevance, translated into rules by a language model, type-checked and grounded against the parsed model, and evaluated deterministically at base and head into one of six outcomes, which the check run reports.</desc>
   <defs>
-    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f46e5"/></marker>
-    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
-    <marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a1917"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker>
+    <marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b45309"/></marker>
     <style>
-      text{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;fill:#0f172a}
+      text{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;fill:#1a1917}
       .h{font-size:22px;font-weight:700}
-      .s{font-size:15px;fill:#64748b}
-      .lane{font-size:13px;font-weight:600;letter-spacing:.08em;fill:#64748b}
+      .s{font-size:15px;fill:#7a756c}
+      .lane{font-size:13px;font-weight:600;letter-spacing:.08em;fill:#7a756c}
       .nt{font-size:17px;font-weight:600}
-      .ns{font-size:14.5px;fill:#475569}
-      .rt{font-size:15px;font-weight:600;fill:#b91c1c}
-      .rs{font-size:14px;fill:#7f1d1d}
+      .ns{font-size:14.5px;fill:#4a4741}
+      .rt{font-size:15px;font-weight:600;fill:#9a3412}
+      .rs{font-size:14px;fill:#7c2d12}
       .ot{font-size:14px;font-weight:700;font-family:ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace}
-      .os{font-size:13.5px;fill:#475569}
-      .mono{font-family:ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;font-size:13.5px;fill:#334155}
-      .n{fill:#eef2ff;stroke:#4f46e5;stroke-width:1.5}
-      .m{fill:#fffbeb;stroke:#d97706;stroke-width:1.5}
-      .r{fill:#fef2f2;stroke:#dc2626;stroke-width:1.25;stroke-dasharray:6 4}
-      .li{fill:none;stroke:#4f46e5;stroke-width:2}
-      .la{fill:none;stroke:#d97706;stroke-width:2}
-      .lr{fill:none;stroke:#dc2626;stroke-width:1.5;stroke-dasharray:5 4}
+      .os{font-size:13.5px;fill:#4a4741}
+      .mono{font-family:ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;font-size:13.5px;fill:#1a1917}
+      .n{fill:#efe9df;stroke:#1a1917;stroke-width:1.5}
+      .m{fill:#f7efe1;stroke:#b45309;stroke-width:1.5}
+      .r{fill:#fbe9df;stroke:#c2410c;stroke-width:1.25;stroke-dasharray:6 4}
+      .li{fill:none;stroke:#1a1917;stroke-width:2}
+      .la{fill:none;stroke:#b45309;stroke-width:2}
+      .lr{fill:none;stroke:#c2410c;stroke-width:1.5;stroke-dasharray:5 4}
     </style>
   </defs>
-  <rect x="0.5" y="0.5" width="1199" height="839" rx="20" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="0.5" y="0.5" width="1199" height="839" rx="20" fill="#fffdf9" stroke="#e6e1d8"/>
   <text x="48" y="58" class="h">From a sentence in a document to a row in the check run</text>
   <text x="48" y="84" class="s">The model only translates. Everything after the amber step is a program, and every refusal withholds.</text>
 
@@ -103,28 +103,28 @@
 
   <!-- outcomes 3x2 -->
   <g>
-    <rect x="624" y="452" width="168" height="62" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
-    <text x="638" y="477" class="ot" fill="#3730a3" style="fill:#3730a3">HOLDS</text>
+    <rect x="624" y="452" width="168" height="62" rx="10" fill="#efe9df" stroke="#e6e1d8"/>
+    <text x="638" y="477" class="ot" fill="#1a1917" style="fill:#1a1917">HOLDS</text>
     <text x="638" y="499" class="os">this PR keeps it</text>
 
-    <rect x="804" y="452" width="168" height="62" rx="10" fill="#fef2f2" stroke="#fca5a5"/>
-    <text x="818" y="477" class="ot" style="fill:#b91c1c">VIOLATED</text>
+    <rect x="804" y="452" width="168" height="62" rx="10" fill="#fbe9df" stroke="#e8a98c"/>
+    <text x="818" y="477" class="ot" style="fill:#9a3412">VIOLATED</text>
     <text x="818" y="499" class="os">this PR broke it</text>
 
-    <rect x="984" y="452" width="168" height="62" rx="10" fill="#fff7ed" stroke="#fdba74"/>
-    <text x="998" y="477" class="ot" style="fill:#9a3412">PRE_EXISTING</text>
+    <rect x="984" y="452" width="168" height="62" rx="10" fill="#f7efe1" stroke="#e0b07a"/>
+    <text x="998" y="477" class="ot" style="fill:#7c3a0a">PRE_EXISTING</text>
     <text x="998" y="499" class="os">broken before the PR</text>
 
-    <rect x="624" y="530" width="168" height="62" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
-    <text x="638" y="555" class="ot" style="fill:#3730a3">RESTORED</text>
+    <rect x="624" y="530" width="168" height="62" rx="10" fill="#efe9df" stroke="#e6e1d8"/>
+    <text x="638" y="555" class="ot" style="fill:#1a1917">RESTORED</text>
     <text x="638" y="577" class="os">this PR closed a gap</text>
 
-    <rect x="804" y="530" width="168" height="62" rx="10" fill="#f1f5f9" stroke="#cbd5e1"/>
-    <text x="818" y="555" class="ot" style="fill:#475569">UNRESOLVABLE</text>
+    <rect x="804" y="530" width="168" height="62" rx="10" fill="#f3f0ea" stroke="#d6cfc2"/>
+    <text x="818" y="555" class="ot" style="fill:#4a4741">UNRESOLVABLE</text>
     <text x="818" y="577" class="os">nothing to bind to</text>
 
-    <rect x="984" y="530" width="168" height="62" rx="10" fill="#f1f5f9" stroke="#cbd5e1"/>
-    <text x="998" y="555" class="ot" style="fill:#475569">UNSUPPORTED</text>
+    <rect x="984" y="530" width="168" height="62" rx="10" fill="#f3f0ea" stroke="#d6cfc2"/>
+    <text x="998" y="555" class="ot" style="fill:#4a4741">UNSUPPORTED</text>
     <text x="998" y="577" class="os">reason stated</text>
   </g>
 

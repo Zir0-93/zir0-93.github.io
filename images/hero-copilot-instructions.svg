@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <style>
+      .ink{stroke:#1a1917;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .ink2{stroke:#1a1917;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .paper{fill:#fffdf9;stroke:#1a1917;stroke-width:1.6}
+      .t{fill:#1a1917}
+      .m{fill:#7a756c}
+      .acc{fill:#c2410c}
+      .accs{stroke:#c2410c}
+      .mono{font-family:"Geist Mono","JetBrains Mono",Menlo,monospace}
+      .serif{font-family:Newsreader,"Source Serif 4",Georgia,serif}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#1a1917" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowacc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#c2410c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="630" fill="#f7f5f0"/>
+
+  <!-- TITLE (hidden on the cover variant) -->
+  <g id="title">
+    <rect x="72" y="58" width="48" height="2.5" class="acc"/>
+    <text x="72" y="118" class="serif t" font-size="46" font-weight="600" letter-spacing="-0.5">The MCP C# SDK's Copilot instructions tell agents</text>
+    <text x="72" y="172" class="serif t" font-size="46" font-weight="600" letter-spacing="-0.5">to use a class Copilot deleted</text>
+  </g>
+
+  <!-- SCENE -->
+  <g id="scene" transform="translate(0,0)">
+    <!-- document card -->
+    <g transform="translate(72,236)">
+      <path class="paper" d="M0 0 H300 L332 32 V300 H0 Z"/>
+      <path class="ink" d="M300 0 V32 H332"/>
+      <text x="22" y="36" class="mono m" font-size="13">.github/copilot-instructions.md</text>
+      <line x1="22" y1="52" x2="310" y2="52" stroke="#e6e1d8" stroke-width="1.6"/>
+      <g class="mono" font-size="13.5">
+        <text x="22" y="86" class="m">256</text><text x="62" y="86" class="t">Server primitives are discovered</text>
+        <text x="62" y="106" class="t">via reflection using attributes</text>
+        <text x="22" y="140" class="m">257</text><text x="62" y="140" class="t">Support attribute-based and</text>
+        <text x="62" y="160" class="t">instance-based registration</text>
+        <rect x="12" y="180" width="308" height="52" fill="#fbe9df"/>
+        <rect x="12" y="180" width="3" height="52" class="acc"/>
+        <text x="22" y="204" class="acc" font-weight="600">258</text><text x="62" y="204" class="t">Use <tspan class="acc" font-weight="600">McpServerFactory</tspan> to</text>
+        <text x="62" y="224" class="t">create server instances</text>
+      </g>
+      <text x="22" y="272" class="serif m" font-size="15" font-style="italic">written by Copilot, 13 Oct 2025</text>
+    </g>
+
+    <!-- agent glyph -->
+    <g transform="translate(520,330)">
+      <rect x="0" y="0" width="120" height="88" rx="14" class="paper"/>
+      <line x1="60" y1="0" x2="60" y2="-18" class="ink"/><circle cx="60" cy="-22" r="4" class="paper"/>
+      <circle cx="40" cy="36" r="7" class="ink"/><circle cx="80" cy="36" r="7" class="ink"/>
+      <circle cx="40" cy="36" r="2.4" class="t"/><circle cx="80" cy="36" r="2.4" class="t"/>
+      <path class="ink" d="M42 62 Q60 74 78 62"/>
+      <text x="60" y="118" text-anchor="middle" class="serif m" font-size="15" font-style="italic">every agent, first thing</text>
+    </g>
+
+    <!-- arrows: doc -> agent -> repo -->
+    <path class="ink" marker-end="url(#arrow)" d="M410 386 C450 386 470 374 512 374"/>
+    <text x="458" y="366" text-anchor="middle" class="serif m" font-size="14" font-style="italic">reads</text>
+    <path class="ink" marker-end="url(#arrow)" d="M648 374 C690 374 700 386 736 386"/>
+    <text x="692" y="366" text-anchor="middle" class="serif m" font-size="14" font-style="italic">writes</text>
+
+    <!-- repository card -->
+    <g transform="translate(748,236)">
+      <path class="paper" d="M0 0 H380 V300 H0 Z"/>
+      <text x="22" y="36" class="mono m" font-size="13">src/ModelContextProtocol.Core/Server/</text>
+      <line x1="22" y1="52" x2="358" y2="52" stroke="#e6e1d8" stroke-width="1.6"/>
+      <g class="mono t" font-size="13.5">
+        <text x="22" y="86">IMcpServer.cs</text>
+        <text x="22" y="118">McpServer.cs</text>
+        <text x="22" y="150">McpServerExtensions.cs</text>
+        <text x="22" y="182" class="m">McpServerFactory.cs</text>
+        <line x1="20" y1="177" x2="178" y2="177" class="accs" stroke-width="2.2" stroke-linecap="round"/>
+        <text x="22" y="214">McpServerHandlers.cs</text>
+        <text x="22" y="246">McpServerImpl.cs</text>
+      </g>
+      <g transform="translate(196,166)">
+        <path class="ink" d="M0 8 Q10 -4 26 2" marker-end="url(#arrowacc)" stroke="#c2410c"/>
+        <text x="34" y="8" class="serif acc" font-size="15" font-style="italic">deleted by Copilot,</text>
+        <text x="34" y="28" class="serif acc" font-size="15" font-style="italic">2 Dec 2025, in #985</text>
+      </g>
+    </g>
+
+    <!-- footer line -->
+    <line x1="72" y1="572" x2="1128" y2="572" stroke="#d6cfc2" stroke-width="1.2"/>
+    <text x="72" y="600" class="serif t" font-size="17" font-style="italic">Seven weeks between the line and the deletion. Ten months on, the line is still there.</text>
+    <text x="1128" y="600" text-anchor="end" class="mono m" font-size="13">mfadhel.com</text>
+  </g>
+</svg>
