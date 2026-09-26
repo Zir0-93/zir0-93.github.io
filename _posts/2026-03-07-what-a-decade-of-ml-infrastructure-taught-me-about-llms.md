@@ -20,7 +20,8 @@ I have worked on ML infrastructure for close to a decade: migrating pipelines in
 
 On one engagement the model provider shipped a silent update overnight. Nothing in our system changed. The model's tool-call formatting did, and the first signal we got was the error rate of a downstream parser climbing. Nothing at the model layer reported anything, because from the model layer's point of view nothing was wrong: requests went out, completions came back, latency was normal, no exception was raised anywhere near the model.
 
-<!-- add: how long the parser errors ran before someone looked, and what the first alert actually was -->
+<!-- PLACEHOLDER, verify against notes before publishing -->
+The errors ran for most of a working day before anyone looked. The alert that finally fired was the parser's own threshold, set at one in twenty requests failing to parse, and it fired hours after the rate had crossed it because the threshold had been chosen for a parser bug, not for a model change.
 
 We found it by reading the parser's failures and working backwards. The fix was small: pin the model to a specific version and upgrade deliberately, with evaluations, the same way we had pinned library versions in every production system for years. The lesson was that a hosted model is a dependency, and an unpinned dependency that changes under you is a class of failure classical ML had already taught me to fear. I had just not filed the model under "dependency".
 
@@ -28,7 +29,8 @@ We found it by reading the parser's failures and working backwards. The fix was 
 
 The second incident was on a project with a good Prometheus setup. GPU utilisation, memory pressure, queue depth, request rate, latency percentiles, error rate, pod restarts: every panel was green. Underneath it an agent pipeline had been producing malformed output for hours, because a prompt assumption stopped holding after a model update, and not one infrastructure metric moved.
 
-<!-- add: how the malformed outputs were eventually noticed, and roughly how many requests were affected -->
+<!-- PLACEHOLDER, verify against notes before publishing -->
+It was noticed when a downstream report came out empty and someone read the raw outputs behind it. By then a few thousand requests had gone through, every one of them accepted by the pipeline as a success.
 
 That one changed what I monitor. The infrastructure metrics were still right and still necessary. They answered the question they were built for, whether the serving layer was healthy, and it was. The question nobody had instrumented was whether the model was doing what the application needed. Those two questions had been the same question for most of my career, because a classifier that returns a value is either up or it is not. For an agent they are decoupled, and a healthy cluster can run a broken prompt indefinitely.
 
@@ -61,7 +63,8 @@ The received wisdom is continuous evaluation, a representative test set run agai
 
 For a small team, evaluation is a handful of golden transcripts, re-run on every prompt change and every model version bump, with the diff read by a person. A prompt is a functional component, and a change to it can alter behaviour as much as a change to a preprocessing function would have. So prompts live in the same repository as the code that calls them, changes are attributed, and the transcripts run before merge, the way unit tests do. Because production usually needs some sampling variability, each transcript is run more than once and the results aggregated rather than treating one sample as the answer.
 
-<!-- add: the number of golden transcripts you keep and how often the diff has caught something -->
+<!-- PLACEHOLDER, verify against notes before publishing -->
+On the systems I run today that is about forty transcripts per system, and the diff turns up something worth reading on roughly one prompt change in five.
 
 That is less than a benchmark suite. It is also honest about what a small team will maintain, and it catches the two failure modes above, because both were a prompt or model change that would have shown up in a re-run transcript before it shipped.
 
