@@ -2,6 +2,7 @@
 title: "The MCP C# SDK's Copilot instructions tell agents to use a class Copilot deleted"
 date: 2026-09-26 09:00:00
 og_image: /images/og-copilot-instructions.png
+cover: /images/cover-copilot-instructions.png
 tags: [coding agents, documentation, architecture, software design]
 toc: true
 description: "Line 258 of the official C# SDK's copilot-instructions.md says to use McpServerFactory. Copilot wrote that line in October 2025 and deleted the class in December. Ten months on, every agent that opens the repository is still told to use it. How that happens, why a normal pipeline never notices, and what to do about it."

@@ -17,9 +17,10 @@ layout: default
       {% if forloop.first and paginator.page == 1 %}
       <li>
         <article class="post-card post-card--featured">
-          {% if post.og_image %}
-          <a class="post-card__cover" href="{{ post.url | relative_url }}" aria-hidden="true" tabindex="-1">
-            <img src="{% if post.og_image contains '://' %}{{ post.og_image }}{% else %}{{ post.og_image | relative_url }}{% endif %}" alt="" width="1200" height="630">
+          {% assign cover_src = post.cover | default: post.og_image %}
+          {% if cover_src %}
+          <a class="post-card__cover{% if post.cover %} post-card__cover--wide{% endif %}" href="{{ post.url | relative_url }}" aria-hidden="true" tabindex="-1">
+            <img src="{% if cover_src contains '://' %}{{ cover_src }}{% else %}{{ cover_src | relative_url }}{% endif %}" alt="" {% if post.cover %}width="1200" height="400"{% else %}width="1200" height="630"{% endif %}>
           </a>
           {% endif %}
           <div class="post-card__body">
