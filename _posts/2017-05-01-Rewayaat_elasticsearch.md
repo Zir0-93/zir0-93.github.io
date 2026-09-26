@@ -3,7 +3,7 @@ title:  "Developing a Search Engine using Elastic Search"
 date:   2017-05-01 15:04:23
 icon: /images/elasticsearchicon.png
 tags: [elasticsearch, search, text analysis, information retrieval]
-description: "Building a search engine that works well across Arabic and English content is harder than it looks — tokenization, stemming, and relevance ranking all behave differently across language families. This post documents the architecture of a multi-language search system built with Elasticsearch, including the index configuration, language-specific analyzers, and query strategies that made retrieval accurate across both languages. It covers the practical edge cases that appear when users mix languages within a single query and how those were handled at the application layer. The lessons apply to any multilingual content platform that needs more than naive keyword matching."
+description: "Tokenization, stemming and relevance ranking behave differently in Arabic and English. This post documents a multilingual search system on Elasticsearch: index configuration, language-specific analyzers, query strategies, and how mixed-language queries were handled at the application layer."
 excerpt_separator: <!--more-->
 ---
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is an open-source, broadly-distributable, readily-scalable, enterprise-grade search engine. Accessible through an extensive

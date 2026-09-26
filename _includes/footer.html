@@ -1,5 +1,6 @@
 <footer class="footer">
-  <span class="footer__copyright">&copy; {{ site.time | date: '%Y' }} {{ site.author.name | default: site.title }}. All rights reserved.</span>
+  <span class="footer__copyright">&copy; {{ site.time | date: '%Y' }} {{ site.author.name | default: site.title }}</span>
+  <span class="footer__links"><a href="{{ '/feed.xml' | relative_url }}">RSS</a> · <a href="https://github.com/{{ site.author.github_username }}" rel="noreferrer">GitHub</a> · <a href="https://www.linkedin.com/in/{{ site.author.linkedin_username }}" rel="noreferrer">LinkedIn</a> · <a href="/contact/">Contact</a></span>
 </footer>
 {% if site.google_analytics %}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   {% include head.html %}
   <body class="site-shell">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -13,121 +13,116 @@
       </main>
     </div>
     <script>
-      if (window.anchors) {
-        anchors.add();
-      }
+      (function () {
+        var postRoot = document.querySelector(".post--single");
+        if (!postRoot) { return; }
 
-      const tocRoot = document.querySelector("[data-post-toc]");
-      const postRoot = document.querySelector(".post--single");
-
-      if (tocRoot && postRoot) {
-        const tocList = tocRoot.querySelector(".post-toc__list");
-        const headings = Array.from(postRoot.querySelectorAll("h2"));
-
-        headings.forEach((heading) => {
-          if (!heading.id) {
-            return;
+        // Heading anchors and table of contents
+        var headings = Array.prototype.slice.call(postRoot.querySelectorAll("h2"));
+        var used = {};
+        headings.forEach(function (h) {
+          if (!h.id) {
+            var slug = h.textContent.trim().toLowerCase().replace(/[^\w]+/g, "-").replace(/^-+|-+$/g, "");
+            while (used[slug]) { slug += "-"; }
+            h.id = slug;
           }
-
-          const item = document.createElement("li");
-          const link = document.createElement("a");
-          link.href = "#" + heading.id;
-          link.textContent = heading.textContent.trim();
-          item.appendChild(link);
-          tocList.appendChild(item);
+          used[h.id] = true;
+          var a = document.createElement("a");
+          a.className = "anchorjs-link";
+          a.href = "#" + h.id;
+          a.setAttribute("aria-label", "Link to this section");
+          a.textContent = "#";
+          h.appendChild(a);
         });
 
-        if (headings.length < 2) {
-          tocRoot.hidden = true;
-        } else {
-          let insertionPoint = headings[0];
-          const previousElement = insertionPoint.previousElementSibling;
-
-          if (previousElement && previousElement.tagName === "HR") {
-            insertionPoint = previousElement;
-          }
-
-          postRoot.insertBefore(tocRoot, insertionPoint);
-        }
-      }
-
-      // Code copy buttons
-      document.querySelectorAll("pre.highlight, .highlight pre").forEach(function(pre) {
-        var wrapper = document.createElement("div");
-        wrapper.className = "code-block-wrapper";
-        var btn = document.createElement("button");
-        btn.className = "code-copy-btn";
-        btn.textContent = "Copy";
-        btn.setAttribute("aria-label", "Copy code to clipboard");
-        pre.parentNode.insertBefore(wrapper, pre);
-        wrapper.appendChild(pre);
-        wrapper.appendChild(btn);
-        btn.addEventListener("click", function() {
-          var code = pre.querySelector("code");
-          navigator.clipboard.writeText(code ? code.textContent : pre.textContent).then(function() {
-            btn.textContent = "Copied";
-            btn.setAttribute("data-copied", "");
-            setTimeout(function() {
-              btn.textContent = "Copy";
-              btn.removeAttribute("data-copied");
-            }, 2000);
+        document.querySelectorAll("[data-post-toc]").forEach(function (toc) {
+          var list = toc.querySelector(".post-toc__list");
+          if (headings.length < 2) { toc.hidden = true; return; }
+          headings.forEach(function (h) {
+            var li = document.createElement("li");
+            var link = document.createElement("a");
+            link.href = "#" + h.id;
+            link.textContent = h.textContent.replace(/#$/, "").trim();
+            li.appendChild(link);
+            list.appendChild(li);
           });
         });
-      });
 
-      // Lazy load post images and add expand buttons
-      document.querySelectorAll(".post img").forEach(function(img, i) {
-        if (i > 0) {
-          img.setAttribute("loading", "lazy");
-        }
-        // Make parent position relative for the button
-        var parent = img.parentNode;
-        if (getComputedStyle(parent).position === "static") {
-          parent.style.position = "relative";
-        }
-        parent.style.display = parent.style.display || "block";
-        var btn = document.createElement("button");
-        btn.className = "img-expand-btn";
-        btn.innerHTML = "&#x26F6;";
-        btn.setAttribute("aria-label", "View image fullscreen");
-        btn.addEventListener("click", function(e) {
-          e.stopPropagation();
-          openLightbox(img.src);
+        // Wrap tables so they can scroll on narrow screens
+        postRoot.querySelectorAll("table").forEach(function (t) {
+          if (t.parentNode.classList.contains("table-wrap") || t.closest(".highlight")) { return; }
+          var w = document.createElement("div");
+          w.className = "table-wrap";
+          t.parentNode.insertBefore(w, t);
+          w.appendChild(t);
         });
-        parent.appendChild(btn);
-      });
 
-      // Lightbox
-      var lightbox = null;
-      function openLightbox(src) {
-        if (!lightbox) {
-          lightbox = document.createElement("div");
-          lightbox.className = "img-lightbox";
-          var closeBtn = document.createElement("button");
-          closeBtn.className = "img-lightbox__close";
-          closeBtn.innerHTML = "&times;";
-          closeBtn.addEventListener("click", function(e) { e.stopPropagation(); closeLightbox(); });
-          lightbox.appendChild(closeBtn);
-          var lbImg = document.createElement("img");
-          lbImg.src = src;
-          lightbox.appendChild(lbImg);
-          lightbox.addEventListener("click", closeLightbox);
-          document.body.appendChild(lightbox);
-        } else {
+        // Code copy buttons
+        postRoot.querySelectorAll("pre").forEach(function (pre) {
+          if (pre.closest("table")) { return; }
+          var wrapper = document.createElement("div");
+          wrapper.className = "code-block-wrapper";
+          var btn = document.createElement("button");
+          btn.className = "code-copy-btn";
+          btn.textContent = "Copy";
+          btn.setAttribute("aria-label", "Copy code to clipboard");
+          pre.parentNode.insertBefore(wrapper, pre);
+          wrapper.appendChild(pre);
+          wrapper.appendChild(btn);
+          btn.addEventListener("click", function () {
+            var code = pre.querySelector("code");
+            navigator.clipboard.writeText(code ? code.textContent : pre.textContent).then(function () {
+              btn.textContent = "Copied";
+              btn.setAttribute("data-copied", "");
+              setTimeout(function () {
+                btn.textContent = "Copy";
+                btn.removeAttribute("data-copied");
+              }, 2000);
+            });
+          });
+        });
+
+        // Lazy loading and lightbox for images
+        var lightbox = null;
+        function openLightbox(src) {
+          if (!lightbox) {
+            lightbox = document.createElement("div");
+            lightbox.className = "img-lightbox";
+            var closeBtn = document.createElement("button");
+            closeBtn.className = "img-lightbox__close";
+            closeBtn.innerHTML = "&times;";
+            closeBtn.setAttribute("aria-label", "Close");
+            closeBtn.addEventListener("click", function (e) { e.stopPropagation(); closeLightbox(); });
+            lightbox.appendChild(closeBtn);
+            lightbox.appendChild(document.createElement("img"));
+            lightbox.addEventListener("click", closeLightbox);
+            document.body.appendChild(lightbox);
+          }
           lightbox.querySelector("img").src = src;
+          lightbox.classList.add("is-open");
+          document.body.style.overflow = "hidden";
         }
-        lightbox.classList.add("is-open");
-        document.body.style.overflow = "hidden";
-      }
-      function closeLightbox() {
-        if (lightbox) {
-          lightbox.classList.remove("is-open");
-          document.body.style.overflow = "";
+        function closeLightbox() {
+          if (lightbox) {
+            lightbox.classList.remove("is-open");
+            document.body.style.overflow = "";
+          }
         }
-      }
-      document.addEventListener("keydown", function(e) {
-        if (e.key === "Escape") closeLightbox();
-      });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLightbox(); });
+
+        postRoot.querySelectorAll("img").forEach(function (img, i) {
+          if (i > 0) { img.setAttribute("loading", "lazy"); }
+          if (img.closest(".post-badges") || img.width < 200) { return; }
+          var parent = img.parentNode;
+          if (getComputedStyle(parent).position === "static") { parent.style.position = "relative"; }
+          var btn = document.createElement("button");
+          btn.className = "img-expand-btn";
+          btn.innerHTML = "&#x26F6;";
+          btn.setAttribute("aria-label", "View image fullscreen");
+          btn.addEventListener("click", function (e) { e.stopPropagation(); e.preventDefault(); openLightbox(img.src); });
+          parent.appendChild(btn);
+        });
+      })();
     </script>
   </body>
 </html>

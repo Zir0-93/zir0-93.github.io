@@ -4,19 +4,19 @@ date: 2026-04-28 10:00:00
 og_image: /images/gnn-pipeline-diagram.svg
 tags: [gnn, code review, graph neural networks, software architecture, ml engineering]
 toc: true
-description: "How [striff.io](https://striff.io) uses a neurosymbolic pipeline with typed dependency graphs, Chidamber-Kemerer features, and an edge-prediction GNN to flag the dependencies in a pull request that carry architectural risk. Covers the graph construction pipeline, the 403-dimensional feature vector, why we switched from node-level anomaly scoring to edge-prediction, twelve deterministic detectors of which only five are allowed to speak to users, and why the GNN's scores and the LLM's prose are both barred from originating a finding."
+description: "How [striff.io](https://striff.io)'s spring 2026 pipeline scored pull requests with an edge-prediction graph neural network over typed dependency graphs, and why the deterministic layer decided what got said: neither the model's scores nor the LLM's prose could originate a finding."
 excerpt_separator: <!--more-->
 ---
 
-
+> *Update, September 2026.* The model this post describes was retired in August 2026, and the deterministic detectors followed in September. Striff now reads the architecture documents already in a repository and checks each pull request against them. The principle in the last section, that a language model may phrase a finding but never originate one, survived into the current design; the GNN did not. This post stays up as a record of what was built and why it was withdrawn. The current system is described in [a post on the Striff blog](https://striff.io/blog/design-docs-are-enforceable-now).
 
 Code review has a specific information problem that most tooling ignores. When you open a pull request on a large codebase, the diff shows you *lines*. It does not show you that the class you just modified now has fourteen things depending on it when it had three last week. It does not show you that a new import three files away quietly created a dependency cycle between two packages that were previously clean. It does not show you that the abstraction an LLM just extended sits at depth six in an inheritance tree that has been growing for two years.
 
 These are not edge cases. They are the class of change that produces architectural debt, the kind that compounds quietly and becomes expensive to unwind.
 
-That is the problem [striff.io](https://striff.io) was built to address. It reviews the architecture of a pull request: which components changed, how their relationships shifted, and which of those shifts carry structural risk, posted as a GitHub check and drawn on a class diagram.
+That is the problem the spring 2026 version of [striff.io](https://striff.io) was built to address. It reviewed the architecture of a pull request: which components changed, how their relationships shifted, and which of those shifts carried structural risk, posted as a GitHub check and drawn on a class diagram.
 
-The interesting engineering question is not the diagram rendering. It is *what earns the right to be said out loud*. This post is largely about the constraints we put on our own machine learning: a GNN whose scores users never see, and an LLM that is structurally forbidden from telling you something a deterministic detector did not already find. Those sound like limitations. They are the reason the output is trustworthy, and getting there took removing capability, not adding it. The infrastructure that runs the pipeline (queueing, in-process inference, degradation modes) is covered in a [companion post]({% post_url 2026-04-28-striff-io-ml-infrastructure %}).
+The interesting engineering question is not the diagram rendering. It is *what earns the right to be said out loud*. This post is largely about the constraints we put on our own machine learning: a GNN whose scores users never saw, and an LLM that was structurally forbidden from telling you something a deterministic detector had not already found. Those sound like limitations. They are the reason the output is trustworthy, and getting there took removing capability, not adding it. The infrastructure that runs the pipeline (queueing, in-process inference, degradation modes) is covered in a [companion post]({% post_url 2026-04-28-striff-io-ml-infrastructure %}).
 
 <!--more-->
 

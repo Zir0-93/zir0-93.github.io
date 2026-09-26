@@ -4,7 +4,7 @@ date:  2020-09-11 15:04:23
 og_image: https://raw.githubusercontent.com/hadii-tech/production-ready-prestashop/master/resources/scalable_presta.png
 redirect_to: "https://github.com/hadi-technology/production-ready-prestashop"
 tags: [aws, ecommerce, cloudformation, scalability]
-description: "Shopify works until it doesn't — vendor lock-in and transaction fees compound at scale, and the platform gives you limited control over infrastructure when it matters. This post walks through a CloudFormation-based reference architecture for running PrestaShop on AWS with the operational properties of a production system: auto-scaling application tier, managed RDS database, ElastiCache for session and object caching, and a CDN layer for static assets. Every resource is defined as code, so the entire stack can be reproduced across environments with a single command. The architecture was developed following a real client engagement where the cost and control tradeoffs of hosted e-commerce platforms became untenable at scale."
+description: "Vendor lock-in and transaction fees on hosted e-commerce platforms compound at scale. This post walks through a CloudFormation reference architecture for PrestaShop on AWS: an auto-scaling application tier, managed RDS, ElastiCache and a CDN, all defined as code and reproducible with one command."
 excerpt_separator: <!--more-->
 ---
 

@@ -1,96 +1,82 @@
 ---
 layout: default
 ---
-{% assign show_recent_multipart_toc = page.toc | default: false %}
-{% assign recent_heading_count = page.content | split: '## ' | size | minus: 1 %}
-{% assign recent_cutoff_post = site.posts | slice: 2, 1 | first %}
-{% if show_recent_multipart_toc != true and recent_cutoff_post %}
-  {% if recent_heading_count > 1 and page.date >= recent_cutoff_post.date %}
-    {% assign show_recent_multipart_toc = true %}
-  {% endif %}
-{% elsif show_recent_multipart_toc != true and recent_heading_count > 1 %}
-  {% assign show_recent_multipart_toc = true %}
-{% endif %}
+{% assign word_count = page.content | strip_html | number_of_words %}
+{% assign read_time = word_count | plus: 179 | divided_by: 180 %}
+{% if read_time < 1 %}{% assign read_time = 1 %}{% endif %}
+{% assign h2_or_more = page.content | split: '## ' | size | minus: 1 %}
+{% assign h3_or_more = page.content | split: '### ' | size | minus: 1 %}
+{% assign heading_count = h2_or_more | minus: h3_or_more %}
+{% assign show_toc = false %}
+{% if page.toc == true or heading_count > 2 %}{% assign show_toc = true %}{% endif %}
 <div class="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
-<article class="post-container post-container--single">
-  <header class="post-header post-header--single">
-    <h1 class="post-title">{{ page.title }}</h1>
-  </header>
-
-  {% if show_recent_multipart_toc %}
-    <nav class="post-toc" aria-label="Article contents" data-post-toc>
-      <p class="post-toc__eyebrow">Navigation</p>
-      <p class="post-toc__title">On this page</p>
-      <ul class="post-toc__list"></ul>
-    </nav>
+<div class="post-layout{% if show_toc %} post-layout--toc{% endif %}">
+  {% if show_toc %}
+  <nav class="post-toc" aria-label="Article contents" data-post-toc>
+    <p class="post-toc__title">On this page</p>
+    <ul class="post-toc__list"></ul>
+  </nav>
   {% endif %}
 
-  <section class="post post--single">
-    {{ content }}
-  </section>
-
-  {% assign max_related = 3 %}
-  {% assign related_count = 0 %}
-  {% for post in site.posts %}
-    {% if post.url == page.url %}
-      {% continue %}
-    {% endif %}
-    {% assign common_tags = 0 %}
-    {% for tag in page.tags %}
-      {% if post.tags contains tag %}
-        {% assign common_tags = common_tags | plus: 1 %}
+  <article class="post-container post-container--single">
+    <header class="post-header post-header--single">
+      <h1 class="post-title">{{ page.title }}</h1>
+      <p class="post-header__meta">
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>
+        <i aria-hidden="true">·</i>
+        <span>{{ read_time }} min read</span>
+      </p>
+      {% if page.tags and page.tags != empty %}
+      <p class="post-header__tags">{% for tag in page.tags %}<a class="post_tags" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>{% endfor %}</p>
       {% endif %}
-    {% endfor %}
-    {% if common_tags > 0 %}
-      {% assign related_count = related_count | plus: 1 %}
-    {% endif %}
-  {% endfor %}
+    </header>
 
-  {% if related_count > 0 %}
-  <section class="related-posts">
-    <p class="related-posts__title">Related articles</p>
-    <ul class="related-posts__list">
-      {% assign shown = 0 %}
+    {% if show_toc %}
+    <details class="post-toc post-toc--inline" data-post-toc>
+      <summary>Contents</summary>
+      <ul class="post-toc__list"></ul>
+    </details>
+    {% endif %}
+
+    <section class="post post--single">
+      {{ content }}
+    </section>
+
+    {% assign max_related = 3 %}
+    {% assign shown = 0 %}
+    {% capture related %}
       {% for post in site.posts %}
-        {% if shown >= max_related %}
-          {% break %}
-        {% endif %}
-        {% if post.url == page.url %}
-          {% continue %}
-        {% endif %}
+        {% if shown >= max_related %}{% break %}{% endif %}
+        {% if post.url == page.url %}{% continue %}{% endif %}
         {% assign common_tags = 0 %}
         {% for tag in page.tags %}
-          {% if post.tags contains tag %}
-            {% assign common_tags = common_tags | plus: 1 %}
-          {% endif %}
+          {% if post.tags contains tag %}{% assign common_tags = common_tags | plus: 1 %}{% endif %}
         {% endfor %}
         {% if common_tags > 0 %}
-        <li class="related-posts__item">
-          <a href="{{ post.url | relative_url }}">
-            <p class="related-posts__item-title">{{ post.title }}</p>
-          </a>
-        </li>
+        <li class="related-posts__item"><a href="{{ post.url | relative_url }}"><p class="related-posts__item-title">{{ post.title }}</p></a></li>
         {% assign shown = shown | plus: 1 %}
         {% endif %}
       {% endfor %}
-    </ul>
-  </section>
-  {% endif %}
-</article>
+    {% endcapture %}
+    {% if shown > 0 %}
+    <section class="related-posts">
+      <p class="related-posts__title">Related articles</p>
+      <ul class="related-posts__list">{{ related }}</ul>
+    </section>
+    {% endif %}
+  </article>
+</div>
 
 <script>
   (function () {
-    // Reading progress bar
     var bar = document.querySelector(".reading-progress");
     var article = document.querySelector(".post-container--single");
-
     if (bar && article) {
       function updateProgress() {
         var rect = article.getBoundingClientRect();
         var total = article.offsetHeight - window.innerHeight;
-        var scrolled = -rect.top;
-        var pct = total > 0 ? Math.min(100, Math.max(0, (scrolled / total) * 100)) : 0;
+        var pct = total > 0 ? Math.min(100, Math.max(0, (-rect.top / total) * 100)) : 0;
         bar.style.width = pct + "%";
         bar.setAttribute("aria-valuenow", Math.round(pct));
       }
@@ -98,38 +84,17 @@ layout: default
       updateProgress();
     }
 
-    // TOC active section highlighting
-    var tocLinks = Array.from(document.querySelectorAll(".post-toc__list a"));
-    var headings = Array.from(document.querySelectorAll(".post--single h2[id]"));
-
-    if (tocLinks.length > 0 && headings.length > 0) {
+    var tocLinks = Array.prototype.slice.call(document.querySelectorAll(".post-toc:not(.post-toc--inline) .post-toc__list a"));
+    var headings = Array.prototype.slice.call(document.querySelectorAll(".post--single h2[id]"));
+    if (tocLinks.length && headings.length) {
       function setActive(id) {
-        tocLinks.forEach(function (link) {
-          if (link.getAttribute("href") === "#" + id) {
-            link.classList.add("is-active");
-          } else {
-            link.classList.remove("is-active");
-          }
-        });
+        tocLinks.forEach(function (l) { l.classList.toggle("is-active", l.getAttribute("href") === "#" + id); });
       }
-
-      var observer = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              setActive(entry.target.id);
-            }
-          });
-        },
-        { rootMargin: "0px 0px -70% 0px", threshold: 0 }
-      );
-
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { if (entry.isIntersecting) { setActive(entry.target.id); } });
+      }, { rootMargin: "0px 0px -70% 0px", threshold: 0 });
       headings.forEach(function (h) { observer.observe(h); });
-
-      // Highlight first section by default before any scroll
-      if (headings[0]) {
-        setActive(headings[0].id);
-      }
+      setActive(headings[0].id);
     }
   })();
 </script>

@@ -1,62 +1,51 @@
 {% assign home_url = '/' | relative_url %}
 <header class="site-header">
-  <div class="site-header__identity">
-    {% if site.author.img %}
+  <div class="site-header__top">
+    <div class="site-header__identity">
       <a class="site-header__avatar-link" href="{{ home_url }}" aria-label="{{ site.title }}">
-        <img class="site-header__avatar" src="{{ site.author.img | relative_url }}" alt="{{ site.title }}">
+        <img class="site-header__avatar" src="{{ '/images/muntazir_fadhel-avatar.png' | relative_url }}" alt="{{ site.title }}" width="52" height="52">
       </a>
-    {% endif %}
-    <div class="site-header__copy">
-      <a class="name-logo" href="{{ home_url }}">{{ site.title }}</a>
-      <p class="site-header__role">ML Systems Architect</p>
+      <div class="site-header__copy">
+        <a class="name-logo" href="{{ home_url }}">{{ site.title }}</a>
+        <p class="site-header__role">Founder, Striff · ML systems architect</p>
+      </div>
     </div>
+
+    <nav class="site-nav" aria-label="Primary">
+      <a class="site-nav__link" href="{{ home_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </a>
+      <a class="site-nav__link" target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/{{ site.author.linkedin_username }}">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        <span>LinkedIn</span>
+      </a>
+      <a class="site-nav__link" target="_blank" rel="noreferrer" href="https://github.com/{{ site.author.github_username }}">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        <span>GitHub</span>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <span class="theme-toggle__icon" id="theme-icon" aria-hidden="true">&#9790;</span>
+        <span id="theme-label">Dark</span>
+      </button>
+    </nav>
   </div>
 
+  {% if page.url == '/' or page.url contains '/page' %}
   <section class="site-header__bio" aria-label="Profile">
-    <p class="site-header__bio-text">With a decade of experience across enterprise-scale organizations and startups, I design production AI platforms spanning data pipelines, model training and evaluation, serving infrastructure, observability, and cloud architecture.</p>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <a class="site-header__cta" href="/downloads/MFadhel_Engagement_Brief.pdf" target="_blank" rel="noopener" style="background:transparent !important;border:1px solid #2563eb;color:#2563eb !important;display:inline-flex;align-items:center;gap:6px;" data-theme-light="border-color:#2563eb;color:#2563eb" data-theme-dark="border-color:#60a5fa;color:#60a5fa">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Technical Profile
-      </a>
-      <a class="site-header__cta" href="/contact/" style="display:inline-flex;align-items:center;gap:6px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    <p class="site-header__bio-text">I build <a href="https://striff.io">Striff</a>, which checks every pull request against the architecture documents already in the repository. Before that, a decade designing production AI platforms across enterprise-scale organizations and startups: data pipelines, model training and evaluation, serving infrastructure, observability and cloud architecture.</p>
+    <div class="site-header__actions">
+      <a class="site-header__cta site-header__cta--primary" href="/contact/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Contact
       </a>
+      <a class="site-header__cta" href="/downloads/MFadhel_Engagement_Brief.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Technical profile
+      </a>
     </div>
-
-    <style>
-      [data-theme="dark"] .site-header__cta[style*="background:transparent"] {
-        border-color: #60a5fa !important;
-        color: #60a5fa !important;
-      }
-      [data-theme="dark"] .site-header__cta[style*="background:transparent"]:hover {
-        background: rgba(96, 165, 250, 0.1) !important;
-      }
-      .site-header__cta[style*="background:transparent"]:hover {
-        background: rgba(37, 99, 235, 0.08) !important;
-      }
-    </style>
   </section>
-
-  <nav class="site-nav" aria-label="Primary">
-    <a class="site-nav__link site-nav__link--primary" href="{{ home_url }}">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span>Home</span>
-    </a>
-    <a class="site-nav__link" target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/{{ site.author.linkedin_username }}">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <span>About</span>
-    </a>
-    <a class="site-nav__link" target="_blank" rel="noreferrer" href="https://github.com/{{ site.author.github_username }}">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-      <span>Portfolio</span>
-    </a>
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-      <span class="theme-toggle__icon" id="theme-icon">&#9790;</span>
-      <span id="theme-label">Dark mode</span>
-    </button>
-  </nav>
+  {% endif %}
 
   <script>
     (function () {
@@ -65,26 +54,18 @@
       var label = document.getElementById("theme-label");
 
       function applyTheme(dark) {
-        if (dark) {
-          document.documentElement.setAttribute("data-theme", "dark");
-          icon.textContent = "\u2600"; // sun
-          label.textContent = "Light mode";
-          localStorage.setItem("theme", "dark");
-        } else {
-          document.documentElement.setAttribute("data-theme", "light");
-          icon.textContent = "\u263E"; // moon
-          label.textContent = "Dark mode";
-          localStorage.setItem("theme", "light");
-        }
+        document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+        icon.textContent = dark ? "☀" : "☾";
+        label.textContent = dark ? "Light" : "Dark";
+        try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
       }
 
-      // Sync button state with current theme on load
       var isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      applyTheme(isDark);
+      icon.textContent = isDark ? "☀" : "☾";
+      label.textContent = isDark ? "Light" : "Dark";
 
       btn.addEventListener("click", function () {
-        var currentlyDark = document.documentElement.getAttribute("data-theme") === "dark";
-        applyTheme(!currentlyDark);
+        applyTheme(document.documentElement.getAttribute("data-theme") !== "dark");
       });
     })();
   </script>

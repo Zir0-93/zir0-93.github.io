@@ -3,7 +3,7 @@ title:  "Comparing The Performance of Bluemix PaaS Instances and IBM Containers"
 date:   2016-09-12 15:04:23
 icon: /images/bluemix.png
 tags: [ibm cloud, paas, containers, performance]
-description: "Choosing between a Platform-as-a-Service and a container-based deployment model is one of the earliest infrastructure decisions a cloud application faces, and the tradeoffs are not always obvious. This post presents a direct performance comparison between IBM Bluemix PaaS instances and IBM Container deployments under equivalent workloads. Benchmarks cover response time, throughput, startup latency, and resource utilization across both approaches. The results surface meaningful differences in cold-start behavior and sustained load handling that should inform which model fits a given application's requirements."
+description: "A performance comparison of IBM Bluemix PaaS instances and IBM Containers under equivalent workloads: response time, throughput, startup latency and resource use. The cold-start and sustained-load results differ enough to decide which model fits a given application."
 
 excerpt_separator: <!--more-->
 ---

@@ -4,7 +4,7 @@ date: 2026-03-07 00:01:00
 og_image: /images/microservices.png
 tags: [ai, llms, mlops, platform engineering, system design]
 toc: true
-description: "After close to a decade working on ML infrastructure, including GPU clusters, autoscaling pipelines, and model serving systems, the transition into LLM-based production systems turned out to be less of a clean break than the hype suggests. The problems do not change so much as evolve, and they get harder in specific ways. This post works through the areas where classical ML intuitions transfer directly into LLM operations, where they break down and need updating, and where the failure surfaces are genuinely new. Covering latency, reproducibility, data lineage, cost modeling, observability, and the unique challenges of agent systems, written for engineers who have operated traditional ML infrastructure and want an honest map of what carries over."
+description: "After close to a decade on ML infrastructure, the move to LLM production systems was less of a clean break than the hype suggests. Where classical ML intuitions transfer, where they need updating, and where the failure surfaces are new: latency, reproducibility, lineage, cost, observability and agents."
 excerpt_separator: <!--more-->
 ---
 

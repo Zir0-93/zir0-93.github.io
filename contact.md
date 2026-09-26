@@ -5,7 +5,7 @@ permalink: /contact/
 ---
 
 <form action="https://formspree.io/f/xvzlobwe" method="POST" class="contact-form" style="max-width: 500px; margin: 0 auto;">
-  <p style="margin-bottom: 24px;">Have a question about ML infrastructure, neurosymbolic systems, or want to collaborate? Send me a message.</p>
+  <p style="margin-bottom: 24px;">Have a question about Striff, architecture documentation, ML infrastructure, or want to collaborate? Send me a message.</p>
 
   <div style="margin-bottom: 16px;">
     <label for="name" style="display: block; margin-bottom: 6px; font-weight: 500;">Name</label>

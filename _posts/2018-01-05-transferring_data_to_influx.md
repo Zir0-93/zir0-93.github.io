@@ -3,7 +3,7 @@ title:  "Easily Migrate Postgres/MySQL Records to InfluxDB"
 icon: /images/influxdb.png
 date:   2018-01-05 15:04:23
 tags: [python, influxdb, postgresql, mysql, time series]
-description: "Relational databases were not designed for time series data — as write volumes grow, table cardinality climbs and query performance degrades in ways that are hard to tune around. Purpose-built time series databases like InfluxDB handle this workload efficiently by design, with compression, downsampling, and retention policies built in from the start. This post explains when that tradeoff is worth making and walks through the practical steps of migrating existing Postgres or MySQL records into InfluxDB using Python. It covers schema mapping, batching strategies, and the key differences in querying that will affect any application sitting on top of the new store."
+description: "As write volumes grow, relational databases handle time series badly: cardinality climbs and queries slow. This post explains when a move to InfluxDB pays off and walks through migrating Postgres or MySQL records with Python: schema mapping, batching and the query differences that follow."
 
 excerpt_separator: <!--more-->
 ---

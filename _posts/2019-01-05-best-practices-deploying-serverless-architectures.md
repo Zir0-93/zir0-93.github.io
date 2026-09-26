@@ -4,7 +4,7 @@ icon: /images/rocket_cd.png
 date:  2019-01-05 15:04:23
 og_image: /images/Continuous-Delivery-and-Deployment.jpg
 tags: [aws, serverless, ci/cd, infrastructure as code, devops]
-description: "Serverless apps depend on many managed services — storage, caches, load balancers, execution environments — which makes deployment automation non-trivial compared to a single application binary. Without structure, provisioning infrastructure and deploying code across dev, staging, and production environments becomes a manual, error-prone process. This post covers four practices for keeping that process automated and low-risk: separating environments properly, using infrastructure as code to provision resources, packaging application code independently of infrastructure, and automating deployment pipelines end to end. If any part of your release still requires you to look at the cloud console, this post is for you."
+description: "Serverless apps depend on many managed services, which makes deployment automation harder than shipping one binary. Four practices keep it automated and low-risk: separate environments, infrastructure as code, packaging application code apart from infrastructure, and end-to-end deployment pipelines."
 excerpt_separator: <!--more-->
 ---
 *Serverless* is the new Buzz word in town, selling developers the ability to focus on writing applications instead of managing servers. 

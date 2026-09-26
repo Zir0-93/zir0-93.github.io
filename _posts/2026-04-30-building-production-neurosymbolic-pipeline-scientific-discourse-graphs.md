@@ -4,7 +4,7 @@ date: 2026-04-26 10:00:00
 og_image: /images/fylo-pipeline-overview.svg
 tags: [nlp, knowledge graphs, neurosymbolic, scientific discourse, llm engineering, shex]
 toc: true
-description: "Lessons from building [Fylo](https://fylo.io/)'s ingestion pipeline that turns scientific papers into typed discourse graphs. Covers ShEx schema as executable contract, a phased LLM extraction loop that closes the validator-LLM feedback gap, and a three-tier cross-document merge policy that keeps the graph converging as more papers are ingested."
+description: "Lessons from building [Fylo](https://fylo.io/)'s ingestion pipeline that turns scientific papers into typed discourse graphs: a ShEx schema as executable contract, a phased LLM extraction loop that closes the validator feedback gap, and a three-tier cross-document merge policy that keeps the graph converging."
 excerpt_separator: <!--more-->
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: "The MCP C# SDK's Copilot instructions tell agents to use a class Copilot deleted"
-date: 2026-09-26 18:00:00
+date: 2026-09-26 09:00:00
+og_image: /images/og-copilot-instructions.png
 tags: [coding agents, documentation, architecture, software design]
 toc: true
 description: "Line 258 of the official C# SDK's copilot-instructions.md says to use McpServerFactory. Copilot wrote that line in October 2025 and deleted the class in December. Ten months on, every agent that opens the repository is still told to use it. How that happens, why a normal pipeline never notices, and what to do about it."
@@ -49,7 +50,9 @@ A wrong sentence in a doc used to cost one engineer an afternoon of confusion. N
 
 ## Why your pipeline does not catch this
 
-Design docs used to have one reader, a person, who noticed when a sentence had stopped being true. Now the instruction file is an input to code generation, and the tooling around it has not caught up. Everything else your code is built from has a check: source has a compiler, tests have a runner, types have a checker, manifests have a resolver. Prose has some checks too, and they are worth naming so nobody thinks I am pretending otherwise. Rustdoc warns on a broken intra-doc link. Doctests run the examples. A link checker catches a dead URL. None of them reads a sentence. "Use `McpServerFactory`" is not a link, not an example and not a URL, so it passes all of them.
+Design docs used to have one reader, a person, who noticed when a sentence had stopped being true. Now the document is an input to code generation. The practice has a name, spec-driven development, and a toolchain: GitHub's Spec Kit, AWS's Kiro, Tessl, and the `AGENTS.md` and `CLAUDE.md` files that brief an agent before it touches anything. Birgitta Böckeler's [survey of those three tools](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) sorts the practice into three levels: spec-first, where the spec drives one task; spec-anchored, where it is kept afterwards and the feature keeps evolving through it; and spec-as-source, where a human edits only the spec and never the code. Everything past the first level depends on the spec staying true after the task ends, and that is the step the tooling has not caught up with.
+
+Everything else your code is built from has a check: source has a compiler, tests have a runner, types have a checker, manifests have a resolver. Prose has some checks too, and they are worth naming so nobody thinks I am pretending otherwise. Rustdoc warns on a broken intra-doc link. Doctests run the examples. A link checker catches a dead URL. None of them reads a sentence. "Use `McpServerFactory`" is not a link, not an example and not a URL, so it passes all of them.
 
 The obvious answer is to grep. `git grep -w McpServerFactory -- '*.md'` takes a second, and if every removal PR ran it, this post would have nothing to show you. I would genuinely like everyone to do that, and it is the first item in the list at the end. It also only catches the version of the problem you can see. The expensive version has no name in it.
 
