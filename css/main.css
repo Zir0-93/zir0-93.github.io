@@ -1991,3 +1991,40 @@ hr {
 .back-to-top:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (max-width: 720px) { .back-to-top { right: 16px; bottom: 16px; padding: 10px; } .back-to-top span { display: none; } }
 @media (prefers-reduced-motion: reduce) { .back-to-top { transition: none; } }
+
+/* Pull-stat: a linked callout carrying one number */
+.post .pullstat, .pullstat {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 22px;
+  align-items: start;
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.pullstat:hover { border-color: var(--accent); background: var(--surface-2); }
+.pullstat-num {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 46px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  padding-top: 2px;
+}
+.pullstat-body { display: block; }
+.pullstat-lead { display: block; font-family: var(--font-serif); font-size: 19px; line-height: 1.4; color: var(--text); }
+.pullstat-link { display: block; margin-top: 8px; font-family: var(--font-sans); font-size: 13px; color: var(--muted); }
+.pullstat-link::after { content: " \2192"; color: var(--accent); }
+.pullstat:hover .pullstat-link { color: var(--accent); }
+@media (max-width: 720px) {
+  .pullstat { grid-template-columns: 1fr; gap: 8px 0; padding: 16px 18px; }
+  .pullstat-num { font-size: 38px; }
+  .pullstat-lead { font-size: 17px; }
+}

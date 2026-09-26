@@ -71,6 +71,11 @@ Stale names do not just sit there. In April 2026 a commit authored as "Architect
 
 Design docs used to have one reader, a person, who noticed when a sentence had stopped being true. Now the document is an input to code generation. The practice has a name, spec-driven development, and a toolchain: GitHub's Spec Kit, AWS's Kiro, Tessl, and the `AGENTS.md` and `CLAUDE.md` files that brief an agent before it touches anything. Birgitta Böckeler's [survey of those three tools](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) sorts the practice into three levels: spec-first, where the spec drives one task; spec-anchored, where it is kept afterwards and the feature keeps evolving through it; and spec-as-source, where a human edits only the spec and never the code. Everything past the first level depends on the spec staying true after the task ends, and that is the step the tooling has not caught up with.
 
+<a class="pullstat" href="https://striff.io/blog/architecture-matters-more-not-less">
+<span class="pullstat-num">63%</span>
+<span class="pullstat-body"><span class="pullstat-lead">of repositories that document their architecture already hand those docs to coding agents. 8% of them run anything that checks the code still matches.</span><span class="pullstat-link">A survey of 335 open-source repositories, on the Striff blog</span></span>
+</a>
+
 Everything else your code is built from has a check: source has a compiler, tests have a runner, types have a checker, manifests have a resolver. Prose has some checks too, and they are worth naming so nobody thinks I am pretending otherwise. Rustdoc warns on a broken intra-doc link. Doctests run the examples. A link checker catches a dead URL. None of them reads a sentence. "Use `McpServerFactory`" is not a link, not an example and not a URL, so it passes all of them.
 
 The obvious answer is to grep. `git grep -w McpServerFactory -- '*.md'` takes a second, and if every removal PR ran it, this post would have nothing to show you. I would genuinely like everyone to do that, and it is the first item in the list at the end. It also only catches the version of the problem you can see. The expensive version has no name in it.
@@ -98,5 +103,10 @@ The MCP line is the one I chose to lead with because the irony is hard to beat, 
 - Have the docs checked on the pull request, where the change that contradicts them is being reviewed, by something that reads the sentence and the code together.
 
 That last one is what I build, which is how I found these. [Striff](https://striff.io) is a GitHub App, free on public repositories, that parses both revisions of a pull request, reads the documents already in the repository, turns each sentence that makes a claim about the code into a rule, and checks it at the base and the head. A name the repository does not have, like line 258, is reported against the page with the commit that removed the type. A rule the change broke is reported against the change. There is nothing to write and nothing to configure, because the rules are the ones your team already wrote down and your agents are already reading. The sweep these examples came from, with its numbers and a worked example from sentence to verdict, is in [a post on the Striff blog](https://striff.io/blog/design-docs-are-enforceable-now).
+
+<a class="pullstat" href="https://striff.io/blog/design-docs-are-enforceable-now">
+<span class="pullstat-num">97</span>
+<span class="pullstat-body"><span class="pullstat-lead">times, across 609 public pull requests, a change contradicted a sentence in its own repository's docs and would have merged with nobody comparing the two.</span><span class="pullstat-link">7,161 documented rules, checked at both revisions, on the Striff blog</span></span>
+</a>
 
 I opened fixes for both lines before publishing this: [modelcontextprotocol/csharp-sdk#1892](https://github.com/modelcontextprotocol/csharp-sdk/pull/1892) (with [issue #1893](https://github.com/modelcontextprotocol/csharp-sdk/issues/1893)) and [yegor256/cactoos#1959](https://github.com/yegor256/cactoos/pull/1959).
