@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" width="1200" height="460" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <style>
+      .ink{stroke:#1a1917;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .paper{fill:#fffdf9;stroke:#1a1917;stroke-width:1.6}
+      .t{fill:#1a1917}.m{fill:#7a756c}.acc{fill:#c2410c}.g{stroke:#3f6212}
+      .mono{font-family:"Geist Mono","JetBrains Mono",Menlo,monospace}
+      .serif{font-family:Newsreader,"Source Serif 4",Georgia,serif}
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#1a1917" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="460" fill="#f7f5f0"/>
+
+  <!-- dashboard card -->
+  <g transform="translate(72,60)">
+    <rect width="470" height="330" rx="6" class="paper"/>
+    <text x="22" y="34" class="mono m" font-size="13">grafana · serving-cluster · last 6h</text>
+    <line x1="22" y1="48" x2="448" y2="48" stroke="#e6e1d8" stroke-width="1.6"/>
+    <g font-size="12.5" class="t">
+      <text x="22" y="82">GPU utilisation</text>
+      <path class="ink g" stroke-width="2" d="M180 80 C220 76 260 84 300 80 S380 78 440 82"/>
+      <text x="22" y="132">p99 latency</text>
+      <path class="ink g" stroke-width="2" d="M180 132 C220 128 260 134 300 130 S380 130 440 132"/>
+      <text x="22" y="182">error rate</text>
+      <path class="ink g" stroke-width="2" d="M180 184 L440 184"/>
+      <text x="22" y="232">queue depth</text>
+      <path class="ink g" stroke-width="2" d="M180 232 C220 228 260 236 300 232 S380 230 440 234"/>
+      <text x="22" y="282">pod restarts</text>
+      <path class="ink g" stroke-width="2" d="M180 284 L440 284"/>
+    </g>
+    <circle cx="448" cy="32" r="5" fill="#3f6212"/>
+    <text x="22" y="316" class="serif m" font-size="15" font-style="italic">every panel green, for hours</text>
+  </g>
+
+  <!-- arrow -->
+  <path class="ink" marker-end="url(#arr)" d="M556 225 C600 225 620 225 656 225"/>
+  <text x="606" y="212" text-anchor="middle" class="serif m" font-size="14" font-style="italic">serves</text>
+
+  <!-- agent output card -->
+  <g transform="translate(668,60)">
+    <path class="paper" d="M0 0 H428 L460 32 V330 H0 Z"/>
+    <path class="ink" d="M428 0 V32 H460"/>
+    <text x="22" y="34" class="mono m" font-size="13">agent output · step 3 of 6</text>
+    <line x1="22" y1="48" x2="438" y2="48" stroke="#e6e1d8" stroke-width="1.6"/>
+    <g class="mono" font-size="13">
+      <text x="22" y="82" class="t">{ "tool": "lookup_order",</text>
+      <text x="22" y="104" class="t">  "args": { "id": "A-1042" } }</text>
+      <text x="22" y="140" class="t">{ "tool": "refund",</text>
+      <rect x="12" y="152" width="436" height="48" fill="#fbe9df"/>
+      <rect x="12" y="152" width="3" height="48" class="acc"/>
+      <text x="22" y="172" class="acc">  "args": "amount=full; reason=</text>
+      <text x="22" y="192" class="acc">  customer request" }   ← not an object</text>
+      <text x="22" y="228" class="m">parser: schema mismatch, call after call</text>
+    </g>
+    <text x="22" y="316" class="serif m" font-size="15" font-style="italic">no exception raised, no metric moved</text>
+  </g>
+
+  <!-- footer -->
+  <line x1="72" y1="418" x2="1128" y2="418" stroke="#d6cfc2" stroke-width="1.2"/>
+  <text x="72" y="444" class="serif t" font-size="16" font-style="italic">The serving layer was healthy. The question nobody had instrumented was whether the model was doing what the application needed.</text>
+</svg>
