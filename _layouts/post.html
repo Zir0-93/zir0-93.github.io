@@ -67,10 +67,25 @@ layout: default
     </section>
     {% endif %}
   </article>
+
+<button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top" hidden>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+  <span>Top</span>
+</button>
 </div>
 
 <script>
   (function () {
+    var toTop = document.getElementById("back-to-top");
+    if (toTop) {
+      var updateToTop = function () { toTop.hidden = window.scrollY < window.innerHeight; };
+      window.addEventListener("scroll", updateToTop, { passive: true });
+      updateToTop();
+      toTop.addEventListener("click", function () {
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+      });
+    }
     var bar = document.querySelector(".reading-progress");
     var article = document.querySelector(".post-container--single");
     if (bar && article) {

@@ -19,7 +19,7 @@ Every coding agent opens the same file first. Before it writes anything it reads
 <ul>
 <li><span class="ghfile-ln">256</span><span class="ghfile-text">Server primitives (tools, prompts, resources) are discovered via reflection using attributes</span></li>
 <li><span class="ghfile-ln">257</span><span class="ghfile-text">Support both attribute-based registration (<code>WithTools&lt;T&gt;()</code>) and instance-based (<code>WithTools(target)</code>)</span></li>
-<li class="is-hl"><span class="ghfile-ln">258</span><span class="ghfile-text">Use <mark>McpServerFactory</mark> to create server instances with configured options<br /><span class="ghfile-callout"><b>Not in the code.</b> Deleted 2 Dec 2025 in <a href="https://github.com/modelcontextprotocol/csharp-sdk/pull/985">#985</a>.</span></span></li>
+<li class="is-hl"><span class="ghfile-ln">258</span><span class="ghfile-text">Use <mark>McpServerFactory</mark> to create server instances with configured options<br /><span class="ghfile-callout"><b>Not in the code.</b>Deleted 2 Dec 2025 in <a href="https://github.com/modelcontextprotocol/csharp-sdk/pull/985">#985</a>.</span></span></li>
 </ul>
 </div>
 </div>
