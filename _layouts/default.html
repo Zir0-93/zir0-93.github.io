@@ -57,18 +57,32 @@
           w.appendChild(t);
         });
 
-        // Code copy buttons
+        // Code blocks: editor chrome with language label and copy button
         postRoot.querySelectorAll("pre").forEach(function (pre) {
-          if (pre.closest("table")) { return; }
+          if (pre.closest("table") || pre.closest(".code-block-wrapper")) { return; }
+          var host = pre.closest("div.highlighter-rouge, figure.highlight") || pre;
+          var lang = "";
+          var m = (host.className || "").match(/language-([\w+#-]+)/);
+          if (m) { lang = m[1]; }
+          if (!lang) {
+            var code = pre.querySelector("code[class*='language-']");
+            var mm = code && code.className.match(/language-([\w+#-]+)/);
+            if (mm) { lang = mm[1]; }
+          }
           var wrapper = document.createElement("div");
           wrapper.className = "code-block-wrapper";
+          var bar = document.createElement("div");
+          bar.className = "code-block-bar";
+          bar.innerHTML = "<span class=\"code-block-dots\"><i></i><i></i><i></i></span>" +
+            (lang ? "<span class=\"code-block-lang\">" + lang.replace(/</g, "&lt;") + "</span>" : "");
           var btn = document.createElement("button");
           btn.className = "code-copy-btn";
           btn.textContent = "Copy";
           btn.setAttribute("aria-label", "Copy code to clipboard");
-          pre.parentNode.insertBefore(wrapper, pre);
-          wrapper.appendChild(pre);
-          wrapper.appendChild(btn);
+          bar.appendChild(btn);
+          host.parentNode.insertBefore(wrapper, host);
+          wrapper.appendChild(bar);
+          wrapper.appendChild(host);
           btn.addEventListener("click", function () {
             var code = pre.querySelector("code");
             navigator.clipboard.writeText(code ? code.textContent : pre.textContent).then(function () {
@@ -112,7 +126,9 @@
 
         postRoot.querySelectorAll("img").forEach(function (img, i) {
           if (i > 0) { img.setAttribute("loading", "lazy"); }
-          if (img.closest(".post-badges") || img.width < 200) { return; }
+          if (img.closest(".post-badges") || /img\.shields\.io/.test(img.src) || img.closest(".ghfile")) { return; }
+          var h = img.getAttribute("height") || img.naturalHeight || img.height;
+          if (h && h < 48) { return; }
           var parent = img.parentNode;
           if (getComputedStyle(parent).position === "static") { parent.style.position = "relative"; }
           var btn = document.createElement("button");

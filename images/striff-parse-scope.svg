@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="t d">
+  <title id="t">What Striff parses for a change</title>
+  <desc id="d">The changed files are parsed in full, the repository files they reference are modelled as boundary components, files named by a relevant document are parsed in full on a second pass, and the rest of the revision is on disk for resolution but not modelled.</desc>
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f46e5"/></marker>
+    <marker id="as" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker>
+    <style>
+      text{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;fill:#0f172a}
+      .h{font-size:22px;font-weight:700}
+      .s{font-size:15px;fill:#64748b}
+      .lane{font-size:13px;font-weight:600;letter-spacing:.08em;fill:#64748b}
+      .c{font-size:15px;font-weight:600;fill:#ffffff}
+      .b{font-size:15px;font-weight:600;fill:#3730a3}
+      .gt{font-size:15px;font-weight:600;fill:#64748b}
+      .tag{font-size:13px;font-weight:600;fill:#4f46e5}
+      .note{font-size:13.5px;fill:#64748b}
+      .lt{font-size:16px;font-weight:600}
+      .ls{font-size:14.5px;fill:#475569}
+      .p{font-size:15px;fill:#334155}
+    </style>
+  </defs>
+  <rect x="0.5" y="0.5" width="1199" height="699" rx="20" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="48" y="58" class="h">What gets parsed for a change</text>
+  <text x="48" y="84" class="s">Base is the merge base. Head is the base with the pull request’s changed files applied. Both are scoped the same way.</text>
+
+  <rect x="48" y="112" width="700" height="548" rx="16" fill="#fbfcfe" stroke="#e2e8f0"/>
+  <text x="72" y="140" class="lane">THE REVISION ON DISK</text>
+
+  <rect x="76" y="520" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="160" y="520" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="244" y="520" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="328" y="520" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="412" y="520" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="496" y="520" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="580" y="520" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="664" y="520" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="76" y="566" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="160" y="566" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="244" y="566" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="328" y="566" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="412" y="566" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="496" y="566" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="580" y="566" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="664" y="566" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="76" y="612" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="160" y="612" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="244" y="612" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="328" y="612" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="412" y="612" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="496" y="612" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="580" y="612" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <rect x="664" y="612" width="68" height="30" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+
+  <!-- document -->
+  <path d="M72,164 H236 L256,184 V214 H72 Z" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <path d="M236,164 V184 H256" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="88" y="195" class="p">architecture.md</text>
+  <path d="M256,189 C360,189 420,187 514,187" fill="none" stroke="#4f46e5" stroke-width="1.75" stroke-dasharray="3 5" marker-end="url(#ai)"/>
+  <text x="300" y="176" class="note">names a type</text>
+
+  <!-- doc-named -->
+  <rect x="520" y="166" width="190" height="44" rx="10" fill="#c7d2fe" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="615" y="193" class="b" text-anchor="middle">EventBus</text>
+
+  <!-- changed -->
+  <rect x="250" y="282" width="170" height="44" rx="10" fill="#4f46e5"/>
+  <text x="335" y="309" class="c" text-anchor="middle">OrderService</text>
+  <rect x="250" y="352" width="170" height="44" rx="10" fill="#4f46e5"/>
+  <text x="335" y="379" class="c" text-anchor="middle">OrderController</text>
+  <rect x="250" y="422" width="170" height="44" rx="10" fill="#4f46e5"/>
+  <text x="335" y="449" class="c" text-anchor="middle">OrderMapper</text>
+
+  <!-- boundary -->
+  <text x="520" y="266" class="tag">drawn</text>
+  <rect x="520" y="274" width="190" height="44" rx="10" fill="#ffffff" stroke="#4f46e5" stroke-width="2.5" stroke-dasharray="7 4"/>
+  <text x="615" y="301" class="b" text-anchor="middle">PaymentClient</text>
+  <rect x="520" y="352" width="190" height="44" rx="10" fill="#ffffff" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="7 4"/>
+  <text x="615" y="379" class="b" text-anchor="middle">OrderRepository</text>
+  <rect x="520" y="430" width="190" height="44" rx="10" fill="#ffffff" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="7 4"/>
+  <text x="615" y="457" class="b" text-anchor="middle">Money</text>
+
+  <!-- relations -->
+  <path d="M420,300 H512" fill="none" stroke="#4f46e5" stroke-width="3" marker-end="url(#ai)"/>
+  <text x="432" y="290" class="tag">+ added</text>
+  <path d="M420,318 C470,330 470,366 512,370" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#as)"/>
+  <path d="M420,444 C460,446 480,450 512,452" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#as)"/>
+  <path d="M335,352 V334" fill="none" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#as)"/>
+
+  <!-- caller -->
+  <rect x="72" y="352" width="130" height="44" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="137" y="379" class="gt" text-anchor="middle">ReportJob</text>
+  <path d="M202,374 H242" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#as)"/>
+  <text x="72" y="418" class="note">unchanged caller:</text>
+  <text x="72" y="436" class="note">not drawn</text>
+
+  <!-- legend -->
+  <text x="784" y="140" class="lane">WHAT EACH SHADE MEANS</text>
+  <rect x="784" y="162" width="36" height="24" rx="6" fill="#4f46e5"/>
+  <text x="836" y="176" class="lt">Changed files</text>
+  <text x="836" y="198" class="ls">parsed in full at both revisions</text>
+
+  <rect x="784" y="228" width="36" height="24" rx="6" fill="#c7d2fe" stroke="#4f46e5" stroke-width="1.5"/>
+  <text x="836" y="242" class="lt">Files a relevant document names</text>
+  <text x="836" y="264" class="ls">parsed in full on a second pass</text>
+
+  <rect x="784" y="294" width="36" height="24" rx="6" fill="#ffffff" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="836" y="308" class="lt">Files the change references</text>
+  <text x="836" y="330" class="ls">modelled beside it as boundary</text>
+  <text x="836" y="350" class="ls">components</text>
+
+  <rect x="784" y="380" width="36" height="24" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <text x="836" y="394" class="lt">Everything else</text>
+  <text x="836" y="416" class="ls">on disk so names resolve,</text>
+  <text x="836" y="436" class="ls">never modelled</text>
+
+  <line x1="784" y1="470" x2="1152" y2="470" stroke="#e2e8f0"/>
+  <text x="784" y="502" class="p">The diagram draws the changed components</text>
+  <text x="784" y="524" class="p">and whatever sits on a relation the change</text>
+  <text x="784" y="546" class="p">added or deleted. Cost follows the change,</text>
+  <text x="784" y="568" class="p">not the size of the repository.</text>
+</svg>

@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 840" width="1200" height="840" role="img" aria-labelledby="t d">
+  <title id="t">How Striff turns documents into checked rules</title>
+  <desc id="d">Documents are catalogued, screened for relevance, translated into rules by a language model, type-checked and grounded against the parsed model, and evaluated deterministically at base and head into one of six outcomes, which the check run reports.</desc>
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f46e5"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+    <marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+    <style>
+      text{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;fill:#0f172a}
+      .h{font-size:22px;font-weight:700}
+      .s{font-size:15px;fill:#64748b}
+      .lane{font-size:13px;font-weight:600;letter-spacing:.08em;fill:#64748b}
+      .nt{font-size:17px;font-weight:600}
+      .ns{font-size:14.5px;fill:#475569}
+      .rt{font-size:15px;font-weight:600;fill:#b91c1c}
+      .rs{font-size:14px;fill:#7f1d1d}
+      .ot{font-size:14px;font-weight:700;font-family:ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace}
+      .os{font-size:13.5px;fill:#475569}
+      .mono{font-family:ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;font-size:13.5px;fill:#334155}
+      .n{fill:#eef2ff;stroke:#4f46e5;stroke-width:1.5}
+      .m{fill:#fffbeb;stroke:#d97706;stroke-width:1.5}
+      .r{fill:#fef2f2;stroke:#dc2626;stroke-width:1.25;stroke-dasharray:6 4}
+      .li{fill:none;stroke:#4f46e5;stroke-width:2}
+      .la{fill:none;stroke:#d97706;stroke-width:2}
+      .lr{fill:none;stroke:#dc2626;stroke-width:1.5;stroke-dasharray:5 4}
+    </style>
+  </defs>
+  <rect x="0.5" y="0.5" width="1199" height="839" rx="20" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="48" y="58" class="h">From a sentence in a document to a row in the check run</text>
+  <text x="48" y="84" class="s">The model only translates. Everything after the amber step is a program, and every refusal withholds.</text>
+
+  <!-- row 1 -->
+  <rect class="n" x="48" y="124" width="240" height="110" rx="14"/>
+  <text x="68" y="158" class="nt">Catalogue</text>
+  <text x="68" y="184" class="ns">docs at head: READMEs,</text>
+  <text x="68" y="206" class="ns">design docs, AGENTS.md…</text>
+
+  <rect class="n" x="336" y="124" width="240" height="110" rx="14"/>
+  <text x="356" y="158" class="nt">Screen</text>
+  <text x="356" y="184" class="ns">does it bear on this change,</text>
+  <text x="356" y="206" class="ns">and name a parsed type?</text>
+
+  <rect class="m" x="624" y="124" width="240" height="110" rx="14"/>
+  <text x="644" y="158" class="nt">Translate</text>
+  <text x="644" y="184" class="ns">the model returns rules, each</text>
+  <text x="644" y="206" class="ns">citing a numbered sentence</text>
+
+  <rect class="n" x="912" y="124" width="240" height="110" rx="14"/>
+  <text x="932" y="158" class="nt">Type-check and ground</text>
+  <text x="932" y="184" class="ns">closed vocabulary; every</text>
+  <text x="932" y="206" class="ns">gate reruns on cache reads</text>
+
+  <path class="li" d="M288,179 H330" marker-end="url(#ai)"/>
+  <path class="la" d="M576,179 H618" marker-end="url(#aa)"/>
+  <path class="li" d="M864,179 H906" marker-end="url(#ai)"/>
+
+  <!-- refusals -->
+  <path class="lr" d="M168,234 V270" marker-end="url(#ar)"/>
+  <path class="lr" d="M456,234 V270" marker-end="url(#ar)"/>
+  <path class="lr" d="M744,234 V270" marker-end="url(#ar)"/>
+  <path class="lr" d="M1032,234 V270" marker-end="url(#ar)"/>
+
+  <rect class="r" x="48" y="276" width="240" height="100" rx="12"/>
+  <text x="66" y="304" class="rt">Left out</text>
+  <text x="66" y="328" class="rs">superseded or not started,</text>
+  <text x="66" y="350" class="rs">release notes, agent memory</text>
+
+  <rect class="r" x="336" y="276" width="240" height="100" rx="12"/>
+  <text x="354" y="304" class="rt">Not read</text>
+  <text x="354" y="328" class="rs">off-topic, API listings, or a</text>
+  <text x="354" y="350" class="rs">cheap model says no</text>
+
+  <rect class="r" x="624" y="276" width="240" height="100" rx="12"/>
+  <text x="642" y="304" class="rt">Unread, never cached</text>
+  <text x="642" y="328" class="rs">a draw failed or the time</text>
+  <text x="642" y="350" class="rs">budget ran out; read later</text>
+
+  <rect class="r" x="912" y="276" width="240" height="100" rx="12"/>
+  <text x="930" y="304" class="rt">Refused, never evaluated</text>
+  <text x="930" y="328" class="rs">bad quote, planned work,</text>
+  <text x="930" y="350" class="rs">unknown name, type error</text>
+
+  <!-- row 2 -->
+  <path class="li" d="M1152,179 H1172 V412 H168 V446" marker-end="url(#ai)"/>
+  <text x="48" y="406" class="lane">EVALUATION, NO MODEL</text>
+
+  <rect class="n" x="48" y="452" width="240" height="62" rx="12"/>
+  <text x="68" y="478" class="nt">Facts at base</text>
+  <text x="68" y="500" class="ns">the merge base, parsed</text>
+  <rect class="n" x="48" y="530" width="240" height="62" rx="12"/>
+  <text x="68" y="556" class="nt">Facts at head</text>
+  <text x="68" y="578" class="ns">base plus the PR’s files</text>
+
+  <rect class="n" x="336" y="452" width="240" height="140" rx="14"/>
+  <text x="356" y="486" class="nt">Evaluate both sides</text>
+  <text x="356" y="512" class="ns">backtracking join over the</text>
+  <text x="356" y="534" class="ns">relations; the pair of truth</text>
+  <text x="356" y="556" class="ns">values picks the outcome</text>
+
+  <path class="li" d="M288,483 H330" marker-end="url(#ai)"/>
+  <path class="li" d="M288,561 H330" marker-end="url(#ai)"/>
+  <path class="li" d="M576,522 H618" marker-end="url(#ai)"/>
+
+  <!-- outcomes 3x2 -->
+  <g>
+    <rect x="624" y="452" width="168" height="62" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+    <text x="638" y="477" class="ot" fill="#3730a3" style="fill:#3730a3">HOLDS</text>
+    <text x="638" y="499" class="os">this PR keeps it</text>
+
+    <rect x="804" y="452" width="168" height="62" rx="10" fill="#fef2f2" stroke="#fca5a5"/>
+    <text x="818" y="477" class="ot" style="fill:#b91c1c">VIOLATED</text>
+    <text x="818" y="499" class="os">this PR broke it</text>
+
+    <rect x="984" y="452" width="168" height="62" rx="10" fill="#fff7ed" stroke="#fdba74"/>
+    <text x="998" y="477" class="ot" style="fill:#9a3412">PRE_EXISTING</text>
+    <text x="998" y="499" class="os">broken before the PR</text>
+
+    <rect x="624" y="530" width="168" height="62" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+    <text x="638" y="555" class="ot" style="fill:#3730a3">RESTORED</text>
+    <text x="638" y="577" class="os">this PR closed a gap</text>
+
+    <rect x="804" y="530" width="168" height="62" rx="10" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="818" y="555" class="ot" style="fill:#475569">UNRESOLVABLE</text>
+    <text x="818" y="577" class="os">nothing to bind to</text>
+
+    <rect x="984" y="530" width="168" height="62" rx="10" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="998" y="555" class="ot" style="fill:#475569">UNSUPPORTED</text>
+    <text x="998" y="577" class="os">reason stated</text>
+  </g>
+
+  <!-- output -->
+  <path class="li" d="M708,592 V636" marker-end="url(#ai)"/>
+  <rect class="n" x="624" y="642" width="528" height="160" rx="14"/>
+  <text x="644" y="674" class="nt">Documented Rules, in the check run</text>
+  <text x="644" y="700" class="mono">Rule | This PR | Source</text>
+  <text x="644" y="728" class="ns">broken and restored rules: always</text>
+  <text x="644" y="750" class="ns">already broken: at most 10 · held: only where the PR touches them</text>
+  <text x="644" y="772" class="ns">UNRESOLVABLE and UNSUPPORTED: left out of the check run</text>
+
+  <text x="48" y="672" class="nt">Guards only withhold</text>
+  <text x="48" y="700" class="ns">A guard can remove a witness or turn a verdict into</text>
+  <text x="48" y="722" class="ns">UNSUPPORTED. None can create one. VIOLATED and</text>
+  <text x="48" y="744" class="ns">PRE_EXISTING must name the component they accuse,</text>
+  <text x="48" y="766" class="ns">or they become UNSUPPORTED.</text>
+</svg>

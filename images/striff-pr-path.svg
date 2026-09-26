@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 740" width="1200" height="740" role="img" aria-labelledby="t d">
+  <title id="t">The path of a pull request through Striff</title>
+  <desc id="d">A webhook is queued, a worker takes it, admission grants the pod's single analysis slot, both revisions are fetched and parsed, the structural result is posted, and the check run is handed to the review, which completes it.</desc>
+  <defs>
+    <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f46e5"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+    <marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker>
+    <style>
+      text{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;fill:#0f172a}
+      .h{font-size:22px;font-weight:700}
+      .s{font-size:15px;fill:#64748b}
+      .lane{font-size:13px;font-weight:600;letter-spacing:.08em;fill:#64748b}
+      .nt{font-size:17px;font-weight:600}
+      .ns{font-size:14.5px;fill:#475569}
+      .rt{font-size:14px;fill:#b91c1c}
+      .n{fill:#eef2ff;stroke:#4f46e5;stroke-width:1.5}
+      .m{fill:#fffbeb;stroke:#d97706;stroke-width:1.5}
+      .r{fill:#fef2f2;stroke:#dc2626;stroke-width:1.5;stroke-dasharray:6 4}
+      .g{fill:#f8fafc;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:6 4}
+      .li{fill:none;stroke:#4f46e5;stroke-width:2}
+      .lr{fill:none;stroke:#dc2626;stroke-width:1.75;stroke-dasharray:6 5}
+      .la{fill:none;stroke:#d97706;stroke-width:2}
+      .lg{fill:none;stroke:#94a3b8;stroke-width:1.75;stroke-dasharray:6 5}
+    </style>
+  </defs>
+  <rect x="0.5" y="0.5" width="1199" height="739" rx="20" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="48" y="58" class="h">The path of a pull request</text>
+  <text x="48" y="84" class="s">One analysis per pod. The worker is freed as soon as the structural result is posted.</text>
+
+  <!-- refusal loop -->
+  <path class="lr" d="M1032,170 V134 H456 V164" marker-end="url(#ar)"/>
+  <rect x="560" y="122" width="368" height="24" fill="#ffffff"/>
+  <text x="744" y="139" class="rt" text-anchor="middle">No slot within 240 s: deferred, “Waiting for capacity”</text>
+
+  <!-- row 1 -->
+  <text x="48" y="160" class="lane">INTAKE</text>
+  <rect class="n" x="48" y="170" width="240" height="104" rx="14"/>
+  <text x="68" y="204" class="nt">GitHub webhook</text>
+  <text x="68" y="230" class="ns">signature checked, 202</text>
+  <text x="68" y="252" class="ns">check run posted as queued</text>
+
+  <rect class="n" x="336" y="170" width="240" height="104" rx="14"/>
+  <text x="356" y="204" class="nt">Redis queue</text>
+  <text x="356" y="230" class="ns">interactive lane first,</text>
+  <text x="356" y="252" class="ns">then the webhook lane</text>
+
+  <rect class="n" x="624" y="170" width="240" height="104" rx="14"/>
+  <text x="644" y="204" class="nt">Queue worker</text>
+  <text x="644" y="230" class="ns">one thread per pod</text>
+  <text x="644" y="252" class="ns">run moves to in_progress</text>
+
+  <rect class="n" x="912" y="170" width="240" height="104" rx="14"/>
+  <text x="932" y="204" class="nt">Admission</text>
+  <text x="932" y="230" class="ns">one permit per pod</text>
+  <text x="932" y="252" class="ns">App, then extension, then API</text>
+
+  <path class="li" d="M288,222 H330" marker-end="url(#ai)"/>
+  <path class="li" d="M576,222 H618" marker-end="url(#ai)"/>
+  <path class="li" d="M864,222 H906" marker-end="url(#ai)"/>
+  <path class="li" d="M1032,274 V302 H168 V344" marker-end="url(#ai)"/>
+
+  <!-- row 2 -->
+  
+  <text x="1152" y="338" class="lane" text-anchor="end">ANALYSIS, ON THE WORKER</text>
+  <rect class="n" x="48" y="350" width="240" height="104" rx="14"/>
+  <text x="68" y="384" class="nt">Fetch and parse</text>
+  <text x="68" y="410" class="ns">merge base, and head built</text>
+  <text x="68" y="432" class="ns">from the changed files</text>
+
+  <rect class="n" x="336" y="350" width="240" height="104" rx="14"/>
+  <text x="356" y="384" class="nt">Diagram and record</text>
+  <text x="356" y="410" class="ns">striff-lib draws the diff;</text>
+  <text x="356" y="432" class="ns">record saved on success only</text>
+
+  <rect class="n" x="624" y="350" width="240" height="104" rx="14"/>
+  <text x="644" y="384" class="nt">Post structural result</text>
+  <text x="644" y="410" class="ns">diagram in the check run,</text>
+  <text x="644" y="432" class="ns">still in_progress</text>
+
+  <rect class="n" x="912" y="350" width="240" height="104" rx="14"/>
+  <text x="932" y="384" class="nt">Hand off the run</text>
+  <text x="932" y="410" class="ns">entry moves to REVIEWING;</text>
+  <text x="932" y="432" class="ns">worker takes the next job</text>
+
+  <path class="li" d="M288,402 H330" marker-end="url(#ai)"/>
+  <path class="li" d="M576,402 H618" marker-end="url(#ai)"/>
+  <path class="li" d="M864,402 H906" marker-end="url(#ai)"/>
+
+  <text x="48" y="484" class="rt">600 s deadline inside the slot. The thread is interrupted; if it is still running 30 s later, the pod exits.</text>
+
+  <!-- row 3 -->
+  <path class="la" d="M1032,454 V512 H168 V548" marker-end="url(#aa)"/>
+  <text x="1152" y="542" class="lane" text-anchor="end">REVIEW, AFTER THE WORKER IS FREE</text>
+  <rect class="m" x="48" y="554" width="240" height="104" rx="14"/>
+  <text x="68" y="588" class="nt">Documented rules</text>
+  <text x="68" y="614" class="ns">model reads docs into rules,</text>
+  <text x="68" y="636" class="ns">a program evaluates them</text>
+
+  <rect class="n" x="336" y="554" width="240" height="104" rx="14"/>
+  <text x="356" y="588" class="nt">Check run completed</text>
+  <text x="356" y="614" class="ns">claimed before posting,</text>
+  <text x="356" y="636" class="ns">so exactly one post lands</text>
+
+  <rect class="r" x="624" y="554" width="240" height="104" rx="14"/>
+  <text x="644" y="588" class="nt">Structural result alone</text>
+  <text x="644" y="614" class="ns">no rule rows, nothing said</text>
+  <text x="644" y="636" class="ns">about the check</text>
+
+  <rect class="g" x="912" y="554" width="240" height="104" rx="14"/>
+  <text x="932" y="588" class="nt">Orphan sweep</text>
+  <text x="932" y="614" class="ns">finds a lapsed heartbeat</text>
+  <text x="932" y="636" class="ns">and completes the run</text>
+
+  <path class="li" d="M288,606 H330" marker-end="url(#ai)"/>
+  <path class="lr" d="M168,658 V694 H744 V664" marker-end="url(#ar)"/>
+  <text x="456" y="716" class="rt" text-anchor="middle">review failed, timed out or died</text>
+  <path class="lg" d="M912,606 H870" marker-end="url(#ag)"/>
+</svg>

@@ -84,7 +84,7 @@ Object.entries(colors).forEach(function(kv){legend.append("span").style("display
 })();
 </script>
 
-This post covers the three design decisions that mattered most: a ShEx schema as executable contract, a phased extraction pipeline that closes the validator-LLM loop, and a three-tier merge policy that handles cross-document identity correctly. The graph neural network and infrastructure architecture behind the related [striff.io code review system]({% post_url 2026-04-28-detecting-architectural-anomalies-gnn %}) follows a similar neurosymbolic staging pattern, described in a [companion infrastructure post]({% post_url 2026-04-28-striff-io-ml-infrastructure %}).
+This post covers the three design decisions that mattered most: a ShEx schema as executable contract, a phased extraction pipeline that closes the validator-LLM loop, and a three-tier merge policy that handles cross-document identity correctly. The same staging, a language model proposing and a program deciding, runs behind [striff.io]({% post_url 2026-04-28-striff-io-ml-infrastructure %}), which checks pull requests against a repository's own architecture documents.
 
 <!--more-->
 

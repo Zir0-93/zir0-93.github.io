@@ -1,164 +1,127 @@
 ---
-title: "The ML and Infrastructure Architecture Behind striff.io"
-date: 2026-04-28 14:00:00
-og_image: /images/striff-io-screenshot.png
-tags: [mlops, kubernetes, redis, graph neural networks, ml engineering, system design]
+title: "How Striff checks a pull request against the docs in its own repository"
+date: 2026-09-25 10:00:00
+og_image: /images/striff-pr-path.png
+tags: [code review, static analysis, software architecture, documentation, llm, system design]
 toc: true
-description: "The production pipeline behind [striff.io](https://striff.io) in spring 2026, when a graph neural network scored the changed edges of a dependency graph, and the three places we chose the boring option: a Redis list instead of Kafka, in-process ONNX instead of a model server, and graceful degradation."
+description: "How Striff turns the claims in a repository's own documents into rules and checks each pull request against them at both revisions, with a program deciding every verdict."
+redirect_from:
+  - /detecting-architectural-anomalies-gnn/
 excerpt_separator: <!--more-->
 ---
 
-> *Update, September 2026.* This post describes Striff as it ran in spring 2026. The graph neural network scorer was retired in August 2026 and the detector pipeline followed in September; Striff now checks each pull request against the architecture documents already in the repository. The sections on the ONNX scorer describe a component that no longer exists. The queue, the scoped parse and the heap sizing are still how the service runs. The current system is described in [a post on the Striff blog](https://striff.io/blog/design-docs-are-enforceable-now).
-
-Until August 2026, [striff.io](https://striff.io) ran a pipeline that parsed GitHub pull requests into typed dependency graphs, scored the changed dependencies with a graph neural network, and posted the structural findings as a GitHub check next to your CI. This post is a walkthrough of how that system was built, the specific problems that forced each design decision, and the tradeoffs we lived with. The infrastructure patterns here build directly on the MLOps blueprint described in an [earlier post]({% post_url 2024-01-09-mlops-blueprint %}) (single-build artifacts, Vault, Argo CD, blue/green rollouts). The GNN model itself is covered in a [companion post]({% post_url 2026-04-28-detecting-architectural-anomalies-gnn %}).
-
-One thing to set expectations: striff has no message bus and no model server. A fair amount of this post is about why not.
-
-![striff.io screenshot](/images/striff-io-screenshot.png){: .light-border }
+When [Striff](https://striff.io) reviews a pull request, a language model reads your README, your architecture notes and your `AGENTS.md`, and it has no say in whether your code broke any of them. Its one job is to translate a sentence like "the domain layer must not depend on infrastructure" into a rule in a small formal language. A program checks that rule against the parsed code at the base of the pull request and again at its head, and the GitHub check run shows the verdict next to the sentence it came from. This post follows a pull request from the webhook to the last row of that check run, and explains the two rules that shaped most of the design along the way.
 
 <!--more-->
 
----
+## What lands on the pull request
 
-## How the Architecture Evolved
+The output is a GitHub check run with a summary, up to three top review items, a Documented Rules table (Rule, This PR, Source) and the architectural diff of the change as a diagram. Broken and restored rules always get a row. Rules that were already broken before the change get up to ten. A rule that still holds appears only when the change touched it.
 
-Like most pipelines, striff.io started synchronous. A GitHub webhook arrived, the API parsed the repository, built a subgraph, ran inference, called the LLM, enriched the diagram, and returned the result in a single request thread. That is a reasonable starting point and it worked well enough at low volume.
+The contract behind that table is lopsided on purpose: missing a rule is acceptable, and stating a wrong one is not. When the pipeline cannot tell, the check run says nothing and the API response and logs keep the full record. Most of the machinery below exists to make that contract hold.
 
-Three things pushed us toward the architecture described below.
+## Two rules that outrank convenience
 
-Repository parsing has wide tail latency. A small TypeScript service parses in milliseconds. A Java monorepo with thousands of files and deep transitive imports can take several seconds, and the variance is hard to predict in advance. Under concurrent load, the slow parses pile up and thread pool exhaustion becomes a real ceiling.
+Striff never compiles your code. [clarpse](https://github.com/hadi-technology/clarpse) parses the source into a model of types, members and references, and [striff-lib](https://github.com/hadi-technology/striff-lib) turns the difference between two such models into a diagram. The price of skipping the build is that a source parser sees less than a compiler. It misses members a code generator adds, annotations it cannot resolve, and the string and class literals inside method bodies.
 
-LLM annotation adds five to thirty seconds depending on provider load. That is not a tail latency concern, it is the median case. Holding a request thread open while waiting on an external API does not hold up at scale.
+So the first rule is that absence from the parsed model is never evidence of absence in the code. Any code that concludes "X is not there" has to know whether the question was answerable, and say so when it was not.
 
-The subtler issue is failure coupling. When everything runs in a single synchronous request, every component fails together. A timeout in the LLM call returns an error to the user even when the graph was built and the symbolic facts were computed correctly. The most reliable parts of the pipeline become invisible behind the least reliable one. Early on, I spent a week chasing what looked like a parsing failure before realizing the synchronous LLM timeout was swallowing every upstream error with it.
+The second rule is that "could not analyse" must never persist as "analysed, found nothing". From outside, both look like a quiet check, and a quiet check that means "I did not look" teaches a team to trust silence nobody earned. Every path that records a result has to answer what it writes when the work did not happen.
 
----
+## From webhook to worker
 
-## What striff.io Does
+![The path of a pull request through Striff](/images/striff-pr-path.svg){: .light-border }
+*A webhook becomes a queued job. The worker is released once the structural result is posted, and the review completes the check run later.*
 
-[striff.io](https://striff.io) takes a GitHub pull request and reviews what it does to the codebase's structure. Changed files become seed nodes in a typed dependency graph extracted by striff-lib. A symbolic analysis layer computes deterministic facts: dependency cycles, package boundary crossings, fan-in blast radius, OOP metric deltas. A distilled GCN with an edge-prediction head, running on ONNX Runtime, scores the dependency edges touching changed components for structural surprise. Findings are posted as a GitHub check and rendered as notes on an SVG class diagram.
+A GitHub App webhook is verified, queued and answered with a 202, and the check run is posted as queued off the request thread. The queue is one Redis queue with two lanes. Submissions from the browser extension, where a person is watching a spinner, go in the interactive lane, which is always drained first.
 
-One rule shapes the rest of the pipeline: the deterministic layer decides what gets said, and the LLM only decides how it reads. A finding exists because a detector computed it, not because a model found it plausible. That keeps the output reproducible, and it means a clean PR gets no findings at all.
+Each pod runs one worker and admits one analysis at a time. An analysis holds both parsed revisions in memory, and two large ones side by side can exhaust the heap and kill everything in flight on the pod. A cluster-wide semaphore would not help, because the heap belongs to the pod. The permit is taken before anything is downloaded, and waiters are ordered GitHub App first, then the extension, then the public API. Priority never preempts a running analysis.
 
-The whole system runs on DigitalOcean Kubernetes, provisioned with Terraform, deployed via ArgoCD, and monitored with Prometheus and Grafana.
+A waiter gets 240 seconds. An App check that does not get a slot goes back on the queue with a delay, and its check run stays in progress, saying "Waiting for analysis capacity" and when Striff will stop trying. Failing it would have been simpler, but a refusal is a case of "could not analyse", and a completed check run cannot be reopened.
 
-<a class="post-figure__link" href="/images/striff-why-visual.svg" target="_blank" rel="noopener"><img src="/images/striff-why-visual.svg" class="post-figure"/></a>
+Inside the slot an analysis has 600 seconds. At the deadline a watchdog interrupts the thread. If the thread ignores the interrupt for another 30 seconds, the pod records the overrun and exits, and that revision is refused on the same build from then on.
 
-<a class="post-figure__link" href="/images/striff-architecture-diagram.svg" target="_blank" rel="noopener"><img src="/images/striff-architecture-diagram.svg" class="post-figure"/></a>
+When the analysis succeeds, the operation is saved, the diagram is posted into the still-running check run, and the run is handed to the review. The worker moves on. The review keeps only what it reads (the document catalogue, the relations at both revisions, the head source text), so the parsed models can be collected as soon as the analysis returns. Whoever first sees the review end claims the run in the database before posting, so exactly one final result reaches GitHub. If the review fails, times out or dies with its pod, the run shows the structural result alone, with no rule rows and nothing said about the check. A sweep finds reviews whose heartbeat has lapsed and completes their runs the same way.
 
----
+## Which two revisions, and how much of them
 
-## Async Without a Message Bus
+The base is the pull request's merge base, which is often older than the tip of the target branch. GitHub's list of changed files is a three-dot diff, so applying it to the branch tip would compare against a merge nobody performed. Striff downloads the base archive once and builds the head by applying the changed files to a copy.
 
-The API does not do ML work on the request thread. A GitHub webhook arrives at `GitHubAppController`, which verifies the HMAC signature, drops duplicates through `GitHubWebhookDedupService`, pushes a job onto a **Redis list**, and returns 202 Accepted. Everything downstream is asynchronous.
+![What Striff parses for a change](/images/striff-parse-scope.svg){: .light-border }
+*The changed files are parsed in full, what they reference is modelled beside them, and the rest of the revision is there so names resolve.*
 
-Durability is the reason for Redis rather than an in-process queue, and it is worth being precise about the failure it prevents. The first version used a `ThreadPoolTaskExecutor` directly: 8 core threads, 64 queue slots, jobs living purely in JVM memory. Two things break at that design. Jobs are lost on pod restart, and GitHub only retries a webhook about three times over roughly twenty seconds, so a deploy during a busy minute silently drops reviews that nobody will ever ask for again. And each pod has its own queue, so one pod can saturate while another sits idle, with no way to shed work between them.
+The changed files are analysed in full. The repository files they reference are modelled beside them as boundary components, and the whole revision sits on disk so references resolve. Both simpler options failed first. A whole-repository parse was all or nothing and ran out of memory on large repositories. Parsing a copy cut down to the changed files could not tell a reference to an unloaded repository type from a reference to a library. With the revision on disk, the far end of every reference is known and the cost follows the size of the change.
 
-A Redis list fixes both without introducing a broker. Workers `BRPOP` from a shared key, so any pod can pick up any job and load balances itself. Redis was already in the cluster for striff caching and prefetch storage, and was already configured for this to be safe: AOF persistence with `appendfsync everysec`, and `volatile-lru` eviction so that only keys with a TTL are evictable and queue entries cannot be dropped under memory pressure. Each pod runs a small pool of long-lived worker threads (`GitHubEventWorker`, a `SmartLifecycle` that drains in-flight jobs on shutdown).
+The diagram draws the changed components and whatever sits on a relation the change added or deleted. The cost is that an unchanged caller is invisible: its relation to the changed code is identical at both revisions, and the analysis follows references outwards only. The diagram says what the change did and nothing about who else will feel it.
 
-**Why not Kafka.** Kafka gives you ordering, consumer groups, and replay. We don't need any of the three: reviews are independent per PR, and a webhook event is worthless once it's a few minutes stale. What we would get for certain is a broker to run and a third stateful system in the cluster. A list and `BRPOP` covers the requirement.
+Boundary components are modelled only as deeply as the change reaches them, so the first rule applies. A rule that finds nothing among them has not been checked and cannot report that it holds, while a violation their present edges witness still stands.
 
-The AI review runs one hop further in, on a small bounded executor: core 2, max 4, queue 50 (`AsyncConfig`). The bound matters more than the numbers. Each review holds a parsed graph, a feature matrix and an ONNX session in heap, so unbounded concurrency here doesn't degrade latency gracefully, it runs out of memory. When the queue fills, the rejection handler marks the operation `FAILED` with error code `QUEUE_FULL` rather than dropping it silently — a state the client can see and retry against.
+Documents get a second pass. After the first parse, Striff chooses the documents this change bears on and parses the files declaring the types they talk about in full, so rules about those types are answered from complete dependencies. A pull request that changes only documents is scoped to the files those documents name. If they name nothing the repository declares, the check says "Nothing to analyze" instead of parsing a whole repository the change never mentioned.
 
-We alert on `striff_ai_review_executor_queued > 25` for 10 minutes. That fires when reviews are arriving faster than they complete, which in practice is either an LLM provider slowdown or a run of large repositories, and the queue-depth signal catches it well before any request errors.
+## Which documents get read
 
-The review status endpoint is a MongoDB read; the browser extension polls it, and the GitHub App posts a check run when the review completes.
+![How Striff turns documents into checked rules](/images/striff-doc-rules-pipeline.svg){: .light-border }
+*Every stage can decline a document or a rule. Only the translation step uses a language model.*
 
-{% include striff-flow-demo.html %}
+The catalogue lists the documents as they stand at head. Agent instruction files count as architecture documents, since `AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md` and Cursor rules all say how the code should be shaped. Agent working memory under directories like `.claude/` is excluded, with release notes, migration guides, tests, vendored code and build output. So is a document whose header says it is superseded or not started.
 
----
+Relevance comes from what the change did: the types its files declare, the far ends of relations it added or deleted, the libraries it starts using and the modules it touches. A type the change merely keeps using does not count, because a document about it is about the repository in general. Documents are ranked by how many of the change's names they mention and at most 25 are read. Those the cap holds back are reported unread, because a limit on spend must never look like a repository with nothing to say.
 
-## Inference Stays In-Process
+A document must also name at least one type in the parsed model, and method listings are skipped. Then a cheap model gets one question: could a change to this repository's source make something in this document false? A document saying which class declares which member, or which module depends on which, passes. A changelog does not. A skip is stored as a skip, and a document that already has stored rules is never skipped, because its edit has to be judged against what it used to state.
 
-The GNN runs inside the application JVM on ONNX Runtime. `OnnxArchitecturalScorer` loads the model from the packaged resources at startup, holds the session for the pod's lifetime, and scores synchronously inside the review task. There is no inference service, no gRPC hop, no GPU.
+## Sentences into rules
 
-This is the decision most likely to look wrong on a diagram and be right in production. Per-review inference is a single forward pass over a subgraph capped at 500 nodes, which is milliseconds of CPU. Standing up a model server would add a network hop and a second deployment to that, plus a new failure mode for a call that currently cannot fail independently of the process making it. The scaling argument for a model server (batching many small requests into one GPU pass) requires request arrival rates we do not have: reviews arrive at human-PR frequency, so the effective batch size would be one almost always, and batching one request is just latency with extra steps.
+The translation model sees each document as numbered sentences, with the closed list of names that exist in the two parsed revisions and a predicate reference with worked examples. Table rows and the edges of Mermaid or C4 diagrams become synthetic sentences so they can be cited. It returns JSON rules, each citing a sentence number and saying whether the document asserts the configuration or forbids it. A rule is a flat conjunction of predicates. "The domain layer must not depend on infrastructure" comes out roughly as:
 
-There is a real cost to in-process inference and it is memory, not latency. At six replicas under the HPA maximum, six copies of the model weights sit in six JVMs doing nothing most of the time. That is the price of the simplicity, it is currently a few hundred megabytes, and it is the number to watch: **the day model weights grow enough that per-replica duplication dominates the memory budget, or inference latency starts landing in the request path, is the day a model server earns its place.** Neither is true yet.
+```
+in(a, "domain"), in(b, "infrastructure"), refs(a, b, "_")      expect: false
+```
 
-The contract risk that a service boundary would have introduced still exists, just in a different form. The scorer's input contract is a 403-dimensional feature vector with a specific layout (text embedding, then metrics, then type one-hot, then language one-hot, then the synthetic flag) plus an `edge_queries` tensor. A retrained model exported with the OOP metrics in a different order produces plausible, wrong scores and throws nothing. Silent numerical wrongness does not appear in error rates. Two things guard it: `ModelMetadata` pins the expected dimension and `OnnxArchitecturalScorer` hard-fails at startup if the loaded model disagrees or if the `edge_queries` input is missing, so a mismatched model kills the pod rather than quietly scoring garbage. Crashing on a contract violation is the correct behaviour for a model whose output nobody can eyeball.
+"The scheduler drives the engine" has the same shape with `expect: true`. The predicates cover where a component lives, what it declares, what it references or reaches transitively, and what the change added or deleted. Roles are normalised across languages, so a rule says `type_role(c, CONTRACT)` and never "interface". Where a language cannot express a role at all, as with interfaces in Python, the question is unanswerable for that component and never counts as false.
 
----
+Everything the model returns is a candidate, and eighteen gates stand before evaluation. A rule must cite a sentence that was actually sent, and that sentence must not sit under a heading about planned work, known limitations or superseded content. Every name must exist in the parsed model at base or head. The exception is a name the parse could never have held, like a type generated from a schema or one under a test root: that rule is kept and answers "unsupported" with the reason, because "we cannot check this" tells a reader more than silence. Placeholders like `MyService` are refused, as is a rule that fails the type checker, contradicts itself or only says a component exists.
 
-## Parsing Large Codebases Without Drowning
+The gates run again on every cache read. The rule cache keeps one entry per document version, keyed by path and content hash, so a new gate reaches rules extracted months ago without another extraction. When the way documents are read changes, such as how sentences are numbered, a schema version is bumped and every older entry becomes a miss. One review gets 300 seconds for screening and extraction. A document the budget does not reach is reported unread and never cached, so a later review picks it up.
 
-Parsing is the most expensive operation in the pipeline and the one most teams building code analysis tools get wrong. The naive approach parses the entire repository on every PR event. That does not scale and it is also wrong: a review does not need the full repository graph, it needs the structural neighbourhood of what changed. Parse less, but parse smarter. On a 1000-file Java codebase, striff-lib's full pipeline (file I/O, Clarpse parsing, reference classification, relationship extraction, diff computation, model merge) takes roughly four seconds. Most of that time is in relationship extraction, which is why scoping the parse set matters so much.
+## Six outcomes at two revisions
 
-The pipeline builds this neighbourhood in three steps via ScopedFileSelector, ScopedParseService, and NeighborhoodExpander.
+Each surviving rule is evaluated by a backtracking join over the relations read from the parsed model at base and at head. No model is involved here. The pair of truth values picks the outcome:
 
-**Scoped file selection.** Changed files are parsed first to extract the set of component names they declare. A fast text scan then runs across the full repository to find every file containing any of those names. This is a string search, not a parse. A tier-based budget trims the resulting candidate set: PR files first, same-directory files second, text-match files last. Lower-priority files are dropped when the budget is exhausted.
+| Outcome | Meaning |
+|---|---|
+| Holds | The change does not break the rule. Nothing is claimed about the rest of the code. |
+| Violated | True at base and false at head, or a forbidden edge the change introduced. |
+| Pre-existing | Broken at both revisions, with a named witness, and not by this change. |
+| Restored | The document and the code disagreed at base, and the change closed the gap. |
+| Unresolvable | The scope was empty or a name resolved to nothing. |
+| Unsupported | The question cannot be answered against this model, and the reason is named. |
 
-**Time-boxed parsing.** ScopedParseService parses the candidate set under a hard per-language deadline. If parsing does not finish in time, it returns whatever it has completed. This is a deliberate design choice: a partial graph is better than a timeout. The review that follows will be weaker but the user gets something rather than an error.
+The last two carry the first rule. An assertion false at both revisions counts as pre-existing only for a declaration whose owner resolves to a source file. Any other false-at-both is unsupported, because a missing edge looks exactly like a parser that could not see it. A rule over a relation the model does not populate is unsupported too, since running it would report a clean result for a question never asked. Where the model lacks a member, the evaluator reads the head source text, and answers "read and not named" only when that evidence is complete.
 
-**Neighbourhood expansion.** NeighborhoodExpander runs a bidirectional BFS from the seed nodes (the changed components), following edges in both directions for three hops. This captures both what the changed components depend on and what depends on them: the structural blast radius of the PR. Node count is capped at 500, with non-seed nodes dropped in hop-distance order when the cap is hit. The subgraph is deterministic and reproducible across runs.
+Every guard in the evaluator can remove a witness or turn a verdict into unsupported, and none can create a verdict. An accusation that names no component becomes unsupported. And if the pull request itself wrote the cited sentence, a restored rule counts as a plain hold, because editing the document to match the code earns no credit.
 
-For most PRs on most repositories this produces a subgraph of a few dozen nodes. For large cross-cutting refactors it might reach the cap.
+## Could not analyse is never found nothing
 
-![BFS neighbourhood expansion](/images/bfs-neighbourhood-diagram.svg){: .light-border }
+The second rule shows up in small decisions everywhere. An operation record is written only after an analysis succeeds, so a failure never leaves an empty result that could be served as clean. The count of documents read stays empty unless the documented-rule check finished, which lets "0 of 14 documents" mean that none bore on the change. A review nobody can be shown any more, because the pull request moved on or the App was suspended, is recorded as failed with its reason and its verdicts are discarded. Caches make a repeated request cheap and are never the authority for a result, and a review is never rebuilt from a cache.
 
-The memory side matters here. A 403-dimensional float feature matrix for a 500-node subgraph is about 800KB. Under concurrent reviews, several of those live in the JVM heap at once alongside cached MongoDB documents and the ONNX model weights, which is the real reason the review executor is bounded at four threads.
+Only a computed finding can create an item a reviewer sees, and the model is never shown the verdicts or findings. What the model reads and what reaches a reader are decided by different code.
 
-The heap is sized explicitly, `-Xms1g -Xmx4g`, rather than with `-XX:MaxRAMPercentage`. That choice gets made the other way in most Kubernetes deployments, so it is worth the sentence: a percentage of the container limit silently re-sizes the heap whenever someone edits the pod's memory request, and this workload has significant *native* memory outside the heap (ONNX Runtime's arenas and the parser's buffers) that the percentage does not know about. A heap that grows to consume the headroom native allocation needs produces an OOM kill that looks like a memory leak and is not. Pinning the heap makes the native budget explicit and the failure reproducible. `-XX:+ExitOnOutOfMemoryError` is set alongside it: if the JVM does exhaust heap, the pod dies and Kubernetes replaces it, rather than limping along in a state where inference might silently produce garbage.
+One producer sits beside the rule pipeline and needs no change to break anything: does a document name a type the repository does not have at all? It reads the whole revision's file tree and the repository's history, and reports one finding per stale page. I wrote about one case it found in [a post on a Copilot instructions file that names a class Copilot deleted]({% post_url 2026-09-26-copilot-instructions-deleted-class %}). The product side of the pipeline is on the [Striff blog](https://striff.io/blog/design-docs-are-enforceable-now).
 
----
+## What this costs, and what it misses
 
-## Shipping a New Model
+The design trades recall for precision. A document that names none of your types is never read. A rule whose subject the parser cannot see comes back unsupported and stays out of the check run, so a quiet Documented Rules section says nothing about whether your docs are accurate. The 25-document cap and the time budget mean a cold repository with many documents is read over several reviews. The screening model can wave a relevant document away, which only ever shows up as a miss. The translation model can misread a sentence, which is why every rule shows the sentence it came from.
 
-Model weights ship inside the application image. A new model is a new build, a new image tag, and a normal deployment, which sounds unsophisticated until you consider what it buys: the model version and the code version can never disagree. The feature-vector layout in `FeatureBuilder` and the tensor the model expects are the single most coupled pair of things in this system, and packaging them together makes a mismatched pair impossible to deploy rather than merely unlikely.
-
-The tradeoff is real and worth naming. Retraining requires an application deploy, so the model cannot be updated independently or rolled back on its own, and image size grows with the weights. For a model that changes a few times a quarter, that is a good trade. For one retrained nightly, it would not be, and that is the second condition (alongside memory pressure) that would push inference out into its own service.
-
-Model behaviour changes discretely between versions, which is the argument against a rolling update here: mixing old and new scoring inside one traffic window produces reviews that differ for reasons no user can see. A blue/green cutover with an instant rollback path is worth briefly running two stacks. Experiment tracking (MLflow, covered in the MLOps blueprint post) keeps each shipped model traceable to the training run that produced it, which matters because "the scores changed and we do not know why" is otherwise unanswerable months later.
-
----
-
-## Degradation Modes
-
-AIReviewService degrades rather than failing. Every failure mode below the top tier produces a weaker but still honest output.
-
-<a class="post-figure__link" href="/images/striff-reviewnote.png" target="_blank" rel="noopener"><img src="/images/striff-reviewnote.png" class="post-figure"/></a>
-
-**Full pipeline.** The scoped parse completes within budget, NeighborhoodExpander produces a valid subgraph, OnnxArchitecturalScorer returns edge scores, and `LlmReviewCoordinator` receives symbolic facts plus scored edges as structured context. This is the highest-quality path.
-
-**Symbolic-only fallback.** If the scoped parse times out, if NeighborhoodExpander produces an empty result, or if the ONNX scorer throws for any reason, the review continues with deterministic symbolic facts only. SymbolicFactsComputer runs Kosaraju SCC on JGraphT, computes boundary crossings and fan-in blast radius, and assembles the payload without anomaly scores. Because the GNN's scores are evidence rather than an origin of findings (the [companion post]({% post_url 2026-04-28-detecting-architectural-anomalies-gnn %}) explains why), losing them costs prioritisation detail, not correctness. The findings that survive are the deterministic ones, which were the only ones users ever saw.
-
-Each degradation mode is logged explicitly and surfaces in metrics. Monitoring which path was taken is not optional: consistent fallback to symbolic-only is a signal worth alerting on, because it means graph construction is systematically failing and every review is quietly thinner without any individual request producing an error.
-
-### The failure that is not a failure, and the one that is
-
-An empty review is a legitimate outcome. Most pull requests do not damage the architecture, and the correct output for those is silence: no findings, no invented "considerations", no note manufactured so the tool looks busy. Striff staying quiet on a clean PR is the product working.
-
-This creates a subtle hazard that took a redesign to close properly. A review that found nothing and a review that *could not analyse anything* produce byte-identical empty artifacts, and they mean opposite things. "Analysed, clean" is a result. "Never analysed" is an outage wearing a result's clothing, and the moment it is persisted as READY it is indistinguishable from good news forever after.
-
-The early fix was a quality gate: reject any review that produced no visible note. That was the wrong lever, because it treats the legitimate case (clean PR) as broken in order to catch the illegitimate one. The current design makes the bad state unrepresentable instead: a review can only be produced by a live analysis that actually ran, so there is no code path that reaches the surfacing stage without a real diff behind it. A review scheduled without an analysis result throws rather than publishing an empty artifact. Nothing needs to be checked at the end, because nothing can get there wrongly.
-
-That is the general shape worth stealing from this section: when two states are externally identical but semantically opposite, adding a validation is weaker than removing the path that produces the ambiguous one.
-
-Two alerts cover the rest. `StriffAPIAIReviewFailuresHigh` fires when more than ten reviews fail in fifteen minutes, and `StriffAPIAIReviewQueueBacklog` fires when the executor queue depth exceeds 25 for ten minutes. The queue-depth alert catches the failure mode that pure error-rate monitoring misses: the system falling behind on review generation without any individual request returning an error.
-
-![Degradation tier flowchart](/images/degradation-flowchart.svg){: .light-border }
+The service itself is a Spring Boot application on Kubernetes, with MongoDB as the system of record and Redis optional for queues and caches. GitHub Actions builds the image and Argo CD applies the manifests, much like the [MLOps blueprint]({% post_url 2024-01-09-mlops-blueprint %}) I described earlier. Public repositories are analysed for free.
 
 ---
 
-## Code Referenced in This Post
+## Code referenced in this post
 
-<div style="border:1px solid rgba(15,23,42,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;background:rgba(255,255,255,0.6);">
-<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
-<a href="https://github.com/hadi-technology/striff-gnn"><img src="https://img.shields.io/badge/GNN%20Training-striff--gnn-blue?logo=github" alt="striff-gnn"></a>
-<a href="https://github.com/hadi-technology/striff-lib"><img src="https://img.shields.io/badge/Graph%20Parsing-striff--lib-blueviolet?logo=github" alt="striff-lib"></a>
-<a href="https://github.com/hadi-technology/clarpse"><img src="https://img.shields.io/badge/Static%20Analysis-clarpse-6a0dad?logo=github" alt="clarpse"></a>
-<a href="https://github.com/hadi-technology/mlops-blueprint"><img src="https://img.shields.io/badge/MLOps%20Pipeline-mlops--blueprint-teal?logo=github" alt="mlops-blueprint"></a>
-</div>
+<div class="post-badges">
+<a href="https://github.com/hadi-technology/striff-lib"><img src="https://img.shields.io/badge/Diff%20and%20Diagrams-striff--lib-blueviolet?logo=github" alt="striff-lib"></a>
+<a href="https://github.com/hadi-technology/clarpse"><img src="https://img.shields.io/badge/Source%20Parsing-clarpse-6a0dad?logo=github" alt="clarpse"></a>
 </div>
 
----
+striff-lib is on Maven as `io.github.hadi-technology:striff-lib`.
 
-## Where to Go From Here
-
-[striff.io](https://striff.io) is live. You can run it on any public GitHub repository today. There is also a [Chrome extension](https://github.com/hadi-technology/striff-browser-extension) for inline PR review on GitHub.
-
-[striff-lib](https://github.com/hadi-technology/striff-lib) is open source (available on Maven as `io.github.hadi-technology:striff-lib`). The parsing and diagram generation core is available if you want to explore the graph extraction layer or build on it.
-
----
-
-*Muntazir Fadhel builds production AI and ML infrastructure. He is the founder of HADI Technology. [Technical Profile](/downloads/MFadhel_Engagement_Brief.pdf) · [Get in Touch](/contact/)*
