@@ -5,6 +5,7 @@ og_image: /images/og-copilot-instructions.png
 cover: /images/cover-copilot-instructions.png
 tags: [coding agents, documentation, architecture, software design]
 toc: true
+hide_related: true
 description: "Line 258 of the official C# SDK's copilot-instructions.md says to use McpServerFactory. Copilot wrote that line in October 2025 and deleted the class in December. Ten months on, every agent that opens the repository is still told to use it. How that happens, why a normal pipeline never notices, and what to do about it."
 excerpt_separator: <!--more-->
 ---
@@ -87,7 +88,7 @@ A stale name can also get copied. The README of [yegor256/cactoos](https://githu
 - Keep them short, and prefer rules to names. "Controllers never call repositories directly" stays true across a hundred refactors. A class name is a claim that can go stale on the next one.
 - Have the docs checked on the pull request, where the change that contradicts them is being reviewed, by something that reads the sentence and the code together.
 
-## How I found these
+## Striff, the tool that found these
 
 [Striff](https://striff.io) is the tool from the top of this post. It is a GitHub App, free on public repositories. It parses both revisions of a pull request, reads the documents already in the repository, turns each sentence that makes a claim about the code into a rule, and checks the rule at the base and the head. A name the repository does not have, like line 258, is reported against the page with the commit that removed the type. A rule the change broke is reported against the change. You do not write any rules yourself, because it uses the ones your team already wrote down and your agents are already reading.
 

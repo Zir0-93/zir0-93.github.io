@@ -60,7 +60,7 @@ layout: default
         {% endif %}
       {% endfor %}
     {% endcapture %}
-    {% if shown > 0 %}
+    {% if shown > 0 and page.hide_related != true %}
     <section class="related-posts">
       <p class="related-posts__title">Related articles</p>
       <ul class="related-posts__list">{{ related }}</ul>
