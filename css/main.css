@@ -2028,28 +2028,3 @@ hr {
   .pullstat-num { font-size: 38px; }
   .pullstat-lead { font-size: 17px; }
 }
-
-/* Try-links: a row of linked actions, each with a one-line note */
-.post .trylinks, .trylinks {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin: 28px 0;
-}
-.post .trylink, .trylink {
-  display: block;
-  padding: 16px 18px;
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  text-decoration: none;
-  color: var(--text);
-  transition: border-color 0.15s ease, background 0.15s ease;
-}
-.trylink:hover { border-color: var(--accent); background: var(--surface-2); }
-.trylink-name { display: block; font-family: var(--font-sans); font-weight: 600; font-size: 15px; line-height: 1.3; color: var(--text); }
-.trylink-name::after { content: "\00a0\2192"; color: var(--accent); }
-.trylink-note { display: block; margin-top: 6px; font-family: var(--font-sans); font-size: 13px; line-height: 1.45; color: var(--muted); }
-@media (max-width: 720px) {
-  .post .trylinks, .trylinks { grid-template-columns: 1fr; }
-}
