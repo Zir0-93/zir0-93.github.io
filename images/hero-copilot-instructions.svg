@@ -55,7 +55,7 @@
       <circle cx="40" cy="36" r="7" class="ink"/><circle cx="80" cy="36" r="7" class="ink"/>
       <circle cx="40" cy="36" r="2.4" class="t"/><circle cx="80" cy="36" r="2.4" class="t"/>
       <path class="ink" d="M42 62 Q60 74 78 62"/>
-      <text x="60" y="118" text-anchor="middle" class="serif m" font-size="15" font-style="italic">every agent, first thing</text>
+      <text x="60" y="118" text-anchor="middle" class="serif m" font-size="15" font-style="italic">Copilot, first thing</text>
     </g>
 
     <!-- arrows: doc -> agent -> repo -->
