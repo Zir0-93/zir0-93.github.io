@@ -12,7 +12,7 @@ excerpt_separator: <!--more-->
 
 Every coding agent opens the same file first. Before it writes anything it reads the repository's instruction file, whichever of `CLAUDE.md`, `AGENTS.md` or `.github/copilot-instructions.md` the project keeps, and takes what that file says about the code as a starting point.
 
-I build [a tool that checks docs against code on pull requests](https://striff.io), and I was running it over public repositories when this came out of the results. It is line 258 of the instruction file in the [official C# SDK for the Model Context Protocol](https://github.com/modelcontextprotocol/csharp-sdk), the protocol whose whole job is to give models accurate context:
+I build [Striff](https://striff.io), a tool that checks docs against code on pull requests, and I was running it over public repositories when this came out of the results. It is line 258 of the instruction file in the [official C# SDK for the Model Context Protocol](https://github.com/modelcontextprotocol/csharp-sdk), the protocol whose whole job is to give models accurate context:
 
 <div class="fig">
 <div class="ghfile">
@@ -90,7 +90,7 @@ A stale name can also get copied. The README of [yegor256/cactoos](https://githu
 
 ## Striff, the tool that found these
 
-[Striff](https://striff.io) is the tool from the top of this post. It is a GitHub App, free on public repositories. It parses both revisions of a pull request, reads the documents already in the repository, turns each sentence that makes a claim about the code into a rule, and checks the rule at the base and the head. A name the repository does not have, like line 258, is reported against the page with the commit that removed the type. A rule the change broke is reported against the change. You do not write any rules yourself, because it uses the ones your team already wrote down and your agents are already reading.
+[Striff](https://striff.io) is a GitHub App, free on public repositories. It parses both revisions of a pull request, reads the documents already in the repository, turns each sentence that makes a claim about the code into a rule, and checks the rule at the base and the head. A name the repository does not have, like line 258, is reported against the page with the commit that removed the type. A rule the change broke is reported against the change. You do not write any rules yourself, because it uses the ones your team already wrote down and your agents are already reading.
 
 [Here is a real check](https://striff.io/#diagram), unedited, from a public pull request. The sweep these examples came from covered 609 public pull requests. Striff read 7,161 rules out of those repositories' docs, could answer 5,674 of them from the parsed code, and found 97 that the change under review had broken. [The full breakdown](https://striff.io/blog/design-docs-are-enforceable-now#how-often-it-fires) is on the Striff blog.
 
