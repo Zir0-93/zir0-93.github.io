@@ -18,7 +18,7 @@ I build [a tool that checks docs against code on pull requests](https://striff.i
 <div class="ghfile">
 <div class="ghfile-bar"><span class="ghfile-crumbs">csharp-sdk <i>/</i> .github <i>/</i> <b>copilot-instructions.md</b></span><span class="ghfile-tabs"><span class="is-on">Preview</span><span>Code</span><span>Blame</span></span></div>
 <div class="ghfile-body">
-<p class="ghfile-h">Server Implementation</p>
+<p class="ghfile-h">Server Implementation Architecture</p>
 <ul>
 <li><span class="ghfile-ln">256</span><span class="ghfile-text">Server primitives (tools, prompts, resources) are discovered via reflection using attributes</span></li>
 <li><span class="ghfile-ln">257</span><span class="ghfile-text">Support both attribute-based registration (<code>WithTools&lt;T&gt;()</code>) and instance-based (<code>WithTools(target)</code>)</span></li>
@@ -39,12 +39,12 @@ The cost of this one line is small. An agent that takes line 258 at face value w
 
 ## How the line got there and stayed
 
-The history is five commits, and in none of them was anyone looking at the instruction and the class at the same time.
+At no point in the history of this line was anyone looking at the instruction and the class at the same time.
 
 <div class="fig">
 <p class="fig-title">One line, five commits</p>
 <ol class="timeline">
-<li><span class="tl-date">16 Sep 2025</span><span class="tl-body"><code>McpServerFactory</code> is marked <code>[Obsolete]</code>: <em>"Use McpServer.Create instead. This member will be removed in a subsequent release."</em> <a href="https://github.com/modelcontextprotocol/csharp-sdk/commit/38b4a269">38b4a26</a></span></li>
+<li><span class="tl-date">16 Sep 2025</span><span class="tl-body"><code>McpServerFactory</code> is marked <code>[Obsolete]</code>: <em>"Use McpServer.Create instead."</em> <a href="https://github.com/modelcontextprotocol/csharp-sdk/commit/38b4a269">38b4a26</a>. A week later the note gains a second sentence: <em>"This member will be removed in a subsequent release."</em> <a href="https://github.com/modelcontextprotocol/csharp-sdk/commit/5f992994">5f99299</a></span></li>
 <li><span class="tl-date">13 Oct 2025</span><span class="tl-body">Copilot opens <a href="https://github.com/modelcontextprotocol/csharp-sdk/pull/858">#858</a>, "Set up Copilot instructions for repository", a long and mostly accurate briefing. A maintainer reviews and merges it. The instruction to use <code>McpServerFactory</code> is line 222.</span></li>
 <li class="is-del"><span class="tl-date">2 Dec 2025</span><span class="tl-body"><a href="https://github.com/modelcontextprotocol/csharp-sdk/pull/985">#985</a>, "Remove obsolete APIs from codebase", deletes <code>McpServerFactory.cs</code>. Authored by Copilot, co-authored by three of the project's developers. The instructions file is not in the diff, so nobody reviewing the removal opened it.</span></li>
 <li><span class="tl-date">Apr to Aug 2026</span><span class="tl-body">Four more commits edit the instructions file. None touches the line, which drifts down to 258.</span></li>
@@ -76,7 +76,7 @@ The second case is where architecture goes: a hundred small changes that each co
 
 ## Other repositories
 
-I led with the MCP line, but it was not hard to find. In the same sweep, [DolphinScheduler](https://github.com/apache/dolphinscheduler/blob/dev/docs/docs/en/contribute/backend/spi/registry.md?plain=1#L20)'s contributor guide sends new contributors to implement an interface the repository no longer has, [Apache Pinot](https://github.com/apache/pinot/blob/master/pinot-sql-ddl/DESIGN.md?plain=1#L97)'s design note says its SQL DDL module depends only on three things while the module's build and imports pull in a fourth, and [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet/blob/master/docs/articles/configs/exporters.md?plain=1#L101) documents four properties of an interface that no longer exists.
+I led with the MCP line, but it was not hard to find. In the same sweep, [DolphinScheduler](https://github.com/apache/dolphinscheduler/blob/7cf1677133624484d2a8e70b4cc7bcf9cdb8ef6d/docs/docs/en/contribute/backend/spi/registry.md?plain=1#L20)'s contributor guide sends new contributors to implement an interface the repository no longer has, [Apache Pinot](https://github.com/apache/pinot/blob/04cca1a58dc23155e1b1fd355fe5da0b633622d3/pinot-sql-ddl/DESIGN.md?plain=1#L97)'s design note says its SQL DDL module depends only on three things while the module's build and imports pull in a fourth, and [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet/blob/962da56e99ff7ab706c3c6f0aeb24e4af91a0d4f/docs/articles/configs/exporters.md?plain=1#L101) documents four properties of an interface that no longer exists.
 
 These are well-maintained projects with careful reviewers, and their review process is fine. It just never puts the sentence and the code in front of the same person.
 
@@ -84,7 +84,7 @@ A stale name can also get copied. The README of [yegor256/cactoos](https://githu
 
 ## What to do about it
 
-- Treat your agent instruction files as code, because agents build from them. When you delete or rename a type, `git grep -w OldName -- '*.md'` takes a second, and IDE rename refactorings skip markdown.
+- Treat your agent instruction files as code, because agents build from them. When you delete or rename a type, `git grep -w OldName -- '*.md'` takes a second, and IDE rename refactorings usually skip markdown.
 - Keep them short, and prefer rules to names. "Controllers never call repositories directly" stays true across a hundred refactors. A class name is a claim that can go stale on the next one.
 - Have the docs checked on the pull request, where the change that contradicts them is being reviewed, by something that reads the sentence and the code together.
 

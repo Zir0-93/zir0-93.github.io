@@ -1284,6 +1284,7 @@ hr {
   white-space: nowrap;
 }
 .ghfile-callout b { font-weight: 600; margin-right: 2px; }
+@media (max-width: 720px) { .ghfile-callout { white-space: normal; } }
 .ghfile-callout a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 
 .ghfile-callout a {
