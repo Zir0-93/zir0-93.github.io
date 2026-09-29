@@ -26,7 +26,7 @@ I build [a tool that checks docs against code on pull requests](https://striff.i
 </ul>
 </div>
 </div>
-<p class="fig-caption"><a href="https://github.com/modelcontextprotocol/csharp-sdk/blob/c40ee044fd415c70da5176c749cb5ef02f2b59f6/.github/copilot-instructions.md#L258">The line, at the commit I checked</a>. This file exists to brief a coding agent before it writes anything.</p>
+<p class="fig-caption"><a href="https://github.com/modelcontextprotocol/csharp-sdk/blob/c40ee044fd415c70da5176c749cb5ef02f2b59f6/.github/copilot-instructions.md?plain=1#L258">The line, at the commit I checked</a>. This file exists to brief a coding agent before it writes anything.</p>
 </div>
 
 `McpServerFactory` does not exist. Search the repository for the name and you get one result: this line, in the file every agent reads first. The class was marked obsolete in September 2025 with a note to use `McpServer.Create` instead, and deleted in December.
