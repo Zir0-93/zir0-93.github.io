@@ -45,7 +45,7 @@ Nobody involved would have caught this, because nothing they did required them t
 <li><span class="tl-date">13 Oct 2025</span><span class="tl-body">Copilot opens <a href="https://github.com/modelcontextprotocol/csharp-sdk/pull/858">#858</a>, "Set up Copilot instructions for repository", a long and mostly accurate briefing. A maintainer reviews and merges it. The instruction to use <code>McpServerFactory</code> is line 222.</span></li>
 <li class="is-del"><span class="tl-date">2 Dec 2025</span><span class="tl-body"><a href="https://github.com/modelcontextprotocol/csharp-sdk/pull/985">#985</a>, "Remove obsolete APIs from codebase", deletes <code>McpServerFactory.cs</code>. Authored by Copilot, co-authored by three of the project's developers. The instructions file is not in the diff, so nobody reviewing the removal opened it.</span></li>
 <li><span class="tl-date">Apr to Aug 2026</span><span class="tl-body">Four more commits edit the instructions file. None touches the line, which drifts down to 258.</span></li>
-<li class="is-now"><span class="tl-date">26 Sep 2026</span><span class="tl-body">Line 258 is still there as this is published.</span></li>
+<li class="is-now"><span class="tl-date">26 Sep 2026</span><span class="tl-body">Line 258 is still there.</span></li>
 </ol>
 </div>
 
@@ -57,7 +57,7 @@ Stale names do not just sit there. In April 2026 a commit authored as "Architect
 
 > Explicit caching requires opting in with `Sticky` or `StickyList`.
 
-`StickyList` was [renamed away in December 2018](https://github.com/yegor256/cactoos/commit/be02845), and the list class it became was [removed in 2020](https://github.com/yegor256/cactoos/commit/eed03c1fc05217eeda0564999cae2c87709b1e13). The old name survived in a comparison table further up the same README. An agent asked to describe the architecture read that table, and the name came out the other side as a confident new instruction with a fresh timestamp. Until that sentence was corrected on 27 September, the next agent to open the README found the name twice, for a class that has been gone for seven years, and the newer mention looked authoritative.
+`StickyList` was [renamed away in December 2018](https://github.com/yegor256/cactoos/commit/be02845), and the list class it became was [removed in 2020](https://github.com/yegor256/cactoos/commit/eed03c1fc05217eeda0564999cae2c87709b1e13). The old name survived in a comparison table further up the same README. An agent asked to describe the architecture read that table, and the name came out the other side as a confident new instruction with a fresh timestamp. Any agent that opened that README afterwards found two sentences recommending a class that had been gone for seven years, and the newer one looked authoritative. The sentence was fixed on 27 September.
 
 <div class="callout callout--amber">A wrong sentence in a doc used to cost one engineer an afternoon of confusion. Now every agent run reads it, acts on it, and sometimes copies it into the next document.</div>
 
@@ -98,7 +98,7 @@ The MCP line is the one I chose to lead with because the irony is hard to beat, 
 
 ## Striff, the tool that found these
 
-The third item on that list is what I build, which is how I found these. [Striff](https://striff.io) is a GitHub App, free on public repositories, that parses both revisions of a pull request, reads the documents already in the repository, turns each sentence that makes a claim about the code into a rule, and checks it at the base and the head. A name the repository does not have, like line 258, is reported against the page with the commit that removed the type. A rule the change broke is reported against the change. There is nothing to write and nothing to configure, because the rules are the ones your team already wrote down and your agents are already reading.
+Checking docs on the pull request is what I build, which is how I found these. [Striff](https://striff.io) is a GitHub App, free on public repositories, that parses both revisions of a pull request, reads the documents already in the repository, turns each sentence that makes a claim about the code into a rule, and checks it at the base and the head. A name the repository does not have, like line 258, is reported against the page with the commit that removed the type. A rule the change broke is reported against the change. There is nothing to write and nothing to configure, because the rules are the ones your team already wrote down and your agents are already reading.
 
 <div class="trylinks">
 <a class="trylink" href="https://github.com/catatafishen/agentbridge/runs/108628049213"><span class="trylink-name">See a real check</span><span class="trylink-note">24 documented rules, checked on a public pull request</span></a>
@@ -106,7 +106,7 @@ The third item on that list is what I build, which is how I found these. [Striff
 <a class="trylink" href="https://github.com/apps/striff-app/installations/new"><span class="trylink-name">Install the app</span><span class="trylink-note">GitHub App, free on public repositories</span></a>
 </div>
 
-The check in the first link is on a pull request in catatafishen/agentbridge, a JetBrains plugin I have no part in. Striff read 24 rules out of that repository's `AGENTS.md` and design docs, and each one links to the line it came from. All 24 held on that change, which is what most checks look like. The extension runs the same analysis in your browser tab, in a repository you own or not.
+The first link is a Striff check on a pull request in [catatafishen/agentbridge](https://github.com/catatafishen/agentbridge), someone else's project. It pulled 24 rules out of the repo's `AGENTS.md` and design docs, and each one links back to the line it came from. All 24 passed, which is the normal case. The extension does the same thing on any public pull request you open in your browser.
 
 The sweep these examples came from, with its numbers and a worked example from sentence to verdict, is in [a post on the Striff blog](https://striff.io/blog/design-docs-are-enforceable-now).
 
