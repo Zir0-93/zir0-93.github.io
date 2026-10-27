@@ -29,7 +29,7 @@ Rather than a step-by-step tutorial, the intent here is to explain the tradeoffs
 Running vLLM directly on Kubernetes is not complicated. You deploy a pod with GPU resources, expose a port, and route traffic to it. The problems that emerge are operational:
 
 - **How do you handle cold start?** A vLLM pod serving a 70B model can take several minutes to initialize. Traffic routed to a cold pod will either fail or stack up in ways that are hard to recover from.
-- **How do you scale up, or from zero, without dropping requests during the ramp-up window?**
+- **How do you scale from zero without dropping requests during the ramp-up window?**
 - **How do you maintain KV cache locality across replicas?** Stateful LLM backends have characteristics that standard round-robin load balancing is not designed for.
 - **How do you present a stable, OpenAI-compatible API surface that survives backend changes, scaling events, and model version updates?**
 
