@@ -80,7 +80,7 @@ Cost moves up into the application layer, because it is proportional to token vo
 
 ## What this looks like in what I build now
 
-The posture from both incidents, that the model may propose and a program must verify, is the design of [Striff](https://striff.io), the tool I work on today. It reads a repository's architecture documents, has a language model translate their sentences into rules, and then checks those rules against the parsed code with no model involved. The model never decides whether a rule holds, a silent "could not check" is never recorded as "checked, nothing found", and every finding names the sentence and the line it came from. That is the parser-error-rate lesson and the green-dashboard lesson, built into the shape of a product rather than added to it afterwards. I wrote up how it works in [a post on the pipeline]({% post_url 2026-04-28-striff-io-ml-infrastructure %}).
+The posture from both incidents, that the model may propose and a program must verify, is the design of [Striff](https://striff.io), the tool I work on today. It reads a repository's architecture documents, has a language model translate their sentences into rules, and then checks those rules against the parsed code with no model involved. The model never decides whether a rule holds, a silent "could not check" is never recorded as "checked, nothing found", and every finding names the sentence and the line it came from. That is the parser-error-rate lesson and the green-dashboard lesson, built into the shape of a product rather than added to it afterwards.
 
 ## Code referenced in this post
 
